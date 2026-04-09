@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>DocuMed — Payment Receipt</title>
+    <link rel="stylesheet" href="../wireframe.css" />
+    <script src="../wireframe.js"></script>
+  </head>
+  <body>
+    <script>
+      ready(() => {
+        document.body.innerHTML = `
+    <div style="max-width:800px;margin:20px auto;padding:0 16px;">
+      <div class="wf-action-bar between mb-2">
+        <a href="pending_payments.html"><button class="wf-btn">← Back to Payments</button></a>
+        <div class="flex gap-1">
+          <button class="wf-btn">🖨 Print</button>
+          <button class="wf-btn">⬇ Download PDF</button>
+        </div>
+      </div>
+
+      <div class="wf-document">
+        <!-- Document Header -->
+        <div class="doc-header">
+          <div class="logo-area">
+            <div class="wf-placeholder" style="width:50px;height:50px;border-width:1.5px;"><span style="font-size:.55rem;">Logo</span></div>
+            <div>
+              <h3 style="margin:0;">DocuMed Clinic</h3>
+              <div style="font-size:.78rem;color:#888;">Clinic Management System</div>
+            </div>
+          </div>
+          <div class="branch-info">
+            Main Branch<br>
+            Bole Road, Addis Ababa<br>
+            +251-11-234-5678<br>
+            main@documed.clinic
+          </div>
+        </div>
+
+        <!-- Title -->
+        <div class="doc-title">Payment Receipt</div>
+
+        <!-- Transaction Details -->
+        <div class="doc-section">
+          <h4>Transaction Details</h4>
+          <div class="doc-kv">
+            <div class="kv"><strong>Receipt #:</strong> RCP-2026-0412</div>
+            <div class="kv"><strong>Date & Time:</strong> 08 Apr 2026, 09:42 AM</div>
+          </div>
+          <div class="doc-kv">
+            <div class="kv"><strong>Patient Name:</strong> Meron Hailu</div>
+            <div class="kv"><strong>Patient ID:</strong> ET-4567890</div>
+          </div>
+        </div>
+
+        <!-- Service Line Items -->
+        <div class="doc-section">
+          <h4>Services</h4>
+          ${renderTable(
+            ["#", "Service Description", "Amount"],
+            [
+              ["1", "CBC (Complete Blood Count)", "ETB 450.00"],
+              ["2", "Lipid Profile", "ETB 400.00"],
+            ],
+          )}
+        </div>
+
+        <!-- Payment Summary -->
+        <div class="doc-section">
+          <div style="display:flex;justify-content:flex-end;">
+            <div style="width:250px;">
+              <div class="flex-between mb-1" style="font-size:.9rem;">
+                <span>Total Amount Paid:</span>
+                <strong>ETB 850.00</strong>
+              </div>
+              <div class="flex-between mb-1" style="font-size:.9rem;">
+                <span>Payment Method:</span>
+                <span>Cash</span>
+              </div>
+              <div class="flex-between" style="font-size:.9rem;">
+                <span>Status:</span>
+                <span class="wf-badge green">Paid</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="doc-footer">
+          This receipt is system-generated and valid without a signature.<br>
+          DocuMed Clinic · Registered Business
+        </div>
+      </div>
+    </div>
+
+    ${renderAnnotation("SCR_payment_receipt", "Finance Clerk", "Payment Processing Flow")}
+  `;
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>DocuMed — Master Data Management</title>
+    <link rel="stylesheet" href="../wireframe.css" />
+    <script src="../wireframe.js"></script>
+  </head>
+  <body>
+    <script>
+      ready(() => {
+        renderPageShell({
+          title: "Master Data Management",
+          role: "admin",
+          activeId: "master_data_management",
+          screenId: "SCR_master_data_management",
+          workflow: "Master Data Management Flow",
+          userName: "Admin (Super)",
+          content: function (main) {
+            main.innerHTML = `
+      <h2 class="page-title">Master Data Management</h2>
+
+      <div class="wf-tabs">
+        <div class="tab active" data-tab="tab-services">Services / Procedures</div>
+        <div class="tab" data-tab="tab-labtests">Lab Tests</div>
+        <div class="tab" data-tab="tab-drugs">Drug Formulary</div>
+      </div>
+
+      <!-- Tab 1: Services -->
+      <div id="tab-services" class="wf-tab-content active">
+        <div class="wf-filter-bar">
+          <div class="filter-group">
+            <input type="text" class="wf-input" placeholder="Search services..." style="width:250px;">
+          </div>
+          <a href="catalog_item_form.html"><button class="wf-btn primary small">+ Add Service</button></a>
+        </div>
+        ${renderTable(
+          [
+            "Service Name",
+            "Description",
+            "Price",
+            "Scope",
+            "Status",
+            "Actions",
+          ],
+          [
+            [
+              '<a href="catalog_item_form.html">Consultation Fee</a>',
+              "Standard practitioner consultation",
+              "ETB 300.00",
+              "All Branches",
+              '<span class="wf-badge green">Active</span>',
+              '<button class="wf-btn small danger">Deactivate</button>',
+            ],
+            [
+              '<a href="catalog_item_form.html">IM Injection</a>',
+              "Intramuscular injection administration",
+              "ETB 150.00",
+              "All Branches",
+              '<span class="wf-badge green">Active</span>',
+              '<button class="wf-btn small danger">Deactivate</button>',
+            ],
+            [
+              '<a href="catalog_item_form.html">Wound Dressing</a>',
+              "Wound cleaning and dressing",
+              "ETB 200.00",
+              "All Branches",
+              '<span class="wf-badge green">Active</span>',
+              '<button class="wf-btn small danger">Deactivate</button>',
+            ],
+            [
+              '<a href="catalog_item_form.html">IV Infusion</a>',
+              "Intravenous fluid/medication",
+              "ETB 500.00",
+              "Main Branch",
+              '<span class="wf-badge green">Active</span>',
+              '<button class="wf-btn small danger">Deactivate</button>',
+            ],
+            [
+              '<a href="catalog_item_form.html">ECG</a>',
+              "Electrocardiogram",
+              "ETB 350.00",
+              "Main Branch",
+              '<span class="wf-badge green">Active</span>',
+              '<button class="wf-btn small danger">Deactivate</button>',
+            ],
+          ],
+          { clickable: true },
+        )}
+      </div>
+
+      <!-- Tab 2: Lab Tests -->
+      <div id="tab-labtests" class="wf-tab-content">
+        <div class="wf-filter-bar">
+          <div class="filter-group">
+            <input type="text" class="wf-input" placeholder="Search lab tests..." style="width:250px;">
+          </div>
+          <a href="catalog_item_form.html"><button class="wf-btn primary small">+ Add Test</button></a>
+        </div>
+        ${renderTable(
+          [
+            "Test Name",
+            "Specimen Type",
+            "Price",
+            "In-House Branches",
+            "Status",
+            "Actions",
+          ],
+          [
+            [
+              "CBC (Complete Blood Count)",
+              "Blood",
+              "ETB 450.00",
+              "Main, Merkato",
+              '<span class="wf-badge green">Active</span>',
+              '<button class="wf-btn small danger">Deactivate</button>',
+            ],
+            [
+              "Lipid Profile",
+              "Blood",
+              "ETB 400.00",
+              "Main",
+              '<span class="wf-badge green">Active</span>',
+              '<button class="wf-btn small danger">Deactivate</button>',
+            ],
+            [
+              "Blood Glucose",
+              "Blood",
+              "ETB 200.00",
+              "Main, Merkato",
+              '<span class="wf-badge green">Active</span>',
+              '<button class="wf-btn small danger">Deactivate</button>',
+            ],
+            [
+              "HbA1c",
+              "Blood",
+              "ETB 400.00",
+              "Main",
+              '<span class="wf-badge green">Active</span>',
+              '<button class="wf-btn small danger">Deactivate</button>',
+            ],
+            [
+              "Thyroid Panel",
+              "Blood",
+              "ETB 800.00",
+              "None (external)",
+              '<span class="wf-badge green">Active</span>',
+              '<button class="wf-btn small danger">Deactivate</button>',
+            ],
+            [
+              "Urinalysis",
+              "Urine",
+              "ETB 150.00",
+              "Main, Merkato",
+              '<span class="wf-badge green">Active</span>',
+              '<button class="wf-btn small danger">Deactivate</button>',
+            ],
+          ],
+          { clickable: true },
+        )}
+      </div>
+
+      <!-- Tab 3: Drug Formulary -->
+      <div id="tab-drugs" class="wf-tab-content">
+        <div class="wf-filter-bar">
+          <div class="filter-group">
+            <input type="text" class="wf-input" placeholder="Search drugs..." style="width:250px;">
+          </div>
+          <a href="catalog_item_form.html"><button class="wf-btn primary small">+ Add Drug</button></a>
+        </div>
+        ${renderTable(
+          ["Drug Name", "Dosage Forms", "Strengths", "Status", "Actions"],
+          [
+            [
+              "Amoxicillin",
+              "Capsule, Syrup",
+              "250mg, 500mg",
+              '<span class="wf-badge green">Active</span>',
+              '<button class="wf-btn small danger">Deactivate</button>',
+            ],
+            [
+              "Ibuprofen",
+              "Tablet",
+              "200mg, 400mg",
+              '<span class="wf-badge green">Active</span>',
+              '<button class="wf-btn small danger">Deactivate</button>',
+            ],
+            [
+              "Metformin",
+              "Tablet",
+              "500mg, 850mg, 1000mg",
+              '<span class="wf-badge green">Active</span>',
+              '<button class="wf-btn small danger">Deactivate</button>',
+            ],
+            [
+              "Amlodipine",
+              "Tablet",
+              "5mg, 10mg",
+              '<span class="wf-badge green">Active</span>',
+              '<button class="wf-btn small danger">Deactivate</button>',
+            ],
+            [
+              "Diclofenac",
+              "Tablet, Injection",
+              "50mg, 75mg/3ml",
+              '<span class="wf-badge green">Active</span>',
+              '<button class="wf-btn small danger">Deactivate</button>',
+            ],
+            [
+              "Paracetamol",
+              "Tablet, Syrup",
+              "500mg, 125mg/5ml",
+              '<span class="wf-badge green">Active</span>',
+              '<button class="wf-btn small danger">Deactivate</button>',
+            ],
+          ],
+          { clickable: true },
+        )}
+      </div>
+      `;
+            initTabs();
+          },
+        });
+      });
+    </script>
+  </body>
+</html>

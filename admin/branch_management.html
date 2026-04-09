@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>DocuMed — Branch Management</title>
+    <link rel="stylesheet" href="../wireframe.css" />
+    <script src="../wireframe.js"></script>
+  </head>
+  <body>
+    <script>
+      ready(() => {
+        renderPageShell({
+          title: "Branch Management",
+          role: "admin",
+          activeId: "branch_management",
+          screenId: "SCR_branch_management",
+          workflow: "Branch Management Flow",
+          userName: "Admin (Super)",
+          content: `
+      <h2 class="page-title">Branch Management</h2>
+
+      <div class="wf-action-bar between">
+        <span class="text-muted text-small">3 branches configured</span>
+        <a href="branch_form.html"><button class="wf-btn primary">+ Create Branch</button></a>
+      </div>
+
+      ${renderTable(
+        [
+          "Branch Name",
+          "Address",
+          "Contact",
+          "Operating Hours",
+          "Status",
+          "Actions",
+        ],
+        [
+          [
+            '<a href="branch_form.html"><strong>Main Branch</strong></a>',
+            "Bole Road, Addis Ababa",
+            "+251-11-234-5678<br>main@documed.clinic",
+            "Mon–Fri 8:00–17:00<br>Sat 8:00–12:00",
+            '<span class="wf-badge green">Active</span>',
+            '<button class="wf-btn small danger">Deactivate</button>',
+          ],
+          [
+            '<a href="branch_form.html"><strong>Merkato Branch</strong></a>',
+            "Merkato, Addis Ababa",
+            "+251-11-345-6789<br>merkato@documed.clinic",
+            "Mon–Fri 8:00–17:00",
+            '<span class="wf-badge green">Active</span>',
+            '<button class="wf-btn small danger">Deactivate</button>',
+          ],
+          [
+            '<a href="branch_form.html"><strong>Piassa Branch</strong></a>',
+            "Piassa, Addis Ababa",
+            "+251-11-456-7890<br>piassa@documed.clinic",
+            "—",
+            '<span class="wf-badge gray">Inactive</span>',
+            '<button class="wf-btn small">Reactivate</button>',
+          ],
+        ],
+        { clickable: true },
+      )}
+    `,
+        });
+      });
+    </script>
+  </body>
+</html>

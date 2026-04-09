@@ -1,0 +1,1158 @@
+/* ============================================================
+   DocuMed Wireframe — Sketch-Style Design System
+   ============================================================ */
+
+@import url("https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Patrick+Hand&display=swap");
+
+/* ---------- Reset & Base ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  font-family: "Patrick Hand", "Segoe UI", sans-serif;
+  color: #333;
+  background: #fafafa;
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+/* ---------- Typography ---------- */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Architects Daughter", cursive;
+  font-weight: 400;
+  color: #222;
+  margin-bottom: 0.4em;
+}
+h1 {
+  font-size: 1.8rem;
+}
+h2 {
+  font-size: 1.4rem;
+}
+h3 {
+  font-size: 1.15rem;
+}
+h4 {
+  font-size: 1rem;
+}
+
+p {
+  margin-bottom: 0.6em;
+}
+
+a {
+  color: #333;
+  text-decoration: underline;
+  text-decoration-style: wavy;
+  text-underline-offset: 3px;
+}
+a:hover {
+  color: #000;
+  background: #fffde7;
+}
+
+/* ---------- Sketch Border Utility ---------- */
+.sketch-border {
+  border: 2px solid #333;
+  border-radius: 3px;
+  box-shadow: 2px 2px 0 #ccc;
+}
+
+.sketch-border-light {
+  border: 1.5px solid #999;
+  border-radius: 2px;
+}
+
+/* ---------- Browser Chrome ---------- */
+.wf-browser-chrome {
+  background: #ddd;
+  border: 2px solid #333;
+  border-radius: 8px 8px 0 0;
+  padding: 6px 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 0;
+}
+.wf-browser-chrome .dots {
+  display: flex;
+  gap: 5px;
+}
+.wf-browser-chrome .dots span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1.5px solid #666;
+  background: #eee;
+}
+.wf-browser-chrome .address-bar {
+  flex: 1;
+  background: #fff;
+  border: 1.5px solid #999;
+  border-radius: 10px;
+  height: 22px;
+  padding: 0 10px;
+  font-size: 0.75rem;
+  color: #888;
+  display: flex;
+  align-items: center;
+}
+.wf-browser-chrome .browser-title {
+  font-family: "Architects Daughter", cursive;
+  font-size: 0.8rem;
+  color: #555;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* ---------- Page Shell ---------- */
+.wf-page-shell {
+  max-width: 1280px;
+  margin: 20px auto;
+  border: 2px solid #333;
+  border-radius: 0 0 4px 4px;
+  background: #fff;
+  min-height: 700px;
+  display: flex;
+  flex-direction: column;
+}
+.wf-page-shell.with-chrome {
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+}
+
+.wf-page-body {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+/* ---------- Sidebar ---------- */
+.wf-sidebar {
+  width: 200px;
+  min-width: 200px;
+  border-right: 2px solid #333;
+  background: #fdfdfd;
+  padding: 12px 0;
+  display: flex;
+  flex-direction: column;
+}
+.wf-sidebar .sidebar-logo {
+  text-align: center;
+  padding: 8px 12px 16px;
+  border-bottom: 1.5px solid #ccc;
+  margin-bottom: 8px;
+}
+.wf-sidebar .sidebar-logo .logo-box {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 6px;
+}
+.wf-sidebar .sidebar-logo span {
+  font-family: "Architects Daughter", cursive;
+  font-size: 1rem;
+  color: #333;
+}
+.wf-sidebar nav {
+  flex: 1;
+}
+.wf-sidebar nav a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  text-decoration: none;
+  color: #555;
+  font-size: 0.95rem;
+  border-left: 3px solid transparent;
+  transition: background 0.15s;
+}
+.wf-sidebar nav a:hover {
+  background: #f0f0f0;
+  color: #222;
+}
+.wf-sidebar nav a.active {
+  background: #f0f0f0;
+  border-left-color: #333;
+  color: #111;
+  font-weight: 600;
+}
+.wf-sidebar nav a .nav-icon {
+  width: 18px;
+  height: 18px;
+  border: 1.5px solid currentColor;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.65rem;
+}
+.wf-sidebar .sidebar-footer {
+  border-top: 1.5px solid #ccc;
+  padding: 10px 16px;
+}
+.wf-sidebar .sidebar-footer a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: #888;
+  font-size: 0.9rem;
+}
+
+/* ---------- Header Bar ---------- */
+.wf-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  border-bottom: 2px solid #333;
+  background: #fefefe;
+  min-height: 50px;
+}
+.wf-header .header-search {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.wf-header .header-search .search-icon {
+  font-size: 1rem;
+}
+.wf-header .header-search input {
+  border: 1.5px solid #999;
+  border-radius: 3px;
+  padding: 4px 10px;
+  font-family: inherit;
+  font-size: 0.85rem;
+  width: 220px;
+  background: #fff;
+}
+.wf-header .header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.wf-header .header-right .notif-icon {
+  font-size: 1.1rem;
+  cursor: pointer;
+  position: relative;
+}
+.wf-header .header-right .user-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+}
+.wf-header .header-right .user-info .avatar {
+  width: 30px;
+  height: 30px;
+}
+
+/* ---------- Main Content ---------- */
+.wf-main {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.wf-main .page-title {
+  font-size: 1.5rem;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 1.5px dashed #ccc;
+}
+
+/* ---------- Image Placeholder (X-crossed) ---------- */
+.wf-placeholder {
+  background: #f0f0f0;
+  border: 2px solid #333;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  color: #888;
+  font-family: "Architects Daughter", cursive;
+  font-size: 0.8rem;
+}
+.wf-placeholder::before,
+.wf-placeholder::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 141.42%;
+  height: 2px;
+  background: #999;
+  transform-origin: 0 0;
+}
+.wf-placeholder::before {
+  transform: rotate(atan2(var(--ph), var(--pw)));
+  /* fallback for simple diagonal */
+  transform: rotate(35deg);
+}
+.wf-placeholder::after {
+  top: auto;
+  bottom: 0;
+  transform-origin: 0 100%;
+  transform: rotate(-35deg);
+}
+.wf-placeholder span {
+  position: relative;
+  z-index: 1;
+  background: #f0f0f0;
+  padding: 2px 8px;
+}
+
+/* ---------- Buttons ---------- */
+.wf-btn {
+  font-family: "Patrick Hand", sans-serif;
+  font-size: 0.95rem;
+  padding: 6px 18px;
+  border: 2px solid #333;
+  border-radius: 3px;
+  background: #fff;
+  color: #333;
+  cursor: pointer;
+  box-shadow: 2px 2px 0 #ccc;
+  transition: all 0.1s;
+}
+.wf-btn:hover {
+  background: #f5f5f5;
+  box-shadow: 1px 1px 0 #bbb;
+  transform: translate(1px, 1px);
+}
+.wf-btn:active {
+  box-shadow: none;
+  transform: translate(2px, 2px);
+}
+.wf-btn.primary {
+  background: #333;
+  color: #fff;
+}
+.wf-btn.primary:hover {
+  background: #555;
+}
+.wf-btn.danger {
+  border-color: #a33;
+  color: #a33;
+}
+.wf-btn.small {
+  font-size: 0.8rem;
+  padding: 3px 10px;
+  border-width: 1.5px;
+  box-shadow: 1px 1px 0 #ccc;
+}
+.wf-btn.disabled,
+.wf-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* ---------- Form Elements ---------- */
+.wf-form-group {
+  margin-bottom: 14px;
+}
+.wf-form-group label {
+  display: block;
+  margin-bottom: 3px;
+  font-size: 0.9rem;
+  color: #444;
+}
+.wf-form-group label .required {
+  color: #a33;
+  margin-left: 2px;
+}
+.wf-input {
+  width: 100%;
+  border: 1.5px solid #999;
+  border-radius: 3px;
+  padding: 6px 10px;
+  font-family: "Patrick Hand", sans-serif;
+  font-size: 0.9rem;
+  background: #fff;
+  color: #333;
+}
+.wf-input:focus {
+  outline: none;
+  border-color: #333;
+  box-shadow: 0 0 0 1px #333;
+}
+.wf-input.readonly {
+  background: #f5f5f5;
+  border-style: dashed;
+  color: #666;
+}
+
+textarea.wf-input {
+  resize: vertical;
+  min-height: 60px;
+}
+
+select.wf-input {
+  appearance: auto;
+}
+
+/* Radio / Checkbox groups */
+.wf-radio-group,
+.wf-checkbox-group {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.wf-radio-group label,
+.wf-checkbox-group label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+.wf-radio-group input,
+.wf-checkbox-group input {
+  accent-color: #333;
+}
+
+/* Segmented control */
+.wf-segmented {
+  display: inline-flex;
+  border: 2px solid #333;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.wf-segmented label {
+  padding: 5px 14px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  border-right: 1.5px solid #999;
+  background: #fff;
+  transition: background 0.1s;
+}
+.wf-segmented label:last-child {
+  border-right: none;
+}
+.wf-segmented input {
+  display: none;
+}
+.wf-segmented input:checked + span,
+.wf-segmented label.active {
+  background: #333;
+  color: #fff;
+}
+
+/* ---------- Table ---------- */
+.wf-table-wrapper {
+  overflow-x: auto;
+  margin-bottom: 16px;
+}
+.wf-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 2px solid #333;
+  font-size: 0.88rem;
+}
+.wf-table th,
+.wf-table td {
+  padding: 7px 12px;
+  border: 1px solid #bbb;
+  text-align: left;
+  vertical-align: top;
+}
+.wf-table th {
+  background: #f0f0f0;
+  font-family: "Architects Daughter", cursive;
+  font-weight: 400;
+  font-size: 0.9rem;
+  border-bottom: 2px solid #333;
+  white-space: nowrap;
+}
+.wf-table tbody tr:hover {
+  background: #fafafa;
+}
+.wf-table tbody tr.clickable {
+  cursor: pointer;
+}
+.wf-table tbody tr.clickable:hover {
+  background: #fffde7;
+}
+.wf-table tbody tr.selected {
+  background: #fffde7;
+  border-left: 3px solid #333;
+}
+
+/* ---------- Badge ---------- */
+.wf-badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  padding: 2px 8px;
+  border: 1.5px solid #333;
+  border-radius: 3px;
+  background: #f5f5f5;
+  font-family: "Patrick Hand", sans-serif;
+  white-space: nowrap;
+}
+.wf-badge.green {
+  border-color: #4a7;
+  color: #4a7;
+  background: #efffef;
+}
+.wf-badge.orange {
+  border-color: #b85;
+  color: #b85;
+  background: #fff8ef;
+}
+.wf-badge.red {
+  border-color: #a44;
+  color: #a44;
+  background: #ffefef;
+}
+.wf-badge.blue {
+  border-color: #48a;
+  color: #48a;
+  background: #eff5ff;
+}
+.wf-badge.gray {
+  border-color: #999;
+  color: #777;
+  background: #f5f5f5;
+}
+
+/* ---------- Card ---------- */
+.wf-card {
+  border: 2px solid #333;
+  border-radius: 4px;
+  background: #fff;
+  box-shadow: 2px 2px 0 #ddd;
+  padding: 14px;
+  margin-bottom: 14px;
+}
+.wf-card .card-title {
+  font-family: "Architects Daughter", cursive;
+  font-size: 1rem;
+  margin-bottom: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px dashed #ccc;
+}
+
+/* ---------- Tabs ---------- */
+.wf-tabs {
+  display: flex;
+  border-bottom: 2px solid #333;
+  margin-bottom: 16px;
+}
+.wf-tabs .tab {
+  padding: 8px 18px;
+  font-family: "Architects Daughter", cursive;
+  font-size: 0.95rem;
+  cursor: pointer;
+  border: 2px solid transparent;
+  border-bottom: none;
+  background: #f5f5f5;
+  color: #777;
+  margin-bottom: -2px;
+  border-radius: 4px 4px 0 0;
+  transition: all 0.1s;
+}
+.wf-tabs .tab:hover {
+  background: #eee;
+  color: #333;
+}
+.wf-tabs .tab.active {
+  background: #fff;
+  color: #222;
+  border-color: #333;
+  border-bottom-color: #fff;
+}
+.wf-tab-content {
+  display: none;
+}
+.wf-tab-content.active {
+  display: block;
+}
+
+/* ---------- Two-Panel Layout ---------- */
+.wf-two-panel {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+.wf-two-panel > .panel {
+  flex: 1;
+  min-width: 0;
+}
+.wf-two-panel > .panel .panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1.5px dashed #ccc;
+}
+.wf-two-panel > .panel .panel-header h3 {
+  margin-bottom: 0;
+}
+
+/* ---------- Summary Widget Cards ---------- */
+.wf-widget-row {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+.wf-widget {
+  flex: 1;
+  border: 2px solid #333;
+  border-radius: 4px;
+  padding: 16px;
+  text-align: center;
+  background: #fff;
+  box-shadow: 2px 2px 0 #ddd;
+}
+.wf-widget .widget-value {
+  font-family: "Architects Daughter", cursive;
+  font-size: 2rem;
+  color: #222;
+  margin-bottom: 4px;
+}
+.wf-widget .widget-label {
+  font-size: 0.85rem;
+  color: #888;
+}
+
+/* ---------- Inline Panel (expandable) ---------- */
+.wf-inline-panel {
+  border: 2px dashed #999;
+  border-radius: 4px;
+  padding: 14px;
+  margin: 10px 0;
+  background: #fafafa;
+}
+
+/* ---------- Action Bar ---------- */
+.wf-action-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.wf-action-bar.right {
+  justify-content: flex-end;
+}
+.wf-action-bar.between {
+  justify-content: space-between;
+}
+
+/* ---------- Summary Bar ---------- */
+.wf-summary-bar {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 8px 14px;
+  border: 1.5px solid #ccc;
+  border-radius: 4px;
+  background: #fafafa;
+  margin-bottom: 14px;
+  font-size: 0.88rem;
+}
+.wf-summary-bar .summary-item strong {
+  margin-right: 4px;
+}
+
+/* ---------- Filter Bar ---------- */
+.wf-filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+.wf-filter-bar .filter-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.wf-filter-bar label {
+  font-size: 0.85rem;
+  color: #666;
+  white-space: nowrap;
+}
+.wf-filter-bar .wf-input {
+  width: auto;
+  min-width: 140px;
+}
+
+/* ---------- Form Sections ---------- */
+.wf-form-section {
+  margin-bottom: 20px;
+}
+.wf-form-section .section-title {
+  font-family: "Architects Daughter", cursive;
+  font-size: 1.05rem;
+  margin-bottom: 12px;
+  padding-bottom: 6px;
+  border-bottom: 1.5px dashed #ccc;
+  color: #444;
+}
+.wf-form-row {
+  display: flex;
+  gap: 16px;
+}
+.wf-form-row .wf-form-group {
+  flex: 1;
+}
+
+/* ---------- Document / Receipt Layout ---------- */
+.wf-document {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 30px;
+  border: 2px solid #333;
+  background: #fff;
+  box-shadow: 3px 3px 0 #ccc;
+}
+.wf-document .doc-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding-bottom: 16px;
+  border-bottom: 2px solid #333;
+  margin-bottom: 20px;
+}
+.wf-document .doc-header .logo-area {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.wf-document .doc-header .branch-info {
+  text-align: right;
+  font-size: 0.82rem;
+  color: #666;
+  line-height: 1.6;
+}
+.wf-document .doc-title {
+  text-align: center;
+  font-family: "Architects Daughter", cursive;
+  font-size: 1.3rem;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+.wf-document .doc-section {
+  margin-bottom: 18px;
+}
+.wf-document .doc-section h4 {
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+  color: #555;
+  border-bottom: 1px dashed #ccc;
+  padding-bottom: 4px;
+}
+.wf-document .doc-footer {
+  margin-top: 24px;
+  padding-top: 12px;
+  border-top: 1.5px dashed #999;
+  font-size: 0.8rem;
+  color: #888;
+  text-align: center;
+  font-style: italic;
+}
+.wf-document .doc-kv {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+.wf-document .doc-kv .kv {
+  font-size: 0.88rem;
+}
+.wf-document .doc-kv .kv strong {
+  color: #555;
+}
+
+/* ---------- Modal ---------- */
+.wf-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+.wf-modal {
+  background: #fff;
+  border: 2px solid #333;
+  border-radius: 6px;
+  box-shadow: 4px 4px 0 #bbb;
+  padding: 24px;
+  min-width: 420px;
+  max-width: 600px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+.wf-modal .modal-title {
+  font-family: "Architects Daughter", cursive;
+  font-size: 1.2rem;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 1.5px dashed #ccc;
+}
+
+/* ---------- Calendar Grid ---------- */
+.wf-calendar {
+  border: 2px solid #333;
+  border-collapse: collapse;
+  width: 100%;
+}
+.wf-calendar th {
+  padding: 6px;
+  background: #f0f0f0;
+  border: 1px solid #bbb;
+  font-family: "Architects Daughter", cursive;
+  font-size: 0.85rem;
+  text-align: center;
+}
+.wf-calendar td {
+  border: 1px solid #bbb;
+  padding: 6px;
+  height: 70px;
+  vertical-align: top;
+  font-size: 0.82rem;
+  width: 14.28%;
+}
+.wf-calendar td .day-num {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.wf-calendar td.today {
+  background: #fffde7;
+  border: 2px solid #333;
+}
+.wf-calendar td.empty {
+  background: #f8f8f8;
+}
+.wf-calendar td .cal-badge {
+  font-size: 0.7rem;
+  padding: 1px 5px;
+  border: 1px solid #999;
+  border-radius: 2px;
+  display: inline-block;
+  margin-top: 2px;
+}
+
+/* ---------- Patient Header Bar ---------- */
+.wf-patient-header {
+  padding: 14px 18px;
+  border: 2.5px solid #333;
+  border-left: 6px solid #333;
+  border-radius: 4px;
+  background: #f8f8f8;
+  margin-bottom: 16px;
+  box-shadow: 2px 2px 0 #ddd;
+}
+.wf-patient-header .ph-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.wf-patient-header .ph-name {
+  font-family: "Architects Daughter", cursive;
+  font-size: 1.4rem;
+  color: #222;
+}
+.wf-patient-header .ph-visit-badge {
+  font-size: 0.78rem;
+  padding: 3px 10px;
+  border: 1.5px solid #48a;
+  border-radius: 3px;
+  background: #eff5ff;
+  color: #48a;
+  font-family: "Patrick Hand", sans-serif;
+}
+.wf-patient-header .ph-meta {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed #ccc;
+}
+.wf-patient-header .ph-meta-item {
+  font-size: 0.85rem;
+  color: #555;
+}
+.wf-patient-header .ph-meta-item .meta-label {
+  font-size: 0.72rem;
+  color: #999;
+  display: block;
+  margin-bottom: 1px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.wf-patient-header .ph-complaint {
+  background: #fffde7;
+  border: 1.5px solid #e0d57e;
+  border-radius: 3px;
+  padding: 8px 12px;
+  margin-bottom: 10px;
+}
+.wf-patient-header .ph-complaint .complaint-label {
+  font-size: 0.72rem;
+  color: #998a00;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 2px;
+  font-weight: 600;
+}
+.wf-patient-header .ph-complaint .complaint-text {
+  font-family: "Patrick Hand", sans-serif;
+  font-size: 1rem;
+  color: #665800;
+}
+.wf-patient-header .ph-vitals {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.wf-patient-header .ph-vitals .vital-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 0.78rem;
+  padding: 3px 10px;
+  border: 1.5px solid #999;
+  border-radius: 3px;
+  background: #fff;
+  font-family: "Patrick Hand", sans-serif;
+}
+.wf-patient-header .ph-vitals .vital-chip .vital-label {
+  color: #999;
+  font-size: 0.7rem;
+}
+.wf-patient-header .ph-vitals .vital-chip .vital-value {
+  color: #333;
+  font-weight: 600;
+}
+.wf-patient-header .ph-vitals .vital-chip.warn {
+  border-color: #b85;
+  background: #fff8ef;
+}
+.wf-patient-header .ph-vitals .vital-chip.warn .vital-value {
+  color: #b85;
+}
+.wf-patient-header .ph-detail {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+/* ---------- Read-Only Key-Value Pairs ---------- */
+.wf-kv-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 10px 20px;
+  margin-bottom: 14px;
+}
+.wf-kv {
+  font-size: 0.88rem;
+}
+.wf-kv .kv-label {
+  color: #888;
+  font-size: 0.78rem;
+  margin-bottom: 1px;
+}
+.wf-kv .kv-value {
+  color: #333;
+}
+
+/* ---------- Annotation Box ---------- */
+.wf-annotation {
+  position: fixed;
+  bottom: 12px;
+  right: 12px;
+  background: #fffde7;
+  border: 1.5px solid #e0d57e;
+  border-radius: 4px;
+  padding: 6px 12px;
+  font-size: 0.72rem;
+  color: #998a00;
+  z-index: 999;
+  max-width: 220px;
+  line-height: 1.4;
+  box-shadow: 1px 1px 0 #eee;
+  font-family: "Patrick Hand", sans-serif;
+}
+
+/* ---------- Empty State ---------- */
+.wf-empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: #999;
+  font-size: 0.95rem;
+  border: 1.5px dashed #ccc;
+  border-radius: 4px;
+  margin: 20px 0;
+}
+
+/* ---------- Divider ---------- */
+.wf-divider {
+  border: none;
+  border-top: 1.5px dashed #ccc;
+  margin: 16px 0;
+}
+
+/* ---------- Grid layouts ---------- */
+.wf-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.wf-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+/* ---------- Weekly Schedule Grid ---------- */
+.wf-schedule-grid {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1.5px solid #999;
+  font-size: 0.85rem;
+  margin-bottom: 14px;
+}
+.wf-schedule-grid th,
+.wf-schedule-grid td {
+  padding: 5px 8px;
+  border: 1px solid #ccc;
+  text-align: left;
+}
+.wf-schedule-grid th {
+  background: #f5f5f5;
+  font-family: "Architects Daughter", cursive;
+  font-weight: 400;
+}
+
+/* ---------- Success / Error States ---------- */
+.wf-success-box {
+  border: 2px solid #4a7;
+  background: #efffef;
+  border-radius: 4px;
+  padding: 14px;
+  margin: 14px 0;
+  color: #2a5;
+}
+.wf-error-box {
+  border: 2px solid #a44;
+  background: #ffefef;
+  border-radius: 4px;
+  padding: 14px;
+  margin: 14px 0;
+  color: #a44;
+}
+
+/* ---------- Slider ---------- */
+.wf-slider {
+  width: 100%;
+  accent-color: #333;
+}
+
+/* ---------- Tag Input ---------- */
+.wf-tag-input {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 4px 8px;
+  border: 1.5px solid #999;
+  border-radius: 3px;
+  min-height: 34px;
+  align-items: center;
+}
+.wf-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border: 1px solid #999;
+  border-radius: 3px;
+  font-size: 0.78rem;
+  background: #f5f5f5;
+}
+.wf-tag .remove {
+  cursor: pointer;
+  color: #999;
+  font-weight: bold;
+}
+
+/* ---------- Utilities ---------- */
+.mt-0 {
+  margin-top: 0;
+}
+.mt-1 {
+  margin-top: 8px;
+}
+.mt-2 {
+  margin-top: 16px;
+}
+.mt-3 {
+  margin-top: 24px;
+}
+.mb-0 {
+  margin-bottom: 0;
+}
+.mb-1 {
+  margin-bottom: 8px;
+}
+.mb-2 {
+  margin-bottom: 16px;
+}
+.mb-3 {
+  margin-bottom: 24px;
+}
+.text-center {
+  text-align: center;
+}
+.text-right {
+  text-align: right;
+}
+.text-muted {
+  color: #999;
+}
+.text-small {
+  font-size: 0.82rem;
+}
+.flex {
+  display: flex;
+}
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.gap-1 {
+  gap: 8px;
+}
+.gap-2 {
+  gap: 16px;
+}
+.w-full {
+  width: 100%;
+}

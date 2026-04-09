@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>DocuMed — Nursing Order Detail</title>
+    <link rel="stylesheet" href="../wireframe.css" />
+    <script src="../wireframe.js"></script>
+  </head>
+  <body>
+    <script>
+      ready(() => {
+        renderPageShell({
+          title: "Nursing Order Detail",
+          role: "nurse",
+          activeId: "nursing_order_detail",
+          screenId: "SCR_nursing_order_detail",
+          workflow: "Nursing Orders Administration Flow",
+          userName: "Selam D. (Nurse)",
+          content: `
+      <!-- Patient & Order Header -->
+      <div class="wf-form-section">
+        <div class="section-title">Patient & Order Information</div>
+        <div class="wf-kv-grid">
+          <div class="wf-kv"><div class="kv-label">Patient Name</div><div class="kv-value">Meron Hailu</div></div>
+          <div class="wf-kv"><div class="kv-label">Visit Date</div><div class="kv-value">08 Apr 2026</div></div>
+          <div class="wf-kv"><div class="kv-label">Ordering Practitioner</div><div class="kv-value">Dr. Solomon T.</div></div>
+          <div class="wf-kv"><div class="kv-label">Order Created</div><div class="kv-value">08 Apr 2026, 09:55 AM</div></div>
+        </div>
+      </div>
+
+      <h2 class="page-title">Ordered Procedures</h2>
+
+      <!-- Procedure 1 -->
+      <div class="wf-card">
+        <div class="card-title flex-between">
+          1. Intramuscular Injection
+          <span class="wf-badge orange">Pending</span>
+        </div>
+        <div class="wf-kv-grid mb-2">
+          <div class="wf-kv"><div class="kv-label">Instructions</div><div class="kv-value">Administer in deltoid muscle</div></div>
+          <div class="wf-kv"><div class="kv-label">Dosage</div><div class="kv-value">Diclofenac 75mg/3ml</div></div>
+          <div class="wf-kv"><div class="kv-label">Practitioner Notes</div><div class="kv-value">Patient reports pain level 6. Administer slowly.</div></div>
+        </div>
+        <div class="wf-inline-panel">
+          <h4 style="margin-bottom:8px;">Administration Documentation</h4>
+          <div class="wf-form-row">
+            <div class="wf-form-group">
+              <label><input type="checkbox" checked> Procedure Performed</label>
+            </div>
+            ${renderFormField("Time of Administration", "time", { required: true, value: "10:30" })}
+          </div>
+          ${renderFormField("Notes", "textarea", { placeholder: "Site of injection, patient tolerance, observations..." })}
+        </div>
+      </div>
+
+      <!-- Procedure 2 -->
+      <div class="wf-card">
+        <div class="card-title flex-between">
+          2. Wound Dressing
+          <span class="wf-badge orange">Pending</span>
+        </div>
+        <div class="wf-kv-grid mb-2">
+          <div class="wf-kv"><div class="kv-label">Instructions</div><div class="kv-value">Clean wound, apply antiseptic, sterile gauze wrap</div></div>
+          <div class="wf-kv"><div class="kv-label">Dosage</div><div class="kv-value">—</div></div>
+          <div class="wf-kv"><div class="kv-label">Practitioner Notes</div><div class="kv-value">Right forearm laceration, approx 4cm</div></div>
+        </div>
+        <div class="wf-inline-panel">
+          <h4 style="margin-bottom:8px;">Administration Documentation</h4>
+          <div class="wf-form-row">
+            <div class="wf-form-group">
+              <label><input type="checkbox"> Procedure Performed</label>
+            </div>
+            ${renderFormField("Time of Administration", "time", { required: true })}
+          </div>
+          ${renderFormField("Notes", "textarea", { placeholder: "Site details, patient tolerance..." })}
+        </div>
+      </div>
+
+      <hr class="wf-divider">
+
+      <div class="wf-action-bar">
+        <button class="wf-btn primary">✓ Complete Order</button>
+        <a href="nurse_dashboard.html"><button class="wf-btn">← Back</button></a>
+        <span class="text-small text-muted">→ Practitioner will be notified</span>
+      </div>
+    `,
+        });
+      });
+    </script>
+  </body>
+</html>

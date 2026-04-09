@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>DocuMed — Payment Detail</title>
+    <link rel="stylesheet" href="../wireframe.css" />
+    <script src="../wireframe.js"></script>
+  </head>
+  <body>
+    <script>
+      ready(() => {
+        renderPageShell({
+          title: "Payment Detail",
+          role: "finance",
+          activeId: "payment_detail",
+          screenId: "SCR_payment_detail",
+          workflow: "Payment Processing Flow",
+          userName: "Kidist M. (Finance)",
+          content: `
+      <h2 class="page-title">Payment Detail</h2>
+
+      <!-- Patient Info -->
+      <div class="wf-form-section">
+        <div class="section-title">Patient Information</div>
+        <div class="wf-kv-grid">
+          <div class="wf-kv"><div class="kv-label">Patient Name</div><div class="kv-value">Meron Hailu</div></div>
+          <div class="wf-kv"><div class="kv-label">Patient ID / National ID</div><div class="kv-value">ET-4567890</div></div>
+        </div>
+      </div>
+
+      <!-- Service Details -->
+      <div class="wf-form-section">
+        <div class="section-title">Service Details</div>
+        <div class="wf-kv-grid">
+          <div class="wf-kv"><div class="kv-label">Payment Type</div><div class="kv-value"><span class="wf-badge blue">Lab Order</span></div></div>
+          <div class="wf-kv"><div class="kv-label">Service Description</div><div class="kv-value">CBC (Complete Blood Count), Lipid Profile</div></div>
+        </div>
+        <div style="margin-top:12px;padding:16px;border:2px solid #333;border-radius:4px;text-align:center;background:#fafafa;">
+          <div style="font-size:.85rem;color:#888;">Total Amount Due</div>
+          <div style="font-family:'Architects Daughter',cursive;font-size:2.2rem;color:#222;">ETB 850.00</div>
+        </div>
+      </div>
+
+      <!-- Payment Method -->
+      <div class="wf-form-section">
+        <div class="section-title">Payment Method</div>
+        <div class="wf-radio-group">
+          <label><input type="radio" name="method" checked> Cash</label>
+          <label><input type="radio" name="method"> Card</label>
+          <label><input type="radio" name="method"> Mobile Money</label>
+        </div>
+      </div>
+
+      <hr class="wf-divider">
+
+      <div class="wf-action-bar">
+        <button class="wf-btn primary">✓ Confirm Payment</button>
+        <a href="pending_payments.html"><button class="wf-btn">← Back</button></a>
+      </div>
+
+      <!-- Success State Variant -->
+      <div class="wf-success-box" style="margin-top:20px;">
+        <strong>✓ Payment Confirmed!</strong>
+        <p style="margin-top:6px;">Receipt generated. Lab order has been sent to the Lab Tech's queue.</p>
+        <div class="wf-action-bar" style="margin-top:10px;">
+          <a href="payment_receipt.html"><button class="wf-btn small">🖨 Print Receipt</button></a>
+          <button class="wf-btn small">⬇ Download Receipt</button>
+        </div>
+      </div>
+    `,
+        });
+      });
+    </script>
+  </body>
+</html>

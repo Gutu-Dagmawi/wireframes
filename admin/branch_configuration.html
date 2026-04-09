@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>DocuMed — Branch Configuration</title>
+    <link rel="stylesheet" href="../wireframe.css" />
+    <script src="../wireframe.js"></script>
+  </head>
+  <body>
+    <script>
+      ready(() => {
+        renderPageShell({
+          title: "Branch Configuration",
+          role: "admin",
+          activeId: "branch_configuration",
+          screenId: "SCR_branch_configuration",
+          workflow: "Branch Configuration Flow",
+          userName: "Admin (Super)",
+          content: function (main) {
+            main.innerHTML = `
+      <h2 class="page-title">Branch Configuration — Main Branch</h2>
+
+      <div class="wf-tabs">
+        <div class="tab active" data-tab="tab-hours">Operating Hours & Departments</div>
+        <div class="tab" data-tab="tab-schedules">Practitioner Schedules</div>
+        <div class="tab" data-tab="tab-rooms">Rooms & Resources</div>
+      </div>
+
+      <!-- Tab 1: Operating Hours & Departments -->
+      <div id="tab-hours" class="wf-tab-content active">
+        <div class="wf-form-section">
+          <div class="section-title">Operating Hours</div>
+          <table class="wf-schedule-grid">
+            <thead><tr><th>Day</th><th>Open</th><th>Close</th><th>Closed</th></tr></thead>
+            <tbody>
+              <tr><td>Monday</td><td><input type="time" class="wf-input" value="08:00" style="width:100px;"></td><td><input type="time" class="wf-input" value="17:00" style="width:100px;"></td><td><input type="checkbox"></td></tr>
+              <tr><td>Tuesday</td><td><input type="time" class="wf-input" value="08:00" style="width:100px;"></td><td><input type="time" class="wf-input" value="17:00" style="width:100px;"></td><td><input type="checkbox"></td></tr>
+              <tr><td>Wednesday</td><td><input type="time" class="wf-input" value="08:00" style="width:100px;"></td><td><input type="time" class="wf-input" value="17:00" style="width:100px;"></td><td><input type="checkbox"></td></tr>
+              <tr><td>Thursday</td><td><input type="time" class="wf-input" value="08:00" style="width:100px;"></td><td><input type="time" class="wf-input" value="17:00" style="width:100px;"></td><td><input type="checkbox"></td></tr>
+              <tr><td>Friday</td><td><input type="time" class="wf-input" value="08:00" style="width:100px;"></td><td><input type="time" class="wf-input" value="17:00" style="width:100px;"></td><td><input type="checkbox"></td></tr>
+              <tr><td>Saturday</td><td><input type="time" class="wf-input" value="08:00" style="width:100px;"></td><td><input type="time" class="wf-input" value="12:00" style="width:100px;"></td><td><input type="checkbox"></td></tr>
+              <tr><td>Sunday</td><td><input type="time" class="wf-input" style="width:100px;" disabled></td><td><input type="time" class="wf-input" style="width:100px;" disabled></td><td><input type="checkbox" checked></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="wf-form-section">
+          <div class="section-title flex-between">
+            Departments
+            <button class="wf-btn small">+ Add Department</button>
+          </div>
+          ${renderTable(
+            ["Department Name", "Actions"],
+            [
+              [
+                "General Practice",
+                '<button class="wf-btn small">Edit</button> <button class="wf-btn small danger">Remove</button>',
+              ],
+              [
+                "Paediatrics",
+                '<button class="wf-btn small">Edit</button> <button class="wf-btn small danger">Remove</button>',
+              ],
+              [
+                "Internal Medicine",
+                '<button class="wf-btn small">Edit</button> <button class="wf-btn small danger">Remove</button>',
+              ],
+              [
+                "Laboratory",
+                '<button class="wf-btn small">Edit</button> <button class="wf-btn small danger">Remove</button>',
+              ],
+            ],
+          )}
+        </div>
+      </div>
+
+      <!-- Tab 2: Practitioner Schedules -->
+      <div id="tab-schedules" class="wf-tab-content">
+        ${renderFormField("Select Practitioner", "select", { options: ["Dr. Solomon T. (General Practice)", "Dr. Miriam K. (Paediatrics)", "Dr. Alem B. (Internal Medicine)"] })}
+        <div class="wf-form-section mt-2">
+          <div class="section-title">Dr. Solomon T. — Weekly Schedule</div>
+          <table class="wf-schedule-grid">
+            <thead><tr><th>Day</th><th>Start</th><th>End</th><th>Slot (min)</th><th>Available</th></tr></thead>
+            <tbody>
+              <tr><td>Monday</td><td><input type="time" class="wf-input" value="08:00" style="width:90px;"></td><td><input type="time" class="wf-input" value="17:00" style="width:90px;"></td><td><input type="number" class="wf-input" value="30" style="width:60px;"></td><td><input type="checkbox" checked></td></tr>
+              <tr><td>Tuesday</td><td><input type="time" class="wf-input" value="08:00" style="width:90px;"></td><td><input type="time" class="wf-input" value="17:00" style="width:90px;"></td><td><input type="number" class="wf-input" value="30" style="width:60px;"></td><td><input type="checkbox" checked></td></tr>
+              <tr><td>Wednesday</td><td><input type="time" class="wf-input" value="08:00" style="width:90px;"></td><td><input type="time" class="wf-input" value="12:00" style="width:90px;"></td><td><input type="number" class="wf-input" value="30" style="width:60px;"></td><td><input type="checkbox" checked></td></tr>
+              <tr><td>Thursday</td><td><input type="time" class="wf-input" value="08:00" style="width:90px;"></td><td><input type="time" class="wf-input" value="17:00" style="width:90px;"></td><td><input type="number" class="wf-input" value="30" style="width:60px;"></td><td><input type="checkbox" checked></td></tr>
+              <tr><td>Friday</td><td><input type="time" class="wf-input" value="08:00" style="width:90px;"></td><td><input type="time" class="wf-input" value="17:00" style="width:90px;"></td><td><input type="number" class="wf-input" value="30" style="width:60px;"></td><td><input type="checkbox" checked></td></tr>
+              <tr><td>Saturday</td><td><input type="time" class="wf-input" style="width:90px;"></td><td><input type="time" class="wf-input" style="width:90px;"></td><td><input type="number" class="wf-input" style="width:60px;"></td><td><input type="checkbox"></td></tr>
+              <tr><td>Sunday</td><td><input type="time" class="wf-input" style="width:90px;" disabled></td><td><input type="time" class="wf-input" style="width:90px;" disabled></td><td><input type="number" class="wf-input" style="width:60px;" disabled></td><td><input type="checkbox"></td></tr>
+            </tbody>
+          </table>
+          <div class="wf-action-bar">
+            <button class="wf-btn primary">Save Schedule</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 3: Rooms & Resources -->
+      <div id="tab-rooms" class="wf-tab-content">
+        <div class="wf-form-section">
+          <div class="section-title flex-between">
+            Consultation Rooms
+            <button class="wf-btn small">+ Add Room</button>
+          </div>
+          ${renderTable(
+            ["Room Name / #", "Assigned Practitioner(s)", "Status", "Actions"],
+            [
+              [
+                "Room 1",
+                "Dr. Solomon T.",
+                '<span class="wf-badge green">Active</span>',
+                '<button class="wf-btn small">Edit</button> <button class="wf-btn small danger">Deactivate</button>',
+              ],
+              [
+                "Room 2",
+                "Dr. Miriam K.",
+                '<span class="wf-badge green">Active</span>',
+                '<button class="wf-btn small">Edit</button> <button class="wf-btn small danger">Deactivate</button>',
+              ],
+              [
+                "Room 3",
+                "Dr. Alem B.",
+                '<span class="wf-badge green">Active</span>',
+                '<button class="wf-btn small">Edit</button> <button class="wf-btn small danger">Deactivate</button>',
+              ],
+              [
+                "Room 4",
+                "—",
+                '<span class="wf-badge gray">Inactive</span>',
+                '<button class="wf-btn small">Reactivate</button>',
+              ],
+            ],
+          )}
+        </div>
+
+        <div class="wf-form-section">
+          <div class="section-title flex-between">
+            Shared Resources
+            <button class="wf-btn small">+ Add Resource</button>
+          </div>
+          ${renderTable(
+            ["Resource Name", "Type", "Status"],
+            [
+              [
+                "ECG Machine",
+                "Diagnostic",
+                '<span class="wf-badge green">Available</span>',
+              ],
+              [
+                "Pulse Oximeter",
+                "Diagnostic",
+                '<span class="wf-badge blue">In Use</span>',
+              ],
+              [
+                "Nebulizer",
+                "Treatment",
+                '<span class="wf-badge green">Available</span>',
+              ],
+            ],
+          )}
+        </div>
+      </div>
+      `;
+            initTabs();
+          },
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>DocuMed — System Settings</title>
+    <link rel="stylesheet" href="../wireframe.css" />
+    <script src="../wireframe.js"></script>
+  </head>
+  <body>
+    <script>
+      ready(() => {
+        renderPageShell({
+          title: "System Settings",
+          role: "admin",
+          activeId: "system_settings",
+          screenId: "SCR_system_settings",
+          workflow: "System Settings Flow",
+          userName: "Admin (Super)",
+          content: `
+      <h2 class="page-title">System Settings</h2>
+      <p class="text-small text-muted mb-2">Super-admin only. Changes apply across all branches.</p>
+
+      <div style="max-width:700px;">
+        <!-- Notification Preferences -->
+        <div class="wf-form-section">
+          <div class="section-title">Notification Preferences</div>
+          <div class="wf-form-group">
+            <label>Notification Channels</label>
+            <div class="wf-checkbox-group">
+              <label><input type="checkbox" checked> SMS</label>
+              <label><input type="checkbox" checked> In-App Push</label>
+            </div>
+          </div>
+
+          ${renderFormField("Appointment Confirmation Template", "textarea", {
+            value:
+              "Dear {patient_name}, your appointment with {practitioner} is confirmed for {date} at {time}. — DocuMed Clinic",
+          })}
+          <p class="text-small text-muted" style="margin-top:-8px;">Placeholders: {patient_name}, {date}, {time}, {practitioner}</p>
+
+          ${renderFormField("Payment Receipt Template", "textarea", {
+            value:
+              "Dear {patient_name}, your payment of {amount} for {service} has been received. Receipt #{receipt_number}. — DocuMed Clinic",
+          })}
+
+          ${renderFormField("Lab Results Ready Template", "textarea", {
+            value:
+              "Dear {patient_name}, your lab results are ready. Please visit the clinic for consultation. — DocuMed Clinic",
+          })}
+        </div>
+
+        <!-- System-Wide Defaults -->
+        <div class="wf-form-section">
+          <div class="section-title">System-Wide Defaults</div>
+          <div class="wf-form-row">
+            ${renderFormField("Currency", "select", { options: ["ETB (Ethiopian Birr)", "USD (US Dollar)", "EUR (Euro)"] })}
+            ${renderFormField("Date Format", "select", { options: ["DD/MM/YYYY", "MM/DD/YYYY", "YYYY-MM-DD"] })}
+            ${renderFormField("Locale / Language", "select", { options: ["English", "Amharic (አማርኛ)"] })}
+          </div>
+        </div>
+
+        <hr class="wf-divider">
+
+        <div class="wf-action-bar">
+          <button class="wf-btn primary">✓ Save Settings</button>
+          <button class="wf-btn danger">Reset to Defaults</button>
+        </div>
+      </div>
+    `,
+        });
+      });
+    </script>
+  </body>
+</html>

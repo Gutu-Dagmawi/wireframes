@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>DocuMed — Branch Form</title>
+    <link rel="stylesheet" href="../wireframe.css" />
+    <script src="../wireframe.js"></script>
+  </head>
+  <body>
+    <script>
+      ready(() => {
+        renderPageShell({
+          title: "Branch Form",
+          role: "admin",
+          activeId: "branch_form",
+          screenId: "SCR_branch_form",
+          workflow: "Branch Management Flow",
+          userName: "Admin (Super)",
+          content: `
+      <h2 class="page-title">Branch Form — Edit Mode</h2>
+
+      <div style="max-width:700px;">
+        <div class="wf-form-section">
+          <div class="section-title">Branch Details</div>
+          <div class="wf-form-row">
+            ${renderFormField("Branch Name", "text", { required: true, value: "Main Branch" })}
+            ${renderFormField("Contact Phone", "text", { required: true, value: "+251-11-234-5678" })}
+          </div>
+          ${renderFormField("Physical Address", "textarea", { required: true, value: "Bole Road, Addis Ababa, Ethiopia" })}
+          ${renderFormField("Contact Email", "email", { required: true, value: "main@documed.clinic" })}
+        </div>
+
+        <div class="wf-form-section">
+          <div class="section-title">Operating Hours</div>
+          <table class="wf-schedule-grid">
+            <thead><tr><th>Day</th><th>Open</th><th>Close</th><th>Closed</th></tr></thead>
+            <tbody>
+              <tr><td>Monday</td><td><input type="time" class="wf-input" value="08:00" style="width:100px;"></td><td><input type="time" class="wf-input" value="17:00" style="width:100px;"></td><td><input type="checkbox"></td></tr>
+              <tr><td>Tuesday</td><td><input type="time" class="wf-input" value="08:00" style="width:100px;"></td><td><input type="time" class="wf-input" value="17:00" style="width:100px;"></td><td><input type="checkbox"></td></tr>
+              <tr><td>Wednesday</td><td><input type="time" class="wf-input" value="08:00" style="width:100px;"></td><td><input type="time" class="wf-input" value="17:00" style="width:100px;"></td><td><input type="checkbox"></td></tr>
+              <tr><td>Thursday</td><td><input type="time" class="wf-input" value="08:00" style="width:100px;"></td><td><input type="time" class="wf-input" value="17:00" style="width:100px;"></td><td><input type="checkbox"></td></tr>
+              <tr><td>Friday</td><td><input type="time" class="wf-input" value="08:00" style="width:100px;"></td><td><input type="time" class="wf-input" value="17:00" style="width:100px;"></td><td><input type="checkbox"></td></tr>
+              <tr><td>Saturday</td><td><input type="time" class="wf-input" value="08:00" style="width:100px;"></td><td><input type="time" class="wf-input" value="12:00" style="width:100px;"></td><td><input type="checkbox"></td></tr>
+              <tr><td>Sunday</td><td><input type="time" class="wf-input" style="width:100px;" disabled></td><td><input type="time" class="wf-input" style="width:100px;" disabled></td><td><input type="checkbox" checked></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <hr class="wf-divider">
+        <div class="wf-action-bar">
+          <button class="wf-btn primary">✓ Save</button>
+          <a href="branch_management.html"><button class="wf-btn">Cancel</button></a>
+        </div>
+      </div>
+    `,
+        });
+      });
+    </script>
+  </body>
+</html>

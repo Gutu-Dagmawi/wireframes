@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>DocuMed — Schedule Appointment</title>
+    <link rel="stylesheet" href="../wireframe.css" />
+    <script src="../wireframe.js"></script>
+  </head>
+  <body>
+    <script>
+      ready(() => {
+        renderPageShell({
+          title: "Schedule Appointment",
+          role: "practitioner",
+          activeId: "schedule_appointment",
+          screenId: "SCR_schedule_appointment_form",
+          workflow: "Scheduling Flow",
+          userName: "Dr. Solomon T.",
+          content: `
+      <h2 class="page-title">Schedule Appointment</h2>
+
+      <div style="max-width:550px;">
+        <div class="wf-card" style="padding:20px;">
+          ${renderFormField("Patient", "text", { required: true, placeholder: "Search patient by name, phone, or ID..." })}
+          <div class="wf-form-row">
+            ${renderFormField("Date", "date", { required: true, value: "2026-04-15" })}
+            ${renderFormField("Time Slot", "select", { required: true, options: ["— Select available slot —", "09:00 – 09:30", "09:30 – 10:00", "10:30 – 11:00", "14:00 – 14:30", "14:30 – 15:00"] })}
+          </div>
+          ${renderFormField("Reason / Note", "textarea", { placeholder: "Optional reason for the appointment..." })}
+
+          <hr class="wf-divider">
+
+          <div class="wf-action-bar">
+            <button class="wf-btn primary">✓ Confirm Booking</button>
+            <a href="calendar_view.html"><button class="wf-btn">Cancel</button></a>
+          </div>
+        </div>
+
+        <!-- State: From Encounter (follow-up) -->
+        <div class="wf-inline-panel mt-2">
+          <h4 style="margin-bottom:8px;">State Variant: Follow-Up from Encounter</h4>
+          <p class="text-small text-muted">When opened from an encounter via "Schedule Follow-Up":</p>
+          <ul class="text-small text-muted" style="list-style:disc;padding-left:18px;">
+            <li>Patient field is <strong>pre-populated and read-only</strong></li>
+            <li>Date field is empty (practitioner selects date)</li>
+          </ul>
+        </div>
+      </div>
+    `,
+        });
+      });
+    </script>
+  </body>
+</html>

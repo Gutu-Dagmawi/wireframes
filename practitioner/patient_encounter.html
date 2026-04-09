@@ -1,0 +1,975 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>DocuMed — Patient Encounter</title>
+    <link rel="stylesheet" href="../wireframe.css" />
+    <script src="../wireframe.js"></script>
+  </head>
+  <body>
+    <script>
+      ready(() => {
+        renderPageShell({
+          title: "Patient Encounter",
+          role: "practitioner",
+          activeId: "patient_encounter",
+          screenId: "SCR_patient_encounter",
+          workflow: "Session Flow",
+          userName: "Dr. Solomon T.",
+          content: function (main) {
+            main.innerHTML = `
+      <!-- Patient Header (persistent) -->
+      <div class="wf-patient-header">
+        <div class="ph-top-row">
+          <div class="ph-name">Abebe Kebede</div>
+          <div class="ph-visit-badge">📅 Visit: 08 Apr 2026 · Encounter #E-2026-0412</div>
+        </div>
+
+        <div class="ph-meta">
+          <div class="ph-meta-item">
+            <span class="meta-label">Sex / Age</span>
+            Male, 41 yrs
+          </div>
+          <div class="ph-meta-item">
+            <span class="meta-label">Date of Birth</span>
+            12 Mar 1985
+          </div>
+          <div class="ph-meta-item">
+            <span class="meta-label">Patient ID</span>
+            ET-1234567
+          </div>
+          <div class="ph-meta-item">
+            <span class="meta-label">Phone</span>
+            0911-234-567
+          </div>
+          <div class="ph-meta-item">
+            <span class="meta-label">Assigned Practitioner</span>
+            Dr. Solomon T. (General Practice)
+          </div>
+          <div class="ph-meta-item">
+            <span class="meta-label">Known Allergies</span>
+            <span class="wf-tag" style="font-size:.72rem;border-color:#a44;color:#a44;background:#ffefef;">⚠ Penicillin</span>
+            <span class="wf-tag" style="font-size:.72rem;border-color:#a44;color:#a44;background:#ffefef;">⚠ Peanuts</span>
+          </div>
+          <div class="ph-meta-item">
+            <span class="meta-label">Current Medications</span>
+            <span class="wf-tag" style="font-size:.72rem;">Amlodipine 5mg</span>
+            <span class="wf-tag" style="font-size:.72rem;">Metformin 500mg</span>
+          </div>
+        </div>
+
+        <div class="ph-complaint">
+          <div class="complaint-label">⚡ Chief Complaint</div>
+          <div class="complaint-text">Persistent headache for 3 days, mainly frontal. Worse in the morning. Pain score: 4/10. Location: Frontal region, bilateral.</div>
+        </div>
+
+        <div class="ph-vitals">
+          <div class="vital-chip warn">
+            <span class="vital-label">BP</span>
+            <span class="vital-value">130/85</span>
+            <span style="font-size:.65rem;color:#b85;">↑</span>
+          </div>
+          <div class="vital-chip">
+            <span class="vital-label">Temp</span>
+            <span class="vital-value">36.8°C</span>
+          </div>
+          <div class="vital-chip">
+            <span class="vital-label">Pulse</span>
+            <span class="vital-value">78 bpm</span>
+          </div>
+          <div class="vital-chip">
+            <span class="vital-label">RR</span>
+            <span class="vital-value">16/min</span>
+          </div>
+          <div class="vital-chip">
+            <span class="vital-label">SpO₂</span>
+            <span class="vital-value">97%</span>
+          </div>
+          <div class="vital-chip">
+            <span class="vital-label">Wt</span>
+            <span class="vital-value">70 kg</span>
+          </div>
+          <div class="vital-chip">
+            <span class="vital-label">Ht</span>
+            <span class="vital-value">175 cm</span>
+          </div>
+          <div class="vital-chip">
+            <span class="vital-label">BMI</span>
+            <span class="vital-value">22.9</span>
+          </div>
+        </div>
+
+        <!-- Triage Source Info -->
+        <div style="margin-top:10px;padding-top:8px;border-top:1px dashed #ccc;display:flex;gap:20px;flex-wrap:wrap;font-size:.78rem;color:#888;">
+          <span>🏥 <strong style="color:#555;">Vitals taken by:</strong> Selam D. (Nurse)</span>
+          <span>🕐 <strong style="color:#555;">Triage completed:</strong> 08 Apr 2026, 09:15 AM</span>
+        </div>
+      </div>
+
+      <!-- Action Buttons Row -->
+      <div class="wf-action-bar between mb-2">
+        <div class="flex gap-1">
+          <a href="referral_form.html"><button class="wf-btn small">↗ Create Referral</button></a>
+          <a href="schedule_appointment.html"><button class="wf-btn small">📅 Schedule Follow-Up</button></a>
+        </div>
+        <button class="wf-btn primary" onclick="document.getElementById('encounter-summary').style.display='block'">✓ Finalise Encounter</button>
+      </div>
+
+      <!-- Tabs -->
+      <div class="wf-tabs">
+        <div class="tab active" data-tab="tab-history">History</div>
+        <div class="tab" data-tab="tab-assessment">Assessment</div>
+        <div class="tab" data-tab="tab-laborder">Lab Order</div>
+        <div class="tab" data-tab="tab-ordersheet">Order-Sheet</div>
+        <div class="tab" data-tab="tab-prescription">Prescription</div>
+      </div>
+
+      <!-- Tab 1: History -->
+      <div id="tab-history" class="wf-tab-content active">
+        <div class="wf-form-section">
+          <div class="section-title">Past Encounters</div>
+          ${renderTable(
+            ["Date", "Branch", "Practitioner", "Diagnosis", "Treatment"],
+            [
+              [
+                "15 Mar 2026",
+                "Main Branch",
+                "Dr. Alem B.",
+                "Hypertension Stage 1",
+                "Amlodipine 5mg daily",
+              ],
+              [
+                "20 Feb 2026",
+                "Main Branch",
+                "Dr. Solomon T.",
+                "URTI",
+                "Amoxicillin 500mg TDS x 5 days",
+              ],
+              [
+                "05 Jan 2026",
+                "Main Branch",
+                "Dr. Solomon T.",
+                "Annual checkup",
+                "No treatment needed",
+              ],
+            ],
+          )}
+        </div>
+        <div class="wf-grid-2">
+          <div class="wf-form-section">
+            <div class="section-title">Chronic Conditions</div>
+            <ul style="list-style:disc;padding-left:18px;font-size:.9rem;color:#555;">
+              <li>Hypertension (diagnosed 2024)</li>
+              <li>Pre-diabetes (HbA1c 6.1%)</li>
+            </ul>
+          </div>
+          <div class="wf-form-section">
+            <div class="section-title">Known Allergies</div>
+            <div class="flex gap-1">
+              <span class="wf-tag">Penicillin</span>
+              <span class="wf-tag">Peanuts</span>
+            </div>
+          </div>
+        </div>
+        <div class="wf-grid-2">
+          <div class="wf-form-section">
+            <div class="section-title">Current Medications</div>
+            <ul style="list-style:disc;padding-left:18px;font-size:.9rem;color:#555;">
+              <li>Amlodipine 5mg — once daily</li>
+              <li>Metformin 500mg — twice daily</li>
+            </ul>
+          </div>
+          <div class="wf-form-section">
+            <div class="section-title">Previous Lab Results</div>
+            ${renderTable(
+              ["Date", "Test", "Result", "Flag"],
+              [
+                [
+                  "15 Mar",
+                  "CBC",
+                  "Normal",
+                  '<span class="wf-badge green">Normal</span>',
+                ],
+                [
+                  "15 Mar",
+                  "HbA1c",
+                  "6.1%",
+                  '<span class="wf-badge orange">High</span>',
+                ],
+              ],
+            )}
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 2: Assessment -->
+      <div id="tab-assessment" class="wf-tab-content">
+        <p class="text-small text-muted mb-2">Activate the assessment sections you need for this encounter. Toggle sections on/off as required.</p>
+
+        <!-- Physical Examination (togglable) -->
+        <div class="wf-card" style="margin-bottom:16px;">
+          <div class="card-title flex-between" style="cursor:pointer;" onclick="togglePE()">
+            <span><input type="checkbox" id="pe-toggle" checked style="margin-right:6px;accent-color:#333;"> Physical Examination</span>
+            <span id="pe-arrow" style="font-size:.85rem;">&#x25BC;</span>
+          </div>
+          <div id="pe-body" style="display:block;">
+            <p class="text-small text-muted" style="margin-bottom:12px;">Document findings per body system. Leave blank or enter NAD for systems not examined.</p>
+            <div class="wf-grid-2">
+              <div class="wf-form-group">
+                <label><strong>General Appearance</strong></label>
+                <textarea class="wf-input" rows="2" placeholder="Alertness, orientation, distress, nutritional status...">Alert, oriented x3. No acute distress. Well-nourished.</textarea>
+              </div>
+              <div class="wf-form-group">
+                <label><strong>Vital Signs (Review)</strong></label>
+                <textarea class="wf-input" rows="2" placeholder="Practitioner annotations on nurse vitals..." style="background:#fffde7;">BP 130/85 - mildly elevated, consistent with known HTN. Recheck post-consult. Other vitals WNL.</textarea>
+              </div>
+              <div class="wf-form-group">
+                <label><strong>HEENT</strong> <span class="text-muted text-small">(Head, Eyes, Ears, Nose, Throat)</span></label>
+                <textarea class="wf-input" rows="2" placeholder="Pupils, TMs, pharynx, neck, thyroid, JVP...">PERRLA. TMs clear bilaterally. Pharynx non-erythematous. No neck stiffness. No lymphadenopathy.</textarea>
+              </div>
+              <div class="wf-form-group">
+                <label><strong>LGS</strong> <span class="text-muted text-small">(Lympho-Glandular System)</span></label>
+                <textarea class="wf-input" rows="2" placeholder="Cervical, axillary, inguinal nodes...">NAD</textarea>
+              </div>
+              <div class="wf-form-group">
+                <label><strong>Chest / Respiratory</strong></label>
+                <textarea class="wf-input" rows="2" placeholder="Air entry, breath sounds, crackles, wheezes...">Clear to auscultation bilaterally. No wheezes, crackles, or rhonchi. Good air entry.</textarea>
+              </div>
+              <div class="wf-form-group">
+                <label><strong>CVS</strong> <span class="text-muted text-small">(Cardiovascular)</span></label>
+                <textarea class="wf-input" rows="2" placeholder="Heart sounds, murmurs, JVP, pulses, oedema...">S1 S2 normal. No murmurs. No pedal oedema. Peripheral pulses palpable.</textarea>
+              </div>
+              <div class="wf-form-group">
+                <label><strong>GI / ABD</strong> <span class="text-muted text-small">(Abdomen)</span></label>
+                <textarea class="wf-input" rows="2" placeholder="Bowel sounds, tenderness, organomegaly, masses...">NAD</textarea>
+              </div>
+              <div class="wf-form-group">
+                <label><strong>GUS</strong> <span class="text-muted text-small">(Genital Urinary)</span></label>
+                <textarea class="wf-input" rows="2" placeholder="External genitalia, CVA tenderness...">Not examined</textarea>
+              </div>
+              <div class="wf-form-group">
+                <label><strong>Skin</strong> <span class="text-muted text-small">(Integumentary)</span></label>
+                <textarea class="wf-input" rows="2" placeholder="Rashes, lesions, wounds, turgor, colour...">NAD</textarea>
+              </div>
+              <div class="wf-form-group">
+                <label><strong>MSK</strong> <span class="text-muted text-small">(Musculoskeletal)</span></label>
+                <textarea class="wf-input" rows="2" placeholder="ROM, swelling, tenderness, gait, strength...">NAD</textarea>
+              </div>
+              <div class="wf-form-group" style="grid-column: span 2;">
+                <label><strong>CNS</strong> <span class="text-muted text-small">(Central Nervous System)</span></label>
+                <textarea class="wf-input" rows="2" placeholder="Mental status, cranial nerves, motor, sensory, reflexes...">Alert, GCS 15/15. Cranial nerves II-XII intact. No focal neurological deficits. Fundoscopic exam normal.</textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Assessment / Diagnosis -->
+        <div class="wf-form-section">
+          <div class="section-title">Assessment / Diagnosis</div>
+          <div class="wf-form-group">
+            <label>Assessment / Diagnosis <span class="required">*</span></label>
+            <textarea class="wf-input" rows="3" placeholder="Clinical impression, diagnosis, or differential diagnoses... (supports ICD catalog lookup)">Tension-type headache, likely stress-related.
+Hypertension Stage 1 - adequately controlled on current medication (Amlodipine 5mg).</textarea>
+          </div>
+          <p class="text-small text-muted" style="margin-top:-8px;">Supports ICD-coded diagnosis catalog search. Multiple diagnoses can be listed.</p>
+        </div>
+
+        <!-- Plan / Management -->
+        <div class="wf-form-section">
+          <div class="section-title">Plan / Management</div>
+          <div class="wf-form-group">
+            <label>Plan / Management <span class="required">*</span></label>
+            <textarea class="wf-input" rows="4" placeholder="Patient-specific management plan. Reference lab orders, prescriptions, procedures, referrals, follow-up...">1. Prescribe Ibuprofen 400mg PRN for headache (see Prescription tab).
+2. Continue Amlodipine 5mg daily.
+3. Lab order: Blood Glucose (Fasting), Renal Function Panel (see Lab Order tab).
+4. Patient education: stress management, adequate hydration.
+5. Follow-up in 2 weeks - schedule appointment.</textarea>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Tab 3: Lab Order -->
+      <div id="tab-laborder" class="wf-tab-content">
+        <div class="wf-form-section">
+          <div class="section-title">Create Lab Order</div>
+          <div class="wf-form-group">
+            <label>Select Test(s) from Catalog <span class="required">*</span></label>
+            <div id="lab-test-picker" style="border:1.5px solid #999;border-radius:3px;max-height:260px;overflow-y:auto;padding:8px 12px;background:#fff;">
+              <div style="margin-bottom:8px;">
+                <div style="font-family:'Architects Daughter',cursive;font-size:.88rem;color:#555;border-bottom:1px dashed #ddd;padding-bottom:3px;margin-bottom:5px;">🩸 Haematology</div>
+                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshLabTags()" value="CBC (Complete Blood Count)"> CBC (Complete Blood Count)</label>
+                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshLabTags()" value="ESR (Erythrocyte Sedimentation Rate)"> ESR (Erythrocyte Sedimentation Rate)</label>
+                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshLabTags()" value="Blood Film / Peripheral Smear"> Blood Film / Peripheral Smear</label>
+                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshLabTags()" value="Coagulation Profile (PT, aPTT, INR)"> Coagulation Profile (PT, aPTT, INR)</label>
+                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshLabTags()" value="Blood Group & Rh Type"> Blood Group &amp; Rh Type</label>
+              </div>
+              <div style="margin-bottom:8px;">
+                <div style="font-family:'Architects Daughter',cursive;font-size:.88rem;color:#555;border-bottom:1px dashed #ddd;padding-bottom:3px;margin-bottom:5px;">🧪 Biochemistry</div>
+                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshLabTags()" value="Blood Glucose (Fasting)" checked> Blood Glucose (Fasting)</label>
+                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshLabTags()" value="Blood Glucose (Random)"> Blood Glucose (Random)</label>
+                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshLabTags()" value="HbA1c"> HbA1c</label>
+                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshLabTags()" value="Lipid Profile (Total, LDL, HDL, TG)"> Lipid Profile (Total, LDL, HDL, TG)</label>
+                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshLabTags()" value="Liver Function Tests (ALT, AST, ALP, Bilirubin)"> Liver Function Tests (ALT, AST, ALP, Bilirubin)</label>
+              </div>
+              <div style="margin-bottom:8px;">
+                <div style="font-family:'Architects Daughter',cursive;font-size:.88rem;color:#555;border-bottom:1px dashed #ddd;padding-bottom:3px;margin-bottom:5px;">🦠 Endocrine</div>
+                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshLabTags()" value="Thyroid Panel (T3, T4, TSH)"> Thyroid Panel (T3, T4, TSH)</label>
+              </div>
+              <div style="margin-bottom:8px;">
+                <div style="font-family:'Architects Daughter',cursive;font-size:.88rem;color:#555;border-bottom:1px dashed #ddd;padding-bottom:3px;margin-bottom:5px;">💧 Renal</div>
+                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshLabTags()" value="Renal Function Panel (BUN, Creatinine, eGFR)" checked> Renal Function Panel (BUN, Creatinine, eGFR)</label>
+                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshLabTags()" value="Electrolytes (Na, K, Cl, Ca)"> Electrolytes (Na, K, Cl, Ca)</label>
+              </div>
+              <div style="margin-bottom:8px;">
+                <div style="font-family:'Architects Daughter',cursive;font-size:.88rem;color:#555;border-bottom:1px dashed #ddd;padding-bottom:3px;margin-bottom:5px;">🔬 Urinalysis</div>
+                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshLabTags()" value="Urinalysis (Routine)"> Urinalysis (Routine)</label>
+                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshLabTags()" value="Urine Culture & Sensitivity"> Urine Culture &amp; Sensitivity</label>
+              </div>
+              <div style="margin-bottom:8px;">
+                <div style="font-family:'Architects Daughter',cursive;font-size:.88rem;color:#555;border-bottom:1px dashed #ddd;padding-bottom:3px;margin-bottom:5px;">🦠 Microbiology</div>
+                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshLabTags()" value="Blood Culture & Sensitivity"> Blood Culture &amp; Sensitivity</label>
+                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshLabTags()" value="Stool Exam (O&P)"> Stool Exam (O&amp;P)</label>
+                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshLabTags()" value="AFB Smear / Gene Xpert"> AFB Smear / Gene Xpert</label>
+              </div>
+              <div>
+                <div style="font-family:'Architects Daughter',cursive;font-size:.88rem;color:#555;border-bottom:1px dashed #ddd;padding-bottom:3px;margin-bottom:5px;">🧬 Serology / Immunology</div>
+                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshLabTags()" value="HIV Screening"> HIV Screening</label>
+                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshLabTags()" value="Hepatitis B (HBsAg)"> Hepatitis B (HBsAg)</label>
+                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshLabTags()" value="Hepatitis C (Anti-HCV)"> Hepatitis C (Anti-HCV)</label>
+                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshLabTags()" value="VDRL / RPR (Syphilis)"> VDRL / RPR (Syphilis)</label>
+                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshLabTags()" value="Widal Test"> Widal Test</label>
+                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshLabTags()" value="CRP (C-Reactive Protein)"> CRP (C-Reactive Protein)</label>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top:8px;margin-bottom:12px;">
+            <span class="text-small text-muted">Selected tests:</span>
+            <div id="lab-selected-tags" class="flex gap-1 mt-1" style="flex-wrap:wrap;min-height:24px;"></div>
+          </div>
+          <div class="wf-form-row">
+            <div class="wf-form-group">
+              <label>Urgency <span class="required">*</span></label>
+              <div class="wf-radio-group">
+                <label><input type="radio" name="urgency" checked> Routine</label>
+                <label><input type="radio" name="urgency"> Urgent</label>
+              </div>
+            </div>
+            ${renderFormField("Specimen Type", "select", { options: ["Blood (auto-detected)", "Urine", "Swab"] })}
+          </div>
+          ${renderFormField("Clinical Notes", "textarea", { placeholder: "Notes for the lab technician..." })}
+          <div class="wf-action-bar">
+            <button class="wf-btn primary">Submit Lab Order</button>
+            <span class="text-small text-muted">→ Creates payment request in Finance queue</span>
+          </div>
+        </div>
+
+        <hr class="wf-divider">
+        <h4 class="mb-1">Previously Submitted Lab Orders (this encounter)</h4>
+        ${renderTable(
+          ["Tests", "Urgency", "Status"],
+          [
+            [
+              "CBC, Lipid Profile",
+              "Routine",
+              '<span class="wf-badge green">Results Available</span>',
+            ],
+          ],
+        )}
+      </div>
+
+      <!-- Tab 4: Order-Sheet -->
+      <div id="tab-ordersheet" class="wf-tab-content">
+        <div class="wf-form-section">
+          <div class="section-title">Create Order-Sheet (Nursing Procedures)</div>
+          <div class="wf-form-group">
+            <label>Select Procedure(s) from Catalog <span class="required">*</span></label>
+            <div id="proc-picker" style="border:1.5px solid #999;border-radius:3px;max-height:220px;overflow-y:auto;padding:8px 12px;background:#fff;">
+              <div style="margin-bottom:8px;">
+                <div style="font-family:'Architects Daughter',cursive;font-size:.88rem;color:#555;border-bottom:1px dashed #ddd;padding-bottom:3px;margin-bottom:5px;">💉 Injections</div>
+                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshProcTags()" value="IM Injection (Intramuscular)" checked> IM Injection (Intramuscular)</label>
+                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshProcTags()" value="SC Injection (Subcutaneous)"> SC Injection (Subcutaneous)</label>
+                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshProcTags()" value="IV Injection (Intravenous bolus)"> IV Injection (Intravenous bolus)</label>
+              </div>
+              <div style="margin-bottom:8px;">
+                <div style="font-family:'Architects Daughter',cursive;font-size:.88rem;color:#555;border-bottom:1px dashed #ddd;padding-bottom:3px;margin-bottom:5px;">🩹 Wound Care</div>
+                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshProcTags()" value="Wound Dressing"> Wound Dressing</label>
+                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshProcTags()" value="Wound Debridement"> Wound Debridement</label>
+                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshProcTags()" value="Suture Removal"> Suture Removal</label>
+              </div>
+              <div style="margin-bottom:8px;">
+                <div style="font-family:'Architects Daughter',cursive;font-size:.88rem;color:#555;border-bottom:1px dashed #ddd;padding-bottom:3px;margin-bottom:5px;">💧 IV Therapy</div>
+                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshProcTags()" value="IV Infusion (Fluid/Medication)"> IV Infusion (Fluid/Medication)</label>
+                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshProcTags()" value="IV Cannulation"> IV Cannulation</label>
+              </div>
+              <div style="margin-bottom:8px;">
+                <div style="font-family:'Architects Daughter',cursive;font-size:.88rem;color:#555;border-bottom:1px dashed #ddd;padding-bottom:3px;margin-bottom:5px;">📋 Diagnostic</div>
+                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshProcTags()" value="ECG (Electrocardiogram)"> ECG (Electrocardiogram)</label>
+                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshProcTags()" value="Blood Pressure Monitoring (Serial)"> Blood Pressure Monitoring (Serial)</label>
+                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshProcTags()" value="Blood Sugar Monitoring (Serial)"> Blood Sugar Monitoring (Serial)</label>
+              </div>
+              <div style="margin-bottom:8px;">
+                <div style="font-family:'Architects Daughter',cursive;font-size:.88rem;color:#555;border-bottom:1px dashed #ddd;padding-bottom:3px;margin-bottom:5px;">🫁 Respiratory</div>
+                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshProcTags()" value="Nebulization"> Nebulization</label>
+                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshProcTags()" value="Oxygen Therapy"> Oxygen Therapy</label>
+              </div>
+              <div>
+                <div style="font-family:'Architects Daughter',cursive;font-size:.88rem;color:#555;border-bottom:1px dashed #ddd;padding-bottom:3px;margin-bottom:5px;">🏥 Other</div>
+                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshProcTags()" value="Catheterization (Urinary)"> Catheterization (Urinary)</label>
+                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshProcTags()" value="NGT Insertion"> NGT Insertion</label>
+                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshProcTags()" value="Enema Administration"> Enema Administration</label>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top:8px;margin-bottom:12px;">
+            <span class="text-small text-muted">Selected procedures:</span>
+            <div id="proc-selected-tags" class="flex gap-1 mt-1" style="flex-wrap:wrap;min-height:24px;"></div>
+          </div>
+          <div class="wf-form-row">
+            ${renderFormField("Dosage", "text", { placeholder: "e.g., Diclofenac 75mg/3ml" })}
+            ${renderFormField("Frequency & Duration", "text", { placeholder: "e.g., Once, Single dose" })}
+          </div>
+          ${renderFormField("Practitioner Notes", "textarea", { placeholder: "Special instructions for the nurse..." })}
+          <div class="wf-action-bar">
+            <button class="wf-btn primary">Submit Order-Sheet</button>
+            <span class="text-small text-muted">→ Creates payment request in Finance queue</span>
+          </div>
+        </div>
+
+        <hr class="wf-divider">
+        <h4 class="mb-1">Previously Submitted Order-Sheets (this encounter)</h4>
+        <div class="wf-empty-state">No order-sheets submitted for this encounter yet.</div>
+      </div>
+
+      <!-- Tab 5: Prescription -->
+      <div id="tab-prescription" class="wf-tab-content">
+        <div class="wf-form-section">
+          <div class="section-title">Add Prescription Item</div>
+          <!-- Searchable Drug Dropdown -->
+          <div class="wf-form-group" style="position:relative;">
+            <label>Drug <span class="required">*</span></label>
+            <input type="text" class="wf-input" id="drug-search" placeholder="Type to search drug formulary..." autocomplete="off" oninput="filterDrugs(this.value)" onfocus="filterDrugs(this.value)">
+            <div id="drug-dropdown" style="display:none;position:absolute;z-index:10;left:0;right:0;top:100%;max-height:220px;overflow-y:auto;border:1.5px solid #999;border-top:none;border-radius:0 0 3px 3px;background:#fff;box-shadow:2px 4px 8px rgba(0,0,0,.12);">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+          <div class="wf-form-row">
+            ${renderFormField("Dosage", "text", { required: true, placeholder: "e.g., 400mg tablets" })}
+            ${renderFormField("Frequency", "select", { required: true, options: ["— Select —", "Once daily", "Twice daily", "Three times daily", "Every 8 hours", "As needed (PRN)"] })}
+          </div>
+          <div class="wf-form-row">
+            ${renderFormField("Duration", "text", { required: true, placeholder: "e.g., 7 days" })}
+            ${renderFormField("Quantity", "number", { required: true, placeholder: "e.g., 21" })}
+          </div>
+          ${renderFormField("Patient Instructions", "textarea", { placeholder: "e.g., Take with food. Avoid alcohol." })}
+          <div class="wf-action-bar">
+            <button class="wf-btn">+ Add to Prescription</button>
+          </div>
+        </div>
+
+        <hr class="wf-divider">
+        <h4 class="mb-1">Prescription List</h4>
+        ${renderTable(
+          [
+            "Drug",
+            "Dosage",
+            "Frequency",
+            "Duration",
+            "Qty",
+            "Instructions",
+            "",
+          ],
+          [
+            [
+              "Ibuprofen",
+              "400mg tablets",
+              "As needed (PRN)",
+              "7 days",
+              "21",
+              "Take with food",
+              '<button class="wf-btn small danger">Remove</button>',
+            ],
+            [
+              "Amlodipine",
+              "5mg tablets",
+              "Once daily",
+              "30 days",
+              "30",
+              "Take in the morning",
+              '<button class="wf-btn small danger">Remove</button>',
+            ],
+          ],
+        )}
+        <div class="wf-action-bar">
+          <button class="wf-btn primary small" onclick="document.getElementById('rx-preview').style.display='block'">🖨 Print Prescription</button>
+          <button class="wf-btn small">📧 Send Digitally</button>
+        </div>
+
+        <!-- Prescription Print Preview -->
+        <div id="rx-preview" style="display:none;margin-top:20px;">
+          <div class="wf-action-bar between mb-1">
+            <h4>Print Preview</h4>
+            <div class="flex gap-1">
+              <button class="wf-btn small">🖨 Print</button>
+              <button class="wf-btn small">⬇ Download PDF</button>
+              <button class="wf-btn small" onclick="document.getElementById('rx-preview').style.display='none'">✕ Close</button>
+            </div>
+          </div>
+          <div class="wf-document">
+            <div class="doc-header">
+              <div class="logo-area">
+                <div class="wf-placeholder" style="width:50px;height:50px;border-width:1.5px;"><span style="font-size:.55rem;">Logo</span></div>
+                <div>
+                  <h3 style="margin:0;">DocuMed Clinic</h3>
+                  <div style="font-size:.78rem;color:#888;">Clinic Management System</div>
+                </div>
+              </div>
+              <div class="branch-info">
+                Main Branch<br>
+                Bole Road, Addis Ababa<br>
+                +251-11-234-5678<br>
+                main@documed.clinic
+              </div>
+            </div>
+
+            <div class="doc-title">Prescription</div>
+
+            <div class="doc-section">
+              <h4>Patient Information</h4>
+              <div class="doc-kv">
+                <div class="kv"><strong>Patient Name:</strong> Abebe Kebede</div>
+                <div class="kv"><strong>Patient ID:</strong> ET-1234567</div>
+              </div>
+              <div class="doc-kv">
+                <div class="kv"><strong>Date of Birth:</strong> 12 Mar 1985</div>
+                <div class="kv"><strong>Sex / Age:</strong> Male, 41 yrs</div>
+              </div>
+              <div class="doc-kv">
+                <div class="kv"><strong>Date:</strong> 08 Apr 2026</div>
+                <div class="kv"><strong>Rx #:</strong> RX-2026-0087</div>
+              </div>
+            </div>
+
+            <div class="doc-section">
+              <h4>Diagnosis</h4>
+              <p style="font-size:.9rem;color:#444;">Tension-type headache; Hypertension Stage 1 (controlled)</p>
+            </div>
+
+            <div class="doc-section">
+              <h4>Prescribed Medications</h4>
+              <table style="width:100%;border-collapse:collapse;font-size:.85rem;">
+                <thead>
+                  <tr style="border-bottom:2px solid #333;text-align:left;">
+                    <th style="padding:6px 8px;">#</th>
+                    <th style="padding:6px 8px;">Drug</th>
+                    <th style="padding:6px 8px;">Dosage</th>
+                    <th style="padding:6px 8px;">Frequency</th>
+                    <th style="padding:6px 8px;">Duration</th>
+                    <th style="padding:6px 8px;">Qty</th>
+                    <th style="padding:6px 8px;">Instructions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style="border-bottom:1px solid #ddd;">
+                    <td style="padding:6px 8px;">1</td>
+                    <td style="padding:6px 8px;"><strong>Ibuprofen</strong></td>
+                    <td style="padding:6px 8px;">400mg tablets</td>
+                    <td style="padding:6px 8px;">As needed (PRN)</td>
+                    <td style="padding:6px 8px;">7 days</td>
+                    <td style="padding:6px 8px;">21</td>
+                    <td style="padding:6px 8px;">Take with food</td>
+                  </tr>
+                  <tr style="border-bottom:1px solid #ddd;">
+                    <td style="padding:6px 8px;">2</td>
+                    <td style="padding:6px 8px;"><strong>Amlodipine</strong></td>
+                    <td style="padding:6px 8px;">5mg tablets</td>
+                    <td style="padding:6px 8px;">Once daily</td>
+                    <td style="padding:6px 8px;">30 days</td>
+                    <td style="padding:6px 8px;">30</td>
+                    <td style="padding:6px 8px;">Take in the morning</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- E-Signature Section -->
+            <div class="doc-section" style="margin-top:24px;">
+              <div style="display:flex;justify-content:flex-end;">
+                <div style="text-align:center;width:280px;">
+                  <div style="border:1.5px dashed #aaa;border-radius:4px;padding:12px 20px;margin-bottom:6px;background:#fcfcfc;">
+                    <div style="font-family:'Architects Daughter',cursive;font-size:1.6rem;color:#2a5090;transform:rotate(-2deg);">Dr. Solomon T.</div>
+                    <div style="font-size:.7rem;color:#999;margin-top:2px;">Digitally signed — 08 Apr 2026, 10:42 AM</div>
+                  </div>
+                  <div style="border-top:1.5px solid #333;padding-top:4px;font-size:.82rem;">
+                    <strong>Dr. Solomon Tesfaye</strong><br>
+                    General Practice<br>
+                    License No: MD-ETH-12345<br>
+                    Main Branch, DocuMed Clinic
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="doc-footer">
+              This prescription is digitally signed and generated by DocuMed CMS.<br>
+              Valid for 30 days from the date of issue. Verify at verify.documed.clinic<br>
+              DocuMed Clinic · Main Branch · +251-11-234-5678
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Encounter Summary (shown on Finalise) -->
+      <div id="encounter-summary" class="wf-card mt-2" style="display:none;border-color:#333;border-width:3px;">
+        <div class="card-title">📋 Encounter Summary — Review & Close</div>
+        <div class="wf-kv-grid mb-2">
+          <div class="wf-kv"><div class="kv-label">Assessment</div><div class="kv-value">Tension-type headache; Hypertension (controlled)</div></div>
+          <div class="wf-kv"><div class="kv-label">Lab Orders</div><div class="kv-value">CBC, Renal Function Panel — <span class="wf-badge orange">Pending Payment</span></div></div>
+          <div class="wf-kv"><div class="kv-label">Order-Sheets</div><div class="kv-value">None</div></div>
+          <div class="wf-kv"><div class="kv-label">Prescriptions</div><div class="kv-value">Ibuprofen 400mg PRN x 7 days</div></div>
+          <div class="wf-kv"><div class="kv-label">Consultation Fee</div><div class="kv-value">ETB 300.00 — will be sent to Finance</div></div>
+        </div>
+        <div class="wf-action-bar">
+          <a href="session_dashboard.html"><button class="wf-btn primary">✓ Confirm & Close Encounter</button></a>
+          <button class="wf-btn" onclick="document.getElementById('encounter-summary').style.display='none'">Cancel</button>
+        </div>
+      </div>
+      `;
+
+            // Re-init tabs after dynamic content
+            initTabs();
+            // Init lab tags on load
+            setTimeout(() => {
+              refreshLabTags();
+              refreshProcTags();
+            }, 50);
+          },
+        });
+      });
+
+      function togglePE() {
+        const cb = document.getElementById("pe-toggle");
+        const body = document.getElementById("pe-body");
+        const arrow = document.getElementById("pe-arrow");
+        if (body && cb) {
+          const show = cb.checked;
+          body.style.display = show ? "block" : "none";
+          if (arrow) arrow.textContent = show ? "\u25BC" : "\u25B6";
+        }
+      }
+
+      function refreshLabTags() {
+        const container = document.getElementById("lab-selected-tags");
+        if (!container) return;
+        const checkboxes = document.querySelectorAll(
+          '#lab-test-picker input[type="checkbox"]',
+        );
+        let html = "";
+        checkboxes.forEach((cb) => {
+          if (cb.checked) {
+            html +=
+              '<span class="wf-tag">' +
+              cb.value +
+              ' <span class="remove" onclick="removeLabTag(\'' +
+              cb.value.replace(/'/g, "\\'") +
+              '\')" style="cursor:pointer;">×</span></span>';
+          }
+        });
+        if (!html)
+          html =
+            '<span class="text-small text-muted" style="font-style:italic;">No tests selected</span>';
+        container.innerHTML = html;
+      }
+
+      function removeLabTag(val) {
+        const checkboxes = document.querySelectorAll(
+          '#lab-test-picker input[type="checkbox"]',
+        );
+        checkboxes.forEach((cb) => {
+          if (cb.value === val) cb.checked = false;
+        });
+        refreshLabTags();
+      }
+
+      function refreshProcTags() {
+        const container = document.getElementById("proc-selected-tags");
+        if (!container) return;
+        const checkboxes = document.querySelectorAll(
+          '#proc-picker input[type="checkbox"]',
+        );
+        let html = "";
+        checkboxes.forEach((cb) => {
+          if (cb.checked) {
+            html +=
+              '<span class="wf-tag">' +
+              cb.value +
+              ' <span class="remove" onclick="removeProcTag(\'' +
+              cb.value.replace(/'/g, "\\'") +
+              '\')" style="cursor:pointer;">×</span></span>';
+          }
+        });
+        if (!html)
+          html =
+            '<span class="text-small text-muted" style="font-style:italic;">No procedures selected</span>';
+        container.innerHTML = html;
+      }
+
+      function removeProcTag(val) {
+        const checkboxes = document.querySelectorAll(
+          '#proc-picker input[type="checkbox"]',
+        );
+        checkboxes.forEach((cb) => {
+          if (cb.value === val) cb.checked = false;
+        });
+        refreshProcTags();
+      }
+
+      // ---- Drug Formulary Search ----
+      const DRUG_FORMULARY = [
+        {
+          name: "Amoxicillin",
+          forms: "Capsule, Syrup",
+          strengths: "250mg, 500mg",
+          category: "Antibiotic",
+        },
+        {
+          name: "Azithromycin",
+          forms: "Tablet, Syrup",
+          strengths: "250mg, 500mg",
+          category: "Antibiotic",
+        },
+        {
+          name: "Ciprofloxacin",
+          forms: "Tablet",
+          strengths: "250mg, 500mg",
+          category: "Antibiotic",
+        },
+        {
+          name: "Doxycycline",
+          forms: "Capsule",
+          strengths: "100mg",
+          category: "Antibiotic",
+        },
+        {
+          name: "Metronidazole",
+          forms: "Tablet, IV",
+          strengths: "250mg, 400mg, 500mg",
+          category: "Antibiotic",
+        },
+        {
+          name: "Ibuprofen",
+          forms: "Tablet",
+          strengths: "200mg, 400mg",
+          category: "Analgesic / NSAID",
+        },
+        {
+          name: "Paracetamol",
+          forms: "Tablet, Syrup",
+          strengths: "500mg, 125mg/5ml",
+          category: "Analgesic",
+        },
+        {
+          name: "Diclofenac",
+          forms: "Tablet, Injection",
+          strengths: "50mg, 75mg/3ml",
+          category: "Analgesic / NSAID",
+        },
+        {
+          name: "Tramadol",
+          forms: "Capsule, Injection",
+          strengths: "50mg, 100mg/2ml",
+          category: "Analgesic (Opioid)",
+        },
+        {
+          name: "Amlodipine",
+          forms: "Tablet",
+          strengths: "5mg, 10mg",
+          category: "Antihypertensive",
+        },
+        {
+          name: "Enalapril",
+          forms: "Tablet",
+          strengths: "5mg, 10mg, 20mg",
+          category: "Antihypertensive",
+        },
+        {
+          name: "Losartan",
+          forms: "Tablet",
+          strengths: "25mg, 50mg, 100mg",
+          category: "Antihypertensive",
+        },
+        {
+          name: "Atenolol",
+          forms: "Tablet",
+          strengths: "25mg, 50mg, 100mg",
+          category: "Antihypertensive",
+        },
+        {
+          name: "Hydrochlorothiazide",
+          forms: "Tablet",
+          strengths: "12.5mg, 25mg",
+          category: "Diuretic",
+        },
+        {
+          name: "Furosemide",
+          forms: "Tablet, Injection",
+          strengths: "40mg, 20mg/2ml",
+          category: "Diuretic",
+        },
+        {
+          name: "Metformin",
+          forms: "Tablet",
+          strengths: "500mg, 850mg, 1000mg",
+          category: "Antidiabetic",
+        },
+        {
+          name: "Glibenclamide",
+          forms: "Tablet",
+          strengths: "2.5mg, 5mg",
+          category: "Antidiabetic",
+        },
+        {
+          name: "Insulin (Regular)",
+          forms: "Injection",
+          strengths: "100 IU/ml",
+          category: "Antidiabetic",
+        },
+        {
+          name: "Omeprazole",
+          forms: "Capsule",
+          strengths: "20mg, 40mg",
+          category: "GI / Antacid",
+        },
+        {
+          name: "Ranitidine",
+          forms: "Tablet",
+          strengths: "150mg, 300mg",
+          category: "GI / Antacid",
+        },
+        {
+          name: "Prednisolone",
+          forms: "Tablet",
+          strengths: "5mg, 20mg",
+          category: "Corticosteroid",
+        },
+        {
+          name: "Dexamethasone",
+          forms: "Tablet, Injection",
+          strengths: "0.5mg, 4mg, 4mg/ml",
+          category: "Corticosteroid",
+        },
+        {
+          name: "Salbutamol",
+          forms: "Inhaler, Nebule",
+          strengths: "100mcg/puff, 2.5mg/2.5ml",
+          category: "Respiratory",
+        },
+        {
+          name: "Cetirizine",
+          forms: "Tablet, Syrup",
+          strengths: "10mg, 5mg/5ml",
+          category: "Antihistamine",
+        },
+        {
+          name: "Chlorpheniramine",
+          forms: "Tablet",
+          strengths: "4mg",
+          category: "Antihistamine",
+        },
+        {
+          name: "Ferrous Sulfate",
+          forms: "Tablet",
+          strengths: "200mg",
+          category: "Supplement",
+        },
+        {
+          name: "Folic Acid",
+          forms: "Tablet",
+          strengths: "5mg",
+          category: "Supplement",
+        },
+        {
+          name: "Multivitamin",
+          forms: "Tablet, Syrup",
+          strengths: "Various",
+          category: "Supplement",
+        },
+      ];
+
+      function filterDrugs(query) {
+        const dd = document.getElementById("drug-dropdown");
+        if (!dd) return;
+        const q = query.toLowerCase().trim();
+        if (!q) {
+          dd.style.display = "none";
+          return;
+        }
+        const matches = DRUG_FORMULARY.filter(
+          (d) =>
+            d.name.toLowerCase().includes(q) ||
+            d.category.toLowerCase().includes(q) ||
+            d.forms.toLowerCase().includes(q),
+        );
+        if (matches.length === 0) {
+          dd.innerHTML =
+            '<div style="padding:10px;color:#999;font-size:.85rem;font-style:italic;">No matching drugs found</div>';
+        } else {
+          dd.innerHTML = matches
+            .map(
+              (d) =>
+                '<div class="drug-option" onclick="selectDrug(\'' +
+                d.name.replace(/'/g, "\\'") +
+                '\')" style="padding:6px 10px;cursor:pointer;border-bottom:1px solid #eee;font-size:.85rem;">' +
+                "<strong>" +
+                highlightMatch(d.name, q) +
+                "</strong>" +
+                '<span style="color:#888;margin-left:8px;">' +
+                d.forms +
+                "</span>" +
+                '<br><span style="font-size:.78rem;color:#aaa;">' +
+                d.category +
+                " · Strengths: " +
+                d.strengths +
+                "</span>" +
+                "</div>",
+            )
+            .join("");
+        }
+        dd.style.display = "block";
+      }
+
+      function highlightMatch(text, query) {
+        const idx = text.toLowerCase().indexOf(query);
+        if (idx < 0) return text;
+        return (
+          text.substring(0, idx) +
+          '<span style="background:#fffde7;text-decoration:underline;">' +
+          text.substring(idx, idx + query.length) +
+          "</span>" +
+          text.substring(idx + query.length)
+        );
+      }
+
+      function selectDrug(name) {
+        const input = document.getElementById("drug-search");
+        if (input) input.value = name;
+        const dd = document.getElementById("drug-dropdown");
+        if (dd) dd.style.display = "none";
+      }
+
+      // Close dropdown on outside click
+      document.addEventListener("click", function (e) {
+        const dd = document.getElementById("drug-dropdown");
+        const input = document.getElementById("drug-search");
+        if (
+          dd &&
+          input &&
+          !input.contains(e.target) &&
+          !dd.contains(e.target)
+        ) {
+          dd.style.display = "none";
+        }
+      });
+    </script>
+  </body>
+</html>

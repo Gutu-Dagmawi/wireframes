@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>DocuMed — Nurse Dashboard</title>
+    <link rel="stylesheet" href="../wireframe.css" />
+    <script src="../wireframe.js"></script>
+  </head>
+  <body>
+    <script>
+      ready(() => {
+        renderPageShell({
+          title: "Nurse Dashboard",
+          role: "nurse",
+          activeId: "nurse_dashboard",
+          screenId: "SCR_nurse_dashboard",
+          workflow: "Entry Flow",
+          userName: "Selam D. (Nurse)",
+          content: `
+      <h2 class="page-title">Nurse Dashboard</h2>
+
+      <div class="wf-two-panel">
+        <!-- Vitals Queue -->
+        <div class="panel">
+          <div class="panel-header">
+            <h3>❤️ Vitals Queue</h3>
+            <span class="wf-badge">4 patients</span>
+          </div>
+          ${renderTable(
+            ["Patient Name", "Time Enlisted", "Assigned Practitioner"],
+            [
+              [
+                '<a href="vitals_triage.html"><strong>Abebe Kebede</strong></a>',
+                "08:45",
+                "Dr. Solomon T.",
+              ],
+              [
+                '<a href="vitals_triage.html"><strong>Fatima Ali</strong></a>',
+                "09:12",
+                "Dr. Solomon T.",
+              ],
+              [
+                '<a href="vitals_triage.html"><strong>Dawit Tadesse</strong></a>',
+                "09:25",
+                "Dr. Alem B.",
+              ],
+              [
+                '<a href="vitals_triage.html"><strong>Yonas Gebre</strong></a>',
+                "09:40",
+                "Dr. Miriam K.",
+              ],
+            ],
+            { clickable: true },
+          )}
+          <p class="text-small text-muted">Sorted by time of enlistment (oldest first — FIFO). Click to open vitals form.</p>
+        </div>
+
+        <!-- Nursing Orders Queue -->
+        <div class="panel">
+          <div class="panel-header">
+            <h3>💉 Nursing Orders Queue</h3>
+            <span class="wf-badge">2 orders</span>
+          </div>
+          ${renderTable(
+            [
+              "Patient Name",
+              "Procedure(s)",
+              "Ordering Practitioner",
+              "Time Enlisted",
+            ],
+            [
+              [
+                '<a href="nursing_order_detail.html"><strong>Meron Hailu</strong></a>',
+                "IM Injection",
+                "Dr. Solomon T.",
+                "10:05",
+              ],
+              [
+                '<a href="nursing_order_detail.html"><strong>Tigist Mekonnen</strong></a>',
+                "Wound Dressing, IV Infusion",
+                "Dr. Alem B.",
+                "10:20",
+              ],
+            ],
+            { clickable: true },
+          )}
+          <p class="text-small text-muted">Payment-confirmed orders waiting for administration. Click to open order detail.</p>
+        </div>
+      </div>
+    `,
+        });
+      });
+    </script>
+  </body>
+</html>

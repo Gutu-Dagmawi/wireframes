@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>DocuMed — Vitals & Triage Form</title>
+    <link rel="stylesheet" href="../wireframe.css" />
+    <script src="../wireframe.js"></script>
+  </head>
+  <body>
+    <script>
+      ready(() => {
+        renderPageShell({
+          title: "Vitals & Triage Form",
+          role: "nurse",
+          activeId: "vitals_triage",
+          screenId: "SCR_vitals_and_triage_form",
+          workflow: "Vitals Collection + Triage Flow",
+          userName: "Selam D. (Nurse)",
+          content: `
+      <!-- Patient Header -->
+      <div class="wf-patient-header">
+        <div class="ph-top-row">
+          <div class="ph-name">Abebe Kebede</div>
+          <div class="ph-visit-badge">📅 Visit: 08 Apr 2026</div>
+        </div>
+        <div class="ph-meta">
+          <div class="ph-meta-item">
+            <span class="meta-label">Sex / Age</span>
+            Male, 41 yrs
+          </div>
+          <div class="ph-meta-item">
+            <span class="meta-label">Date of Birth</span>
+            12 Mar 1985
+          </div>
+          <div class="ph-meta-item">
+            <span class="meta-label">Patient ID</span>
+            ET-1234567
+          </div>
+          <div class="ph-meta-item">
+            <span class="meta-label">Phone</span>
+            0911-234-567
+          </div>
+          <div class="ph-meta-item">
+            <span class="meta-label">Assigned Practitioner</span>
+            Dr. Solomon T. (General Practice)
+          </div>
+        </div>
+      </div>
+
+      <h2 class="page-title">Vitals & Triage Form</h2>
+
+      <!-- Section 1: Vital Signs -->
+      <div class="wf-form-section">
+        <div class="section-title">Section 1: Vital Signs</div>
+        <div class="wf-form-row">
+          ${renderFormField("Blood Pressure (Systolic) — mmHg", "number", { required: true, placeholder: "120" })}
+          ${renderFormField("Blood Pressure (Diastolic) — mmHg", "number", { required: true, placeholder: "80" })}
+          ${renderFormField("Temperature — °C", "number", { required: true, placeholder: "36.5" })}
+        </div>
+        <div class="wf-form-row">
+          ${renderFormField("Pulse Rate — bpm", "number", { required: true, placeholder: "72" })}
+          ${renderFormField("Respiratory Rate — breaths/min", "number", { required: true, placeholder: "16" })}
+          ${renderFormField("Oxygen Saturation (SpO₂) — %", "number", { required: true, placeholder: "98" })}
+        </div>
+        <div class="wf-form-row">
+          ${renderFormField("Weight — kg", "number", { required: true, placeholder: "70" })}
+          ${renderFormField("Height — cm", "number", { required: true, placeholder: "175" })}
+          ${renderFormField("BMI — kg/m² (auto-calculated)", "readonly", { value: "22.9" })}
+        </div>
+      </div>
+
+      <!-- Section 2: Triage -->
+      <div class="wf-form-section">
+        <div class="section-title">Section 2: Triage / Pre-Assessment</div>
+        ${renderFormField("Chief Complaint", "textarea", { required: true, placeholder: "Patient's primary reason for visit, in their own words..." })}
+        <div class="wf-form-row">
+          <div class="wf-form-group" style="flex:1;">
+            <label>Allergies <span class="required">*</span></label>
+            <div class="wf-tag-input">
+              <span class="wf-tag">Penicillin <span class="remove">×</span></span>
+              <span class="wf-tag">Peanuts <span class="remove">×</span></span>
+              <input type="text" style="border:none;outline:none;flex:1;min-width:80px;font-family:inherit;" placeholder="Add allergy...">
+            </div>
+            <label style="margin-top:4px;font-size:.8rem;"><input type="checkbox"> No Known Allergies</label>
+          </div>
+          <div class="wf-form-group" style="flex:1;">
+            <label>Current Medications</label>
+            <div class="wf-tag-input">
+              <span class="wf-tag">Metformin 500mg <span class="remove">×</span></span>
+              <input type="text" style="border:none;outline:none;flex:1;min-width:80px;font-family:inherit;" placeholder="Add medication...">
+            </div>
+          </div>
+        </div>
+        <div class="wf-form-row">
+          ${renderFormField("Pain Score (0–10)", "slider", { value: "4" })}
+          ${renderFormField("Pain Location", "text", { placeholder: "e.g., Lower back, right side" })}
+        </div>
+      </div>
+
+      <hr class="wf-divider">
+
+      <div class="wf-action-bar">
+        <button class="wf-btn primary">✓ Complete Vitals & Triage</button>
+        <a href="nurse_dashboard.html"><button class="wf-btn">← Back</button></a>
+        <span class="text-small text-muted">→ Patient moves to Practitioner's assessment queue</span>
+      </div>
+    `,
+        });
+      });
+    </script>
+  </body>
+</html>

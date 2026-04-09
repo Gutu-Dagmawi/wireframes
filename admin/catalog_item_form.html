@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>DocuMed — Catalog Item Form</title>
+    <link rel="stylesheet" href="../wireframe.css" />
+    <script src="../wireframe.js"></script>
+  </head>
+  <body>
+    <script>
+      ready(() => {
+        renderPageShell({
+          title: "Catalog Item Form",
+          role: "admin",
+          activeId: "catalog_item_form",
+          screenId: "SCR_catalog_item_form",
+          workflow: "Master Data Management Flow",
+          userName: "Admin (Super)",
+          content: function (main) {
+            main.innerHTML = `
+      <h2 class="page-title">Catalog Item Form</h2>
+
+      <div style="max-width:600px;">
+        <!-- Type Selector -->
+        <div class="wf-form-section">
+          <div class="section-title">Catalog Type</div>
+          <div class="wf-segmented" id="catalog-type-selector">
+            <label class="active" onclick="showCatalogType('service',this)"><span>Service / Procedure</span></label>
+            <label onclick="showCatalogType('labtest',this)"><span>Lab Test</span></label>
+            <label onclick="showCatalogType('drug',this)"><span>Drug</span></label>
+          </div>
+        </div>
+
+        <!-- Service Fields (default) -->
+        <div id="cat-service" class="wf-form-section cat-fields">
+          <div class="section-title">Service / Procedure</div>
+          ${renderFormField("Service Name", "text", { required: true, placeholder: "e.g., IM Injection" })}
+          ${renderFormField("Description", "textarea", { placeholder: "Brief description..." })}
+          ${renderFormField("Price (ETB)", "number", { required: true, placeholder: "150" })}
+          ${renderFormField("Branch Scope", "text", { required: true, placeholder: "Multi-select: All Branches or specific..." })}
+        </div>
+
+        <!-- Lab Test Fields -->
+        <div id="cat-labtest" class="wf-form-section cat-fields" style="display:none;">
+          <div class="section-title">Lab Test</div>
+          ${renderFormField("Test Name", "text", { required: true, placeholder: "e.g., CBC" })}
+          ${renderFormField("Specimen Type", "select", { required: true, options: ["— Select —", "Blood", "Urine", "Swab", "Stool", "CSF"] })}
+          ${renderFormField("Price (ETB)", "number", { required: true, placeholder: "450" })}
+          ${renderFormField("In-House Branches", "text", { required: true, placeholder: "Multi-select branches that can process in-house..." })}
+        </div>
+
+        <!-- Drug Fields -->
+        <div id="cat-drug" class="wf-form-section cat-fields" style="display:none;">
+          <div class="section-title">Drug</div>
+          ${renderFormField("Drug Name", "text", { required: true, placeholder: "e.g., Amoxicillin" })}
+          ${renderFormField("Dosage Forms", "text", { required: true, placeholder: "Multi-select: Tablet / Capsule / Syrup / Injection / Cream..." })}
+          <div class="wf-form-group">
+            <label>Available Strengths <span class="required">*</span></label>
+            <div class="wf-tag-input">
+              <span class="wf-tag">250mg <span class="remove">×</span></span>
+              <span class="wf-tag">500mg <span class="remove">×</span></span>
+              <input type="text" style="border:none;outline:none;flex:1;min-width:80px;font-family:inherit;" placeholder="Add strength...">
+            </div>
+          </div>
+        </div>
+
+        <hr class="wf-divider">
+        <div class="wf-action-bar">
+          <button class="wf-btn primary">✓ Save</button>
+          <a href="master_data_management.html"><button class="wf-btn">Cancel</button></a>
+        </div>
+      </div>
+      `;
+          },
+        });
+      });
+
+      function showCatalogType(type, el) {
+        document
+          .querySelectorAll(".cat-fields")
+          .forEach((f) => (f.style.display = "none"));
+        document
+          .querySelectorAll("#catalog-type-selector label")
+          .forEach((l) => l.classList.remove("active"));
+        const target = document.getElementById("cat-" + type);
+        if (target) target.style.display = "block";
+        el.classList.add("active");
+      }
+    </script>
+  </body>
+</html>

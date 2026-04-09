@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>DocuMed — Referral Form</title>
+    <link rel="stylesheet" href="../wireframe.css" />
+    <script src="../wireframe.js"></script>
+  </head>
+  <body>
+    <script>
+      ready(() => {
+        renderPageShell({
+          title: "Referral Form",
+          role: "practitioner",
+          activeId: "referral_form",
+          screenId: "SCR_referral_form",
+          workflow: "Referral Flow",
+          userName: "Dr. Solomon T.",
+          content: `
+      <h2 class="page-title">Create Referral</h2>
+
+      <div style="max-width:650px;">
+        <!-- Auto-Populated Fields -->
+        <div class="wf-form-section">
+          <div class="section-title">Auto-Populated (read-only)</div>
+          <div class="wf-kv-grid">
+            <div class="wf-kv"><div class="kv-label">Referring Practitioner</div><div class="kv-value">Dr. Solomon T. — General Practice, Main Branch</div></div>
+            <div class="wf-kv"><div class="kv-label">Patient Name</div><div class="kv-value">Abebe Kebede</div></div>
+            <div class="wf-kv"><div class="kv-label">Patient ID</div><div class="kv-value">ET-1234567</div></div>
+            <div class="wf-kv"><div class="kv-label">Date</div><div class="kv-value">08 Apr 2026</div></div>
+          </div>
+        </div>
+
+        <!-- Practitioner Input Fields -->
+        <div class="wf-form-section">
+          <div class="section-title">Referral Details</div>
+          ${renderFormField("Referral Destination", "text", { required: true, placeholder: "Specialist name, facility, or department..." })}
+          ${renderFormField("Reason for Referral", "textarea", { required: true, placeholder: "Clinical reason and relevant summary..." })}
+          ${renderFormField("Attachments", "file", { placeholder: "Attach supporting documents or lab results" })}
+        </div>
+
+        <hr class="wf-divider">
+
+        <div class="wf-action-bar">
+          <button class="wf-btn primary">✓ Submit Referral</button>
+          <a href="patient_encounter.html"><button class="wf-btn">Cancel</button></a>
+          <span class="text-small text-muted">→ Saved to patient record. Can print or send digitally.</span>
+        </div>
+      </div>
+    `,
+        });
+      });
+    </script>
+  </body>
+</html>

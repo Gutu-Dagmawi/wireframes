@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>DocuMed — Appointment Management</title>
+    <link rel="stylesheet" href="../wireframe.css" />
+    <script src="../wireframe.js"></script>
+  </head>
+  <body>
+    <script>
+      ready(() => {
+        renderPageShell({
+          title: "Appointment Management",
+          role: "receptionist",
+          activeId: "appointment_management",
+          screenId: "SCR_appointment_management",
+          workflow: "Appointment Management Flow",
+          userName: "Hana G. (Receptionist)",
+          content: `
+      <h2 class="page-title">Appointment Management</h2>
+
+      <div class="wf-two-panel">
+        <!-- Left Panel: Practitioner + Calendar -->
+        <div class="panel" style="max-width:420px;">
+          ${renderFormField("Practitioner", "select", { options: ["Dr. Solomon T. (General Practice)", "Dr. Miriam K. (Paediatrics)", "Dr. Alem B. (Internal Medicine)"] })}
+
+          <!-- Calendar Grid -->
+          <table class="wf-calendar" style="margin-top:12px;">
+            <thead>
+              <tr><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th><th>Sun</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="empty"></td><td class="empty"></td><td><div class="day-num">1</div></td><td><div class="day-num">2</div></td>
+                <td><div class="day-num">3</div></td><td><div class="day-num">4</div></td><td><div class="day-num">5</div></td>
+              </tr>
+              <tr>
+                <td><div class="day-num">6</div><span class="cal-badge">2</span></td><td><div class="day-num">7</div><span class="cal-badge">1</span></td>
+                <td class="today"><div class="day-num">8</div><span class="cal-badge" style="background:#fffde7;">3</span></td>
+                <td><div class="day-num">9</div></td><td><div class="day-num">10</div><span class="cal-badge">1</span></td>
+                <td><div class="day-num">11</div></td><td><div class="day-num">12</div></td>
+              </tr>
+              <tr>
+                <td><div class="day-num">13</div></td><td><div class="day-num">14</div><span class="cal-badge">2</span></td>
+                <td><div class="day-num">15</div></td><td><div class="day-num">16</div></td>
+                <td><div class="day-num">17</div></td><td><div class="day-num">18</div></td><td><div class="day-num">19</div></td>
+              </tr>
+              <tr>
+                <td><div class="day-num">20</div></td><td><div class="day-num">21</div></td>
+                <td><div class="day-num">22</div></td><td><div class="day-num">23</div></td>
+                <td><div class="day-num">24</div></td><td><div class="day-num">25</div></td><td><div class="day-num">26</div></td>
+              </tr>
+              <tr>
+                <td><div class="day-num">27</div></td><td><div class="day-num">28</div></td>
+                <td><div class="day-num">29</div></td><td><div class="day-num">30</div></td>
+                <td class="empty"></td><td class="empty"></td><td class="empty"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Right Panel: Appointments for selected date -->
+        <div class="panel">
+          <div class="panel-header">
+            <h3>Appointments — Apr 8, 2026</h3>
+            <button class="wf-btn small">+ Book Appointment</button>
+          </div>
+
+          ${renderTable(
+            ["Time Slot", "Patient Name", "Reason / Note", "Status", "Actions"],
+            [
+              [
+                "09:00",
+                "Abebe Kebede",
+                "Follow-up check",
+                '<span class="wf-badge green">Confirmed</span>',
+                '<button class="wf-btn small">Reschedule</button> <button class="wf-btn small danger">Cancel</button>',
+              ],
+              [
+                "10:00",
+                "Fatima Ali",
+                "Blood pressure review",
+                '<span class="wf-badge green">Confirmed</span>',
+                '<button class="wf-btn small">Reschedule</button> <button class="wf-btn small danger">Cancel</button>',
+              ],
+              [
+                "11:30",
+                "Dawit Tadesse",
+                "Lab result discussion",
+                '<span class="wf-badge orange">Rescheduled</span>',
+                '<button class="wf-btn small">Reschedule</button> <button class="wf-btn small danger">Cancel</button>',
+              ],
+            ],
+            { clickable: true },
+          )}
+
+          <!-- Inline Booking Form -->
+          <div class="wf-inline-panel" style="margin-top:16px;">
+            <h4 style="margin-bottom:12px;">Book New Appointment</h4>
+            <div class="wf-form-row">
+              ${renderFormField("Practitioner", "readonly", { value: "Dr. Solomon T. (General Practice)" })}
+              ${renderFormField("Date", "date", { required: true, value: "2026-04-15" })}
+            </div>
+            <div class="wf-form-row">
+              ${renderFormField("Time Slot", "select", { required: true, options: ["— Select —", "09:00 – 09:30", "09:30 – 10:00", "10:30 – 11:00", "14:00 – 14:30"] })}
+              ${renderFormField("Patient", "text", { required: true, placeholder: "Search patient by name..." })}
+            </div>
+            ${renderFormField("Reason / Note", "text", { placeholder: "Optional appointment reason" })}
+            <div class="wf-action-bar" style="margin-top:10px;">
+              <button class="wf-btn primary">✓ Confirm Booking</button>
+              <button class="wf-btn">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    `,
+        });
+      });
+    </script>
+  </body>
+</html>

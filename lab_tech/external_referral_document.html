@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>DocuMed — External Referral Document</title>
+    <link rel="stylesheet" href="../wireframe.css" />
+    <script src="../wireframe.js"></script>
+  </head>
+  <body>
+    <script>
+      ready(() => {
+        document.body.innerHTML = `
+    <div style="max-width:800px;margin:20px auto;padding:0 16px;">
+      <div class="wf-action-bar between mb-2">
+        <a href="lab_order_detail.html"><button class="wf-btn">← Back to Lab Order</button></a>
+        <div class="flex gap-1">
+          <button class="wf-btn">🖨 Print</button>
+          <button class="wf-btn">⬇ Download PDF</button>
+        </div>
+      </div>
+
+      <div class="wf-document">
+        <div class="doc-header">
+          <div class="logo-area">
+            <div class="wf-placeholder" style="width:50px;height:50px;border-width:1.5px;"><span style="font-size:.55rem;">Logo</span></div>
+            <div>
+              <h3 style="margin:0;">DocuMed Clinic</h3>
+              <div style="font-size:.78rem;color:#888;">Clinic Management System</div>
+            </div>
+          </div>
+          <div class="branch-info">
+            Main Branch<br>
+            Bole Road, Addis Ababa<br>
+            +251-11-234-5678<br>
+            main@documed.clinic
+          </div>
+        </div>
+
+        <div class="doc-title">External Laboratory Referral</div>
+
+        <div class="doc-section">
+          <h4>Patient Information</h4>
+          <div class="doc-kv">
+            <div class="kv"><strong>Patient Name:</strong> Fatima Ali</div>
+            <div class="kv"><strong>Patient ID:</strong> ET-2345678</div>
+          </div>
+          <div class="doc-kv">
+            <div class="kv"><strong>Date of Birth:</strong> 25 Aug 1990</div>
+            <div class="kv"><strong>Sex:</strong> Female</div>
+          </div>
+        </div>
+
+        <div class="doc-section">
+          <h4>Referring Details</h4>
+          <div class="doc-kv">
+            <div class="kv"><strong>Referring Practitioner:</strong> Dr. Solomon T. — General Practice</div>
+          </div>
+          <div class="doc-kv">
+            <div class="kv"><strong>Branch:</strong> Main Branch, Bole Road, Addis Ababa</div>
+            <div class="kv"><strong>Referral Date:</strong> 08 Apr 2026</div>
+          </div>
+        </div>
+
+        <div class="doc-section">
+          <h4>Ordered Tests</h4>
+          ${renderTable(
+            ["#", "Test Name", "Specimen Type", "Clinical Notes"],
+            [
+              [
+                "1",
+                "Thyroid Panel — T3",
+                "Blood",
+                "Patient on Levothyroxine. Recheck levels.",
+              ],
+              ["2", "Thyroid Panel — T4", "Blood", ""],
+              ["3", "Thyroid Panel — TSH", "Blood", ""],
+            ],
+          )}
+        </div>
+
+        <div class="doc-footer">
+          Please return results to the referring branch.<br>
+          DocuMed Clinic · Main Branch · +251-11-234-5678 · main@documed.clinic
+        </div>
+      </div>
+    </div>
+
+    ${renderAnnotation("SCR_external_referral_document", "Lab Technician", "External Lab Referral Flow")}
+  `;
+      });
+    </script>
+  </body>
+</html>

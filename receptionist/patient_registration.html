@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>DocuMed — Patient Registration</title>
+    <link rel="stylesheet" href="../wireframe.css" />
+    <script src="../wireframe.js"></script>
+  </head>
+  <body>
+    <script>
+      ready(() => {
+        renderPageShell({
+          title: "Patient Registration Form",
+          role: "receptionist",
+          activeId: "patient_registration",
+          screenId: "SCR_patient_registration_form",
+          workflow: "Patient Card Activation / Creation Flow",
+          userName: "Hana G. (Receptionist)",
+          content: `
+      <h2 class="page-title">Patient Registration Form</h2>
+
+      <!-- Patient Demographics -->
+      <div class="wf-form-section">
+        <div class="section-title">Patient Demographics</div>
+        <div class="wf-form-row">
+          ${renderFormField("Full Name", "text", { required: true, placeholder: "Patient full legal name" })}
+          ${renderFormField("Date of Birth", "date", { required: true })}
+          ${renderFormField("Sex", "select", { required: true, options: ["— Select —", "Male", "Female"] })}
+        </div>
+      </div>
+
+      <!-- Contact Information -->
+      <div class="wf-form-section">
+        <div class="section-title">Contact Information</div>
+        <div class="wf-form-row">
+          ${renderFormField("Phone Number", "text", { required: true, placeholder: "09XX-XXX-XXXX" })}
+          ${renderFormField("Email", "email", { placeholder: "email@example.com" })}
+        </div>
+        ${renderFormField("Address", "textarea", { required: true, placeholder: "Residential address..." })}
+      </div>
+
+      <!-- Emergency Contact -->
+      <div class="wf-form-section">
+        <div class="section-title">Emergency Contact</div>
+        <div class="wf-form-row">
+          ${renderFormField("Contact Name", "text", { required: true, placeholder: "Emergency contact name" })}
+          ${renderFormField("Contact Phone", "text", { required: true, placeholder: "09XX-XXX-XXXX" })}
+          ${renderFormField("Relationship", "select", { required: true, options: ["— Select —", "Spouse", "Parent", "Sibling", "Child", "Other"] })}
+        </div>
+      </div>
+
+      <hr class="wf-divider">
+
+      <!-- Actions -->
+      <div class="wf-action-bar">
+        <button class="wf-btn primary">✓ Submit</button>
+        <a href="patient_search.html"><button class="wf-btn">Cancel</button></a>
+        <span class="text-small text-muted">→ On submit: returns to Patient Search with new patient pre-selected</span>
+      </div>
+
+      <!-- Validation Error State -->
+      <div class="wf-error-box" style="margin-top:16px;">
+        ⚠ Please fill in all required fields: Full Name, Date of Birth, Phone Number.
+      </div>
+    `,
+        });
+      });
+    </script>
+  </body>
+</html>

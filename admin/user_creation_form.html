@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>DocuMed — User Creation Form</title>
+    <link rel="stylesheet" href="../wireframe.css" />
+    <script src="../wireframe.js"></script>
+  </head>
+  <body>
+    <script>
+      ready(() => {
+        renderPageShell({
+          title: "User Creation Form",
+          role: "admin",
+          activeId: "user_creation_form",
+          screenId: "SCR_user_creation_form",
+          workflow: "User Management Flow",
+          userName: "Admin (Super)",
+          content: function (main) {
+            main.innerHTML = `
+      <h2 class="page-title">Create New User</h2>
+
+      <div style="max-width:700px;">
+        <!-- User Type Selector -->
+        <div class="wf-form-section">
+          <div class="section-title">User Type</div>
+          <div class="wf-segmented" id="user-type-selector">
+            <label class="active" onclick="showRoleFields('practitioner',this)"><span>Practitioner</span></label>
+            <label onclick="showRoleFields('nurse',this)"><span>Nurse</span></label>
+            <label onclick="showRoleFields('receptionist',this)"><span>Receptionist</span></label>
+            <label onclick="showRoleFields('lab_tech',this)"><span>Lab Tech</span></label>
+            <label onclick="showRoleFields('finance',this)"><span>Finance</span></label>
+            <label onclick="showRoleFields('admin',this)"><span>Admin</span></label>
+          </div>
+        </div>
+
+        <!-- Common Fields -->
+        <div class="wf-form-section">
+          <div class="section-title">Common Information</div>
+          <div class="wf-form-row">
+            ${renderFormField("Full Name", "text", { required: true, placeholder: "User full legal name" })}
+            ${renderFormField("Phone Number", "text", { required: true, placeholder: "09XX-XXX-XXXX" })}
+          </div>
+          <div class="wf-form-row">
+            ${renderFormField("Email", "email", { required: true, placeholder: "email@example.com" })}
+            ${renderFormField("Username", "text", { required: true, placeholder: "Must be unique" })}
+          </div>
+          <div class="wf-form-row">
+            ${renderFormField("Temporary Password", "password", { required: true, placeholder: "Initial password" })}
+            ${renderFormField("Profile Photo", "file")}
+          </div>
+        </div>
+
+        <!-- Role-Specific: Practitioner (default visible) -->
+        <div id="role-practitioner" class="wf-form-section role-fields">
+          <div class="section-title">Practitioner Fields</div>
+          <div class="wf-form-row">
+            ${renderFormField("Specialisation", "select", { required: true, options: ["— Select —", "General Practice", "Internal Medicine", "Paediatrics", "Obstetrics/Gynaecology", "Surgery", "Dermatology"] })}
+            ${renderFormField("License Number", "text", { required: true, placeholder: "Medical license ID" })}
+          </div>
+          ${renderFormField("Consultation Fee (ETB)", "number", { required: true, placeholder: "300" })}
+          <div class="section-title mt-2">Schedule / Availability</div>
+          <table class="wf-schedule-grid">
+            <thead><tr><th>Day</th><th>Start</th><th>End</th><th>Slot (min)</th><th>Available</th></tr></thead>
+            <tbody>
+              <tr><td>Monday</td><td><input type="time" class="wf-input" value="08:00" style="width:90px;"></td><td><input type="time" class="wf-input" value="17:00" style="width:90px;"></td><td><input type="number" class="wf-input" value="30" style="width:60px;"></td><td><input type="checkbox" checked></td></tr>
+              <tr><td>Tuesday</td><td><input type="time" class="wf-input" value="08:00" style="width:90px;"></td><td><input type="time" class="wf-input" value="17:00" style="width:90px;"></td><td><input type="number" class="wf-input" value="30" style="width:60px;"></td><td><input type="checkbox" checked></td></tr>
+              <tr><td>Wednesday</td><td><input type="time" class="wf-input" value="08:00" style="width:90px;"></td><td><input type="time" class="wf-input" value="17:00" style="width:90px;"></td><td><input type="number" class="wf-input" value="30" style="width:60px;"></td><td><input type="checkbox" checked></td></tr>
+              <tr><td>Thursday</td><td><input type="time" class="wf-input" value="08:00" style="width:90px;"></td><td><input type="time" class="wf-input" value="17:00" style="width:90px;"></td><td><input type="number" class="wf-input" value="30" style="width:60px;"></td><td><input type="checkbox" checked></td></tr>
+              <tr><td>Friday</td><td><input type="time" class="wf-input" value="08:00" style="width:90px;"></td><td><input type="time" class="wf-input" value="17:00" style="width:90px;"></td><td><input type="number" class="wf-input" value="30" style="width:60px;"></td><td><input type="checkbox" checked></td></tr>
+              <tr><td>Saturday</td><td><input type="time" class="wf-input" style="width:90px;"></td><td><input type="time" class="wf-input" style="width:90px;"></td><td><input type="number" class="wf-input" style="width:60px;"></td><td><input type="checkbox"></td></tr>
+              <tr><td>Sunday</td><td><input type="time" class="wf-input" style="width:90px;" disabled></td><td><input type="time" class="wf-input" style="width:90px;" disabled></td><td><input type="number" class="wf-input" style="width:60px;" disabled></td><td><input type="checkbox"></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Role-Specific: Nurse -->
+        <div id="role-nurse" class="wf-form-section role-fields" style="display:none;">
+          <div class="section-title">Nurse Fields</div>
+          ${renderFormField("Department", "select", { options: ["— Select —", "General", "Paediatrics", "Emergency"] })}
+          ${renderFormField("Shift Pattern", "select", { options: ["— Select —", "Morning", "Afternoon", "Night", "Rotating"] })}
+        </div>
+
+        <!-- Role-Specific: Receptionist -->
+        <div id="role-receptionist" class="wf-form-section role-fields" style="display:none;">
+          <div class="section-title">Receptionist Fields</div>
+          ${renderFormField("Front-Desk Station", "text", { placeholder: "e.g., Station A" })}
+          ${renderFormField("Managed Practitioners", "text", { placeholder: "Multi-select from branch practitioners..." })}
+        </div>
+
+        <!-- Role-Specific: Lab Tech -->
+        <div id="role-lab_tech" class="wf-form-section role-fields" style="display:none;">
+          <div class="section-title">Lab Technician Fields</div>
+          ${renderFormField("Lab Section", "select", { options: ["— Select —", "Haematology", "Biochemistry", "Microbiology", "Immunology"] })}
+          ${renderFormField("Test Competencies", "text", { placeholder: "Multi-select from lab test catalog..." })}
+        </div>
+
+        <!-- Role-Specific: Finance -->
+        <div id="role-finance" class="wf-form-section role-fields" style="display:none;">
+          <div class="section-title">Finance Clerk Fields</div>
+          ${renderFormField("Payment Permissions", "text", { placeholder: "Multi-select: Card Activation / Lab Order / Procedure / Consultation" })}
+          ${renderFormField("Cash Drawer Assignment", "text", { placeholder: "e.g., Drawer 1" })}
+        </div>
+
+        <!-- Role-Specific: Admin -->
+        <div id="role-admin" class="wf-form-section role-fields" style="display:none;">
+          <div class="section-title">Admin Fields</div>
+          <div class="wf-form-group">
+            <label>Admin Scope <span class="required">*</span></label>
+            <div class="wf-radio-group">
+              <label><input type="radio" name="scope" checked> Super-Admin (cross-branch)</label>
+              <label><input type="radio" name="scope"> Branch-Admin (single branch)</label>
+            </div>
+          </div>
+        </div>
+
+        <hr class="wf-divider">
+        <div class="wf-action-bar">
+          <button class="wf-btn primary">✓ Create User</button>
+          <a href="user_management.html"><button class="wf-btn">Cancel</button></a>
+        </div>
+      </div>
+      `;
+          },
+        });
+      });
+
+      function showRoleFields(role, el) {
+        document
+          .querySelectorAll(".role-fields")
+          .forEach((f) => (f.style.display = "none"));
+        document
+          .querySelectorAll("#user-type-selector label")
+          .forEach((l) => l.classList.remove("active"));
+        const target = document.getElementById("role-" + role);
+        if (target) target.style.display = "block";
+        el.classList.add("active");
+      }
+    </script>
+  </body>
+</html>

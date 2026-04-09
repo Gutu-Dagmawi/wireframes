@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>DocuMed — Wireframe Index</title>
+    <link rel="stylesheet" href="wireframe.css" />
+    <style>
+      body {
+        background: #f5f5f5;
+      }
+      .index-container {
+        max-width: 1100px;
+        margin: 30px auto;
+        padding: 0 20px;
+      }
+      .index-header {
+        text-align: center;
+        margin-bottom: 30px;
+        padding: 30px;
+        border: 2px solid #333;
+        background: #fff;
+        box-shadow: 3px 3px 0 #ccc;
+        border-radius: 6px;
+      }
+      .index-header h1 {
+        font-size: 2.2rem;
+        margin-bottom: 8px;
+      }
+      .index-header p {
+        color: #777;
+        font-size: 1rem;
+      }
+      .role-section {
+        margin-bottom: 24px;
+        border: 2px solid #333;
+        border-radius: 6px;
+        background: #fff;
+        box-shadow: 2px 2px 0 #ddd;
+        overflow: hidden;
+      }
+      .role-header {
+        background: #f0f0f0;
+        padding: 10px 18px;
+        border-bottom: 2px solid #333;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .role-header h2 {
+        margin: 0;
+        font-size: 1.2rem;
+      }
+      .role-header .count {
+        font-size: 0.8rem;
+        color: #888;
+        font-family: "Patrick Hand", sans-serif;
+      }
+      .screen-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 14px;
+        padding: 16px;
+      }
+      .screen-card {
+        border: 1.5px solid #999;
+        border-radius: 4px;
+        padding: 12px;
+        transition: all 0.15s;
+        text-decoration: none;
+        color: #333;
+        display: block;
+      }
+      .screen-card:hover {
+        border-color: #333;
+        box-shadow: 2px 2px 0 #ccc;
+        background: #fffde7;
+      }
+      .screen-card .card-icon {
+        font-size: 1.4rem;
+        margin-bottom: 6px;
+      }
+      .screen-card .card-name {
+        font-family: "Architects Daughter", cursive;
+        font-size: 1rem;
+        margin-bottom: 4px;
+      }
+      .screen-card .card-id {
+        font-size: 0.72rem;
+        color: #999;
+      }
+      .flow-section {
+        margin-bottom: 24px;
+        border: 2px solid #333;
+        border-radius: 6px;
+        background: #fff;
+        box-shadow: 2px 2px 0 #ddd;
+        padding: 20px;
+      }
+      .flow-section h2 {
+        margin-bottom: 14px;
+      }
+      .flow-diagram {
+        font-family: "Patrick Hand", sans-serif;
+        font-size: 0.88rem;
+        line-height: 1.7;
+        background: #fafafa;
+        border: 1.5px solid #ccc;
+        border-radius: 4px;
+        padding: 16px;
+        white-space: pre;
+        overflow-x: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="index-container">
+      <div class="index-header">
+        <div
+          class="wf-placeholder"
+          style="
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 12px;
+            border-radius: 8px;
+          "
+        >
+          <span>Logo</span>
+        </div>
+        <h1>DocuMed — Wireframes</h1>
+        <p>Clinic Management System · 28 Screens · 7 Roles</p>
+        <p class="text-small text-muted" style="margin-top: 8px">
+          Sketch-style wireframes — not production mockups
+        </p>
+      </div>
+
+      <!-- Patient Journey Flow -->
+      <div class="flow-section">
+        <h2>Patient Journey Flow</h2>
+        <div class="flow-diagram">
+          Receptionist Finance Nurse Practitioner ─────────── ─────── ─────
+          ──────────── Register/activate → Card-activation → Vitals &amp; →
+          Assessment, patient &amp; select payment processing triage diagnosis,
+          practitioner (must complete lab orders, before patient order-sheets,
+          enters MD queue) prescriptions ↑ │ │ │ │
+          ┌──────────────────────────────┘ │ │ (lab order / procedure created) │
+          ▼ Finance ← Lab order fee Lab Tech Nurse Finance ← Procedure fee
+          (in-house / (administer │ external) procedures) │ │ │ │ └─────────┘ │
+          │ ▼ ▼ Results released Order completed │ │ └───────► Practitioner ◄──┘
+          (review &amp; finalize)
+        </div>
+      </div>
+
+      <!-- Shared -->
+      <div class="role-section">
+        <div class="role-header">
+          <h2>🔑 Shared</h2>
+          <span class="count">1 screen</span>
+        </div>
+        <div class="screen-grid">
+          <a class="screen-card" href="shared/login.html">
+            <div class="card-icon">🔑</div>
+            <div class="card-name">Login</div>
+            <div class="card-id">SCR_login</div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Receptionist -->
+      <div class="role-section">
+        <div class="role-header">
+          <h2>📋 Receptionist</h2>
+          <span class="count">4 screens</span>
+        </div>
+        <div class="screen-grid">
+          <a class="screen-card" href="receptionist/patient_search.html">
+            <div class="card-icon">🔍</div>
+            <div class="card-name">Patient Search & List</div>
+            <div class="card-id">SCR_patient_search</div>
+          </a>
+          <a class="screen-card" href="receptionist/patient_registration.html">
+            <div class="card-icon">📝</div>
+            <div class="card-name">Patient Registration Form</div>
+            <div class="card-id">SCR_patient_registration_form</div>
+          </a>
+          <a
+            class="screen-card"
+            href="receptionist/appointment_management.html"
+          >
+            <div class="card-icon">📅</div>
+            <div class="card-name">Appointment Management</div>
+            <div class="card-id">SCR_appointment_management</div>
+          </a>
+          <a class="screen-card" href="receptionist/queue_monitoring.html">
+            <div class="card-icon">📊</div>
+            <div class="card-name">Queue Monitoring Dashboard</div>
+            <div class="card-id">SCR_queue_monitoring_dashboard</div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Finance -->
+      <div class="role-section">
+        <div class="role-header">
+          <h2>💰 Finance</h2>
+          <span class="count">3 screens</span>
+        </div>
+        <div class="screen-grid">
+          <a class="screen-card" href="finance/pending_payments.html">
+            <div class="card-icon">💰</div>
+            <div class="card-name">Pending Payments Queue</div>
+            <div class="card-id">SCR_pending_payments_queue</div>
+          </a>
+          <a class="screen-card" href="finance/payment_detail.html">
+            <div class="card-icon">📄</div>
+            <div class="card-name">Payment Detail</div>
+            <div class="card-id">SCR_payment_detail</div>
+          </a>
+          <a class="screen-card" href="finance/payment_receipt.html">
+            <div class="card-icon">🧾</div>
+            <div class="card-name">Payment Receipt</div>
+            <div class="card-id">SCR_payment_receipt</div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Nurse -->
+      <div class="role-section">
+        <div class="role-header">
+          <h2>🏥 Nurse</h2>
+          <span class="count">3 screens</span>
+        </div>
+        <div class="screen-grid">
+          <a class="screen-card" href="nurse/nurse_dashboard.html">
+            <div class="card-icon">🏥</div>
+            <div class="card-name">Nurse Dashboard</div>
+            <div class="card-id">SCR_nurse_dashboard</div>
+          </a>
+          <a class="screen-card" href="nurse/vitals_triage.html">
+            <div class="card-icon">❤️</div>
+            <div class="card-name">Vitals & Triage Form</div>
+            <div class="card-id">SCR_vitals_and_triage_form</div>
+          </a>
+          <a class="screen-card" href="nurse/nursing_order_detail.html">
+            <div class="card-icon">💉</div>
+            <div class="card-name">Nursing Order Detail</div>
+            <div class="card-id">SCR_nursing_order_detail</div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Practitioner -->
+      <div class="role-section">
+        <div class="role-header">
+          <h2>🩺 Practitioner</h2>
+          <span class="count">6 screens</span>
+        </div>
+        <div class="screen-grid">
+          <a
+            class="screen-card"
+            href="practitioner/practitioner_dashboard.html"
+          >
+            <div class="card-icon">🏠</div>
+            <div class="card-name">Practitioner Dashboard</div>
+            <div class="card-id">SCR_practitioner_dashboard</div>
+          </a>
+          <a class="screen-card" href="practitioner/calendar_view.html">
+            <div class="card-icon">📅</div>
+            <div class="card-name">Calendar View</div>
+            <div class="card-id">SCR_calendar_view</div>
+          </a>
+          <a class="screen-card" href="practitioner/session_dashboard.html">
+            <div class="card-icon">⚡</div>
+            <div class="card-name">Session Dashboard</div>
+            <div class="card-id">SCR_session_dashboard</div>
+          </a>
+          <a class="screen-card" href="practitioner/patient_encounter.html">
+            <div class="card-icon">🩺</div>
+            <div class="card-name">Patient Encounter</div>
+            <div class="card-id">SCR_patient_encounter</div>
+          </a>
+          <a class="screen-card" href="practitioner/schedule_appointment.html">
+            <div class="card-icon">📋</div>
+            <div class="card-name">Schedule Appointment</div>
+            <div class="card-id">SCR_schedule_appointment_form</div>
+          </a>
+          <a class="screen-card" href="practitioner/referral_form.html">
+            <div class="card-icon">↗️</div>
+            <div class="card-name">Referral Form</div>
+            <div class="card-id">SCR_referral_form</div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Lab Tech -->
+      <div class="role-section">
+        <div class="role-header">
+          <h2>🔬 Lab Technician</h2>
+          <span class="count">3 screens</span>
+        </div>
+        <div class="screen-grid">
+          <a class="screen-card" href="lab_tech/lab_dashboard.html">
+            <div class="card-icon">🔬</div>
+            <div class="card-name">Lab Dashboard</div>
+            <div class="card-id">SCR_lab_dashboard</div>
+          </a>
+          <a class="screen-card" href="lab_tech/lab_order_detail.html">
+            <div class="card-icon">🧪</div>
+            <div class="card-name">Lab Order Detail</div>
+            <div class="card-id">SCR_lab_order_detail</div>
+          </a>
+          <a
+            class="screen-card"
+            href="lab_tech/external_referral_document.html"
+          >
+            <div class="card-icon">📤</div>
+            <div class="card-name">External Referral Document</div>
+            <div class="card-id">SCR_external_referral_document</div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Admin -->
+      <div class="role-section">
+        <div class="role-header">
+          <h2>⚙️ Administrator</h2>
+          <span class="count">8 screens</span>
+        </div>
+        <div class="screen-grid">
+          <a class="screen-card" href="admin/branch_management.html">
+            <div class="card-icon">🏢</div>
+            <div class="card-name">Branch Management</div>
+            <div class="card-id">SCR_branch_management</div>
+          </a>
+          <a class="screen-card" href="admin/branch_form.html">
+            <div class="card-icon">✏️</div>
+            <div class="card-name">Branch Form</div>
+            <div class="card-id">SCR_branch_form</div>
+          </a>
+          <a class="screen-card" href="admin/user_management.html">
+            <div class="card-icon">👥</div>
+            <div class="card-name">User Management</div>
+            <div class="card-id">SCR_user_management</div>
+          </a>
+          <a class="screen-card" href="admin/user_creation_form.html">
+            <div class="card-icon">➕</div>
+            <div class="card-name">User Creation Form</div>
+            <div class="card-id">SCR_user_creation_form</div>
+          </a>
+          <a class="screen-card" href="admin/branch_configuration.html">
+            <div class="card-icon">⚙️</div>
+            <div class="card-name">Branch Configuration</div>
+            <div class="card-id">SCR_branch_configuration</div>
+          </a>
+          <a class="screen-card" href="admin/master_data_management.html">
+            <div class="card-icon">📚</div>
+            <div class="card-name">Master Data Management</div>
+            <div class="card-id">SCR_master_data_management</div>
+          </a>
+          <a class="screen-card" href="admin/catalog_item_form.html">
+            <div class="card-icon">📦</div>
+            <div class="card-name">Catalog Item Form</div>
+            <div class="card-id">SCR_catalog_item_form</div>
+          </a>
+          <a class="screen-card" href="admin/system_settings.html">
+            <div class="card-icon">🔧</div>
+            <div class="card-name">System Settings</div>
+            <div class="card-id">SCR_system_settings</div>
+          </a>
+        </div>
+      </div>
+
+      <div
+        style="
+          text-align: center;
+          padding: 20px;
+          color: #bbb;
+          font-size: 0.8rem;
+        "
+      >
+        DocuMed Wireframes · Generated 2026-04-08 · Sketch-style, not production
+        mockups
+      </div>
+    </div>
+  </body>
+</html>

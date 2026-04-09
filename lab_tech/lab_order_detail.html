@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>DocuMed — Lab Order Detail</title>
+    <link rel="stylesheet" href="../wireframe.css" />
+    <script src="../wireframe.js"></script>
+  </head>
+  <body>
+    <script>
+      ready(() => {
+        renderPageShell({
+          title: "Lab Order Detail",
+          role: "lab_tech",
+          activeId: "lab_order_detail",
+          screenId: "SCR_lab_order_detail",
+          workflow: "In-House Sample Processing + External Referral Flow",
+          userName: "Daniel A. (Lab Tech)",
+          content: `
+      <h2 class="page-title">Lab Order Detail</h2>
+
+      <!-- Patient & Order Header -->
+      <div class="wf-form-section">
+        <div class="section-title">Patient & Order Information</div>
+        <div class="wf-kv-grid">
+          <div class="wf-kv"><div class="kv-label">Patient Name</div><div class="kv-value">Meron Hailu</div></div>
+          <div class="wf-kv"><div class="kv-label">Patient ID</div><div class="kv-value">ET-4567890</div></div>
+          <div class="wf-kv"><div class="kv-label">Ordering Practitioner</div><div class="kv-value">Dr. Solomon T. (General Practice)</div></div>
+          <div class="wf-kv"><div class="kv-label">Order Timestamp</div><div class="kv-value">08 Apr 2026, 09:45 AM</div></div>
+          <div class="wf-kv"><div class="kv-label">Clinical Notes</div><div class="kv-value">Review cholesterol and CBC. Patient on Metformin.</div></div>
+        </div>
+      </div>
+
+      <!-- Specimen Logging -->
+      <div class="wf-form-section">
+        <div class="section-title">Specimen Logging (In-House)</div>
+        <div class="wf-form-row">
+          ${renderFormField("Specimen Type", "select", { required: true, options: ["Blood (auto-detected)", "Urine", "Swab"] })}
+          ${renderFormField("Collection Timestamp", "datetime", { required: true, value: "2026-04-08T10:00" })}
+          ${renderFormField("Accession Identifier", "text", { required: true, value: "ACC-2026-0198", placeholder: "Auto-generated or manual" })}
+        </div>
+      </div>
+
+      <!-- Test Results Entry -->
+      <div class="wf-form-section">
+        <div class="section-title">Test Results Entry</div>
+        ${renderTable(
+          [
+            "Test Name",
+            "Result Value",
+            "Unit",
+            "Normal Reference Range",
+            "Abnormal Flag",
+          ],
+          [
+            [
+              "<strong>CBC — WBC</strong>",
+              '<input type="text" class="wf-input" style="width:80px;" value="6.5">',
+              '<input type="text" class="wf-input" style="width:70px;" value="×10³/µL">',
+              '<input type="text" class="wf-input" style="width:100px;" value="4.5 – 11.0">',
+              '<select class="wf-input" style="width:90px;"><option selected>Normal</option><option>High</option><option>Low</option><option>Critical</option></select>',
+            ],
+            [
+              "<strong>CBC — RBC</strong>",
+              '<input type="text" class="wf-input" style="width:80px;" value="4.8">',
+              '<input type="text" class="wf-input" style="width:70px;" value="×10⁶/µL">',
+              '<input type="text" class="wf-input" style="width:100px;" value="4.5 – 5.5">',
+              '<select class="wf-input" style="width:90px;"><option selected>Normal</option><option>High</option><option>Low</option><option>Critical</option></select>',
+            ],
+            [
+              "<strong>CBC — Hemoglobin</strong>",
+              '<input type="text" class="wf-input" style="width:80px;" value="14.2">',
+              '<input type="text" class="wf-input" style="width:70px;" value="g/dL">',
+              '<input type="text" class="wf-input" style="width:100px;" value="13.5 – 17.5">',
+              '<select class="wf-input" style="width:90px;"><option selected>Normal</option><option>High</option><option>Low</option><option>Critical</option></select>',
+            ],
+            [
+              "<strong>Lipid — Total Cholesterol</strong>",
+              '<input type="text" class="wf-input" style="width:80px;" value="245">',
+              '<input type="text" class="wf-input" style="width:70px;" value="mg/dL">',
+              '<input type="text" class="wf-input" style="width:100px;" value="< 200">',
+              '<select class="wf-input" style="width:90px;"><option>Normal</option><option selected>High</option><option>Low</option><option>Critical</option></select>',
+            ],
+            [
+              "<strong>Lipid — LDL</strong>",
+              '<input type="text" class="wf-input" style="width:80px;" value="160">',
+              '<input type="text" class="wf-input" style="width:70px;" value="mg/dL">',
+              '<input type="text" class="wf-input" style="width:100px;" value="< 130">',
+              '<select class="wf-input" style="width:90px;"><option>Normal</option><option selected>High</option><option>Low</option><option>Critical</option></select>',
+            ],
+          ],
+        )}
+      </div>
+
+      <hr class="wf-divider">
+
+      <div class="wf-action-bar">
+        <button class="wf-btn primary">✓ Approve & Release Results</button>
+        <a href="external_referral_document.html"><button class="wf-btn">📤 Generate External Referral</button></a>
+        <button class="wf-btn">Enter External Results</button>
+        <a href="lab_dashboard.html"><button class="wf-btn">← Back</button></a>
+      </div>
+
+      <div class="wf-inline-panel mt-2">
+        <p class="text-small text-muted">
+          <strong>States:</strong><br>
+          • <em>In-house order:</em> Specimen logging + result entry visible. "Approve & Release" active.<br>
+          • <em>External referral:</em> "Generate External Referral" visible. Result fields hidden until "Enter External Results" clicked.<br>
+          • <em>Mixed order:</em> Both sections shown, grouped by mode.
+        </p>
+      </div>
+    `,
+        });
+      });
+    </script>
+  </body>
+</html>

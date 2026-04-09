@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>DocuMed — Session Dashboard</title>
+    <link rel="stylesheet" href="../wireframe.css" />
+    <script src="../wireframe.js"></script>
+  </head>
+  <body>
+    <script>
+      ready(() => {
+        renderPageShell({
+          title: "Session Dashboard",
+          role: "practitioner",
+          activeId: "session_dashboard",
+          screenId: "SCR_session_dashboard",
+          workflow: "Session Flow",
+          userName: "Dr. Solomon T.",
+          content: `
+      <h2 class="page-title">Session Dashboard — 08 Apr 2026</h2>
+
+      <!-- Call Next Patient CTA -->
+      <div style="text-align:center;margin-bottom:20px;">
+        <a href="patient_encounter.html">
+          <button class="wf-btn primary" style="font-size:1.2rem;padding:12px 40px;">
+            📢 Call Next Patient
+          </button>
+        </a>
+        <p class="text-small text-muted mt-1">Calls the next patient from the initial assessment queue (FIFO)</p>
+      </div>
+
+      <div class="wf-two-panel">
+        <!-- Initial Assessment Queue -->
+        <div class="panel">
+          <div class="panel-header">
+            <h3>🩺 Initial Assessment Queue</h3>
+            <span class="wf-badge">3 waiting</span>
+          </div>
+          ${renderTable(
+            ["Patient Name", "Chief Complaint", "Time in Queue", "Status"],
+            [
+              [
+                '<a href="patient_encounter.html"><strong>Abebe Kebede</strong></a>',
+                "Persistent headache, 3 days",
+                "25 min",
+                '<span class="wf-badge">Waiting</span>',
+              ],
+              [
+                '<a href="patient_encounter.html"><strong>Fatima Ali</strong></a>',
+                "Blood pressure check",
+                "18 min",
+                '<span class="wf-badge">Waiting</span>',
+              ],
+              [
+                '<a href="patient_encounter.html"><strong>Dawit Tadesse</strong></a>',
+                "Joint pain, right knee",
+                "5 min",
+                '<span class="wf-badge">Waiting</span>',
+              ],
+            ],
+            { clickable: true },
+          )}
+          <p class="text-small text-muted">Patients who have completed vitals with the nurse.</p>
+        </div>
+
+        <!-- Lab Result Granted Queue -->
+        <div class="panel">
+          <div class="panel-header">
+            <h3>🧪 Lab Result Granted Queue</h3>
+            <span class="wf-badge">1 waiting</span>
+          </div>
+          ${renderTable(
+            ["Patient Name", "Lab Tests", "Results Available Since", "Status"],
+            [
+              [
+                '<a href="patient_encounter.html"><strong>Meron Hailu</strong></a>',
+                "CBC, Lipid Profile",
+                "10:25 AM",
+                '<span class="wf-badge blue">Waiting for Review</span>',
+              ],
+            ],
+            { clickable: true },
+          )}
+          <p class="text-small text-muted">Patients returning after lab results are released.</p>
+        </div>
+      </div>
+    `,
+        });
+      });
+    </script>
+  </body>
+</html>

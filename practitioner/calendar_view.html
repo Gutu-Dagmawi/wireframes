@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>DocuMed — Calendar View</title>
+    <link rel="stylesheet" href="../wireframe.css" />
+    <script src="../wireframe.js"></script>
+  </head>
+  <body>
+    <script>
+      ready(() => {
+        renderPageShell({
+          title: "Calendar View",
+          role: "practitioner",
+          activeId: "calendar_view",
+          screenId: "SCR_calendar_view",
+          workflow: "Entry Flow + Scheduling Flow",
+          userName: "Dr. Solomon T.",
+          content: `
+      <h2 class="page-title">Calendar — April 2026</h2>
+
+      <table class="wf-calendar">
+        <thead>
+          <tr><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th><th>Sun</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="empty"></td><td class="empty"></td><td><div class="day-num">1</div><span class="cal-badge" style="background:#efffef;">✓</span></td>
+            <td><div class="day-num">2</div><span class="cal-badge" style="background:#efffef;">✓</span> <span class="cal-badge">3</span></td>
+            <td><div class="day-num">3</div><span class="cal-badge" style="background:#efffef;">✓</span> <span class="cal-badge">5</span></td>
+            <td><div class="day-num">4</div></td><td><div class="day-num">5</div></td>
+          </tr>
+          <tr>
+            <td><div class="day-num">6</div><span class="cal-badge" style="background:#efffef;">✓</span> <span class="cal-badge">4</span></td>
+            <td><div class="day-num">7</div><span class="cal-badge" style="background:#efffef;">✓</span> <span class="cal-badge">2</span></td>
+            <td class="today">
+              <div class="day-num">8 — TODAY</div>
+              <span class="cal-badge" style="background:#fffde7;border-color:#b85;">⚡ Active</span>
+              <span class="cal-badge">3</span>
+            </td>
+            <td><div class="day-num">9</div><span class="cal-badge">Scheduled</span></td>
+            <td><div class="day-num">10</div><span class="cal-badge">Scheduled</span> <span class="cal-badge">1</span></td>
+            <td><div class="day-num">11</div></td><td><div class="day-num">12</div></td>
+          </tr>
+          <tr>
+            <td><div class="day-num">13</div><span class="cal-badge">Scheduled</span></td>
+            <td><div class="day-num">14</div><span class="cal-badge">Scheduled</span></td>
+            <td><div class="day-num">15</div><span class="cal-badge">Scheduled</span></td>
+            <td><div class="day-num">16</div></td><td><div class="day-num">17</div></td>
+            <td><div class="day-num">18</div></td><td><div class="day-num">19</div></td>
+          </tr>
+          <tr>
+            <td><div class="day-num">20</div></td><td><div class="day-num">21</div></td>
+            <td><div class="day-num">22</div></td><td><div class="day-num">23</div></td>
+            <td><div class="day-num">24</div></td><td><div class="day-num">25</div></td><td><div class="day-num">26</div></td>
+          </tr>
+          <tr>
+            <td><div class="day-num">27</div></td><td><div class="day-num">28</div></td>
+            <td><div class="day-num">29</div></td><td><div class="day-num">30</div></td>
+            <td class="empty"></td><td class="empty"></td><td class="empty"></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Date Detail Panel -->
+      <div class="wf-card mt-2">
+        <div class="card-title flex-between">
+          April 8, 2026 — Session Detail
+          <span class="wf-badge green">⚡ Active</span>
+        </div>
+
+        <div class="wf-action-bar mb-2">
+          <a href="session_dashboard.html"><button class="wf-btn primary">→ Go to Session Dashboard</button></a>
+          <span class="text-small text-muted">(Session already started)</span>
+        </div>
+
+        <h4 class="mb-1">Appointments</h4>
+        ${renderTable(
+          ["Time Slot", "Patient Name", "Reason / Note", "Status"],
+          [
+            [
+              "09:00",
+              "Abebe Kebede",
+              "Follow-up check",
+              '<span class="wf-badge green">Confirmed</span>',
+            ],
+            [
+              "10:00",
+              "Fatima Ali",
+              "Blood pressure review",
+              '<span class="wf-badge green">Confirmed</span>',
+            ],
+            [
+              "11:30",
+              "Dawit Tadesse",
+              "Lab result discussion",
+              '<span class="wf-badge green">Confirmed</span>',
+            ],
+          ],
+        )}
+        <div class="wf-action-bar">
+          <a href="schedule_appointment.html"><button class="wf-btn small">+ Schedule Appointment</button></a>
+        </div>
+      </div>
+
+      <!-- Session not started state hint -->
+      <div class="wf-inline-panel mt-2">
+        <p class="text-small text-muted">
+          <strong>Note:</strong> For today's date (if session is <em>Scheduled</em> but not yet started), a <code>Start Session</code> button would appear here → navigates to <a href="session_dashboard.html">Session Dashboard</a>.<br>
+          Historical dates show read-only data.
+        </p>
+      </div>
+    `,
+        });
+      });
+    </script>
+  </body>
+</html>

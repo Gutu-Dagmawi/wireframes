@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>DocuMed — User Management</title>
+    <link rel="stylesheet" href="../wireframe.css" />
+    <script src="../wireframe.js"></script>
+  </head>
+  <body>
+    <script>
+      ready(() => {
+        renderPageShell({
+          title: "User Management",
+          role: "admin",
+          activeId: "user_management",
+          screenId: "SCR_user_management",
+          workflow: "User Management Flow",
+          userName: "Admin (Super)",
+          content: `
+      <h2 class="page-title">User Management</h2>
+
+      <div class="wf-filter-bar">
+        <div class="filter-group">
+          <label>Role:</label>
+          <select class="wf-input" style="width:150px;">
+            <option>All Roles</option><option>Practitioner</option><option>Nurse</option><option>Receptionist</option><option>Lab Technician</option><option>Finance Clerk</option><option>Admin</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Branch:</label>
+          <select class="wf-input" style="width:150px;">
+            <option>All Branches</option><option>Main Branch</option><option>Merkato Branch</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Status:</label>
+          <select class="wf-input" style="width:110px;">
+            <option>All</option><option>Active</option><option>Inactive</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Search:</label>
+          <input type="text" class="wf-input" placeholder="User name..." style="width:160px;">
+        </div>
+      </div>
+
+      <div class="wf-action-bar between">
+        <span class="text-muted text-small">8 users found</span>
+        <a href="user_creation_form.html"><button class="wf-btn primary">+ Create User</button></a>
+      </div>
+
+      ${renderTable(
+        [
+          "Full Name",
+          "Role Type",
+          "Branch",
+          "Status",
+          "Created Date",
+          "Actions",
+        ],
+        [
+          [
+            '<a href="user_creation_form.html"><strong>Dr. Solomon T.</strong></a>',
+            '<span class="wf-badge blue">Practitioner</span>',
+            "Main Branch",
+            '<span class="wf-badge green">Active</span>',
+            "15 Jan 2025",
+            '<button class="wf-btn small">Reset PW</button> <button class="wf-btn small">Transfer</button> <button class="wf-btn small danger">Deactivate</button>',
+          ],
+          [
+            '<a href="user_creation_form.html"><strong>Dr. Miriam K.</strong></a>',
+            '<span class="wf-badge blue">Practitioner</span>',
+            "Main Branch",
+            '<span class="wf-badge green">Active</span>',
+            "20 Feb 2025",
+            '<button class="wf-btn small">Reset PW</button> <button class="wf-btn small">Transfer</button> <button class="wf-btn small danger">Deactivate</button>',
+          ],
+          [
+            '<a href="user_creation_form.html"><strong>Selam D.</strong></a>',
+            '<span class="wf-badge">Nurse</span>',
+            "Main Branch",
+            '<span class="wf-badge green">Active</span>',
+            "01 Mar 2025",
+            '<button class="wf-btn small">Reset PW</button> <button class="wf-btn small danger">Deactivate</button>',
+          ],
+          [
+            '<a href="user_creation_form.html"><strong>Hana G.</strong></a>',
+            '<span class="wf-badge">Receptionist</span>',
+            "Main Branch",
+            '<span class="wf-badge green">Active</span>',
+            "01 Mar 2025",
+            '<button class="wf-btn small">Reset PW</button> <button class="wf-btn small danger">Deactivate</button>',
+          ],
+          [
+            '<a href="user_creation_form.html"><strong>Kidist M.</strong></a>',
+            '<span class="wf-badge">Finance</span>',
+            "Main Branch",
+            '<span class="wf-badge green">Active</span>',
+            "05 Mar 2025",
+            '<button class="wf-btn small">Reset PW</button> <button class="wf-btn small danger">Deactivate</button>',
+          ],
+          [
+            '<a href="user_creation_form.html"><strong>Daniel A.</strong></a>',
+            '<span class="wf-badge">Lab Tech</span>',
+            "Main Branch",
+            '<span class="wf-badge green">Active</span>',
+            "10 Mar 2025",
+            '<button class="wf-btn small">Reset PW</button> <button class="wf-btn small danger">Deactivate</button>',
+          ],
+          [
+            "<strong>Tigist W.</strong>",
+            '<span class="wf-badge">Nurse</span>',
+            "Merkato Br.",
+            '<span class="wf-badge gray">Inactive</span>',
+            "15 Apr 2025",
+            '<button class="wf-btn small">Reactivate</button>',
+          ],
+        ],
+        { clickable: true },
+      )}
+    `,
+        });
+      });
+    </script>
+  </body>
+</html>

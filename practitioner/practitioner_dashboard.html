@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>DocuMed — Practitioner Dashboard</title>
+    <link rel="stylesheet" href="../wireframe.css" />
+    <script src="../wireframe.js"></script>
+  </head>
+  <body>
+    <script>
+      ready(() => {
+        renderPageShell({
+          title: "Practitioner Dashboard",
+          role: "practitioner",
+          activeId: "practitioner_dashboard",
+          screenId: "SCR_practitioner_dashboard",
+          workflow: "Entry Flow",
+          userName: "Dr. Solomon T.",
+          content: `
+      <h2 class="page-title">Practitioner Dashboard</h2>
+
+      <!-- Summary Widgets -->
+      <div class="wf-widget-row">
+        <div class="wf-widget">
+          <div class="widget-value">12</div>
+          <div class="widget-label">Patients Scheduled Today</div>
+        </div>
+        <div class="wf-widget">
+          <div class="widget-value">4</div>
+          <div class="widget-label">Patients in Queue</div>
+        </div>
+        <div class="wf-widget">
+          <div class="widget-value">2</div>
+          <div class="widget-label">Pending Lab Results</div>
+        </div>
+      </div>
+
+      <!-- Session Status -->
+      <div class="wf-card">
+        <div class="card-title">Today's Session</div>
+        <div class="wf-kv-grid">
+          <div class="wf-kv"><div class="kv-label">Date</div><div class="kv-value">08 Apr 2026</div></div>
+          <div class="wf-kv"><div class="kv-label">Status</div><div class="kv-value"><span class="wf-badge green">Active</span></div></div>
+          <div class="wf-kv"><div class="kv-label">Patients Seen</div><div class="kv-value">5 of 12</div></div>
+        </div>
+        <div class="wf-action-bar" style="margin-top:12px;">
+          <a href="session_dashboard.html"><button class="wf-btn primary">→ Go to Session Dashboard</button></a>
+        </div>
+      </div>
+
+      <!-- Quick Links -->
+      <div class="wf-grid-3 mt-2">
+        <a href="calendar_view.html" class="wf-card" style="text-align:center;text-decoration:none;">
+          <div style="font-size:2rem;">📅</div>
+          <div class="card-title" style="border:none;">Calendar</div>
+          <div class="text-small text-muted">View schedule & start sessions</div>
+        </a>
+        <a href="session_dashboard.html" class="wf-card" style="text-align:center;text-decoration:none;">
+          <div style="font-size:2rem;">⚡</div>
+          <div class="card-title" style="border:none;">Session</div>
+          <div class="text-small text-muted">Active patient queues</div>
+        </a>
+        <a href="schedule_appointment.html" class="wf-card" style="text-align:center;text-decoration:none;">
+          <div style="font-size:2rem;">📋</div>
+          <div class="card-title" style="border:none;">Appointments</div>
+          <div class="text-small text-muted">Schedule patient visits</div>
+        </a>
+      </div>
+
+      <!-- No-session state variant -->
+      <div class="wf-empty-state mt-3">
+        <strong>Session Not Started</strong><br>
+        <span class="text-muted">Start your session from the <a href="calendar_view.html">Calendar</a>.</span>
+      </div>
+    `,
+        });
+      });
+    </script>
+  </body>
+</html>

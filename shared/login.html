@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>DocuMed — Login</title>
+    <link rel="stylesheet" href="../wireframe.css" />
+    <script src="../wireframe.js"></script>
+  </head>
+  <body>
+    <script>
+      ready(() => {
+        renderPageShell({
+          title: "Login",
+          role: "shared",
+          activeId: "login",
+          screenId: "SCR_login",
+          workflow: "All workflows",
+          noSidebar: true,
+          content: `
+      <div style="display:flex;align-items:center;justify-content:center;min-height:580px;">
+        <div style="width:360px;">
+          <div style="text-align:center;margin-bottom:24px;">
+            <div class="wf-placeholder" style="width:90px;height:90px;margin:0 auto 12px;border-radius:10px;">
+              <span>Logo</span>
+            </div>
+            <h1 style="font-size:1.8rem;margin-bottom:4px;">DocuMed</h1>
+            <p class="text-muted">Clinic Management System</p>
+          </div>
+
+          <div class="wf-card" style="padding:24px;">
+            <h2 style="text-align:center;margin-bottom:18px;">Sign In</h2>
+
+            ${renderFormField("Username", "text", { required: true, placeholder: "Enter your username" })}
+            ${renderFormField("Password", "password", { required: true, placeholder: "Enter your password" })}
+
+            <div style="margin-top:18px;">
+              <button class="wf-btn primary w-full" style="width:100%;padding:10px;">Login</button>
+            </div>
+          </div>
+
+          <!-- Error state variant -->
+          <div class="wf-error-box" style="margin-top:14px;">
+            ⚠ Invalid username or password. Please try again.
+          </div>
+
+          <div style="margin-top:20px;text-align:center;">
+            <p class="text-small text-muted">After login, users are redirected to their role-specific dashboard:</p>
+            <div style="margin-top:8px;font-size:.82rem;line-height:1.8;">
+              <a href="../receptionist/patient_search.html">Receptionist → Patient Search</a><br>
+              <a href="../finance/pending_payments.html">Finance → Pending Payments</a><br>
+              <a href="../nurse/nurse_dashboard.html">Nurse → Dashboard</a><br>
+              <a href="../practitioner/practitioner_dashboard.html">Practitioner → Dashboard</a><br>
+              <a href="../lab_tech/lab_dashboard.html">Lab Tech → Dashboard</a><br>
+              <a href="../admin/branch_management.html">Admin → Branch Management</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    `,
+        });
+      });
+    </script>
+  </body>
+</html>

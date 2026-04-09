@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>DocuMed — Lab Dashboard</title>
+    <link rel="stylesheet" href="../wireframe.css" />
+    <script src="../wireframe.js"></script>
+  </head>
+  <body>
+    <script>
+      ready(() => {
+        renderPageShell({
+          title: "Lab Dashboard",
+          role: "lab_tech",
+          activeId: "lab_dashboard",
+          screenId: "SCR_lab_dashboard",
+          workflow: "Entry Flow",
+          userName: "Daniel A. (Lab Tech)",
+          content: `
+      <h2 class="page-title">Lab Dashboard</h2>
+
+      <div class="wf-summary-bar">
+        <div class="summary-item"><strong>Total Orders:</strong> 5</div>
+        <div class="summary-item"><strong>In-House:</strong> 3</div>
+        <div class="summary-item"><strong>External:</strong> 2</div>
+      </div>
+
+      <div class="wf-filter-bar">
+        <div class="filter-group">
+          <label>Order Mode:</label>
+          <select class="wf-input" style="width:160px;">
+            <option>All</option><option>In-House</option><option>External Referral</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Search:</label>
+          <input type="text" class="wf-input" placeholder="Patient name..." style="width:180px;">
+        </div>
+      </div>
+
+      ${renderTable(
+        [
+          "Patient Name",
+          "Ordering Practitioner",
+          "Tests Ordered",
+          "Order Mode",
+          "Order Timestamp",
+          "Status",
+        ],
+        [
+          [
+            '<a href="lab_order_detail.html"><strong>Meron Hailu</strong></a>',
+            "Dr. Solomon T.",
+            "CBC, Lipid Profile",
+            '<span class="wf-badge green">In-House</span>',
+            "08 Apr, 09:45",
+            '<span class="wf-badge">Ready for Processing</span>',
+          ],
+          [
+            '<a href="lab_order_detail.html"><strong>Dawit Tadesse</strong></a>',
+            "Dr. Alem B.",
+            "Blood Glucose, HbA1c",
+            '<span class="wf-badge green">In-House</span>',
+            "08 Apr, 10:00",
+            '<span class="wf-badge">Ready for Processing</span>',
+          ],
+          [
+            '<a href="lab_order_detail.html"><strong>Abebe Kebede</strong></a>',
+            "Dr. Solomon T.",
+            "Renal Function Panel",
+            '<span class="wf-badge green">In-House</span>',
+            "08 Apr, 10:30",
+            '<span class="wf-badge">Ready for Processing</span>',
+          ],
+          [
+            '<a href="lab_order_detail.html"><strong>Fatima Ali</strong></a>',
+            "Dr. Solomon T.",
+            "Thyroid Panel (T3, T4, TSH)",
+            '<span class="wf-badge orange">External</span>',
+            "08 Apr, 10:35",
+            '<span class="wf-badge orange">Pending External Results</span>',
+          ],
+          [
+            '<a href="lab_order_detail.html"><strong>Yonas Gebre</strong></a>',
+            "Dr. Miriam K.",
+            "MRI - Brain",
+            '<span class="wf-badge orange">External</span>',
+            "08 Apr, 10:50",
+            '<span class="wf-badge">Ready for Processing</span>',
+          ],
+        ],
+        { clickable: true },
+      )}
+      <p class="text-small text-muted">Click a row to open <a href="lab_order_detail.html">Lab Order Detail</a>. Queue auto-refreshes as new payment-confirmed orders arrive.</p>
+    `,
+        });
+      });
+    </script>
+  </body>
+</html>

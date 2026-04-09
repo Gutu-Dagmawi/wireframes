@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>DocuMed — Pending Payments Queue</title>
+    <link rel="stylesheet" href="../wireframe.css" />
+    <script src="../wireframe.js"></script>
+  </head>
+  <body>
+    <script>
+      ready(() => {
+        renderPageShell({
+          title: "Pending Payments Queue",
+          role: "finance",
+          activeId: "pending_payments",
+          screenId: "SCR_pending_payments_queue",
+          workflow: "Payment Processing Flow",
+          userName: "Kidist M. (Finance)",
+          content: `
+      <h2 class="page-title">Pending Payments Queue</h2>
+
+      <div class="wf-summary-bar">
+        <div class="summary-item"><strong>Total Pending:</strong> 6 payments</div>
+        <div class="summary-item"><strong>Total Amount:</strong> ETB 4,350.00</div>
+      </div>
+
+      <div class="wf-filter-bar">
+        <div class="filter-group">
+          <label>Payment Type:</label>
+          <select class="wf-input" style="width:180px;">
+            <option>All Types</option><option>Card Activation</option><option>Lab Order</option><option>Procedure</option><option>Consultation</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Search:</label>
+          <input type="text" class="wf-input" placeholder="Patient name..." style="width:180px;">
+        </div>
+      </div>
+
+      ${renderTable(
+        [
+          "Patient Name",
+          "Payment Type",
+          "Service Description",
+          "Amount Due",
+          "Requested By",
+          "Timestamp",
+          "Status",
+        ],
+        [
+          [
+            "Abebe Kebede",
+            '<span class="wf-badge">Card Activation</span>',
+            "Visit card activation",
+            "ETB 200.00",
+            "Hana G. (Receptionist)",
+            "08 Apr, 09:05",
+            '<span class="wf-badge orange">Pending</span>',
+          ],
+          [
+            "Fatima Ali",
+            '<span class="wf-badge">Card Activation</span>',
+            "Visit card activation",
+            "ETB 200.00",
+            "Hana G. (Receptionist)",
+            "08 Apr, 09:12",
+            '<span class="wf-badge orange">Pending</span>',
+          ],
+          [
+            "Meron Hailu",
+            '<span class="wf-badge blue">Lab Order</span>',
+            "CBC, Lipid Profile",
+            "ETB 850.00",
+            "Dr. Solomon T.",
+            "08 Apr, 09:30",
+            '<span class="wf-badge orange">Pending</span>',
+          ],
+          [
+            "Dawit Tadesse",
+            '<span class="wf-badge blue">Lab Order</span>',
+            "Blood Glucose, HbA1c",
+            "ETB 600.00",
+            "Dr. Alem B.",
+            "08 Apr, 09:45",
+            '<span class="wf-badge orange">Pending</span>',
+          ],
+          [
+            "Yonas Gebre",
+            '<span class="wf-badge green">Procedure</span>',
+            "IM Injection, Wound Dressing",
+            "ETB 1,200.00",
+            "Dr. Solomon T.",
+            "08 Apr, 10:00",
+            '<span class="wf-badge orange">Pending</span>',
+          ],
+          [
+            "Tigist Mekonnen",
+            '<span class="wf-badge gray">Consultation</span>',
+            "Consultation fee",
+            "ETB 300.00",
+            "Dr. Miriam K.",
+            "08 Apr, 10:15",
+            '<span class="wf-badge orange">Pending</span>',
+          ],
+        ],
+        { clickable: true },
+      )}
+
+      <p class="text-small text-muted">Click a row to open <a href="payment_detail.html">Payment Detail</a>. Queue auto-refreshes.</p>
+    `,
+        });
+      });
+    </script>
+  </body>
+</html>
