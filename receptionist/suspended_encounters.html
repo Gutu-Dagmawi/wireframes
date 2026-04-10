@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>DocuMed — Suspended Encounters</title>
+    <link rel="stylesheet" href="../wireframe.css" />
+    <script src="../wireframe.js"></script>
+  </head>
+  <body>
+    <script>
+      ready(() => {
+        renderPageShell({
+          title: "Suspended Encounters",
+          role: "receptionist",
+          activeId: "suspended_encounters",
+          screenId: "SCR_suspended_encounters",
+          workflow: "Suspended Encounter Management Flow",
+          userName: "Hana G. (Receptionist)",
+          content: function(main) {
+            main.innerHTML = `
+      <h2 class="page-title">Suspended Encounters</h2>
+      <p class="text-small text-muted mb-2">Encounters suspended by practitioners awaiting external results or patient return. Manage resumption via walk-in activation or scheduled appointment.</p>
+
+      <div class="wf-summary-bar">
+        <div class="summary-item"><strong>Awaiting Results:</strong> 3</div>
+        <div class="summary-item"><strong>Appointment Scheduled:</strong> 1</div>
+        <div class="summary-item"><strong>Resumed Today:</strong> 1</div>
+        <div class="summary-item"><strong>Total Active:</strong> 4</div>
+      </div>
+
+      <div class="wf-filter-bar">
+        <div class="filter-group">
+          <label>Status:</label>
+          <select class="wf-input" style="width:180px;">
+            <option>All</option><option selected>Active Suspensions</option><option>Awaiting Results</option><option>Appointment Scheduled</option><option>Resumed</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Practitioner:</label>
+          <select class="wf-input" style="width:160px;">
+            <option>All Practitioners</option><option>Dr. Solomon T.</option><option>Dr. Alem B.</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Search:</label>
+          <input type="text" class="wf-input" placeholder="Patient name or MRN..." style="width:200px;">
+        </div>
+      </div>
+
+      <!-- Suspension Queue Table -->
+      <table style="width:100%;border-collapse:collapse;font-size:.85rem;">
+        <thead>
+          <tr style="border-bottom:1.5px solid #ccc;background:#fafafa;text-align:left;">
+            <th style="padding:6px 10px;">MRN</th>
+            <th style="padding:6px 10px;">Patient</th>
+            <th style="padding:6px 10px;">Practitioner</th>
+            <th style="padding:6px 10px;">Suspended On</th>
+            <th style="padding:6px 10px;">Reason</th>
+            <th style="padding:6px 10px;">Required Items</th>
+            <th style="padding:6px 10px;">Resume By</th>
+            <th style="padding:6px 10px;">Days Remaining</th>
+            <th style="padding:6px 10px;">Status</th>
+            <th style="padding:6px 10px;">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom:1px solid #eee;">
+            <td style="padding:6px 10px;">MRN-0023</td>
+            <td style="padding:6px 10px;"><strong>Dawit Tadesse</strong></td>
+            <td style="padding:6px 10px;">Dr. Solomon T.</td>
+            <td style="padding:6px 10px;">28 Mar 2026</td>
+            <td style="padding:6px 10px;"><span class="wf-badge orange" style="font-size:.6rem;">External Lab Results</span></td>
+            <td style="padding:6px 10px;">Thyroid Panel (T3, T4, TSH)</td>
+            <td style="padding:6px 10px;">24 Apr 2026</td>
+            <td style="padding:6px 10px;"><span style="color:#2e7d32;font-weight:600;">14 days</span></td>
+            <td style="padding:6px 10px;"><span class="wf-badge orange">Awaiting Results</span></td>
+            <td style="padding:6px 10px;">
+              <button class="wf-btn small primary" onclick="showActivation('MRN-0023')">Activate Now</button>
+              <button class="wf-btn small" onclick="showSchedule('MRN-0023')">Schedule</button>
+            </td>
+          </tr>
+          <tr style="border-bottom:1px solid #eee;">
+            <td style="padding:6px 10px;">MRN-0045</td>
+            <td style="padding:6px 10px;"><strong>Sara Mengistu</strong></td>
+            <td style="padding:6px 10px;">Dr. Alem B.</td>
+            <td style="padding:6px 10px;">02 Apr 2026</td>
+            <td style="padding:6px 10px;"><span class="wf-badge orange" style="font-size:.6rem;">External Lab Results</span></td>
+            <td style="padding:6px 10px;">HbA1c, Fasting Insulin</td>
+            <td style="padding:6px 10px;">16 Apr 2026</td>
+            <td style="padding:6px 10px;"><span style="color:#e65100;font-weight:600;">6 days</span></td>
+            <td style="padding:6px 10px;"><span class="wf-badge blue">Appointment Scheduled</span><div class="text-small text-muted">15 Apr, 10:00 AM</div></td>
+            <td style="padding:6px 10px;">
+              <button class="wf-btn small" onclick="showActivation('MRN-0045')">Activate Now</button>
+              <button class="wf-btn small">View Appt</button>
+            </td>
+          </tr>
+          <tr style="border-bottom:1px solid #eee;">
+            <td style="padding:6px 10px;">MRN-0112</td>
+            <td style="padding:6px 10px;"><strong>Yonas Gebre</strong></td>
+            <td style="padding:6px 10px;">Dr. Solomon T.</td>
+            <td style="padding:6px 10px;">15 Mar 2026</td>
+            <td style="padding:6px 10px;"><span class="wf-badge orange" style="font-size:.6rem;">External Lab Results</span></td>
+            <td style="padding:6px 10px;">Cardiac Enzymes Panel</td>
+            <td style="padding:6px 10px;">05 Apr 2026</td>
+            <td style="padding:6px 10px;"><span style="color:#c62828;font-weight:600;">5 days overdue</span></td>
+            <td style="padding:6px 10px;"><span class="wf-badge" style="background:#ffebee;color:#c62828;">Overdue</span></td>
+            <td style="padding:6px 10px;">
+              <button class="wf-btn small primary" onclick="showActivation('MRN-0112')">Activate Now</button>
+              <button class="wf-btn small" onclick="showSchedule('MRN-0112')">Schedule</button>
+            </td>
+          </tr>
+          <tr style="border-bottom:1px solid #eee;opacity:.6;">
+            <td style="padding:6px 10px;">MRN-0091</td>
+            <td style="padding:6px 10px;"><strong>Meron Hailu</strong></td>
+            <td style="padding:6px 10px;">Dr. Solomon T.</td>
+            <td style="padding:6px 10px;">08 Apr 2026</td>
+            <td style="padding:6px 10px;"><span class="wf-badge gray" style="font-size:.6rem;">Patient Delay</span></td>
+            <td style="padding:6px 10px;">Patient requested return next week</td>
+            <td style="padding:6px 10px;">15 Apr 2026</td>
+            <td style="padding:6px 10px;">&mdash;</td>
+            <td style="padding:6px 10px;"><span class="wf-badge green">Resumed</span><div class="text-small text-muted">Today, 09:45 AM</div></td>
+            <td style="padding:6px 10px;">
+              <button class="wf-btn small" onclick="showDetails('MRN-0091')">View Details</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Walk-In Activation Panel (shown on Activate Now click) -->
+      <div id="activation-panel" style="display:none;margin-top:12px;">
+        <div class="wf-form-section" style="border-color:#e65100;">
+          <div class="section-title flex-between" style="color:#e65100;">
+            <span>Walk-In Activation — Resume Suspended Encounter</span>
+            <button class="wf-btn small" onclick="document.getElementById('activation-panel').style.display='none'">Close</button>
+          </div>
+
+          <div class="wf-kv-grid">
+            <div class="wf-kv"><div class="kv-label">Patient</div><div class="kv-value"><strong>Dawit Tadesse</strong> (MRN-0023)</div></div>
+            <div class="wf-kv"><div class="kv-label">Original Practitioner</div><div class="kv-value">Dr. Solomon T. (General Practice)</div></div>
+            <div class="wf-kv"><div class="kv-label">Suspended On</div><div class="kv-value">28 Mar 2026</div></div>
+            <div class="wf-kv"><div class="kv-label">Resume By</div><div class="kv-value">24 Apr 2026 <span style="color:#2e7d32;font-weight:600;margin-left:6px;">(14 days remaining)</span></div></div>
+          </div>
+
+          <hr class="wf-divider">
+
+          <div style="margin-bottom:10px;">
+            <div style="font-weight:600;font-size:.88rem;margin-bottom:4px;">Original Encounter Summary</div>
+            <div class="wf-kv-grid" style="background:#f9f9f9;padding:8px;border-radius:3px;">
+              <div class="wf-kv"><div class="kv-label">Assessment</div><div class="kv-value">Tension-type headache; Hypertension (controlled)</div></div>
+              <div class="wf-kv"><div class="kv-label">Suspension Reason</div><div class="kv-value">Awaiting External Lab Results</div></div>
+              <div class="wf-kv"><div class="kv-label">Required Items</div><div class="kv-value">Thyroid Panel (T3, T4, TSH)</div></div>
+              <div class="wf-kv"><div class="kv-label">Practitioner Notes</div><div class="kv-value" style="font-style:italic;">Review thyroid panel results. If TSH > 10, consider Levothyroxine. If normal, reassess symptoms.</div></div>
+            </div>
+          </div>
+
+          <div style="background:#e8f5e9;border:1px solid #a5d6a7;border-radius:3px;padding:8px 12px;margin-bottom:10px;">
+            <div style="font-weight:600;color:#2e7d32;font-size:.85rem;margin-bottom:4px;">Card Status: Valid — within resumption limit</div>
+            <div class="text-small text-muted">No re-activation fee required. Card valid until 24 Apr 2026.</div>
+          </div>
+
+          <div class="wf-form-group">
+            <label>Items Brought In <span class="required">*</span></label>
+            <div style="background:#fff8e1;border:1px solid #ffe082;border-radius:3px;padding:8px 12px;">
+              <label style="display:flex;align-items:center;gap:6px;font-size:.85rem;cursor:pointer;">
+                <input type="checkbox" checked>
+                <strong>Thyroid Panel (T3, T4, TSH)</strong> — External lab results received
+              </label>
+            </div>
+          </div>
+
+          <div class="wf-form-row">
+            <div class="wf-form-group">
+              <label>Assign to Practitioner</label>
+              <select class="wf-input">
+                <option selected>Dr. Solomon T. (original)</option>
+                <option>Dr. Alem B.</option>
+              </select>
+            </div>
+            <div class="wf-form-group">
+              <label>Receptionist Notes</label>
+              <input type="text" class="wf-input" placeholder="Optional notes..." value="Patient brought printed lab results from Kadisco Hospital">
+            </div>
+          </div>
+
+          <div class="wf-action-bar">
+            <button class="wf-btn primary" onclick="confirmActivation()">Confirm Activation</button>
+            <button class="wf-btn" onclick="document.getElementById('activation-panel').style.display='none'">Cancel</button>
+          </div>
+          <p class="text-small text-muted mt-1">Flow: If re-triage requested by practitioner → Nurse (vitals) → Practitioner's Resumed queue. If no re-triage → directly to Practitioner's Resumed queue. <strong>Re-triage is mandatory if past the resumption date limit.</strong></p>
+        </div>
+      </div>
+
+      <!-- Activation Confirmation -->
+      <div id="activation-confirm" style="display:none;margin-top:8px;padding:8px 12px;background:#e8f5e9;border-radius:3px;">
+        <span style="color:#2e7d32;font-size:.85rem;font-weight:600;">Encounter activated for resumption. Patient sent to Nurse for vitals re-triage.</span>
+      </div>
+
+      <div class="wf-inline-panel mt-2">
+        <p class="text-small text-muted">
+          <strong>How it works:</strong><br>
+          &bull; When a practitioner suspends an encounter (e.g., awaiting external lab results), it appears here.<br>
+          &bull; <strong>Activate Now</strong>: Patient walks in with results &mdash; receptionist activates and the patient re-enters the clinical flow (Nurse &rarr; Practitioner).<br>
+          &bull; <strong>Schedule</strong>: Book a return appointment linked to the suspended encounter. On check-in, the patient goes directly to the original practitioner.<br>
+          &bull; <strong>Card validity</strong>: The practitioner declares a resumption date limit. Within this limit, no re-activation fee. After it expires, re-activation payment is required.<br>
+          &bull; <strong>Days Remaining</strong>: Green = within limit, Orange = <3 days, Red = overdue.
+        </p>
+      </div>
+    `;
+
+            window.showActivation = function(mrn) {
+              document.getElementById('activation-panel').style.display = 'block';
+              document.getElementById('activation-confirm').style.display = 'none';
+              document.getElementById('activation-panel').scrollIntoView({ behavior: 'smooth' });
+            };
+            window.showSchedule = function(mrn) {
+              alert('Opens appointment scheduling form pre-populated with patient details, original practitioner, and reason: "Resumption — Awaiting External Lab Results"');
+            };
+            window.showDetails = function(mrn) {
+              alert('Opens read-only view of the completed suspension/resumption details.');
+            };
+            window.confirmActivation = function() {
+              document.getElementById('activation-panel').style.display = 'none';
+              document.getElementById('activation-confirm').style.display = 'block';
+              document.getElementById('activation-confirm').scrollIntoView({ behavior: 'smooth' });
+            };
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

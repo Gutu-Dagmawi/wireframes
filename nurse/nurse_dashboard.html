@@ -23,29 +23,33 @@
         <!-- Vitals Queue -->
         <div class="panel">
           <div class="panel-header">
-            <h3>❤️ Vitals Queue</h3>
+            <h3>Vitals Queue</h3>
             <span class="wf-badge">4 patients</span>
           </div>
           ${renderTable(
-            ["Patient Name", "Time Enlisted", "Assigned Practitioner"],
+            ["Patient Name", "MRN", "Time Enlisted", "Assigned Practitioner"],
             [
               [
                 '<a href="vitals_triage.html"><strong>Abebe Kebede</strong></a>',
+                "MRN-0015",
                 "08:45",
                 "Dr. Solomon T.",
               ],
               [
                 '<a href="vitals_triage.html"><strong>Fatima Ali</strong></a>',
+                "MRN-0078",
                 "09:12",
                 "Dr. Solomon T.",
               ],
               [
                 '<a href="vitals_triage.html"><strong>Dawit Tadesse</strong></a>',
+                "MRN-0023",
                 "09:25",
                 "Dr. Alem B.",
               ],
               [
                 '<a href="vitals_triage.html"><strong>Yonas Gebre</strong></a>',
+                "MRN-0103",
                 "09:40",
                 "Dr. Miriam K.",
               ],
@@ -58,33 +62,50 @@
         <!-- Nursing Orders Queue -->
         <div class="panel">
           <div class="panel-header">
-            <h3>💉 Nursing Orders Queue</h3>
-            <span class="wf-badge">2 orders</span>
+            <h3>Nursing Orders Queue</h3>
+            <span class="wf-badge">4 orders</span>
           </div>
           ${renderTable(
             [
               "Patient Name",
+              "MRN",
               "Procedure(s)",
-              "Ordering Practitioner",
+              "Order Source",
               "Time Enlisted",
             ],
             [
               [
                 '<a href="nursing_order_detail.html"><strong>Meron Hailu</strong></a>',
+                "MRN-0091",
                 "IM Injection",
-                "Dr. Solomon T.",
+                '<span class="wf-badge gray">Practitioner</span> Dr. Solomon T.',
                 "10:05",
               ],
               [
                 '<a href="nursing_order_detail.html"><strong>Tigist Mekonnen</strong></a>',
+                "MRN-0042",
                 "Wound Dressing, IV Infusion",
-                "Dr. Alem B.",
+                '<span class="wf-badge gray">Practitioner</span> Dr. Alem B.',
                 "10:20",
+              ],
+              [
+                '<a href="nursing_order_detail.html"><strong>Fatima Ali</strong></a>',
+                "MRN-0078",
+                "Blood Pressure Check",
+                '<span class="wf-badge" style="background:#e8f5e9;color:#2e7d32;">Special Service</span> SSO-002',
+                "10:30",
+              ],
+              [
+                '<a href="nursing_order_detail.html"><strong>Henok Tadesse</strong></a>',
+                "MRN-0056",
+                "Injection (Patient Drug)",
+                '<span class="wf-badge" style="background:#e8f5e9;color:#2e7d32;">Special Service</span> SSO-003',
+                "10:45",
               ],
             ],
             { clickable: true },
           )}
-          <p class="text-small text-muted">Payment-confirmed orders waiting for administration. Click to open order detail.</p>
+          <p class="text-small text-muted">Payment-confirmed orders waiting for administration. <strong>Special Service</strong> orders are auto-created by the receptionist (no practitioner). Click to open order detail.</p>
         </div>
       </div>
     `,

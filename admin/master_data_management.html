@@ -26,67 +26,39 @@
         <div class="tab" data-tab="tab-drugs">Drug Formulary</div>
       </div>
 
-      <!-- Tab 1: Services -->
+      <!-- Tab 1: Services / Procedures -->
       <div id="tab-services" class="wf-tab-content active">
         <div class="wf-filter-bar">
           <div class="filter-group">
-            <input type="text" class="wf-input" placeholder="Search services..." style="width:250px;">
+            <input type="text" class="wf-input" placeholder="Search services..." style="width:220px;">
+            <select class="wf-input" style="width:140px;">
+              <option>All Categories</option><option>Injections</option><option>Wound Care</option><option>IV Therapy</option><option>Diagnostic</option><option>Respiratory</option><option>Screening</option><option>General</option>
+            </select>
+            <select class="wf-input" style="width:140px;">
+              <option>All Types</option><option>Clinical</option><option>Walk-In Special</option>
+            </select>
           </div>
           <a href="catalog_item_form.html"><button class="wf-btn primary small">+ Add Service</button></a>
         </div>
         ${renderTable(
+          ["Service Name", "Code", "Category", "Service Type", "Linked Lab Test", "Default Price", "Status", "Actions"],
           [
-            "Service Name",
-            "Description",
-            "Price",
-            "Scope",
-            "Status",
-            "Actions",
-          ],
-          [
-            [
-              '<a href="catalog_item_form.html">Consultation Fee</a>',
-              "Standard practitioner consultation",
-              "ETB 300.00",
-              "All Branches",
-              '<span class="wf-badge green">Active</span>',
-              '<button class="wf-btn small danger">Deactivate</button>',
-            ],
-            [
-              '<a href="catalog_item_form.html">IM Injection</a>',
-              "Intramuscular injection administration",
-              "ETB 150.00",
-              "All Branches",
-              '<span class="wf-badge green">Active</span>',
-              '<button class="wf-btn small danger">Deactivate</button>',
-            ],
-            [
-              '<a href="catalog_item_form.html">Wound Dressing</a>',
-              "Wound cleaning and dressing",
-              "ETB 200.00",
-              "All Branches",
-              '<span class="wf-badge green">Active</span>',
-              '<button class="wf-btn small danger">Deactivate</button>',
-            ],
-            [
-              '<a href="catalog_item_form.html">IV Infusion</a>',
-              "Intravenous fluid/medication",
-              "ETB 500.00",
-              "Main Branch",
-              '<span class="wf-badge green">Active</span>',
-              '<button class="wf-btn small danger">Deactivate</button>',
-            ],
-            [
-              '<a href="catalog_item_form.html">ECG</a>',
-              "Electrocardiogram",
-              "ETB 350.00",
-              "Main Branch",
-              '<span class="wf-badge green">Active</span>',
-              '<button class="wf-btn small danger">Deactivate</button>',
-            ],
+            ['<a href="catalog_item_form.html">Consultation Fee</a>', "CONSULT", "General", '<span class="wf-badge gray">Clinical</span>', "—", "ETB 300.00", '<span class="wf-badge green">Active</span>', '<button class="wf-btn small danger">Deactivate</button>'],
+            ['<a href="catalog_item_form.html">IM Injection</a>', "IM-INJ", "Injections", '<span class="wf-badge gray">Clinical</span>', "—", "ETB 150.00", '<span class="wf-badge green">Active</span>', '<button class="wf-btn small danger">Deactivate</button>'],
+            ['<a href="catalog_item_form.html">IV Infusion</a>', "IV-INF", "IV Therapy", '<span class="wf-badge gray">Clinical</span>', "—", "ETB 500.00", '<span class="wf-badge green">Active</span>', '<button class="wf-btn small danger">Deactivate</button>'],
+            ['<a href="catalog_item_form.html">Wound Dressing</a>', "WND-DRS", "Wound Care", '<span class="wf-badge gray">Clinical</span>', "—", "ETB 200.00", '<span class="wf-badge green">Active</span>', '<button class="wf-btn small danger">Deactivate</button>'],
+            ['<a href="catalog_item_form.html">ECG</a>', "ECG", "Diagnostic", '<span class="wf-badge gray">Clinical</span>', "—", "ETB 350.00", '<span class="wf-badge green">Active</span>', '<button class="wf-btn small danger">Deactivate</button>'],
+            ['<a href="catalog_item_form.html">Nebulization</a>', "NEB", "Respiratory", '<span class="wf-badge gray">Clinical</span>', "—", "ETB 250.00", '<span class="wf-badge green">Active</span>', '<button class="wf-btn small danger">Deactivate</button>'],
+            ['<a href="catalog_item_form.html"><strong>Blood Pressure Check</strong></a>', "BP-CHK", "Screening", '<span class="wf-badge" style="background:#e8f5e9;color:#2e7d32;">Walk-In Special</span>', "—", "ETB 50.00", '<span class="wf-badge green">Active</span>', '<button class="wf-btn small danger">Deactivate</button>'],
+            ['<a href="catalog_item_form.html"><strong>Blood Sugar Check</strong></a>', "BS-CHK", "Screening", '<span class="wf-badge" style="background:#e8f5e9;color:#2e7d32;">Walk-In Special</span>', '<span class="wf-badge blue" style="font-size:.6rem;">FBS</span>', "ETB 100.00", '<span class="wf-badge green">Active</span>', '<button class="wf-btn small danger">Deactivate</button>'],
+            ['<a href="catalog_item_form.html"><strong>BMI Measurement</strong></a>', "BMI", "Screening", '<span class="wf-badge" style="background:#e8f5e9;color:#2e7d32;">Walk-In Special</span>', "—", "ETB 30.00", '<span class="wf-badge green">Active</span>', '<button class="wf-btn small danger">Deactivate</button>'],
+            ['<a href="catalog_item_form.html"><strong>Pregnancy Test</strong></a>', "PREG-TST", "Screening", '<span class="wf-badge" style="background:#e8f5e9;color:#2e7d32;">Walk-In Special</span>', '<span class="wf-badge blue" style="font-size:.6rem;">HCG</span>', "ETB 150.00", '<span class="wf-badge green">Active</span>', '<button class="wf-btn small danger">Deactivate</button>'],
+            ['<a href="catalog_item_form.html"><strong>Injection (Patient Drug)</strong></a>', "INJ-OWN", "Injections", '<span class="wf-badge" style="background:#e8f5e9;color:#2e7d32;">Walk-In Special</span>', "—", "ETB 80.00", '<span class="wf-badge green">Active</span>', '<button class="wf-btn small danger">Deactivate</button>'],
+            ['<a href="catalog_item_form.html"><strong>Wound Dressing (Walk-In)</strong></a>', "WND-WI", "Wound Care", '<span class="wf-badge" style="background:#e8f5e9;color:#2e7d32;">Walk-In Special</span>', "—", "ETB 150.00", '<span class="wf-badge green">Active</span>', '<button class="wf-btn small danger">Deactivate</button>'],
           ],
           { clickable: true },
         )}
+        <p class="text-small text-muted"><strong>Walk-In Special</strong> services are ordered by the receptionist (no practitioner). Linked Lab Test auto-creates a lab order on the Lab Tech queue.</p>
       </div>
 
       <!-- Tab 2: Lab Tests -->
@@ -94,21 +66,37 @@
         <div class="wf-filter-bar">
           <div class="filter-group">
             <input type="text" class="wf-input" placeholder="Search lab tests..." style="width:250px;">
+            <select class="wf-input" style="width:160px;">
+              <option>All Categories</option>
+              <option>Haematology</option>
+              <option>Biochemistry</option>
+              <option>Endocrine</option>
+              <option>Renal</option>
+              <option>Urinalysis</option>
+              <option>Microbiology</option>
+              <option>Serology / Immunology</option>
+            </select>
           </div>
           <a href="catalog_item_form.html"><button class="wf-btn primary small">+ Add Test</button></a>
         </div>
         ${renderTable(
           [
             "Test Name",
-            "Specimen Type",
+            "Code",
+            "Category",
+            "Type",
+            "Specimen",
             "Price",
-            "In-House Branches",
+            "Branches",
             "Status",
             "Actions",
           ],
           [
             [
-              "CBC (Complete Blood Count)",
+              '<a href="catalog_item_form.html">Complete Blood Count</a>',
+              "CBC",
+              "Haematology",
+              '<span class="wf-badge blue">Panel</span>',
               "Blood",
               "ETB 450.00",
               "Main, Merkato",
@@ -116,15 +104,10 @@
               '<button class="wf-btn small danger">Deactivate</button>',
             ],
             [
-              "Lipid Profile",
-              "Blood",
-              "ETB 400.00",
-              "Main",
-              '<span class="wf-badge green">Active</span>',
-              '<button class="wf-btn small danger">Deactivate</button>',
-            ],
-            [
-              "Blood Glucose",
+              '<a href="catalog_item_form.html">ESR</a>',
+              "ESR",
+              "Haematology",
+              '<span class="wf-badge gray">Single</span>',
               "Blood",
               "ETB 200.00",
               "Main, Merkato",
@@ -132,7 +115,21 @@
               '<button class="wf-btn small danger">Deactivate</button>',
             ],
             [
-              "HbA1c",
+              '<a href="catalog_item_form.html">Blood Glucose (Fasting)</a>',
+              "FBS",
+              "Biochemistry",
+              '<span class="wf-badge gray">Single</span>',
+              "Blood",
+              "ETB 200.00",
+              "Main, Merkato",
+              '<span class="wf-badge green">Active</span>',
+              '<button class="wf-btn small danger">Deactivate</button>',
+            ],
+            [
+              '<a href="catalog_item_form.html">Lipid Profile</a>',
+              "LIPID",
+              "Biochemistry",
+              '<span class="wf-badge blue">Panel</span>',
               "Blood",
               "ETB 400.00",
               "Main",
@@ -140,7 +137,21 @@
               '<button class="wf-btn small danger">Deactivate</button>',
             ],
             [
-              "Thyroid Panel",
+              '<a href="catalog_item_form.html">Liver Function Tests</a>',
+              "LFT",
+              "Biochemistry",
+              '<span class="wf-badge blue">Panel</span>',
+              "Blood",
+              "ETB 500.00",
+              "Main",
+              '<span class="wf-badge green">Active</span>',
+              '<button class="wf-btn small danger">Deactivate</button>',
+            ],
+            [
+              '<a href="catalog_item_form.html">Thyroid Panel</a>',
+              "TFT",
+              "Endocrine",
+              '<span class="wf-badge blue">Panel</span>',
               "Blood",
               "ETB 800.00",
               "None (external)",
@@ -148,9 +159,34 @@
               '<button class="wf-btn small danger">Deactivate</button>',
             ],
             [
+              '<a href="catalog_item_form.html">Renal Function Panel</a>',
+              "RFT",
+              "Renal",
+              '<span class="wf-badge blue">Panel</span>',
+              "Blood",
+              "ETB 350.00",
+              "Main",
+              '<span class="wf-badge green">Active</span>',
+              '<button class="wf-btn small danger">Deactivate</button>',
+            ],
+            [
+              '<a href="catalog_item_form.html">Urinalysis (Routine)</a>',
+              "UA",
               "Urinalysis",
+              '<span class="wf-badge gray">Single</span>',
               "Urine",
               "ETB 150.00",
+              "Main, Merkato",
+              '<span class="wf-badge green">Active</span>',
+              '<button class="wf-btn small danger">Deactivate</button>',
+            ],
+            [
+              '<a href="catalog_item_form.html">HIV Screening</a>',
+              "HIV",
+              "Serology",
+              '<span class="wf-badge gray">Single</span>',
+              "Blood",
+              "ETB 300.00",
               "Main, Merkato",
               '<span class="wf-badge green">Active</span>',
               '<button class="wf-btn small danger">Deactivate</button>',

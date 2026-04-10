@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>DocuMed — Encounter Outputs</title>
+    <link rel="stylesheet" href="../wireframe.css" />
+    <script src="../wireframe.js"></script>
+  </head>
+  <body>
+    <script>
+      ready(() => {
+        renderPageShell({
+          title: "Encounter Outputs",
+          role: "receptionist",
+          activeId: "encounter_outputs",
+          screenId: "SCR_encounter_outputs",
+          workflow: "Document Delivery Flow",
+          userName: "Hana G. (Receptionist)",
+          content: function(main) {
+            main.innerHTML = `
+      <h2 class="page-title">Encounter Outputs — Document Delivery</h2>
+      <p class="text-small text-muted mb-2">Each document is listed as a separate printable item. A patient may have multiple documents from a single encounter. Read-only — the receptionist prints and hands to the patient.</p>
+
+      <div class="wf-summary-bar">
+        <div class="summary-item"><strong>Pending Documents:</strong> 5</div>
+        <div class="summary-item"><strong>Delivered Today:</strong> 4</div>
+        <div class="summary-item"><strong>Total Today:</strong> 9</div>
+      </div>
+
+      <div class="wf-filter-bar">
+        <div class="filter-group">
+          <label>Status:</label>
+          <select class="wf-input" style="width:160px;">
+            <option>All</option><option selected>Pending Delivery</option><option>Delivered</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Document Type:</label>
+          <select class="wf-input" style="width:180px;">
+            <option>All Types</option><option>Prescription</option><option>Lab Results</option><option>Referral Letter</option><option>Medical Certificate</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Search:</label>
+          <input type="text" class="wf-input" placeholder="Patient name or MRN..." style="width:200px;">
+        </div>
+      </div>
+
+      <!-- Document Delivery Queue — one row per document -->
+      <div class="wf-form-section" style="padding:0;">
+
+        <!-- Patient Group: Meron Hailu — 3 documents from one encounter -->
+        <div style="background:#f0f4ff;padding:8px 14px;border-bottom:1px solid #ddd;display:flex;align-items:center;justify-content:space-between;cursor:pointer;" onclick="toggleGroup('grp-meron',this)">
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span class="grp-arrow" style="font-size:.75rem;color:#666;">&#9660;</span>
+            <strong style="font-size:.9rem;">Meron Hailu</strong>
+            <span class="text-small text-muted">MRN-0091</span>
+            <span class="text-small text-muted">Practitioner: Dr. Solomon T.</span>
+            <span class="text-small text-muted">Encounter: 10:45 AM</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;" onclick="event.stopPropagation();">
+            <span class="wf-badge orange">3 pending</span>
+            <button class="wf-btn small primary" onclick="printAllForPatient('MRN-0091')">Print All (3)</button>
+          </div>
+        </div>
+        <div id="grp-meron">
+        <table style="width:100%;border-collapse:collapse;font-size:.85rem;">
+          <thead>
+            <tr style="border-bottom:1px solid #ddd;background:#fafafa;text-align:left;">
+              <th style="padding:6px 12px;width:36px;"></th>
+              <th style="padding:6px 12px;">Document Type</th>
+              <th style="padding:6px 12px;">Summary</th>
+              <th style="padding:6px 12px;">Sent At</th>
+              <th style="padding:6px 12px;">Status</th>
+              <th style="padding:6px 12px;">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px solid #eee;">
+              <td style="padding:6px 12px;">1</td>
+              <td style="padding:6px 12px;"><span class="wf-badge blue">Prescription</span></td>
+              <td style="padding:6px 12px;">Amlodipine 10mg, Paracetamol 500mg <span class="text-small text-muted">(2 items)</span></td>
+              <td style="padding:6px 12px;">11:30 AM</td>
+              <td style="padding:6px 12px;"><span class="wf-badge orange">Pending</span></td>
+              <td style="padding:6px 12px;">
+                <button class="wf-btn small" onclick="viewDoc('rx-meron')">View</button>
+                <button class="wf-btn small primary" onclick="deliverDoc(this)">Print</button>
+              </td>
+            </tr>
+            <tr style="border-bottom:1px solid #eee;">
+              <td style="padding:6px 12px;">2</td>
+              <td style="padding:6px 12px;"><span class="wf-badge" style="background:#e8f5e9;color:#2e7d32;">Lab Results</span></td>
+              <td style="padding:6px 12px;">Blood Glucose (Fasting) — <strong>92 mg/dL</strong> <span class="wf-badge green" style="font-size:.55rem;">Normal</span></td>
+              <td style="padding:6px 12px;">11:30 AM</td>
+              <td style="padding:6px 12px;"><span class="wf-badge orange">Pending</span></td>
+              <td style="padding:6px 12px;">
+                <button class="wf-btn small" onclick="viewDoc('lab1-meron')">View</button>
+                <button class="wf-btn small primary" onclick="deliverDoc(this)">Print</button>
+              </td>
+            </tr>
+            <tr style="border-bottom:1px solid #eee;">
+              <td style="padding:6px 12px;">3</td>
+              <td style="padding:6px 12px;"><span class="wf-badge" style="background:#e8f5e9;color:#2e7d32;">Lab Results</span></td>
+              <td style="padding:6px 12px;">Renal Function Panel — BUN: <strong>18 mg/dL</strong>, Creatinine: <strong>1.0 mg/dL</strong>, eGFR: <strong>92</strong> <span class="wf-badge green" style="font-size:.55rem;">Normal</span></td>
+              <td style="padding:6px 12px;">11:30 AM</td>
+              <td style="padding:6px 12px;"><span class="wf-badge orange">Pending</span></td>
+              <td style="padding:6px 12px;">
+                <button class="wf-btn small" onclick="viewDoc('lab2-meron')">View</button>
+                <button class="wf-btn small primary" onclick="deliverDoc(this)">Print</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+
+        <!-- Patient Group: Dawit Tadesse — 1 document -->
+        <div style="background:#f0f4ff;padding:8px 14px;border-bottom:1px solid #ddd;border-top:2px solid #ccc;display:flex;align-items:center;justify-content:space-between;cursor:pointer;" onclick="toggleGroup('grp-dawit',this)">
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span class="grp-arrow" style="font-size:.75rem;color:#666;">&#9660;</span>
+            <strong style="font-size:.9rem;">Dawit Tadesse</strong>
+            <span class="text-small text-muted">MRN-0023</span>
+            <span class="text-small text-muted">Practitioner: Dr. Alem B.</span>
+            <span class="text-small text-muted">Encounter: 09:30 AM</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;" onclick="event.stopPropagation();">
+            <span class="wf-badge orange">1 pending</span>
+            <button class="wf-btn small primary" onclick="printAllForPatient('MRN-0023')">Print All (1)</button>
+          </div>
+        </div>
+        <div id="grp-dawit">
+        <table style="width:100%;border-collapse:collapse;font-size:.85rem;">
+          <thead>
+            <tr style="border-bottom:1px solid #ddd;background:#fafafa;text-align:left;">
+              <th style="padding:6px 12px;width:36px;"></th>
+              <th style="padding:6px 12px;">Document Type</th>
+              <th style="padding:6px 12px;">Summary</th>
+              <th style="padding:6px 12px;">Sent At</th>
+              <th style="padding:6px 12px;">Status</th>
+              <th style="padding:6px 12px;">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px solid #eee;">
+              <td style="padding:6px 12px;">1</td>
+              <td style="padding:6px 12px;"><span class="wf-badge blue">Prescription</span></td>
+              <td style="padding:6px 12px;">Omeprazole 20mg, Metronidazole 500mg, Clarithromycin 250mg <span class="text-small text-muted">(3 items)</span></td>
+              <td style="padding:6px 12px;">10:15 AM</td>
+              <td style="padding:6px 12px;"><span class="wf-badge orange">Pending</span></td>
+              <td style="padding:6px 12px;">
+                <button class="wf-btn small" onclick="viewDoc('rx-dawit')">View</button>
+                <button class="wf-btn small primary" onclick="deliverDoc(this)">Print</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+
+        <!-- Patient Group: Fatima Ali — 1 special service lab result -->
+        <div style="background:#f0f4ff;padding:8px 14px;border-bottom:1px solid #ddd;border-top:2px solid #ccc;display:flex;align-items:center;justify-content:space-between;cursor:pointer;" onclick="toggleGroup('grp-fatima',this)">
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span class="grp-arrow" style="font-size:.75rem;color:#666;">&#9660;</span>
+            <strong style="font-size:.9rem;">Fatima Ali</strong>
+            <span class="text-small text-muted">MRN-0078</span>
+            <span class="text-small text-muted">Source: <span class="wf-badge gray" style="font-size:.6rem;">Special Service</span> SSO-002</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;" onclick="event.stopPropagation();">
+            <span class="wf-badge orange">1 pending</span>
+            <button class="wf-btn small primary" onclick="printAllForPatient('MRN-0078')">Print All (1)</button>
+          </div>
+        </div>
+        <div id="grp-fatima">
+        <table style="width:100%;border-collapse:collapse;font-size:.85rem;">
+          <thead>
+            <tr style="border-bottom:1px solid #ddd;background:#fafafa;text-align:left;">
+              <th style="padding:6px 12px;width:36px;"></th>
+              <th style="padding:6px 12px;">Document Type</th>
+              <th style="padding:6px 12px;">Summary</th>
+              <th style="padding:6px 12px;">Sent At</th>
+              <th style="padding:6px 12px;">Status</th>
+              <th style="padding:6px 12px;">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px solid #eee;">
+              <td style="padding:6px 12px;">1</td>
+              <td style="padding:6px 12px;"><span class="wf-badge" style="background:#e8f5e9;color:#2e7d32;">Lab Results</span></td>
+              <td style="padding:6px 12px;">Blood Glucose (Fasting) — <strong>105 mg/dL</strong> <span class="wf-badge orange" style="font-size:.55rem;">High</span></td>
+              <td style="padding:6px 12px;">11:45 AM</td>
+              <td style="padding:6px 12px;"><span class="wf-badge orange">Pending</span></td>
+              <td style="padding:6px 12px;">
+                <button class="wf-btn small" onclick="viewDoc('lab-fatima')">View</button>
+                <button class="wf-btn small primary" onclick="deliverDoc(this)">Print</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+
+      <!-- Document Preview Panel -->
+      <div id="output-preview" style="display:none;margin-top:12px;">
+        <div class="wf-form-section">
+          <div class="section-title flex-between">
+            <span>Document Preview — Prescription</span>
+            <button class="wf-btn small" onclick="document.getElementById('output-preview').style.display='none'">Close</button>
+          </div>
+
+          <div class="wf-kv-grid">
+            <div class="wf-kv"><div class="kv-label">Patient</div><div class="kv-value"><strong>Meron Hailu</strong> (MRN-0091)</div></div>
+            <div class="wf-kv"><div class="kv-label">Practitioner</div><div class="kv-value">Dr. Solomon T. (General Practice)</div></div>
+            <div class="wf-kv"><div class="kv-label">Encounter</div><div class="kv-value">10 Apr 2026, 10:45 AM</div></div>
+            <div class="wf-kv"><div class="kv-label">Document</div><div class="kv-value"><span class="wf-badge blue">Prescription</span> <span class="text-small text-muted">1 of 3 documents for this patient</span></div></div>
+          </div>
+
+          <hr class="wf-divider">
+
+          <div style="background:#fafaf5;padding:12px 16px;border-radius:3px;border:1px solid #ddd;">
+            <div style="font-weight:600;margin-bottom:8px;color:#333;">Prescription</div>
+            <table style="width:100%;border-collapse:collapse;font-size:.85rem;">
+              <thead>
+                <tr style="border-bottom:1px solid #ccc;text-align:left;">
+                  <th style="padding:4px 8px;">#</th>
+                  <th style="padding:4px 8px;">Medication</th>
+                  <th style="padding:4px 8px;">Dosage</th>
+                  <th style="padding:4px 8px;">Route</th>
+                  <th style="padding:4px 8px;">Frequency</th>
+                  <th style="padding:4px 8px;">Duration</th>
+                  <th style="padding:4px 8px;">Instructions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom:1px solid #eee;">
+                  <td style="padding:4px 8px;">1</td>
+                  <td style="padding:4px 8px;"><strong>Amlodipine</strong></td>
+                  <td style="padding:4px 8px;">10mg</td>
+                  <td style="padding:4px 8px;">Oral</td>
+                  <td style="padding:4px 8px;">Once daily (AM)</td>
+                  <td style="padding:4px 8px;">30 days</td>
+                  <td style="padding:4px 8px;">Increased from 5mg. Monitor BP weekly.</td>
+                </tr>
+                <tr style="border-bottom:1px solid #eee;">
+                  <td style="padding:4px 8px;">2</td>
+                  <td style="padding:4px 8px;"><strong>Paracetamol</strong></td>
+                  <td style="padding:4px 8px;">500mg</td>
+                  <td style="padding:4px 8px;">Oral</td>
+                  <td style="padding:4px 8px;">TID (as needed)</td>
+                  <td style="padding:4px 8px;">5 days</td>
+                  <td style="padding:4px 8px;">For headache. Max 4g/day. Take with food.</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="text-small text-muted" style="margin-top:8px;font-style:italic;">Practitioner Notes: Follow-up in 2 weeks. Continue Metformin unchanged.</div>
+          </div>
+
+          <div class="wf-action-bar" style="margin-top:12px;">
+            <button class="wf-btn primary" onclick="deliverDoc(null)">Print This Document</button>
+            <button class="wf-btn" onclick="document.getElementById('output-preview').style.display='none'">Close</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Delivery Confirmation -->
+      <div id="delivery-confirm" style="display:none;margin-top:8px;padding:8px 12px;background:#e8f5e9;border-radius:3px;">
+        <span style="color:#2e7d32;font-size:.85rem;font-weight:600;">Document printed and marked as delivered.</span>
+      </div>
+
+      <div class="wf-inline-panel mt-2">
+        <p class="text-small text-muted">
+          <strong>How it works:</strong><br>
+          &bull; Each document is a <strong>separate printable item</strong> — a patient with 1 prescription + 2 lab results = 3 rows.<br>
+          &bull; Documents are grouped by patient. Click the patient header to <strong>collapse/expand</strong> the group.<br>
+          &bull; <strong>Print All</strong> prints every pending document for that patient at once.<br>
+          &bull; Individual <strong>Print</strong> buttons let you print one document at a time.<br>
+          &bull; All documents are read-only — the receptionist cannot modify clinical content.
+        </p>
+      </div>
+    `;
+
+            // JS handlers
+            window.viewDoc = function(id) {
+              document.getElementById('output-preview').style.display = 'block';
+              document.getElementById('delivery-confirm').style.display = 'none';
+              document.getElementById('output-preview').scrollIntoView({ behavior: 'smooth' });
+            };
+            window.deliverDoc = function(btn) {
+              if (btn) {
+                btn.textContent = 'Delivered';
+                btn.disabled = true;
+                btn.classList.remove('primary');
+                // Update status badge in the same row
+                const row = btn.closest('tr');
+                if (row) {
+                  const statusCell = row.querySelectorAll('td')[4];
+                  if (statusCell) statusCell.innerHTML = '<span class="wf-badge green">Delivered</span>';
+                }
+              }
+              document.getElementById('delivery-confirm').style.display = 'block';
+              document.getElementById('delivery-confirm').scrollIntoView({ behavior: 'smooth' });
+            };
+            window.printAllForPatient = function(mrn) {
+              document.getElementById('delivery-confirm').style.display = 'block';
+              document.getElementById('delivery-confirm').scrollIntoView({ behavior: 'smooth' });
+            };
+            window.toggleGroup = function(id, headerEl) {
+              const body = document.getElementById(id);
+              const arrow = headerEl.querySelector('.grp-arrow');
+              if (body.style.display === 'none') {
+                body.style.display = 'block';
+                if (arrow) arrow.innerHTML = '&#9660;';
+              } else {
+                body.style.display = 'none';
+                if (arrow) arrow.innerHTML = '&#9654;';
+              }
+            };
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

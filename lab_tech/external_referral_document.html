@@ -12,10 +12,10 @@
         document.body.innerHTML = `
     <div style="max-width:800px;margin:20px auto;padding:0 16px;">
       <div class="wf-action-bar between mb-2">
-        <a href="lab_order_detail.html"><button class="wf-btn">← Back to Lab Order</button></a>
+        <a href="../practitioner/patient_encounter.html"><button class="wf-btn">&larr; Back to Encounter</button></a>
         <div class="flex gap-1">
-          <button class="wf-btn">🖨 Print</button>
-          <button class="wf-btn">⬇ Download PDF</button>
+          <button class="wf-btn">Print</button>
+          <button class="wf-btn">Download PDF</button>
         </div>
       </div>
 
@@ -57,7 +57,7 @@
           </div>
           <div class="doc-kv">
             <div class="kv"><strong>Branch:</strong> Main Branch, Bole Road, Addis Ababa</div>
-            <div class="kv"><strong>Referral Date:</strong> 08 Apr 2026</div>
+            <div class="kv"><strong>Referral Date:</strong> 10 Apr 2026</div>
           </div>
         </div>
 
@@ -85,7 +85,7 @@
       </div>
     </div>
 
-    ${renderAnnotation("SCR_external_referral_document", "Lab Technician", "External Lab Referral Flow")}
+    ${renderAnnotation("SCR_external_referral_document", "Practitioner", "External Lab Referral Flow")}
   `;
       });
     </script>

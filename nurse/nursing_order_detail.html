@@ -16,74 +16,165 @@
           screenId: "SCR_nursing_order_detail",
           workflow: "Nursing Orders Administration Flow",
           userName: "Selam D. (Nurse)",
-          content: `
+          content: function(main) {
+            main.innerHTML = `
       <!-- Patient & Order Header -->
       <div class="wf-form-section">
         <div class="section-title">Patient & Order Information</div>
         <div class="wf-kv-grid">
           <div class="wf-kv"><div class="kv-label">Patient Name</div><div class="kv-value">Meron Hailu</div></div>
-          <div class="wf-kv"><div class="kv-label">Visit Date</div><div class="kv-value">08 Apr 2026</div></div>
-          <div class="wf-kv"><div class="kv-label">Ordering Practitioner</div><div class="kv-value">Dr. Solomon T.</div></div>
-          <div class="wf-kv"><div class="kv-label">Order Created</div><div class="kv-value">08 Apr 2026, 09:55 AM</div></div>
+          <div class="wf-kv"><div class="kv-label">MRN</div><div class="kv-value">MRN-0091</div></div>
+          <div class="wf-kv"><div class="kv-label">Visit Date</div><div class="kv-value">10 Apr 2026</div></div>
+          <div class="wf-kv"><div class="kv-label">Order Source</div><div class="kv-value"><span class="wf-badge gray">Practitioner</span> Dr. Solomon T.</div></div>
+          <div class="wf-kv"><div class="kv-label">Order Created</div><div class="kv-value">10 Apr 2026, 09:55 AM</div></div>
+          <div class="wf-kv"><div class="kv-label">Order Status</div><div class="kv-value"><span class="wf-badge orange">In Progress</span></div></div>
         </div>
       </div>
 
       <h2 class="page-title">Ordered Procedures</h2>
+      <p class="text-small text-muted mb-2">Document each procedure as you administer it. Click the header to expand/collapse. <span class="required">*</span> marks required fields.</p>
 
-      <!-- Procedure 1 -->
-      <div class="wf-card">
-        <div class="card-title flex-between">
-          1. Intramuscular Injection
-          <span class="wf-badge orange">Pending</span>
+      <!-- Procedure 1: IM Injection (completed, collapsed by default) -->
+      <div class="wf-card proc-card" style="margin-bottom:16px;" id="proc-card-1">
+        <div class="card-title flex-between" style="cursor:pointer;" onclick="toggleProcCard('proc-card-1')">
+          <span>
+            <span id="proc-arrow-1" style="font-size:.85rem;margin-right:4px;">&#x25B6;</span>
+            <strong>IM-INJ</strong> &mdash; IM Injection (Intramuscular)
+          </span>
+          <span class="wf-badge green" id="proc-status-1">Completed</span>
         </div>
-        <div class="wf-kv-grid mb-2">
-          <div class="wf-kv"><div class="kv-label">Instructions</div><div class="kv-value">Administer in deltoid muscle</div></div>
-          <div class="wf-kv"><div class="kv-label">Dosage</div><div class="kv-value">Diclofenac 75mg/3ml</div></div>
-          <div class="wf-kv"><div class="kv-label">Practitioner Notes</div><div class="kv-value">Patient reports pain level 6. Administer slowly.</div></div>
-        </div>
-        <div class="wf-inline-panel">
-          <h4 style="margin-bottom:8px;">Administration Documentation</h4>
-          <div class="wf-form-row">
-            <div class="wf-form-group">
-              <label><input type="checkbox" checked> Procedure Performed</label>
-            </div>
-            ${renderFormField("Time of Administration", "time", { required: true, value: "10:30" })}
+
+        <!-- Collapsed summary (visible when collapsed) -->
+        <div id="proc-summary-1" style="padding:4px 0 0;">
+          <div class="text-small" style="color:#7b1fa2;background:#f3e5f5;padding:4px 8px;border-radius:2px;margin-bottom:4px;">
+            <strong>Rx:</strong> Diclofenac 75mg/3ml &middot; Intramuscular (IM) &middot; Left deltoid &middot; Single dose
           </div>
-          ${renderFormField("Notes", "textarea", { placeholder: "Site of injection, patient tolerance, observations..." })}
+          <div class="text-small" style="color:#555;">Administered at <strong>10:30</strong> &mdash; Left deltoid &mdash; Tolerated well &mdash; No complications</div>
+        </div>
+
+        <!-- Expandable body (hidden when collapsed) -->
+        <div id="proc-body-1" style="display:none;">
+          <!-- Practitioner's Instructions (read-only) -->
+          <div style="background:#f3e5f5;padding:10px 12px;border-radius:3px;margin:10px 0;border-left:3px solid #7b1fa2;">
+            <div class="text-small" style="font-weight:600;color:#7b1fa2;margin-bottom:6px;">Practitioner's Order:</div>
+            <div style="display:flex;flex-wrap:wrap;gap:12px;font-size:.82rem;margin-bottom:6px;">
+              <div><span style="color:#888;">Drug:</span> <strong>Diclofenac</strong></div>
+              <div><span style="color:#888;">Dosage:</span> <strong>75mg/3ml</strong></div>
+              <div><span style="color:#888;">Route:</span> <strong>Intramuscular (IM)</strong></div>
+              <div><span style="color:#888;">Site:</span> <strong>Left deltoid</strong></div>
+              <div><span style="color:#888;">Frequency:</span> <strong>Single dose</strong></div>
+            </div>
+            <div class="text-small" style="color:#444;border-top:1px solid #e1bee7;padding-top:4px;"><strong>Notes:</strong> Patient reports pain level 6. Administer slowly.</div>
+          </div>
+
+          <!-- Nurse Administration Documentation -->
+          <div class="wf-inline-panel">
+            <h4 style="margin-bottom:8px;">Administration Documentation</h4>
+            <div class="wf-form-row">
+              <div class="wf-form-group">
+                <label><input type="checkbox" checked> Procedure Performed <span class="required">*</span></label>
+              </div>
+              ${renderFormField("Time Administered <span class='required'>*</span>", "time", { required: true, value: "10:30" })}
+            </div>
+            <div class="wf-form-row">
+              ${renderFormField("Site of Administration <span class='required'>*</span>", "text", { placeholder: "e.g., Left deltoid muscle", value: "Left deltoid" })}
+              ${renderFormField("Route <span class='required'>*</span>", "select", { options: ["Intramuscular", "Subcutaneous", "Intravenous", "Other"] })}
+            </div>
+            <div class="wf-form-row">
+              ${renderFormField("Vital Signs (Post-procedure)", "text", { placeholder: "e.g., BP 120/80, HR 72 (optional)" })}
+              ${renderFormField("Patient Response <span class='required'>*</span>", "select", { options: ["Tolerated well", "Mild discomfort", "Significant pain", "Adverse reaction — document below"] })}
+            </div>
+            ${renderFormField("Nurse Notes", "textarea", { placeholder: "Observations, patient tolerance, adverse reactions, follow-up actions... (optional)", value: "Administered IM Diclofenac 75mg to left deltoid at 10:30. Patient tolerated well. No immediate adverse reaction. Advised to remain seated for 15 minutes." })}
+            <div class="wf-form-row">
+              ${renderFormField("Complications <span class='required'>*</span>", "select", { options: ["None", "Bleeding at site", "Swelling", "Allergic reaction", "Other — document in notes"] })}
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- Procedure 2 -->
-      <div class="wf-card">
-        <div class="card-title flex-between">
-          2. Wound Dressing
-          <span class="wf-badge orange">Pending</span>
+      <!-- Procedure 2: Wound Dressing (pending, expanded by default) -->
+      <div class="wf-card proc-card" style="margin-bottom:16px;" id="proc-card-2">
+        <div class="card-title flex-between" style="cursor:pointer;" onclick="toggleProcCard('proc-card-2')">
+          <span>
+            <span id="proc-arrow-2" style="font-size:.85rem;margin-right:4px;">&#x25BC;</span>
+            <strong>WND-DRS</strong> &mdash; Wound Dressing
+          </span>
+          <span class="wf-badge orange" id="proc-status-2">Pending</span>
         </div>
-        <div class="wf-kv-grid mb-2">
-          <div class="wf-kv"><div class="kv-label">Instructions</div><div class="kv-value">Clean wound, apply antiseptic, sterile gauze wrap</div></div>
-          <div class="wf-kv"><div class="kv-label">Dosage</div><div class="kv-value">—</div></div>
-          <div class="wf-kv"><div class="kv-label">Practitioner Notes</div><div class="kv-value">Right forearm laceration, approx 4cm</div></div>
-        </div>
-        <div class="wf-inline-panel">
-          <h4 style="margin-bottom:8px;">Administration Documentation</h4>
-          <div class="wf-form-row">
-            <div class="wf-form-group">
-              <label><input type="checkbox"> Procedure Performed</label>
-            </div>
-            ${renderFormField("Time of Administration", "time", { required: true })}
+
+        <!-- Collapsed summary (hidden when expanded) -->
+        <div id="proc-summary-2" style="display:none;">
+          <div class="text-small" style="color:#7b1fa2;background:#f3e5f5;padding:4px 8px;border-radius:2px;margin-bottom:4px;">
+            <strong>Rx:</strong> Right forearm laceration, ~4cm &middot; Laceration &middot; Clean, antiseptic, sterile gauze wrap
           </div>
-          ${renderFormField("Notes", "textarea", { placeholder: "Site details, patient tolerance..." })}
+          <div class="text-small text-muted" style="font-style:italic;">Not yet documented</div>
         </div>
+
+        <!-- Expandable body (visible when expanded) -->
+        <div id="proc-body-2" style="display:block;">
+          <!-- Practitioner's Instructions (read-only) -->
+          <div style="background:#f3e5f5;padding:10px 12px;border-radius:3px;margin:10px 0;border-left:3px solid #7b1fa2;">
+            <div class="text-small" style="font-weight:600;color:#7b1fa2;margin-bottom:6px;">Practitioner's Order:</div>
+            <div style="display:flex;flex-wrap:wrap;gap:12px;font-size:.82rem;margin-bottom:6px;">
+              <div><span style="color:#888;">Location:</span> <strong>Right forearm</strong></div>
+              <div><span style="color:#888;">Size:</span> <strong>~4cm</strong></div>
+              <div><span style="color:#888;">Wound Type:</span> <strong>Laceration</strong></div>
+            </div>
+            <div class="text-small" style="color:#444;border-top:1px solid #e1bee7;padding-top:4px;"><strong>Instructions:</strong> Clean wound, apply antiseptic, sterile gauze wrap.</div>
+          </div>
+
+          <!-- Nurse Administration Documentation -->
+          <div class="wf-inline-panel">
+            <h4 style="margin-bottom:8px;">Administration Documentation</h4>
+            <div class="wf-form-row">
+              <div class="wf-form-group">
+                <label><input type="checkbox"> Procedure Performed <span class="required">*</span></label>
+              </div>
+              ${renderFormField("Time Administered <span class='required'>*</span>", "time", { required: true })}
+            </div>
+            <div class="wf-form-row">
+              ${renderFormField("Wound Site <span class='required'>*</span>", "text", { placeholder: "e.g., Right forearm, anterior" })}
+              ${renderFormField("Wound Condition <span class='required'>*</span>", "select", { options: ["— Select —", "Clean", "Infected", "Healing", "Necrotic", "Other"] })}
+            </div>
+            <div class="wf-form-row">
+              ${renderFormField("Dressing Used", "text", { placeholder: "e.g., Sterile gauze, Betadine (optional)" })}
+              ${renderFormField("Patient Response <span class='required'>*</span>", "select", { options: ["— Select —", "Tolerated well", "Mild discomfort", "Significant pain", "Adverse reaction — document below"] })}
+            </div>
+            ${renderFormField("Nurse Notes", "textarea", { placeholder: "Wound appearance, drainage, measurements, follow-up instructions... (optional)" })}
+            <div class="wf-form-row">
+              ${renderFormField("Complications <span class='required'>*</span>", "select", { options: ["— Select —", "None", "Bleeding", "Signs of infection", "Allergic reaction to dressing", "Other — document in notes"] })}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Info box for Special Service orders -->
+      <div style="background:#e8f5e9;padding:10px 14px;border-radius:3px;margin-bottom:16px;border-left:3px solid #2e7d32;">
+        <div class="text-small" style="font-weight:600;color:#2e7d32;margin-bottom:4px;">Special Service Order Note</div>
+        <div class="text-small" style="color:#333;">When the order source is <strong>Special Service</strong>, instructions come from the receptionist (not a practitioner). The "Receptionist Notes" field replaces "Practitioner Instructions". On completion, the receptionist's Special Service tracker updates automatically.</div>
       </div>
 
       <hr class="wf-divider">
 
       <div class="wf-action-bar">
-        <button class="wf-btn primary">✓ Complete Order</button>
-        <a href="nurse_dashboard.html"><button class="wf-btn">← Back</button></a>
-        <span class="text-small text-muted">→ Practitioner will be notified</span>
+        <button class="wf-btn primary">Complete Order</button>
+        <a href="nurse_dashboard.html"><button class="wf-btn">&larr; Back</button></a>
+        <span class="text-small text-muted">&rarr; Order source (practitioner or receptionist) will be notified on completion</span>
       </div>
-    `,
+    `;
+
+            // Toggle function for collapsible procedure cards
+            window.toggleProcCard = function(cardId) {
+              const body = document.getElementById(cardId.replace('proc-card', 'proc-body'));
+              const summary = document.getElementById(cardId.replace('proc-card', 'proc-summary'));
+              const arrow = document.getElementById(cardId.replace('proc-card', 'proc-arrow'));
+              if (!body || !summary) return;
+              const isOpen = body.style.display !== 'none';
+              body.style.display = isOpen ? 'none' : 'block';
+              summary.style.display = isOpen ? 'block' : 'none';
+              if (arrow) arrow.innerHTML = isOpen ? '&#x25B6;' : '&#x25BC;';
+            };
+          }
         });
       });
     </script>

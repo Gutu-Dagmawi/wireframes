@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>DocuMed — Patient Profile</title>
+  <link rel="stylesheet" href="../wireframe.css">
+  <script src="../wireframe.js"></script>
+</head>
+<body>
+<script>
+ready(() => {
+  renderPageShell({
+    title: 'Patient Profile Dashboard',
+    role: 'practitioner',
+    activeId: 'patient_profile',
+    screenId: 'SCR_patient_profile',
+    workflow: 'Longitudinal Patient Record',
+    userName: 'Dr. Solomon T.',
+    content: function(main) {
+      main.innerHTML = `
+      <!-- Patient Identity Banner -->
+      <div class="wf-patient-header">
+        <div class="ph-top-row">
+          <div style="display:flex;align-items:center;gap:14px;">
+            <div class="wf-placeholder" style="width:60px;height:60px;border-radius:50%;border-width:1.5px;flex-shrink:0;"><span style="font-size:.55rem;">Photo</span></div>
+            <div>
+              <div class="ph-name">Abebe Kebede</div>
+              <div style="font-size:.82rem;color:#888;">Registered: 15 Jan 2024 · Last Visit: 08 Apr 2026</div>
+            </div>
+          </div>
+          <div class="flex gap-1">
+            <button class="wf-btn small">Print Summary</button>
+            <button class="wf-btn small">Export</button>
+          </div>
+        </div>
+        <div class="ph-meta">
+          <div class="ph-meta-item"><span class="meta-label">Patient ID</span>ET-1234567</div>
+          <div class="ph-meta-item"><span class="meta-label">Sex / Age</span>Male, 41 yrs</div>
+          <div class="ph-meta-item"><span class="meta-label">Date of Birth</span>12 Mar 1985</div>
+          <div class="ph-meta-item"><span class="meta-label">Phone</span>0911-234-567</div>
+          <div class="ph-meta-item"><span class="meta-label">Email</span>abebe.k@email.com</div>
+          <div class="ph-meta-item"><span class="meta-label">Address</span>Bole Sub-city, Addis Ababa</div>
+        </div>
+      </div>
+
+      <!-- Emergency Contact -->
+      <div class="wf-card">
+        <div class="card-title flex-between">
+          <span>Emergency Contact</span>
+          <button class="wf-btn small">✏ Edit</button>
+        </div>
+        <div class="wf-kv-grid">
+          <div class="wf-kv"><div class="kv-label">Contact Name</div><div class="kv-value">Tigist Kebede</div></div>
+          <div class="wf-kv"><div class="kv-label">Relationship</div><div class="kv-value">Spouse</div></div>
+          <div class="wf-kv"><div class="kv-label">Phone</div><div class="kv-value">0922-111-222</div></div>
+        </div>
+      </div>
+
+      <!-- Medical Background -->
+      <div class="wf-grid-2">
+        <!-- PMH -->
+        <div class="wf-card">
+          <div class="card-title flex-between">
+            <span>Past Medical History (PMH)</span>
+            <button class="wf-btn small">✏ Edit</button>
+          </div>
+          ${renderTable(
+            ['Condition', 'Year', 'Status', 'Notes'],
+            [
+              ['Hypertension', '2024', '<span class="wf-badge orange">Active</span>', 'Managed with Amlodipine'],
+              ['Pre-diabetes', '2025', '<span class="wf-badge orange">Active</span>', 'HbA1c 6.1%, on Metformin'],
+              ['Malaria', '2020', '<span class="wf-badge green">Resolved</span>', 'P. falciparum, treated'],
+              ['Typhoid Fever', '2018', '<span class="wf-badge green">Resolved</span>', 'Full recovery'],
+            ]
+          )}
+        </div>
+
+        <!-- PSH -->
+        <div class="wf-card">
+          <div class="card-title flex-between">
+            <span>Past Surgical History (PSH)</span>
+            <button class="wf-btn small">✏ Edit</button>
+          </div>
+          ${renderTable(
+            ['Procedure', 'Date', 'Facility', 'Notes'],
+            [
+              ['Appendectomy', 'Mar 2015', 'Tikur Anbessa Hospital', 'Laparoscopic, no complications'],
+            ]
+          )}
+          <button class="wf-btn small" style="margin-top:8px;">+ Add Entry</button>
+        </div>
+      </div>
+
+      <div class="wf-grid-2">
+        <!-- Family History -->
+        <div class="wf-card">
+          <div class="card-title flex-between">
+            <span>Family History</span>
+            <button class="wf-btn small">✏ Edit</button>
+          </div>
+          ${renderTable(
+            ['Relation', 'Condition', 'Notes'],
+            [
+              ['Father', 'Type 2 Diabetes', 'Diagnosed age 50, on insulin'],
+              ['Father', 'Hypertension', 'On medication'],
+              ['Mother', 'Asthma', 'Childhood onset, managed'],
+              ['Brother', 'None reported', '—'],
+            ]
+          )}
+          <button class="wf-btn small" style="margin-top:8px;">+ Add Entry</button>
+        </div>
+
+        <!-- Social History -->
+        <div class="wf-card">
+          <div class="card-title flex-between">
+            <span>Social History</span>
+            <button class="wf-btn small">✏ Edit</button>
+          </div>
+          <div class="wf-kv-grid">
+            <div class="wf-kv"><div class="kv-label">Smoking Status</div><div class="kv-value">Never</div></div>
+            <div class="wf-kv"><div class="kv-label">Alcohol Use</div><div class="kv-value">Occasional (social, 1-2x/month)</div></div>
+            <div class="wf-kv"><div class="kv-label">Occupation</div><div class="kv-value">Software Engineer</div></div>
+            <div class="wf-kv"><div class="kv-label">Lifestyle Notes</div><div class="kv-value">Sedentary work, walks 20 min/day. Reports recent work stress.</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Active Problem List + Allergies -->
+      <div class="wf-grid-2">
+        <div class="wf-card">
+          <div class="card-title flex-between">
+            <span>Active Problem List</span>
+            <button class="wf-btn small">✏ Edit</button>
+          </div>
+          ${renderTable(
+            ['Condition', 'Onset', 'Status', 'Managing Provider'],
+            [
+              ['Hypertension Stage 1', 'Jun 2024', '<span class="wf-badge orange">Active</span>', 'Dr. Solomon T.'],
+              ['Pre-diabetes', 'Jan 2025', '<span class="wf-badge orange">Monitoring</span>', 'Dr. Solomon T.'],
+            ]
+          )}
+          <button class="wf-btn small" style="margin-top:8px;">+ Add Condition</button>
+        </div>
+
+        <div class="wf-card">
+          <div class="card-title flex-between">
+            <span>Allergies</span>
+            <button class="wf-btn small">✏ Edit</button>
+          </div>
+          ${renderTable(
+            ['Allergen', 'Type', 'Reaction', 'Severity'],
+            [
+              ['Penicillin', 'Drug', 'Rash, urticaria', '<span class="wf-badge red">Severe</span>'],
+              ['Peanuts', 'Food', 'Oral itching, swelling', '<span class="wf-badge orange">Moderate</span>'],
+            ]
+          )}
+          <button class="wf-btn small" style="margin-top:8px;">+ Add Allergy</button>
+        </div>
+      </div>
+
+      <!-- Current Medications (Master List) -->
+      <div class="wf-card">
+        <div class="card-title flex-between">
+          <span>Current Medications (Master List)</span>
+          <button class="wf-btn small">✏ Edit</button>
+        </div>
+        ${renderTable(
+          ['Drug', 'Dosage', 'Frequency', 'Prescribed By', 'Start Date', 'Status'],
+          [
+            ['Amlodipine', '5mg tablets', 'Once daily', 'Dr. Solomon T.', '15 Jun 2024', '<span class="wf-badge green">Active</span>'],
+            ['Metformin', '500mg tablets', 'Twice daily', 'Dr. Solomon T.', '20 Jan 2025', '<span class="wf-badge green">Active</span>'],
+            ['Ibuprofen', '400mg tablets', 'PRN', 'Dr. Solomon T.', '08 Apr 2026', '<span class="wf-badge green">Active</span>'],
+            ['Amoxicillin', '500mg capsules', 'TDS x 5 days', 'Dr. Solomon T.', '20 Feb 2026', '<span class="wf-badge gray">Completed</span>'],
+          ]
+        )}
+      </div>
+
+      <!-- Encounter History -->
+      <div class="wf-card">
+        <div class="card-title">Encounter History</div>
+        ${renderTable(
+          ['Date', 'Branch', 'Practitioner', 'Visit Type', 'Diagnosis', 'Status'],
+          [
+            ['08 Apr 2026', 'Main Branch', 'Dr. Solomon T.', '<span class="wf-badge blue">Walk-in</span>', 'Tension headache; HTN (controlled)', '<span class="wf-badge green">Completed</span>'],
+            ['15 Mar 2026', 'Main Branch', 'Dr. Alem B.', '<span class="wf-badge blue">Appointment</span>', 'Hypertension Stage 1', '<span class="wf-badge green">Completed</span>'],
+            ['20 Feb 2026', 'Main Branch', 'Dr. Solomon T.', '<span class="wf-badge blue">Walk-in</span>', 'URTI', '<span class="wf-badge green">Completed</span>'],
+            ['05 Jan 2026', 'Main Branch', 'Dr. Solomon T.', '<span class="wf-badge blue">Appointment</span>', 'Annual checkup', '<span class="wf-badge green">Completed</span>'],
+          ],
+          { clickable: true }
+        )}
+      </div>
+
+      <!-- Lab Results History -->
+      <div class="wf-card">
+        <div class="card-title">Lab Results History</div>
+        ${renderTable(
+          ['Date', 'Test', 'Result', 'Flag', 'Ordered By'],
+          [
+            ['08 Apr 2026', 'Blood Glucose (Fasting)', '105 mg/dL', '<span class="wf-badge orange">Borderline</span>', 'Dr. Solomon T.'],
+            ['08 Apr 2026', 'Renal Function Panel', 'Normal', '<span class="wf-badge green">Normal</span>', 'Dr. Solomon T.'],
+            ['15 Mar 2026', 'CBC', 'Normal', '<span class="wf-badge green">Normal</span>', 'Dr. Alem B.'],
+            ['15 Mar 2026', 'HbA1c', '6.1%', '<span class="wf-badge orange">High</span>', 'Dr. Alem B.'],
+            ['15 Mar 2026', 'Lipid Profile', 'LDL 142 mg/dL', '<span class="wf-badge orange">High</span>', 'Dr. Alem B.'],
+          ]
+        )}
+      </div>
+
+      <!-- Version History -->
+      <div class="wf-card">
+        <div class="card-title">Profile Change History</div>
+        ${renderTable(
+          ['Date/Time', 'Changed By', 'Encounter', 'Section', 'Summary'],
+          [
+            ['08 Apr 2026, 10:45', 'Dr. Solomon T.', 'E-2026-0412', 'Medications', 'Added Ibuprofen 400mg PRN'],
+            ['15 Mar 2026, 11:20', 'Dr. Alem B.', 'E-2026-0315', 'Problem List', 'Updated HTN status to "controlled"'],
+            ['20 Jan 2025, 09:30', 'Dr. Solomon T.', 'E-2025-0120', 'Medications', 'Added Metformin 500mg BID'],
+            ['20 Jan 2025, 09:30', 'Dr. Solomon T.', 'E-2025-0120', 'Problem List', 'Added Pre-diabetes'],
+            ['15 Jun 2024, 14:15', 'Dr. Solomon T.', 'E-2024-0615', 'Allergies', 'Added Penicillin allergy (severe)'],
+          ]
+        )}
+      </div>
+      `;
+    }
+  });
+});
+</script>
+</body>
+</html>

@@ -24,6 +24,8 @@
         <div class="tab active" data-tab="tab-hours">Operating Hours & Departments</div>
         <div class="tab" data-tab="tab-schedules">Practitioner Schedules</div>
         <div class="tab" data-tab="tab-rooms">Rooms & Resources</div>
+        <div class="tab" data-tab="tab-fees">Fee Schedule & Pricing</div>
+        <div class="tab" data-tab="tab-availability">Service Availability</div>
       </div>
 
       <!-- Tab 1: Operating Hours & Departments -->
@@ -52,24 +54,20 @@
           ${renderTable(
             ["Department Name", "Actions"],
             [
-              [
-                "General Practice",
-                '<button class="wf-btn small">Edit</button> <button class="wf-btn small danger">Remove</button>',
-              ],
-              [
-                "Paediatrics",
-                '<button class="wf-btn small">Edit</button> <button class="wf-btn small danger">Remove</button>',
-              ],
-              [
-                "Internal Medicine",
-                '<button class="wf-btn small">Edit</button> <button class="wf-btn small danger">Remove</button>',
-              ],
-              [
-                "Laboratory",
-                '<button class="wf-btn small">Edit</button> <button class="wf-btn small danger">Remove</button>',
-              ],
+              ["General Practice", '<button class="wf-btn small">Edit</button> <button class="wf-btn small danger">Remove</button>'],
+              ["Paediatrics", '<button class="wf-btn small">Edit</button> <button class="wf-btn small danger">Remove</button>'],
+              ["Internal Medicine", '<button class="wf-btn small">Edit</button> <button class="wf-btn small danger">Remove</button>'],
+              ["Laboratory", '<button class="wf-btn small">Edit</button> <button class="wf-btn small danger">Remove</button>'],
             ],
           )}
+        </div>
+
+        <div class="wf-form-section">
+          <div class="section-title">Queue & Workflow Settings</div>
+          <div class="wf-form-row">
+            ${renderFormField("No-Show Grace Window (minutes)", "number", { value: "30", placeholder: "30" })}
+            ${renderFormField("Default Appointment Slot Duration (minutes)", "number", { value: "30" })}
+          </div>
         </div>
       </div>
 
@@ -106,34 +104,13 @@
           ${renderTable(
             ["Room Name / #", "Assigned Practitioner(s)", "Status", "Actions"],
             [
-              [
-                "Room 1",
-                "Dr. Solomon T.",
-                '<span class="wf-badge green">Active</span>',
-                '<button class="wf-btn small">Edit</button> <button class="wf-btn small danger">Deactivate</button>',
-              ],
-              [
-                "Room 2",
-                "Dr. Miriam K.",
-                '<span class="wf-badge green">Active</span>',
-                '<button class="wf-btn small">Edit</button> <button class="wf-btn small danger">Deactivate</button>',
-              ],
-              [
-                "Room 3",
-                "Dr. Alem B.",
-                '<span class="wf-badge green">Active</span>',
-                '<button class="wf-btn small">Edit</button> <button class="wf-btn small danger">Deactivate</button>',
-              ],
-              [
-                "Room 4",
-                "—",
-                '<span class="wf-badge gray">Inactive</span>',
-                '<button class="wf-btn small">Reactivate</button>',
-              ],
+              ["Room 1", "Dr. Solomon T.", '<span class="wf-badge green">Active</span>', '<button class="wf-btn small">Edit</button> <button class="wf-btn small danger">Deactivate</button>'],
+              ["Room 2", "Dr. Miriam K.", '<span class="wf-badge green">Active</span>', '<button class="wf-btn small">Edit</button> <button class="wf-btn small danger">Deactivate</button>'],
+              ["Room 3", "Dr. Alem B.", '<span class="wf-badge green">Active</span>', '<button class="wf-btn small">Edit</button> <button class="wf-btn small danger">Deactivate</button>'],
+              ["Room 4", "—", '<span class="wf-badge gray">Inactive</span>', '<button class="wf-btn small">Reactivate</button>'],
             ],
           )}
         </div>
-
         <div class="wf-form-section">
           <div class="section-title flex-between">
             Shared Resources
@@ -142,23 +119,161 @@
           ${renderTable(
             ["Resource Name", "Type", "Status"],
             [
+              ["ECG Machine", "Diagnostic", '<span class="wf-badge green">Available</span>'],
+              ["Pulse Oximeter", "Diagnostic", '<span class="wf-badge blue">In Use</span>'],
+              ["Nebulizer", "Treatment", '<span class="wf-badge green">Available</span>'],
+            ],
+          )}
+        </div>
+      </div>
+
+      <!-- Tab 4: Fee Schedule & Pricing -->
+      <div id="tab-fees" class="wf-tab-content">
+        <div class="wf-form-section">
+          <div class="section-title">System Fees</div>
+          <p class="text-small text-muted" style="margin-top:-4px;margin-bottom:8px;">Default prices are set system-wide in Master Data. Branch overrides apply only at this branch. Leave blank to use the default.</p>
+          ${renderTable(
+            ["Fee Type", "Code", "Default Price (ETB)", "Branch Override (ETB)", "Status", "Actions"],
+            [
               [
-                "ECG Machine",
-                "Diagnostic",
-                '<span class="wf-badge green">Available</span>',
+                "Card Activation (Walk-in)",
+                "CARD-WI",
+                "200.00",
+                '<input type="number" class="wf-input" placeholder="—" style="width:100px;">',
+                '<span class="wf-badge green">Active</span>',
+                '<button class="wf-btn small">Edit</button>',
               ],
               [
-                "Pulse Oximeter",
-                "Diagnostic",
-                '<span class="wf-badge blue">In Use</span>',
+                "Card Activation (Appointment)",
+                "CARD-APPT",
+                "150.00",
+                '<input type="number" class="wf-input" placeholder="—" style="width:100px;">',
+                '<span class="wf-badge green">Active</span>',
+                '<button class="wf-btn small">Edit</button>',
               ],
               [
-                "Nebulizer",
-                "Treatment",
-                '<span class="wf-badge green">Available</span>',
+                "Consultation Fee (General)",
+                "CONSULT-GEN",
+                "300.00",
+                '<input type="number" class="wf-input" value="350" style="width:100px;">',
+                '<span class="wf-badge green">Active</span>',
+                '<button class="wf-btn small">Edit</button>',
+              ],
+              [
+                "Consultation Fee (Specialist)",
+                "CONSULT-SPEC",
+                "500.00",
+                '<input type="number" class="wf-input" placeholder="—" style="width:100px;">',
+                '<span class="wf-badge green">Active</span>',
+                '<button class="wf-btn small">Edit</button>',
+              ],
+              [
+                "Appointment Booking Fee",
+                "APPT-FEE",
+                "50.00",
+                '<input type="number" class="wf-input" placeholder="—" style="width:100px;">',
+                '<span class="wf-badge green">Active</span>',
+                '<button class="wf-btn small">Edit</button>',
+              ],
+              [
+                "Follow-up Visit",
+                "FOLLOWUP",
+                "100.00",
+                '<input type="number" class="wf-input" placeholder="—" style="width:100px;">',
+                '<span class="wf-badge green">Active</span>',
+                '<button class="wf-btn small">Edit</button>',
               ],
             ],
           )}
+          <div class="wf-action-bar" style="margin-top:8px;">
+            <button class="wf-btn primary">Save Fee Overrides</button>
+            <button class="wf-btn small">+ Add Custom Fee</button>
+            <span class="text-small text-muted" style="margin-left:auto;">Changes take effect immediately for new payment requests.</span>
+          </div>
+        </div>
+
+        <div class="wf-form-section" style="margin-top:12px;">
+          <div class="section-title">Card Validity Settings</div>
+          <div class="wf-form-row">
+            <div class="wf-form-group">
+              <label>Card Auto-Deactivation Duration <span class="required">*</span></label>
+              <div class="flex gap-1" style="align-items:center;">
+                <input type="number" class="wf-input" value="14" style="width:80px;">
+                <span>days after activation</span>
+              </div>
+              <p class="text-small text-muted" style="margin-top:4px;">Cards automatically deactivate after this period.  Patients must pay a re-activation fee for visits beyond this window.</p>
+            </div>
+            <div class="wf-form-group">
+              <label>Suspended Encounter Override</label>
+              <div style="background:#fff8e1;border:1px solid #ffe082;border-radius:3px;padding:8px 12px;">
+                <p class="text-small" style="margin:0;">For <strong>suspended encounters</strong>, the practitioner's declared <em>resumption date limit</em> overrides this setting.  The card remains valid for resumption until the practitioner's declared date, even if it exceeds the auto-deactivation window.</p>
+              </div>
+            </div>
+          </div>
+          <div class="wf-action-bar" style="margin-top:8px;">
+            <button class="wf-btn primary">Save Card Settings</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 5: Service Availability -->
+      <div id="tab-availability" class="wf-tab-content">
+        <p class="text-small text-muted mb-2">Toggle which services, lab tests, and special services are available at this branch. Unchecked items will not appear in ordering screens. Branch price overrides apply only at this branch.</p>
+
+        <!-- Services / Procedures -->
+        <div class="wf-form-section">
+          <div class="section-title">Services & Procedures (Clinical)</div>
+          ${renderTable(
+            ["", "Service", "Code", "Category", "Default Price", "Available", "Branch Price Override"],
+            [
+              ['<input type="checkbox" checked>', "IM Injection", "IM-INJ", "Injections", "ETB 150.00", '<span class="wf-badge green">Yes</span>', '<input type="number" class="wf-input" placeholder="—" style="width:90px;">'],
+              ['<input type="checkbox" checked>', "SC Injection", "SC-INJ", "Injections", "ETB 150.00", '<span class="wf-badge green">Yes</span>', '<input type="number" class="wf-input" placeholder="—" style="width:90px;">'],
+              ['<input type="checkbox" checked>', "IV Infusion", "IV-INF", "IV Therapy", "ETB 500.00", '<span class="wf-badge green">Yes</span>', '<input type="number" class="wf-input" value="450" style="width:90px;">'],
+              ['<input type="checkbox" checked>', "Wound Dressing", "WND-DRS", "Wound Care", "ETB 200.00", '<span class="wf-badge green">Yes</span>', '<input type="number" class="wf-input" placeholder="—" style="width:90px;">'],
+              ['<input type="checkbox" checked>', "ECG", "ECG", "Diagnostic", "ETB 350.00", '<span class="wf-badge green">Yes</span>', '<input type="number" class="wf-input" placeholder="—" style="width:90px;">'],
+              ['<input type="checkbox">', "Nebulization", "NEB", "Respiratory", "ETB 250.00", '<span class="wf-badge gray">No</span>', '<input type="number" class="wf-input" placeholder="—" style="width:90px;" disabled>'],
+              ['<input type="checkbox" checked>', "Oxygen Therapy", "O2-TX", "Respiratory", "ETB 300.00", '<span class="wf-badge green">Yes</span>', '<input type="number" class="wf-input" placeholder="—" style="width:90px;">'],
+            ],
+          )}
+        </div>
+
+        <!-- Lab Tests -->
+        <div class="wf-form-section">
+          <div class="section-title">Lab Tests</div>
+          ${renderTable(
+            ["", "Test", "Code", "Category", "Default Price", "Available", "Branch Price Override"],
+            [
+              ['<input type="checkbox" checked>', "Complete Blood Count", "CBC", "Haematology", "ETB 450.00", '<span class="wf-badge green">Yes</span>', '<input type="number" class="wf-input" placeholder="—" style="width:90px;">'],
+              ['<input type="checkbox" checked>', "ESR", "ESR", "Haematology", "ETB 200.00", '<span class="wf-badge green">Yes</span>', '<input type="number" class="wf-input" placeholder="—" style="width:90px;">'],
+              ['<input type="checkbox" checked>', "Blood Glucose (Fasting)", "FBS", "Biochemistry", "ETB 200.00", '<span class="wf-badge green">Yes</span>', '<input type="number" class="wf-input" placeholder="—" style="width:90px;">'],
+              ['<input type="checkbox" checked>', "Lipid Profile", "LIPID", "Biochemistry", "ETB 400.00", '<span class="wf-badge green">Yes</span>', '<input type="number" class="wf-input" placeholder="—" style="width:90px;">'],
+              ['<input type="checkbox">', "Thyroid Panel", "TFT", "Endocrine", "ETB 800.00", '<span class="wf-badge" style="background:#fff3e0;color:#e65100;">External Only</span>', '<input type="number" class="wf-input" placeholder="—" style="width:90px;" disabled>'],
+              ['<input type="checkbox" checked>', "Urinalysis", "UA", "Urinalysis", "ETB 150.00", '<span class="wf-badge green">Yes</span>', '<input type="number" class="wf-input" placeholder="—" style="width:90px;">'],
+              ['<input type="checkbox" checked>', "HIV Screening", "HIV", "Serology", "ETB 300.00", '<span class="wf-badge green">Yes</span>', '<input type="number" class="wf-input" placeholder="—" style="width:90px;">'],
+            ],
+          )}
+        </div>
+
+        <!-- Special Services (Walk-In) -->
+        <div class="wf-form-section">
+          <div class="section-title">Special Services (Walk-In, No Doctor Required)</div>
+          ${renderTable(
+            ["", "Service", "Code", "Category", "Linked Lab Test", "Default Price", "Available", "Branch Price Override"],
+            [
+              ['<input type="checkbox" checked>', "Blood Pressure Check", "BP-CHK", "Screening", "—", "ETB 50.00", '<span class="wf-badge green">Yes</span>', '<input type="number" class="wf-input" placeholder="—" style="width:90px;">'],
+              ['<input type="checkbox" checked>', "Blood Sugar Check (FBS/RBS)", "BS-CHK", "Screening", '<span class="wf-badge blue" style="font-size:.6rem;">FBS</span>', "ETB 100.00", '<span class="wf-badge green">Yes</span>', '<input type="number" class="wf-input" placeholder="—" style="width:90px;">'],
+              ['<input type="checkbox" checked>', "BMI Measurement", "BMI", "Screening", "—", "ETB 30.00", '<span class="wf-badge green">Yes</span>', '<input type="number" class="wf-input" placeholder="—" style="width:90px;">'],
+              ['<input type="checkbox" checked>', "Pregnancy Test", "PREG-TST", "Screening", '<span class="wf-badge blue" style="font-size:.6rem;">HCG</span>', "ETB 150.00", '<span class="wf-badge green">Yes</span>', '<input type="number" class="wf-input" placeholder="—" style="width:90px;">'],
+              ['<input type="checkbox" checked>', "Injection (Patient-Provided Drug)", "INJ-OWN", "Injections", "—", "ETB 80.00", '<span class="wf-badge green">Yes</span>', '<input type="number" class="wf-input" placeholder="—" style="width:90px;">'],
+              ['<input type="checkbox" checked>', "Wound Dressing (Walk-In)", "WND-WI", "Wound Care", "—", "ETB 150.00", '<span class="wf-badge green">Yes</span>', '<input type="number" class="wf-input" placeholder="—" style="width:90px;">'],
+              ['<input type="checkbox">', "ECG (Walk-In)", "ECG-WI", "Diagnostic", "—", "ETB 350.00", '<span class="wf-badge gray">No</span>', '<input type="number" class="wf-input" placeholder="—" style="width:90px;" disabled>'],
+            ],
+          )}
+        </div>
+
+        <div class="wf-action-bar">
+          <button class="wf-btn primary">Save Availability</button>
+          <span class="text-small text-muted" style="margin-left:8px;">Changes propagate immediately to ordering screens. Unchecked items will not appear for practitioners or receptionists at this branch.</span>
         </div>
       </div>
       `;

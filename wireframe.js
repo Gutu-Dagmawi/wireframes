@@ -9,6 +9,12 @@ const NAV = {
   ],
   receptionist: [
     {
+      id: "today_dashboard",
+      label: "Today",
+      file: "receptionist/today_dashboard.html",
+      icon: "📋",
+    },
+    {
       id: "patient_search",
       label: "Patient Search",
       file: "receptionist/patient_search.html",
@@ -31,6 +37,24 @@ const NAV = {
       label: "Queue Monitor",
       file: "receptionist/queue_monitoring.html",
       icon: "📊",
+    },
+    {
+      id: "special_service",
+      label: "Special Service",
+      file: "receptionist/special_service_order.html",
+      icon: "⚕️",
+    },
+    {
+      id: "encounter_outputs",
+      label: "Encounter Outputs",
+      file: "receptionist/encounter_outputs.html",
+      icon: "📄",
+    },
+    {
+      id: "suspended_encounters",
+      label: "Suspended Encounters",
+      file: "receptionist/suspended_encounters.html",
+      icon: "⏸️",
     },
   ],
   finance: [
@@ -99,6 +123,12 @@ const NAV = {
       icon: "🩺",
     },
     {
+      id: "patient_profile",
+      label: "Patient Profile",
+      file: "shared/patient_profile.html",
+      icon: "👤",
+    },
+    {
       id: "schedule_appointment",
       label: "Schedule Appt.",
       file: "practitioner/schedule_appointment.html",
@@ -123,12 +153,6 @@ const NAV = {
       label: "Lab Order Detail",
       file: "lab_tech/lab_order_detail.html",
       icon: "🧪",
-    },
-    {
-      id: "external_referral_document",
-      label: "External Referral",
-      file: "lab_tech/external_referral_document.html",
-      icon: "📤",
     },
   ],
   admin: [

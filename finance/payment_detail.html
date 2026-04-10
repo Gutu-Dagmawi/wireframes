@@ -23,21 +23,39 @@
       <div class="wf-form-section">
         <div class="section-title">Patient Information</div>
         <div class="wf-kv-grid">
-          <div class="wf-kv"><div class="kv-label">Patient Name</div><div class="kv-value">Meron Hailu</div></div>
-          <div class="wf-kv"><div class="kv-label">Patient ID / National ID</div><div class="kv-value">ET-4567890</div></div>
+          <div class="wf-kv"><div class="kv-label">Patient</div><div class="kv-value"><div style="display:flex;align-items:center;gap:8px;"><div class="wf-placeholder" style="width:32px;height:32px;border-radius:50%;font-size:.45rem;display:flex;align-items:center;justify-content:center;">Foto</div> <strong>Meron Hailu</strong></div></div></div>
+          <div class="wf-kv"><div class="kv-label">MRN</div><div class="kv-value">MRN-0091</div></div>
+          <div class="wf-kv"><div class="kv-label">National ID</div><div class="kv-value">ET-4567890</div></div>
+          <div class="wf-kv"><div class="kv-label">Phone</div><div class="kv-value">0944-567-890</div></div>
         </div>
       </div>
 
-      <!-- Service Details -->
+      <!-- Order Info -->
       <div class="wf-form-section">
-        <div class="section-title">Service Details</div>
+        <div class="section-title">Order Information</div>
         <div class="wf-kv-grid">
           <div class="wf-kv"><div class="kv-label">Payment Type</div><div class="kv-value"><span class="wf-badge blue">Lab Order</span></div></div>
-          <div class="wf-kv"><div class="kv-label">Service Description</div><div class="kv-value">CBC (Complete Blood Count), Lipid Profile</div></div>
+          <div class="wf-kv"><div class="kv-label">Ordered By</div><div class="kv-value">Dr. Solomon T. (General Practice)</div></div>
+          <div class="wf-kv"><div class="kv-label">Order Time</div><div class="kv-value">10 Apr 2026, 09:30</div></div>
         </div>
-        <div style="margin-top:12px;padding:16px;border:2px solid #333;border-radius:4px;text-align:center;background:#fafafa;">
-          <div style="font-size:.85rem;color:#888;">Total Amount Due</div>
-          <div style="font-family:'Architects Daughter',cursive;font-size:2.2rem;color:#222;">ETB 850.00</div>
+      </div>
+
+      <!-- Itemised Breakdown -->
+      <div class="wf-form-section">
+        <div class="section-title">Itemised Breakdown</div>
+        ${renderTable(
+          ["#", "Item", "Code", "Unit Price (ETB)", "Qty", "Subtotal (ETB)"],
+          [
+            ["1", "Complete Blood Count", "CBC", "450.00", "1", "450.00"],
+            ["2", "Lipid Profile", "LIPID", "400.00", "1", "400.00"],
+          ],
+        )}
+        <div style="display:flex;justify-content:space-between;align-items:flex-end;padding:8px 0;margin-top:4px;">
+          <div class="text-small text-muted">Price source: Master Data (default) &mdash; no branch override applied</div>
+          <div style="padding:12px 20px;border:2px solid #333;border-radius:4px;text-align:center;background:#fafafa;">
+            <div style="font-size:.75rem;color:#888;">Total Amount Due</div>
+            <div style="font-family:'Architects Daughter',cursive;font-size:2rem;color:#222;">ETB 850.00</div>
+          </div>
         </div>
       </div>
 
@@ -46,25 +64,27 @@
         <div class="section-title">Payment Method</div>
         <div class="wf-radio-group">
           <label><input type="radio" name="method" checked> Cash</label>
-          <label><input type="radio" name="method"> Card</label>
+          <label><input type="radio" name="method"> Card (POS)</label>
           <label><input type="radio" name="method"> Mobile Money</label>
+          <label><input type="radio" name="method"> Bank Transfer</label>
         </div>
+        <p class="text-small text-muted" style="margin-top:6px;">Prices are auto-populated from admin configuration. Finance clerks cannot modify amounts.</p>
       </div>
 
       <hr class="wf-divider">
 
       <div class="wf-action-bar">
-        <button class="wf-btn primary">✓ Confirm Payment</button>
-        <a href="pending_payments.html"><button class="wf-btn">← Back</button></a>
+        <button class="wf-btn primary">Confirm Payment</button>
+        <a href="pending_payments.html"><button class="wf-btn">Back</button></a>
       </div>
 
-      <!-- Success State Variant -->
+      <!-- Success State -->
       <div class="wf-success-box" style="margin-top:20px;">
-        <strong>✓ Payment Confirmed!</strong>
-        <p style="margin-top:6px;">Receipt generated. Lab order has been sent to the Lab Tech's queue.</p>
+        <strong>Payment Confirmed</strong>
+        <p style="margin-top:6px;">Receipt generated. Lab order sent to the Lab Tech queue. Patient proceeds to specimen collection.</p>
         <div class="wf-action-bar" style="margin-top:10px;">
-          <a href="payment_receipt.html"><button class="wf-btn small">🖨 Print Receipt</button></a>
-          <button class="wf-btn small">⬇ Download Receipt</button>
+          <a href="payment_receipt.html"><button class="wf-btn small">Print Receipt</button></a>
+          <button class="wf-btn small">Download Receipt</button>
         </div>
       </div>
     `,

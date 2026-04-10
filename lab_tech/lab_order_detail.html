@@ -24,9 +24,10 @@
         <div class="section-title">Patient & Order Information</div>
         <div class="wf-kv-grid">
           <div class="wf-kv"><div class="kv-label">Patient Name</div><div class="kv-value">Meron Hailu</div></div>
+          <div class="wf-kv"><div class="kv-label">MRN</div><div class="kv-value">MRN-0091</div></div>
           <div class="wf-kv"><div class="kv-label">Patient ID</div><div class="kv-value">ET-4567890</div></div>
-          <div class="wf-kv"><div class="kv-label">Ordering Practitioner</div><div class="kv-value">Dr. Solomon T. (General Practice)</div></div>
-          <div class="wf-kv"><div class="kv-label">Order Timestamp</div><div class="kv-value">08 Apr 2026, 09:45 AM</div></div>
+          <div class="wf-kv"><div class="kv-label">Order Source</div><div class="kv-value"><span class="wf-badge gray">Practitioner</span> Dr. Solomon T. (General Practice)</div></div>
+          <div class="wf-kv"><div class="kv-label">Order Timestamp</div><div class="kv-value">10 Apr 2026, 09:45 AM</div></div>
           <div class="wf-kv"><div class="kv-label">Clinical Notes</div><div class="kv-value">Review cholesterol and CBC. Patient on Metformin.</div></div>
         </div>
       </div>
@@ -94,19 +95,24 @@
 
       <hr class="wf-divider">
 
+      <!-- Result Routing -->
+      <div style="background:#e3f2fd;padding:10px 14px;border-radius:3px;margin-bottom:12px;border-left:3px solid #1565c0;">
+        <div class="text-small" style="font-weight:600;color:#1565c0;margin-bottom:4px;">Result Destination</div>
+        <div class="text-small" style="color:#333;">On approval, results will be sent to: <strong>Dr. Solomon T.</strong> (ordering practitioner). For <em>Special Service</em> orders, results are sent to the <strong>Receptionist</strong> who prints and delivers to the patient.</div>
+      </div>
+
       <div class="wf-action-bar">
-        <button class="wf-btn primary">✓ Approve & Release Results</button>
-        <a href="external_referral_document.html"><button class="wf-btn">📤 Generate External Referral</button></a>
-        <button class="wf-btn">Enter External Results</button>
-        <a href="lab_dashboard.html"><button class="wf-btn">← Back</button></a>
+        <button class="wf-btn primary">Approve and Release Results</button>
+        <a href="lab_dashboard.html"><button class="wf-btn">&larr; Back</button></a>
       </div>
 
       <div class="wf-inline-panel mt-2">
         <p class="text-small text-muted">
-          <strong>States:</strong><br>
-          • <em>In-house order:</em> Specimen logging + result entry visible. "Approve & Release" active.<br>
-          • <em>External referral:</em> "Generate External Referral" visible. Result fields hidden until "Enter External Results" clicked.<br>
-          • <em>Mixed order:</em> Both sections shown, grouped by mode.
+          <strong>Notes:</strong><br>
+          &bull; Lab tech handles <em>in-house tests only</em>. External lab referrals are managed by the ordering practitioner.<br>
+          &bull; <em>Practitioner orders:</em> results are sent to the ordering practitioner's dashboard.<br>
+          &bull; <em>Special Service orders:</em> results are sent to the receptionist. The receptionist prints and delivers results to the patient. Clinical Notes replaced by "Receptionist Notes".<br>
+          &bull; "Approve and Release" marks the order as completed and triggers the result routing.
         </p>
       </div>
     `,

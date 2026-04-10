@@ -14,7 +14,7 @@
           role: "receptionist",
           activeId: "patient_search",
           screenId: "SCR_patient_search",
-          workflow: "Patient Card Activation / Creation Flow",
+          workflow: "Walk-In Check-In Flow",
           userName: "Hana G. (Receptionist)",
           content: `
       <h2 class="page-title">Patient Search & List</h2>
@@ -25,10 +25,10 @@
           ${renderFormField("Full Name", "text", { placeholder: "Patient name..." })}
           ${renderFormField("Phone Number", "text", { placeholder: "09..." })}
           ${renderFormField("National ID", "text", { placeholder: "ID number..." })}
-          ${renderFormField("Date of Birth", "date")}
+          ${renderFormField("MRN", "text", { placeholder: "MRN-XXXX" })}
         </div>
         <div class="wf-action-bar" style="margin-top:10px;">
-          <button class="wf-btn primary">🔍 Search</button>
+          <button class="wf-btn primary">Search</button>
           <button class="wf-btn">Clear</button>
         </div>
       </div>
@@ -36,31 +36,39 @@
       <!-- Action Bar -->
       <div class="wf-action-bar between">
         <span class="text-muted text-small">Showing 5 patients</span>
-        <a href="patient_registration.html"><button class="wf-btn">📝 Register Patient</button></a>
+        <a href="patient_registration.html"><button class="wf-btn">Register New Patient</button></a>
       </div>
 
       <!-- Results Table -->
       ${renderTable(
         [
+          "MRN",
+          "Photo",
           "Full Name",
           "Sex",
           "Date of Birth",
           "Phone",
           "National ID",
           "Last Visit",
-          "Status",
+          "Today's Status",
+          "Payment",
         ],
         [
           [
+            "MRN-0015",
+            '<div class="wf-placeholder" style="width:28px;height:28px;border-radius:50%;font-size:.45rem;display:flex;align-items:center;justify-content:center;">Foto</div>',
             "<strong>Abebe Kebede</strong>",
             "M",
             "12/03/1985",
             "0911-234-567",
             "ET-1234567",
             "02/04/2026",
-            '<span class="wf-badge green">Active</span>',
+            '<span class="wf-badge blue">In Queue</span>',
+            '<span class="wf-badge green">Paid</span>',
           ],
           [
+            "MRN-0078",
+            '<div class="wf-placeholder" style="width:28px;height:28px;border-radius:50%;font-size:.45rem;display:flex;align-items:center;justify-content:center;">Foto</div>',
             "<strong>Fatima Ali</strong>",
             "F",
             "25/08/1990",
@@ -68,8 +76,11 @@
             "ET-2345678",
             "28/03/2026",
             '<span class="wf-badge gray">Not activated</span>',
+            '<span class="wf-badge gray">—</span>',
           ],
           [
+            "MRN-0023",
+            '<div class="wf-placeholder" style="width:28px;height:28px;border-radius:50%;font-size:.45rem;display:flex;align-items:center;justify-content:center;">Foto</div>',
             "<strong>Dawit Tadesse</strong>",
             "M",
             "07/11/1978",
@@ -77,17 +88,23 @@
             "ET-3456789",
             "15/03/2026",
             '<span class="wf-badge gray">Not activated</span>',
+            '<span class="wf-badge gray">—</span>',
           ],
           [
+            "MRN-0091",
+            '<div class="wf-placeholder" style="width:28px;height:28px;border-radius:50%;font-size:.45rem;display:flex;align-items:center;justify-content:center;">Foto</div>',
             "<strong>Meron Hailu</strong>",
             "F",
             "19/06/1995",
             "0944-567-890",
             "ET-4567890",
             "01/04/2026",
-            '<span class="wf-badge blue">In Queue</span>',
+            '<span class="wf-badge" style="background:#fff3e0;color:#e65100;">Has appointment today</span>',
+            '<span class="wf-badge gray">—</span>',
           ],
           [
+            "MRN-0103",
+            '<div class="wf-placeholder" style="width:28px;height:28px;border-radius:50%;font-size:.45rem;display:flex;align-items:center;justify-content:center;">Foto</div>',
             "<strong>Yonas Gebre</strong>",
             "M",
             "03/02/2001",
@@ -95,22 +112,50 @@
             "ET-5678901",
             "—",
             '<span class="wf-badge gray">Not activated</span>',
+            '<span class="wf-badge gray">—</span>',
           ],
         ],
         { clickable: true },
       )}
 
-      <!-- Inline Card Activation Panel (shown when a patient row is selected) -->
-      <div class="wf-inline-panel">
-        <h3 style="margin-bottom:10px;">Card Activation — Fatima Ali</h3>
-        <div class="wf-kv-grid">
-          <div class="wf-kv"><div class="kv-label">Patient</div><div class="kv-value">Fatima Ali</div></div>
-          <div class="wf-kv"><div class="kv-label">Sex / Age</div><div class="kv-value">Female, 35 yrs</div></div>
-          <div class="wf-kv"><div class="kv-label">Phone</div><div class="kv-value">0922-345-678</div></div>
-          <div class="wf-kv"><div class="kv-label">Last Visit</div><div class="kv-value">28 Mar 2026</div></div>
+      <!-- Alert for patient with appointment -->
+      <div class="wf-inline-panel" style="background:#fff3e0;border-left:3px solid #e65100;margin-bottom:12px;display:none;" id="appt-alert">
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span style="font-size:1.1rem;">&#9888;</span>
+          <span class="text-small"><strong>Meron Hailu</strong> has a scheduled appointment today at <strong>10:30</strong> with Dr. Miriam K. &mdash; <a href="today_dashboard.html" style="color:#e65100;font-weight:600;">Check in from Today's Dashboard</a> to link it to the appointment.</span>
         </div>
-        <div class="wf-form-row" style="max-width:500px;">
-          ${renderFormField("Select Practitioner", "select", {
+      </div>
+
+      <!-- Walk-In Check-In Panel (shown when a patient row is selected) -->
+      <div class="wf-inline-panel" id="walkin-panel">
+        <div class="section-title">Walk-In Check-In &mdash; Fatima Ali</div>
+
+        <!-- Patient Identity -->
+        <div class="wf-kv-grid">
+          <div class="wf-kv"><div class="kv-label">Patient</div><div class="kv-value"><div style="display:flex;align-items:center;gap:8px;"><div class="wf-placeholder" style="width:36px;height:36px;border-radius:50%;font-size:.5rem;display:flex;align-items:center;justify-content:center;">Foto</div> <strong>Fatima Ali</strong> (MRN-0078)</div></div></div>
+          <div class="wf-kv"><div class="kv-label">Sex / Age</div><div class="kv-value">Female, 35 yrs</div></div>
+          <div class="wf-kv"><div class="kv-label">Blood Type</div><div class="kv-value">A+</div></div>
+          <div class="wf-kv"><div class="kv-label">Phone</div><div class="kv-value">0922-345-678</div></div>
+          <div class="wf-kv"><div class="kv-label">National ID</div><div class="kv-value">ET-2345678</div></div>
+          <div class="wf-kv"><div class="kv-label">Known Allergies</div><div class="kv-value" style="color:#666;">None known</div></div>
+        </div>
+
+        <!-- Recent Visit History -->
+        <div style="margin-top:12px;">
+          <div style="font-size:.82rem;font-weight:600;color:#555;margin-bottom:6px;">Recent Visits (last 3):</div>
+          ${renderTable(
+            ["Date", "Practitioner", "Chief Complaint"],
+            [
+              ["28 Mar 2026", "Dr. Solomon T.", "Headache, elevated BP (140/95)"],
+              ["15 Feb 2026", "Dr. Solomon T.", "Routine check-up"],
+              ["20 Jan 2026", "Dr. Alem B.", "UTI symptoms"],
+            ],
+          )}
+        </div>
+
+        <!-- Practitioner Selection -->
+        <div class="wf-form-row" style="max-width:600px;margin-top:12px;">
+          ${renderFormField("Select Practitioner <span class='required'>*</span>", "select", {
             required: true,
             options: [
               "— Select —",
@@ -119,10 +164,12 @@
               "Dr. Alem B. (Internal Medicine) — 5 in queue",
             ],
           })}
+          ${renderFormField("Visit Reason", "text", { placeholder: "Brief reason for visit (optional)" })}
         </div>
         <div class="wf-action-bar" style="margin-top:10px;">
-          <button class="wf-btn primary">✓ Activate Card</button>
-          <span class="text-small text-muted">→ Creates payment request in Finance queue</span>
+          <button class="wf-btn primary">Confirm Walk-In Check-In</button>
+          <button class="wf-btn" onclick="window.print()">Print Queue Ticket</button>
+          <span class="text-small text-muted">Creates payment request in Finance queue. Est. wait: ~25 min.</span>
         </div>
       </div>
     `,

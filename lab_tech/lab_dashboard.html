@@ -21,77 +21,90 @@
 
       <div class="wf-summary-bar">
         <div class="summary-item"><strong>Total Orders:</strong> 5</div>
-        <div class="summary-item"><strong>In-House:</strong> 3</div>
-        <div class="summary-item"><strong>External:</strong> 2</div>
+        <div class="summary-item"><strong>Awaiting Specimen:</strong> 2</div>
+        <div class="summary-item"><strong>In Progress:</strong> 1</div>
+        <div class="summary-item"><strong>Completed Today:</strong> 2</div>
       </div>
 
       <div class="wf-filter-bar">
         <div class="filter-group">
-          <label>Order Mode:</label>
+          <label>Status:</label>
+          <select class="wf-input" style="width:180px;">
+            <option>All</option><option>Awaiting Specimen</option><option>In Progress</option><option>Completed</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Order Source:</label>
           <select class="wf-input" style="width:160px;">
-            <option>All</option><option>In-House</option><option>External Referral</option>
+            <option>All Sources</option><option>Practitioner</option><option>Special Service</option>
           </select>
         </div>
         <div class="filter-group">
           <label>Search:</label>
-          <input type="text" class="wf-input" placeholder="Patient name..." style="width:180px;">
+          <input type="text" class="wf-input" placeholder="Patient name or MRN..." style="width:200px;">
         </div>
       </div>
 
       ${renderTable(
         [
+          "MRN",
           "Patient Name",
-          "Ordering Practitioner",
+          "Order Source",
           "Tests Ordered",
-          "Order Mode",
           "Order Timestamp",
           "Status",
+          "Result Destination",
         ],
         [
           [
+            "MRN-0091",
             '<a href="lab_order_detail.html"><strong>Meron Hailu</strong></a>',
-            "Dr. Solomon T.",
+            '<span class="wf-badge gray">Practitioner</span> Dr. Solomon T.',
             "CBC, Lipid Profile",
-            '<span class="wf-badge green">In-House</span>',
-            "08 Apr, 09:45",
-            '<span class="wf-badge">Ready for Processing</span>',
+            "10 Apr, 09:45",
+            '<span class="wf-badge">Awaiting Specimen</span>',
+            '<span class="text-small text-muted">→ Dr. Solomon T.</span>',
           ],
           [
+            "MRN-0023",
             '<a href="lab_order_detail.html"><strong>Dawit Tadesse</strong></a>',
-            "Dr. Alem B.",
+            '<span class="wf-badge gray">Practitioner</span> Dr. Alem B.',
             "Blood Glucose, HbA1c",
-            '<span class="wf-badge green">In-House</span>',
-            "08 Apr, 10:00",
-            '<span class="wf-badge">Ready for Processing</span>',
+            "10 Apr, 10:00",
+            '<span class="wf-badge blue">In Progress</span>',
+            '<span class="text-small text-muted">→ Dr. Alem B.</span>',
           ],
           [
+            "MRN-0015",
             '<a href="lab_order_detail.html"><strong>Abebe Kebede</strong></a>',
-            "Dr. Solomon T.",
+            '<span class="wf-badge gray">Practitioner</span> Dr. Solomon T.',
             "Renal Function Panel",
-            '<span class="wf-badge green">In-House</span>',
-            "08 Apr, 10:30",
-            '<span class="wf-badge">Ready for Processing</span>',
+            "10 Apr, 10:30",
+            '<span class="wf-badge">Awaiting Specimen</span>',
+            '<span class="text-small text-muted">→ Dr. Solomon T.</span>',
           ],
           [
+            "MRN-0078",
             '<a href="lab_order_detail.html"><strong>Fatima Ali</strong></a>',
-            "Dr. Solomon T.",
-            "Thyroid Panel (T3, T4, TSH)",
-            '<span class="wf-badge orange">External</span>',
-            "08 Apr, 10:35",
-            '<span class="wf-badge orange">Pending External Results</span>',
+            '<span class="wf-badge" style="background:#e8f5e9;color:#2e7d32;">Special Service</span> SSO-002',
+            "Blood Glucose (Fasting) [FBS]",
+            "10 Apr, 10:30",
+            '<span class="wf-badge">Awaiting Specimen</span>',
+            '<span class="text-small text-muted">→ Receptionist (Hana G.)</span>',
           ],
           [
-            '<a href="lab_order_detail.html"><strong>Yonas Gebre</strong></a>',
-            "Dr. Miriam K.",
-            "MRI - Brain",
-            '<span class="wf-badge orange">External</span>',
-            "08 Apr, 10:50",
-            '<span class="wf-badge">Ready for Processing</span>',
+            "MRN-0042",
+            '<a href="lab_order_detail.html"><strong>Tigist Mekonnen</strong></a>',
+            '<span class="wf-badge gray">Practitioner</span> Dr. Alem B.',
+            "ESR",
+            "10 Apr, 08:30",
+            '<span class="wf-badge green">Completed</span>',
+            '<span class="text-small text-muted">→ Dr. Alem B. (delivered)</span>',
           ],
         ],
         { clickable: true },
       )}
-      <p class="text-small text-muted">Click a row to open <a href="lab_order_detail.html">Lab Order Detail</a>. Queue auto-refreshes as new payment-confirmed orders arrive.</p>
+      <p class="text-small text-muted">Click a row to open <a href="lab_order_detail.html">Lab Order Detail</a>. Lab tech handles <strong>in-house tests only</strong>. External referrals are managed by the ordering practitioner. On completion, results are sent to the order source.</p>
     `,
         });
       });

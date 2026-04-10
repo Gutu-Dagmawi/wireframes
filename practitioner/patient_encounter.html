@@ -112,99 +112,436 @@
           <a href="referral_form.html"><button class="wf-btn small">↗ Create Referral</button></a>
           <a href="schedule_appointment.html"><button class="wf-btn small">📅 Schedule Follow-Up</button></a>
         </div>
-        <button class="wf-btn primary" onclick="document.getElementById('encounter-summary').style.display='block'">✓ Finalise Encounter</button>
+        <div class="flex gap-1">
+          <button class="wf-btn" style="background:#fff3e0;color:#e65100;border-color:#ffb74d;" onclick="document.getElementById('suspend-panel').style.display='block';document.getElementById('encounter-summary').style.display='none'">Suspend Encounter</button>
+          <button class="wf-btn primary" onclick="document.getElementById('encounter-summary').style.display='block';document.getElementById('suspend-panel').style.display='none'">✓ Finalise Encounter</button>
+        </div>
       </div>
 
       <!-- Tabs -->
       <div class="wf-tabs">
-        <div class="tab active" data-tab="tab-history">History</div>
-        <div class="tab" data-tab="tab-assessment">Assessment</div>
+        <div class="tab active" data-tab="tab-profile">Patient Profile</div>
+        <div class="tab" data-tab="tab-encounter">Encounter Form</div>
         <div class="tab" data-tab="tab-laborder">Lab Order</div>
         <div class="tab" data-tab="tab-ordersheet">Order-Sheet</div>
         <div class="tab" data-tab="tab-prescription">Prescription</div>
       </div>
 
-      <!-- Tab 1: History -->
-      <div id="tab-history" class="wf-tab-content active">
-        <div class="wf-form-section">
-          <div class="section-title">Past Encounters</div>
-          ${renderTable(
-            ["Date", "Branch", "Practitioner", "Diagnosis", "Treatment"],
-            [
-              [
-                "15 Mar 2026",
-                "Main Branch",
-                "Dr. Alem B.",
-                "Hypertension Stage 1",
-                "Amlodipine 5mg daily",
-              ],
-              [
-                "20 Feb 2026",
-                "Main Branch",
-                "Dr. Solomon T.",
-                "URTI",
-                "Amoxicillin 500mg TDS x 5 days",
-              ],
-              [
-                "05 Jan 2026",
-                "Main Branch",
-                "Dr. Solomon T.",
-                "Annual checkup",
-                "No treatment needed",
-              ],
-            ],
-          )}
+      <!-- Tab 1: Patient Profile (longitudinal, editable within encounter) -->
+      <div id="tab-profile" class="wf-tab-content active">
+        <div class="wf-action-bar between mb-2">
+          <span class="text-small text-muted">Longitudinal patient record — editable during encounter. All changes are version-tracked.</span>
+          <a href="../shared/patient_profile.html"><button class="wf-btn small">Open Full Profile &rarr;</button></a>
         </div>
-        <div class="wf-grid-2">
-          <div class="wf-form-section">
-            <div class="section-title">Chronic Conditions</div>
-            <ul style="list-style:disc;padding-left:18px;font-size:.9rem;color:#555;">
-              <li>Hypertension (diagnosed 2024)</li>
-              <li>Pre-diabetes (HbA1c 6.1%)</li>
-            </ul>
+
+        <!-- Emergency Contact -->
+        <div class="wf-card" style="margin-bottom:12px;">
+          <div class="card-title flex-between">
+            <span>Emergency Contact</span>
+            <button class="wf-btn small" onclick="toggleEdit(this, 'ec-view', 'ec-edit')">&#9998; Edit</button>
           </div>
-          <div class="wf-form-section">
-            <div class="section-title">Known Allergies</div>
-            <div class="flex gap-1">
-              <span class="wf-tag">Penicillin</span>
-              <span class="wf-tag">Peanuts</span>
+          <!-- View Mode -->
+          <div id="ec-view">
+            <div class="wf-kv-grid">
+              <div class="wf-kv"><div class="kv-label">Contact Name</div><div class="kv-value">Tigist Kebede</div></div>
+              <div class="wf-kv"><div class="kv-label">Relationship</div><div class="kv-value">Spouse</div></div>
+              <div class="wf-kv"><div class="kv-label">Phone</div><div class="kv-value">0922-111-222</div></div>
+            </div>
+          </div>
+          <!-- Edit Mode -->
+          <div id="ec-edit" style="display:none;">
+            <div class="wf-form-row">
+              <div class="wf-form-group"><label>Contact Name</label><input class="wf-input" value="Tigist Kebede"></div>
+              <div class="wf-form-group"><label>Relationship</label>
+                <select class="wf-input"><option selected>Spouse</option><option>Parent</option><option>Sibling</option><option>Child</option><option>Friend</option><option>Other</option></select>
+              </div>
+              <div class="wf-form-group"><label>Phone</label><input class="wf-input" value="0922-111-222"></div>
+            </div>
+            <div class="wf-action-bar" style="margin-top:8px;">
+              <button class="wf-btn primary small" onclick="toggleEdit(this.closest('.wf-card').querySelector('.wf-btn.small'), 'ec-view', 'ec-edit')">Save</button>
+              <button class="wf-btn small" onclick="toggleEdit(this.closest('.wf-card').querySelector('.card-title .wf-btn'), 'ec-view', 'ec-edit')">Cancel</button>
             </div>
           </div>
         </div>
+
+        <!-- Medical Background -->
         <div class="wf-grid-2">
+          <!-- PMH -->
           <div class="wf-form-section">
-            <div class="section-title">Current Medications</div>
-            <ul style="list-style:disc;padding-left:18px;font-size:.9rem;color:#555;">
-              <li>Amlodipine 5mg — once daily</li>
-              <li>Metformin 500mg — twice daily</li>
-            </ul>
+            <div class="section-title flex-between" style="display:flex;justify-content:space-between;align-items:center;">
+              <span>Past Medical History (PMH)</span>
+              <button class="wf-btn small" style="border-bottom:none;" onclick="toggleEdit(this, 'pmh-view', 'pmh-edit')">&#9998; Edit</button>
+            </div>
+            <div id="pmh-view">
+              ${renderTable(
+                ['Condition', 'Year', 'Status'],
+                [
+                  ['Hypertension', '2024', '<span class="wf-badge orange">Active</span>'],
+                  ['Pre-diabetes', '2025', '<span class="wf-badge orange">Active</span>'],
+                  ['Malaria', '2020', '<span class="wf-badge green">Resolved</span>'],
+                  ['Typhoid Fever', '2018', '<span class="wf-badge green">Resolved</span>'],
+                ]
+              )}
+            </div>
+            <div id="pmh-edit" style="display:none;">
+              <div class="wf-form-group" style="margin-bottom:6px;">
+                <label class="text-small">Hypertension (2024)</label>
+                <div style="display:flex;gap:6px;"><input class="wf-input" value="Hypertension" style="flex:2;"><input class="wf-input" value="2024" style="flex:1;"><select class="wf-input" style="flex:1;"><option selected>Active</option><option>Resolved</option><option>Managed</option></select></div>
+              </div>
+              <div class="wf-form-group" style="margin-bottom:6px;">
+                <label class="text-small">Pre-diabetes (2025)</label>
+                <div style="display:flex;gap:6px;"><input class="wf-input" value="Pre-diabetes" style="flex:2;"><input class="wf-input" value="2025" style="flex:1;"><select class="wf-input" style="flex:1;"><option selected>Active</option><option>Resolved</option><option>Managed</option></select></div>
+              </div>
+              <div class="wf-form-group" style="margin-bottom:6px;">
+                <label class="text-small">Malaria (2020)</label>
+                <div style="display:flex;gap:6px;"><input class="wf-input" value="Malaria" style="flex:2;"><input class="wf-input" value="2020" style="flex:1;"><select class="wf-input" style="flex:1;"><option>Active</option><option selected>Resolved</option><option>Managed</option></select></div>
+              </div>
+              <div class="wf-form-group" style="margin-bottom:6px;">
+                <label class="text-small">Typhoid Fever (2018)</label>
+                <div style="display:flex;gap:6px;"><input class="wf-input" value="Typhoid Fever" style="flex:2;"><input class="wf-input" value="2018" style="flex:1;"><select class="wf-input" style="flex:1;"><option>Active</option><option selected>Resolved</option><option>Managed</option></select></div>
+              </div>
+              <button class="wf-btn small" style="margin-top:4px;">+ Add Condition</button>
+              <div class="wf-action-bar" style="margin-top:8px;">
+                <button class="wf-btn primary small" onclick="toggleEdit(this.closest('.wf-form-section').querySelector('.section-title .wf-btn'), 'pmh-view', 'pmh-edit')">Save</button>
+                <button class="wf-btn small" onclick="toggleEdit(this.closest('.wf-form-section').querySelector('.section-title .wf-btn'), 'pmh-view', 'pmh-edit')">Cancel</button>
+              </div>
+            </div>
           </div>
+
+          <!-- PSH -->
+          <div class="wf-form-section">
+            <div class="section-title flex-between" style="display:flex;justify-content:space-between;align-items:center;">
+              <span>Past Surgical History (PSH)</span>
+              <button class="wf-btn small" style="border-bottom:none;" onclick="toggleEdit(this, 'psh-view', 'psh-edit')">&#9998; Edit</button>
+            </div>
+            <div id="psh-view">
+              ${renderTable(
+                ['Procedure', 'Date', 'Notes'],
+                [
+                  ['Appendectomy', 'Mar 2015', 'Laparoscopic, no complications'],
+                ]
+              )}
+            </div>
+            <div id="psh-edit" style="display:none;">
+              <div class="wf-form-group" style="margin-bottom:6px;">
+                <label class="text-small">Appendectomy</label>
+                <div style="display:flex;gap:6px;"><input class="wf-input" value="Appendectomy" style="flex:2;"><input class="wf-input" value="Mar 2015" style="flex:1;"><input class="wf-input" value="Laparoscopic, no complications" style="flex:2;"></div>
+              </div>
+              <button class="wf-btn small" style="margin-top:4px;">+ Add Procedure</button>
+              <div class="wf-action-bar" style="margin-top:8px;">
+                <button class="wf-btn primary small" onclick="toggleEdit(this.closest('.wf-form-section').querySelector('.section-title .wf-btn'), 'psh-view', 'psh-edit')">Save</button>
+                <button class="wf-btn small" onclick="toggleEdit(this.closest('.wf-form-section').querySelector('.section-title .wf-btn'), 'psh-view', 'psh-edit')">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="wf-grid-2">
+          <!-- Family History -->
+          <div class="wf-form-section">
+            <div class="section-title flex-between" style="display:flex;justify-content:space-between;align-items:center;">
+              <span>Family History</span>
+              <button class="wf-btn small" style="border-bottom:none;" onclick="toggleEdit(this, 'fh-view', 'fh-edit')">&#9998; Edit</button>
+            </div>
+            <div id="fh-view">
+              ${renderTable(
+                ['Relation', 'Condition', 'Notes'],
+                [
+                  ['Father', 'Type 2 Diabetes', 'Diagnosed age 50'],
+                  ['Father', 'Hypertension', 'On medication'],
+                  ['Mother', 'Asthma', 'Childhood onset'],
+                ]
+              )}
+            </div>
+            <div id="fh-edit" style="display:none;">
+              <div class="wf-form-group" style="margin-bottom:6px;">
+                <div style="display:flex;gap:6px;"><select class="wf-input" style="flex:1;"><option selected>Father</option><option>Mother</option><option>Sibling</option><option>Other</option></select><input class="wf-input" value="Type 2 Diabetes" style="flex:2;"><input class="wf-input" value="Diagnosed age 50" style="flex:2;"></div>
+              </div>
+              <div class="wf-form-group" style="margin-bottom:6px;">
+                <div style="display:flex;gap:6px;"><select class="wf-input" style="flex:1;"><option selected>Father</option><option>Mother</option><option>Sibling</option><option>Other</option></select><input class="wf-input" value="Hypertension" style="flex:2;"><input class="wf-input" value="On medication" style="flex:2;"></div>
+              </div>
+              <div class="wf-form-group" style="margin-bottom:6px;">
+                <div style="display:flex;gap:6px;"><select class="wf-input" style="flex:1;"><option>Father</option><option selected>Mother</option><option>Sibling</option><option>Other</option></select><input class="wf-input" value="Asthma" style="flex:2;"><input class="wf-input" value="Childhood onset" style="flex:2;"></div>
+              </div>
+              <button class="wf-btn small" style="margin-top:4px;">+ Add Entry</button>
+              <div class="wf-action-bar" style="margin-top:8px;">
+                <button class="wf-btn primary small" onclick="toggleEdit(this.closest('.wf-form-section').querySelector('.section-title .wf-btn'), 'fh-view', 'fh-edit')">Save</button>
+                <button class="wf-btn small" onclick="toggleEdit(this.closest('.wf-form-section').querySelector('.section-title .wf-btn'), 'fh-view', 'fh-edit')">Cancel</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Social History -->
+          <div class="wf-form-section">
+            <div class="section-title flex-between" style="display:flex;justify-content:space-between;align-items:center;">
+              <span>Social History</span>
+              <button class="wf-btn small" style="border-bottom:none;" onclick="toggleEdit(this, 'sh-view', 'sh-edit')">&#9998; Edit</button>
+            </div>
+            <div id="sh-view">
+              <div class="wf-kv-grid">
+                <div class="wf-kv"><div class="kv-label">Smoking</div><div class="kv-value">Never</div></div>
+                <div class="wf-kv"><div class="kv-label">Alcohol</div><div class="kv-value">Occasional</div></div>
+                <div class="wf-kv"><div class="kv-label">Occupation</div><div class="kv-value">Software Engineer</div></div>
+                <div class="wf-kv"><div class="kv-label">Lifestyle</div><div class="kv-value">Sedentary work; recent stress</div></div>
+              </div>
+            </div>
+            <div id="sh-edit" style="display:none;">
+              <div class="wf-form-row">
+                <div class="wf-form-group"><label>Smoking Status</label>
+                  <select class="wf-input"><option selected>Never</option><option>Former</option><option>Current</option></select>
+                </div>
+                <div class="wf-form-group"><label>Alcohol Use</label>
+                  <select class="wf-input"><option>None</option><option selected>Occasional</option><option>Regular</option></select>
+                </div>
+              </div>
+              <div class="wf-form-row">
+                <div class="wf-form-group"><label>Occupation</label><input class="wf-input" value="Software Engineer"></div>
+                <div class="wf-form-group"><label>Lifestyle Notes</label><textarea class="wf-input" rows="2">Sedentary work; recent stress</textarea></div>
+              </div>
+              <div class="wf-action-bar" style="margin-top:8px;">
+                <button class="wf-btn primary small" onclick="toggleEdit(this.closest('.wf-form-section').querySelector('.section-title .wf-btn'), 'sh-view', 'sh-edit')">Save</button>
+                <button class="wf-btn small" onclick="toggleEdit(this.closest('.wf-form-section').querySelector('.section-title .wf-btn'), 'sh-view', 'sh-edit')">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ongoing Clinical Data -->
+        <div class="wf-grid-2">
+          <!-- Active Problem List -->
+          <div class="wf-form-section">
+            <div class="section-title flex-between" style="display:flex;justify-content:space-between;align-items:center;">
+              <span>Active Problem List</span>
+              <button class="wf-btn small" style="border-bottom:none;" onclick="toggleEdit(this, 'apl-view', 'apl-edit')">&#9998; Edit</button>
+            </div>
+            <div id="apl-view">
+              <ul style="list-style:disc;padding-left:18px;font-size:.9rem;color:#555;">
+                <li>Hypertension Stage 1 (diagnosed Jun 2024) &mdash; <span class="wf-badge orange" style="font-size:.7rem;">Active</span></li>
+                <li>Pre-diabetes (diagnosed Jan 2025) &mdash; <span class="wf-badge orange" style="font-size:.7rem;">Monitoring</span></li>
+              </ul>
+            </div>
+            <div id="apl-edit" style="display:none;">
+              <div class="wf-form-group" style="margin-bottom:6px;">
+                <div style="display:flex;gap:6px;align-items:center;"><input class="wf-input" value="Hypertension Stage 1" style="flex:2;"><input class="wf-input" value="Jun 2024" style="flex:1;"><select class="wf-input" style="flex:1;"><option selected>Active</option><option>In Remission</option><option>Monitoring</option><option>Resolved</option></select></div>
+              </div>
+              <div class="wf-form-group" style="margin-bottom:6px;">
+                <div style="display:flex;gap:6px;align-items:center;"><input class="wf-input" value="Pre-diabetes" style="flex:2;"><input class="wf-input" value="Jan 2025" style="flex:1;"><select class="wf-input" style="flex:1;"><option>Active</option><option>In Remission</option><option selected>Monitoring</option><option>Resolved</option></select></div>
+              </div>
+              <button class="wf-btn small" style="margin-top:4px;">+ Add Condition</button>
+              <div class="wf-action-bar" style="margin-top:8px;">
+                <button class="wf-btn primary small" onclick="toggleEdit(this.closest('.wf-form-section').querySelector('.section-title .wf-btn'), 'apl-view', 'apl-edit')">Save</button>
+                <button class="wf-btn small" onclick="toggleEdit(this.closest('.wf-form-section').querySelector('.section-title .wf-btn'), 'apl-view', 'apl-edit')">Cancel</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Allergies -->
+          <div class="wf-form-section">
+            <div class="section-title flex-between" style="display:flex;justify-content:space-between;align-items:center;">
+              <span>Known Allergies</span>
+              <button class="wf-btn small" style="border-bottom:none;" onclick="toggleEdit(this, 'alg-view', 'alg-edit')">&#9998; Edit</button>
+            </div>
+            <div id="alg-view">
+              <div class="flex gap-1" style="flex-wrap:wrap;">
+                <span class="wf-tag" style="border-color:#a44;color:#a44;background:#ffefef;">Penicillin &mdash; Severe</span>
+                <span class="wf-tag" style="border-color:#b85;color:#b85;background:#fff8ef;">Peanuts &mdash; Moderate</span>
+              </div>
+            </div>
+            <div id="alg-edit" style="display:none;">
+              <div class="wf-form-group" style="margin-bottom:6px;">
+                <div style="display:flex;gap:6px;"><input class="wf-input" value="Penicillin" style="flex:2;"><select class="wf-input" style="flex:1;"><option selected>Drug</option><option>Food</option><option>Environmental</option></select><input class="wf-input" value="Rash, urticaria" style="flex:2;" placeholder="Reaction"><select class="wf-input" style="flex:1;"><option>Mild</option><option>Moderate</option><option selected>Severe</option><option>Life-threatening</option></select></div>
+              </div>
+              <div class="wf-form-group" style="margin-bottom:6px;">
+                <div style="display:flex;gap:6px;"><input class="wf-input" value="Peanuts" style="flex:2;"><select class="wf-input" style="flex:1;"><option>Drug</option><option selected>Food</option><option>Environmental</option></select><input class="wf-input" value="Oral itching, swelling" style="flex:2;" placeholder="Reaction"><select class="wf-input" style="flex:1;"><option>Mild</option><option selected>Moderate</option><option>Severe</option><option>Life-threatening</option></select></div>
+              </div>
+              <button class="wf-btn small" style="margin-top:4px;">+ Add Allergy</button>
+              <div class="wf-action-bar" style="margin-top:8px;">
+                <button class="wf-btn primary small" onclick="toggleEdit(this.closest('.wf-form-section').querySelector('.section-title .wf-btn'), 'alg-view', 'alg-edit')">Save</button>
+                <button class="wf-btn small" onclick="toggleEdit(this.closest('.wf-form-section').querySelector('.section-title .wf-btn'), 'alg-view', 'alg-edit')">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="wf-grid-2">
+          <!-- Current Medications -->
+          <div class="wf-form-section">
+            <div class="section-title flex-between" style="display:flex;justify-content:space-between;align-items:center;">
+              <span>Current Medications</span>
+              <button class="wf-btn small" style="border-bottom:none;" onclick="toggleEdit(this, 'med-view', 'med-edit')">&#9998; Edit</button>
+            </div>
+            <div id="med-view">
+              ${renderTable(
+                ['Drug', 'Dosage', 'Frequency', 'Started', 'Ended', 'Status'],
+                [
+                  ['Amlodipine', '5mg', 'Once daily', '15 Jun 2024', '&mdash;', '<span class="wf-badge green">Active</span>'],
+                  ['Metformin', '500mg', 'Twice daily', '20 Jan 2025', '&mdash;', '<span class="wf-badge green">Active</span>'],
+                  ['Amoxicillin', '500mg', 'TDS x 5 days', '20 Feb 2026', '25 Feb 2026', '<span class="wf-badge gray">Completed</span>'],
+                  ['Lisinopril', '10mg', 'Once daily', '10 Mar 2024', '14 Jun 2024', '<span class="wf-badge red">Discontinued</span>'],
+                ]
+              )}
+            </div>
+            <div id="med-edit" style="display:none;">
+              <div class="wf-form-group" style="margin-bottom:6px;">
+                <label class="text-small" style="font-weight:600;margin-bottom:4px;">Amlodipine <span class="wf-badge green" style="font-size:.65rem;">Active</span></label>
+                <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                  <input class="wf-input" value="Amlodipine" style="flex:2;min-width:100px;" readonly>
+                  <input class="wf-input" value="5mg" style="flex:1;min-width:50px;" placeholder="Dosage">
+                  <input class="wf-input" value="Once daily" style="flex:1;min-width:70px;" placeholder="Frequency">
+                  <div style="flex:1;min-width:100px;"><label class="text-small" style="font-size:.65rem;color:#888;">Started</label><input class="wf-input" type="date" value="2024-06-15"></div>
+                  <div style="flex:1;min-width:100px;"><label class="text-small" style="font-size:.65rem;color:#888;">Ended</label><input class="wf-input" type="date" value="" placeholder="Still active"></div>
+                  <select class="wf-input" style="flex:1;min-width:90px;"><option selected>Active</option><option>Discontinued</option><option>On Hold</option><option>Completed</option></select>
+                </div>
+              </div>
+              <div class="wf-form-group" style="margin-bottom:6px;">
+                <label class="text-small" style="font-weight:600;margin-bottom:4px;">Metformin <span class="wf-badge green" style="font-size:.65rem;">Active</span></label>
+                <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                  <input class="wf-input" value="Metformin" style="flex:2;min-width:100px;" readonly>
+                  <input class="wf-input" value="500mg" style="flex:1;min-width:50px;" placeholder="Dosage">
+                  <input class="wf-input" value="Twice daily" style="flex:1;min-width:70px;" placeholder="Frequency">
+                  <div style="flex:1;min-width:100px;"><label class="text-small" style="font-size:.65rem;color:#888;">Started</label><input class="wf-input" type="date" value="2025-01-20"></div>
+                  <div style="flex:1;min-width:100px;"><label class="text-small" style="font-size:.65rem;color:#888;">Ended</label><input class="wf-input" type="date" value="" placeholder="Still active"></div>
+                  <select class="wf-input" style="flex:1;min-width:90px;"><option selected>Active</option><option>Discontinued</option><option>On Hold</option><option>Completed</option></select>
+                </div>
+              </div>
+              <div class="wf-form-group" style="margin-bottom:6px;">
+                <label class="text-small" style="font-weight:600;margin-bottom:4px;">Amoxicillin <span class="wf-badge gray" style="font-size:.65rem;">Completed</span></label>
+                <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                  <input class="wf-input" value="Amoxicillin" style="flex:2;min-width:100px;" readonly>
+                  <input class="wf-input" value="500mg" style="flex:1;min-width:50px;" placeholder="Dosage">
+                  <input class="wf-input" value="TDS x 5 days" style="flex:1;min-width:70px;" placeholder="Frequency">
+                  <div style="flex:1;min-width:100px;"><label class="text-small" style="font-size:.65rem;color:#888;">Started</label><input class="wf-input" type="date" value="2026-02-20"></div>
+                  <div style="flex:1;min-width:100px;"><label class="text-small" style="font-size:.65rem;color:#888;">Ended</label><input class="wf-input" type="date" value="2026-02-25"></div>
+                  <select class="wf-input" style="flex:1;min-width:90px;"><option>Active</option><option>Discontinued</option><option>On Hold</option><option selected>Completed</option></select>
+                </div>
+              </div>
+              <div class="wf-form-group" style="margin-bottom:6px;">
+                <label class="text-small" style="font-weight:600;margin-bottom:4px;">Lisinopril <span class="wf-badge red" style="font-size:.65rem;">Discontinued</span></label>
+                <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                  <input class="wf-input" value="Lisinopril" style="flex:2;min-width:100px;" readonly>
+                  <input class="wf-input" value="10mg" style="flex:1;min-width:50px;" placeholder="Dosage">
+                  <input class="wf-input" value="Once daily" style="flex:1;min-width:70px;" placeholder="Frequency">
+                  <div style="flex:1;min-width:100px;"><label class="text-small" style="font-size:.65rem;color:#888;">Started</label><input class="wf-input" type="date" value="2024-03-10"></div>
+                  <div style="flex:1;min-width:100px;"><label class="text-small" style="font-size:.65rem;color:#888;">Ended</label><input class="wf-input" type="date" value="2024-06-14"></div>
+                  <select class="wf-input" style="flex:1;min-width:90px;"><option>Active</option><option selected>Discontinued</option><option>On Hold</option><option>Completed</option></select>
+                </div>
+              </div>
+
+              <!-- Add Medication Row (hidden by default) -->
+              <div id="med-add-row" style="display:none;margin-top:8px;padding:10px;border:1.5px dashed #999;border-radius:4px;background:#fffde7;">
+                <label class="text-small" style="font-weight:600;margin-bottom:6px;display:block;">New Medication</label>
+                <div style="position:relative;margin-bottom:6px;">
+                  <input class="wf-input" id="med-search-input" placeholder="Search drug name..." oninput="filterMedDrugs(this.value)" autocomplete="off">
+                  <div id="med-drug-dropdown" style="display:none;position:absolute;top:100%;left:0;right:0;max-height:180px;overflow-y:auto;background:#fff;border:1.5px solid #333;border-top:none;border-radius:0 0 4px 4px;z-index:10;box-shadow:2px 2px 0 #ddd;"></div>
+                </div>
+                <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                  <input class="wf-input" id="med-add-dosage" placeholder="Dosage (e.g. 400mg)" style="flex:1;min-width:100px;">
+                  <input class="wf-input" id="med-add-freq" placeholder="Frequency (e.g. TDS)" style="flex:1;min-width:100px;">
+                  <input class="wf-input" id="med-add-date" type="date" style="flex:1;min-width:120px;">
+                </div>
+                <div class="wf-action-bar" style="margin-top:8px;">
+                  <button class="wf-btn primary small" onclick="confirmAddMed()">Confirm</button>
+                  <button class="wf-btn small" onclick="document.getElementById('med-add-row').style.display='none'">Cancel</button>
+                </div>
+              </div>
+
+              <button class="wf-btn small" style="margin-top:8px;" onclick="showAddMed()">+ Add Medication</button>
+              <div class="wf-action-bar" style="margin-top:8px;">
+                <button class="wf-btn primary small" onclick="toggleEdit(this.closest('.wf-form-section').querySelector('.section-title .wf-btn'), 'med-view', 'med-edit')">Save</button>
+                <button class="wf-btn small" onclick="toggleEdit(this.closest('.wf-form-section').querySelector('.section-title .wf-btn'), 'med-view', 'med-edit')">Cancel</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Previous Lab Results (read-only) -->
           <div class="wf-form-section">
             <div class="section-title">Previous Lab Results</div>
             ${renderTable(
-              ["Date", "Test", "Result", "Flag"],
+              ['Date', 'Test', 'Result', 'Flag'],
               [
-                [
-                  "15 Mar",
-                  "CBC",
-                  "Normal",
-                  '<span class="wf-badge green">Normal</span>',
-                ],
-                [
-                  "15 Mar",
-                  "HbA1c",
-                  "6.1%",
-                  '<span class="wf-badge orange">High</span>',
-                ],
-              ],
+                ['15 Mar', 'CBC', 'Normal', '<span class="wf-badge green">Normal</span>'],
+                ['15 Mar', 'HbA1c', '6.1%', '<span class="wf-badge orange">High</span>'],
+                ['15 Mar', 'Lipid Profile', 'LDL 142', '<span class="wf-badge orange">High</span>'],
+              ]
             )}
           </div>
         </div>
+
+        <!-- Past Encounters (read-only) -->
+        <div class="wf-form-section">
+          <div class="section-title">Past Encounters</div>
+          ${renderTable(
+            ['Date', 'Branch', 'Practitioner', 'Diagnosis', 'Treatment'],
+            [
+              ['15 Mar 2026', 'Main Branch', 'Dr. Alem B.', 'Hypertension Stage 1', 'Amlodipine 5mg daily'],
+              ['20 Feb 2026', 'Main Branch', 'Dr. Solomon T.', 'URTI', 'Amoxicillin 500mg TDS x 5 days'],
+              ['05 Jan 2026', 'Main Branch', 'Dr. Solomon T.', 'Annual checkup', 'No treatment needed'],
+            ],
+            { clickable: true }
+          )}
+        </div>
+
+        <div class="text-small text-muted" style="border-top:1px dashed #ccc;padding-top:8px;">
+          Last profile update: 15 Mar 2026 by Dr. Alem B. (Encounter E-2026-0315)
+        </div>
       </div>
 
-      <!-- Tab 2: Assessment -->
-      <div id="tab-assessment" class="wf-tab-content">
-        <p class="text-small text-muted mb-2">Activate the assessment sections you need for this encounter. Toggle sections on/off as required.</p>
+
+      <!-- Tab 2: Encounter Form -->
+      <div id="tab-encounter" class="wf-tab-content">
+
+        <!-- Visit Context (auto-populated, read-only) -->
+        <div class="wf-card" style="margin-bottom:16px;background:#f8f8f8;">
+          <div class="card-title">Visit Context</div>
+          <div class="wf-kv-grid">
+            <div class="wf-kv"><div class="kv-label">Date / Time</div><div class="kv-value">08 Apr 2026, 10:15 AM</div></div>
+            <div class="wf-kv"><div class="kv-label">Provider</div><div class="kv-value">Dr. Solomon T. (General Practice)</div></div>
+            <div class="wf-kv"><div class="kv-label">Branch / Location</div><div class="kv-value">Main Branch, Room 3</div></div>
+            <div class="wf-kv"><div class="kv-label">Visit Type</div><div class="kv-value"><span class="wf-badge blue">Walk-in</span></div></div>
+          </div>
+          <div style="margin-top:8px;padding-top:8px;border-top:1px dashed #ccc;display:flex;gap:20px;flex-wrap:wrap;align-items:center;">
+            <div style="display:flex;align-items:center;gap:6px;">
+              <span style="font-size:.78rem;color:#888;">⏱ <strong style="color:#555;">Encounter Timer:</strong></span>
+              <span class="wf-badge green" style="font-size:.78rem;" id="encounter-timer">● Active — 00:32:15</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;">
+              <span style="font-size:.78rem;color:#888;">🕐 <strong style="color:#555;">Total Visit Duration:</strong></span>
+              <span style="font-size:.78rem;color:#555;">01:47:30 (from card activation)</span>
+            </div>
+            <div style="display:flex;gap:6px;">
+              <button class="wf-btn small" style="font-size:.72rem;" onclick="this.textContent=this.textContent.includes('Pause')?'▶ Resume Timer':'⏸ Pause Timer'">⏸ Pause Timer</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chief Complaint (Doctor's) -->
+        <div class="wf-form-section">
+          <div class="section-title">Chief Complaint (CC) — Practitioner Documentation</div>
+          <p class="text-small text-muted" style="margin-top:-6px;margin-bottom:8px;">Nurse CC shown in header above. Document your own clinical interpretation below.</p>
+          <div class="wf-form-group">
+            <label>Chief Complaint <span class="required">*</span></label>
+            <textarea class="wf-input" rows="2" placeholder="Practitioner's clinical description of the presenting complaint...">Frontal headache, 3-day duration, progressive, worse in mornings. No associated visual or neurological symptoms. Background of known hypertension.</textarea>
+          </div>
+        </div>
+
+        <!-- History of Present Illness (HPI) -->
+        <div class="wf-form-section">
+          <div class="section-title">History of Present Illness (HPI)</div>
+          <div class="wf-form-group">
+            <label>HPI Narrative <span class="required">*</span></label>
+            <textarea class="wf-input" rows="5" placeholder="Detailed narrative: onset, duration, severity, quality, context, modifying factors, associated symptoms...">41-year-old male presents with a 3-day history of progressive frontal headache. Onset was gradual, beginning last Monday morning. Pain is described as a bilateral, pressure-like sensation rated 4/10 on the pain scale.
+
+The headache is worse in the mornings upon waking and tends to improve slightly by mid-afternoon. No radiation to the neck or occiput. No photophobia, phonophobia, or visual disturbances. No nausea or vomiting.
+
+Patient reports increased work-related stress over the past 2 weeks (project deadline). Sleep has been disrupted — averaging 5 hours/night vs. usual 7-8 hours. Denies head trauma, fever, weight loss, or recent travel.
+
+No previous history of migraines or cluster headaches. Takes Amlodipine 5mg daily for hypertension (diagnosed Jun 2024) and Metformin 500mg BID for pre-diabetes. No recent medication changes. Known allergy to Penicillin.</textarea>
+          </div>
+        </div>
+
+        <hr class="wf-divider">
+        <p class="text-small text-muted mb-2">Activate examination and documentation sections as needed for this encounter.</p>
+
 
         <!-- Physical Examination (togglable) -->
         <div class="wf-card" style="margin-bottom:16px;">
@@ -293,153 +630,726 @@ Hypertension Stage 1 - adequately controlled on current medication (Amlodipine 5
       <div id="tab-laborder" class="wf-tab-content">
         <div class="wf-form-section">
           <div class="section-title">Create Lab Order</div>
+          <p class="text-small text-muted" style="margin-top:-6px;margin-bottom:8px;">Test catalog is configured via Admin &rarr; Master Data Management. Select tests and add per-test notes for the lab technician.</p>
           <div class="wf-form-group">
             <label>Select Test(s) from Catalog <span class="required">*</span></label>
-            <div id="lab-test-picker" style="border:1.5px solid #999;border-radius:3px;max-height:260px;overflow-y:auto;padding:8px 12px;background:#fff;">
-              <div style="margin-bottom:8px;">
-                <div style="font-family:'Architects Daughter',cursive;font-size:.88rem;color:#555;border-bottom:1px dashed #ddd;padding-bottom:3px;margin-bottom:5px;">🩸 Haematology</div>
-                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshLabTags()" value="CBC (Complete Blood Count)"> CBC (Complete Blood Count)</label>
-                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshLabTags()" value="ESR (Erythrocyte Sedimentation Rate)"> ESR (Erythrocyte Sedimentation Rate)</label>
-                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshLabTags()" value="Blood Film / Peripheral Smear"> Blood Film / Peripheral Smear</label>
-                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshLabTags()" value="Coagulation Profile (PT, aPTT, INR)"> Coagulation Profile (PT, aPTT, INR)</label>
-                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshLabTags()" value="Blood Group & Rh Type"> Blood Group &amp; Rh Type</label>
+            <div id="lab-test-picker" style="border:1.5px solid #999;border-radius:3px;max-height:380px;overflow-y:auto;padding:8px 12px;background:#fff;">
+
+              <!-- Haematology -->
+              <div style="margin-bottom:10px;">
+                <div style="font-family:'Architects Daughter',cursive;font-size:.88rem;color:#555;border-bottom:1px dashed #ddd;padding-bottom:3px;margin-bottom:5px;">Haematology</div>
+                <div class="lab-test-item">
+                  <label style="display:flex;align-items:center;gap:4px;padding:2px 0;font-size:.85rem;cursor:pointer;">
+                    <input type="checkbox" onchange="toggleLabTest(this)" value="CBC" data-specimen="Blood" data-name="Complete Blood Count (CBC)" data-type="Panel"> Complete Blood Count (CBC) <span class="wf-badge blue" style="font-size:.6rem;margin-left:4px;">Panel</span>
+                  </label>
+                  <div class="lab-test-note" style="display:none;margin:2px 0 6px 22px;">
+                    <input class="wf-input" style="font-size:.8rem;" placeholder="Notes for lab tech (e.g., check for eosinophilia)...">
+                  </div>
+                </div>
+                <div class="lab-test-item">
+                  <label style="display:flex;align-items:center;gap:4px;padding:2px 0;font-size:.85rem;cursor:pointer;">
+                    <input type="checkbox" onchange="toggleLabTest(this)" value="ESR" data-specimen="Blood" data-name="ESR (Erythrocyte Sedimentation Rate)" data-type="Single"> ESR (Erythrocyte Sedimentation Rate)
+                  </label>
+                  <div class="lab-test-note" style="display:none;margin:2px 0 6px 22px;">
+                    <input class="wf-input" style="font-size:.8rem;" placeholder="Notes for lab tech...">
+                  </div>
+                </div>
+                <div class="lab-test-item">
+                  <label style="display:flex;align-items:center;gap:4px;padding:2px 0;font-size:.85rem;cursor:pointer;">
+                    <input type="checkbox" onchange="toggleLabTest(this)" value="BFILM" data-specimen="Blood" data-name="Blood Film / Peripheral Smear" data-type="Single"> Blood Film / Peripheral Smear
+                  </label>
+                  <div class="lab-test-note" style="display:none;margin:2px 0 6px 22px;">
+                    <input class="wf-input" style="font-size:.8rem;" placeholder="Notes for lab tech...">
+                  </div>
+                </div>
+                <div class="lab-test-item">
+                  <label style="display:flex;align-items:center;gap:4px;padding:2px 0;font-size:.85rem;cursor:pointer;">
+                    <input type="checkbox" onchange="toggleLabTest(this)" value="COAG" data-specimen="Blood" data-name="Coagulation Profile (PT, aPTT, INR)" data-type="Panel"> Coagulation Profile (PT, aPTT, INR) <span class="wf-badge blue" style="font-size:.6rem;margin-left:4px;">Panel</span>
+                  </label>
+                  <div class="lab-test-note" style="display:none;margin:2px 0 6px 22px;">
+                    <input class="wf-input" style="font-size:.8rem;" placeholder="Notes for lab tech...">
+                  </div>
+                </div>
+                <div class="lab-test-item">
+                  <label style="display:flex;align-items:center;gap:4px;padding:2px 0;font-size:.85rem;cursor:pointer;">
+                    <input type="checkbox" onchange="toggleLabTest(this)" value="BGRP" data-specimen="Blood" data-name="Blood Group &amp; Rh Type" data-type="Single"> Blood Group &amp; Rh Type
+                  </label>
+                  <div class="lab-test-note" style="display:none;margin:2px 0 6px 22px;">
+                    <input class="wf-input" style="font-size:.8rem;" placeholder="Notes for lab tech...">
+                  </div>
+                </div>
               </div>
-              <div style="margin-bottom:8px;">
-                <div style="font-family:'Architects Daughter',cursive;font-size:.88rem;color:#555;border-bottom:1px dashed #ddd;padding-bottom:3px;margin-bottom:5px;">🧪 Biochemistry</div>
-                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshLabTags()" value="Blood Glucose (Fasting)" checked> Blood Glucose (Fasting)</label>
-                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshLabTags()" value="Blood Glucose (Random)"> Blood Glucose (Random)</label>
-                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshLabTags()" value="HbA1c"> HbA1c</label>
-                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshLabTags()" value="Lipid Profile (Total, LDL, HDL, TG)"> Lipid Profile (Total, LDL, HDL, TG)</label>
-                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshLabTags()" value="Liver Function Tests (ALT, AST, ALP, Bilirubin)"> Liver Function Tests (ALT, AST, ALP, Bilirubin)</label>
+
+              <!-- Biochemistry -->
+              <div style="margin-bottom:10px;">
+                <div style="font-family:'Architects Daughter',cursive;font-size:.88rem;color:#555;border-bottom:1px dashed #ddd;padding-bottom:3px;margin-bottom:5px;">Biochemistry</div>
+                <div class="lab-test-item">
+                  <label style="display:flex;align-items:center;gap:4px;padding:2px 0;font-size:.85rem;cursor:pointer;">
+                    <input type="checkbox" onchange="toggleLabTest(this)" value="FBS" data-specimen="Blood" data-name="Blood Glucose (Fasting)" data-type="Single" checked> Blood Glucose (Fasting)
+                  </label>
+                  <div class="lab-test-note" style="display:block;margin:2px 0 6px 22px;">
+                    <input class="wf-input" style="font-size:.8rem;" value="Confirm patient fasted for 8+ hours" placeholder="Notes for lab tech...">
+                  </div>
+                </div>
+                <div class="lab-test-item">
+                  <label style="display:flex;align-items:center;gap:4px;padding:2px 0;font-size:.85rem;cursor:pointer;">
+                    <input type="checkbox" onchange="toggleLabTest(this)" value="RBS" data-specimen="Blood" data-name="Blood Glucose (Random)" data-type="Single"> Blood Glucose (Random)
+                  </label>
+                  <div class="lab-test-note" style="display:none;margin:2px 0 6px 22px;">
+                    <input class="wf-input" style="font-size:.8rem;" placeholder="Notes for lab tech...">
+                  </div>
+                </div>
+                <div class="lab-test-item">
+                  <label style="display:flex;align-items:center;gap:4px;padding:2px 0;font-size:.85rem;cursor:pointer;">
+                    <input type="checkbox" onchange="toggleLabTest(this)" value="HBA1C" data-specimen="Blood" data-name="HbA1c" data-type="Single"> HbA1c
+                  </label>
+                  <div class="lab-test-note" style="display:none;margin:2px 0 6px 22px;">
+                    <input class="wf-input" style="font-size:.8rem;" placeholder="Notes for lab tech...">
+                  </div>
+                </div>
+                <div class="lab-test-item">
+                  <label style="display:flex;align-items:center;gap:4px;padding:2px 0;font-size:.85rem;cursor:pointer;">
+                    <input type="checkbox" onchange="toggleLabTest(this)" value="LIPID" data-specimen="Blood" data-name="Lipid Profile (Total, LDL, HDL, TG)" data-type="Panel"> Lipid Profile (Total, LDL, HDL, TG) <span class="wf-badge blue" style="font-size:.6rem;margin-left:4px;">Panel</span>
+                  </label>
+                  <div class="lab-test-note" style="display:none;margin:2px 0 6px 22px;">
+                    <input class="wf-input" style="font-size:.8rem;" placeholder="Notes for lab tech...">
+                  </div>
+                </div>
+                <div class="lab-test-item">
+                  <label style="display:flex;align-items:center;gap:4px;padding:2px 0;font-size:.85rem;cursor:pointer;">
+                    <input type="checkbox" onchange="toggleLabTest(this)" value="LFT" data-specimen="Blood" data-name="Liver Function Tests (ALT, AST, ALP, Bilirubin)" data-type="Panel"> Liver Function Tests (ALT, AST, ALP, Bilirubin) <span class="wf-badge blue" style="font-size:.6rem;margin-left:4px;">Panel</span>
+                  </label>
+                  <div class="lab-test-note" style="display:none;margin:2px 0 6px 22px;">
+                    <input class="wf-input" style="font-size:.8rem;" placeholder="Notes for lab tech...">
+                  </div>
+                </div>
               </div>
-              <div style="margin-bottom:8px;">
-                <div style="font-family:'Architects Daughter',cursive;font-size:.88rem;color:#555;border-bottom:1px dashed #ddd;padding-bottom:3px;margin-bottom:5px;">🦠 Endocrine</div>
-                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshLabTags()" value="Thyroid Panel (T3, T4, TSH)"> Thyroid Panel (T3, T4, TSH)</label>
+
+              <!-- Endocrine -->
+              <div style="margin-bottom:10px;">
+                <div style="font-family:'Architects Daughter',cursive;font-size:.88rem;color:#555;border-bottom:1px dashed #ddd;padding-bottom:3px;margin-bottom:5px;">Endocrine</div>
+                <div class="lab-test-item">
+                  <label style="display:flex;align-items:center;gap:4px;padding:2px 0;font-size:.85rem;cursor:pointer;">
+                    <input type="checkbox" onchange="toggleLabTest(this)" value="TFT" data-specimen="Blood" data-name="Thyroid Panel (T3, T4, TSH)" data-type="Panel" data-external="true"> Thyroid Panel (T3, T4, TSH) <span class="wf-badge blue" style="font-size:.6rem;margin-left:4px;">Panel</span> <span class="wf-badge orange" style="font-size:.6rem;margin-left:2px;">External Only</span>
+                  </label>
+                  <div class="lab-test-note" style="display:none;margin:2px 0 6px 22px;">
+                    <input class="wf-input" style="font-size:.8rem;" placeholder="Notes for lab tech...">
+                  </div>
+                </div>
               </div>
-              <div style="margin-bottom:8px;">
-                <div style="font-family:'Architects Daughter',cursive;font-size:.88rem;color:#555;border-bottom:1px dashed #ddd;padding-bottom:3px;margin-bottom:5px;">💧 Renal</div>
-                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshLabTags()" value="Renal Function Panel (BUN, Creatinine, eGFR)" checked> Renal Function Panel (BUN, Creatinine, eGFR)</label>
-                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshLabTags()" value="Electrolytes (Na, K, Cl, Ca)"> Electrolytes (Na, K, Cl, Ca)</label>
+
+              <!-- Renal -->
+              <div style="margin-bottom:10px;">
+                <div style="font-family:'Architects Daughter',cursive;font-size:.88rem;color:#555;border-bottom:1px dashed #ddd;padding-bottom:3px;margin-bottom:5px;">Renal</div>
+                <div class="lab-test-item">
+                  <label style="display:flex;align-items:center;gap:4px;padding:2px 0;font-size:.85rem;cursor:pointer;">
+                    <input type="checkbox" onchange="toggleLabTest(this)" value="RFT" data-specimen="Blood" data-name="Renal Function Panel (BUN, Creatinine, eGFR)" data-type="Panel" checked> Renal Function Panel (BUN, Creatinine, eGFR) <span class="wf-badge blue" style="font-size:.6rem;margin-left:4px;">Panel</span>
+                  </label>
+                  <div class="lab-test-note" style="display:block;margin:2px 0 6px 22px;">
+                    <input class="wf-input" style="font-size:.8rem;" value="Patient on Metformin - monitor renal function" placeholder="Notes for lab tech...">
+                  </div>
+                </div>
+                <div class="lab-test-item">
+                  <label style="display:flex;align-items:center;gap:4px;padding:2px 0;font-size:.85rem;cursor:pointer;">
+                    <input type="checkbox" onchange="toggleLabTest(this)" value="ELEC" data-specimen="Blood" data-name="Electrolytes (Na, K, Cl, Ca)" data-type="Panel"> Electrolytes (Na, K, Cl, Ca) <span class="wf-badge blue" style="font-size:.6rem;margin-left:4px;">Panel</span>
+                  </label>
+                  <div class="lab-test-note" style="display:none;margin:2px 0 6px 22px;">
+                    <input class="wf-input" style="font-size:.8rem;" placeholder="Notes for lab tech...">
+                  </div>
+                </div>
               </div>
-              <div style="margin-bottom:8px;">
-                <div style="font-family:'Architects Daughter',cursive;font-size:.88rem;color:#555;border-bottom:1px dashed #ddd;padding-bottom:3px;margin-bottom:5px;">🔬 Urinalysis</div>
-                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshLabTags()" value="Urinalysis (Routine)"> Urinalysis (Routine)</label>
-                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshLabTags()" value="Urine Culture & Sensitivity"> Urine Culture &amp; Sensitivity</label>
+
+              <!-- Urinalysis -->
+              <div style="margin-bottom:10px;">
+                <div style="font-family:'Architects Daughter',cursive;font-size:.88rem;color:#555;border-bottom:1px dashed #ddd;padding-bottom:3px;margin-bottom:5px;">Urinalysis</div>
+                <div class="lab-test-item">
+                  <label style="display:flex;align-items:center;gap:4px;padding:2px 0;font-size:.85rem;cursor:pointer;">
+                    <input type="checkbox" onchange="toggleLabTest(this)" value="UA" data-specimen="Urine" data-name="Urinalysis (Routine)" data-type="Single"> Urinalysis (Routine)
+                  </label>
+                  <div class="lab-test-note" style="display:none;margin:2px 0 6px 22px;">
+                    <input class="wf-input" style="font-size:.8rem;" placeholder="Notes for lab tech...">
+                  </div>
+                </div>
+                <div class="lab-test-item">
+                  <label style="display:flex;align-items:center;gap:4px;padding:2px 0;font-size:.85rem;cursor:pointer;">
+                    <input type="checkbox" onchange="toggleLabTest(this)" value="UCS" data-specimen="Urine,Swab" data-name="Urine Culture &amp; Sensitivity" data-type="Single"> Urine Culture &amp; Sensitivity
+                  </label>
+                  <div class="lab-test-note" style="display:none;margin:2px 0 6px 22px;">
+                    <input class="wf-input" style="font-size:.8rem;" placeholder="Notes for lab tech...">
+                  </div>
+                </div>
               </div>
-              <div style="margin-bottom:8px;">
-                <div style="font-family:'Architects Daughter',cursive;font-size:.88rem;color:#555;border-bottom:1px dashed #ddd;padding-bottom:3px;margin-bottom:5px;">🦠 Microbiology</div>
-                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshLabTags()" value="Blood Culture & Sensitivity"> Blood Culture &amp; Sensitivity</label>
-                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshLabTags()" value="Stool Exam (O&P)"> Stool Exam (O&amp;P)</label>
-                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshLabTags()" value="AFB Smear / Gene Xpert"> AFB Smear / Gene Xpert</label>
+
+              <!-- Microbiology -->
+              <div style="margin-bottom:10px;">
+                <div style="font-family:'Architects Daughter',cursive;font-size:.88rem;color:#555;border-bottom:1px dashed #ddd;padding-bottom:3px;margin-bottom:5px;">Microbiology</div>
+                <div class="lab-test-item">
+                  <label style="display:flex;align-items:center;gap:4px;padding:2px 0;font-size:.85rem;cursor:pointer;">
+                    <input type="checkbox" onchange="toggleLabTest(this)" value="BCS" data-specimen="Blood,Swab" data-name="Blood Culture &amp; Sensitivity" data-type="Single"> Blood Culture &amp; Sensitivity
+                  </label>
+                  <div class="lab-test-note" style="display:none;margin:2px 0 6px 22px;">
+                    <input class="wf-input" style="font-size:.8rem;" placeholder="Notes for lab tech...">
+                  </div>
+                </div>
+                <div class="lab-test-item">
+                  <label style="display:flex;align-items:center;gap:4px;padding:2px 0;font-size:.85rem;cursor:pointer;">
+                    <input type="checkbox" onchange="toggleLabTest(this)" value="STOOL" data-specimen="Stool,Rectal swab" data-name="Stool Exam (O&amp;P)" data-type="Single"> Stool Exam (O&amp;P)
+                  </label>
+                  <div class="lab-test-note" style="display:none;margin:2px 0 6px 22px;">
+                    <input class="wf-input" style="font-size:.8rem;" placeholder="Notes for lab tech...">
+                  </div>
+                </div>
+                <div class="lab-test-item">
+                  <label style="display:flex;align-items:center;gap:4px;padding:2px 0;font-size:.85rem;cursor:pointer;">
+                    <input type="checkbox" onchange="toggleLabTest(this)" value="AFB" data-specimen="Sputum,Swab" data-name="AFB Smear / Gene Xpert" data-type="Single"> AFB Smear / Gene Xpert
+                  </label>
+                  <div class="lab-test-note" style="display:none;margin:2px 0 6px 22px;">
+                    <input class="wf-input" style="font-size:.8rem;" placeholder="Notes for lab tech...">
+                  </div>
+                </div>
               </div>
+
+              <!-- Serology / Immunology -->
               <div>
-                <div style="font-family:'Architects Daughter',cursive;font-size:.88rem;color:#555;border-bottom:1px dashed #ddd;padding-bottom:3px;margin-bottom:5px;">🧬 Serology / Immunology</div>
-                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshLabTags()" value="HIV Screening"> HIV Screening</label>
-                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshLabTags()" value="Hepatitis B (HBsAg)"> Hepatitis B (HBsAg)</label>
-                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshLabTags()" value="Hepatitis C (Anti-HCV)"> Hepatitis C (Anti-HCV)</label>
-                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshLabTags()" value="VDRL / RPR (Syphilis)"> VDRL / RPR (Syphilis)</label>
-                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshLabTags()" value="Widal Test"> Widal Test</label>
-                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshLabTags()" value="CRP (C-Reactive Protein)"> CRP (C-Reactive Protein)</label>
+                <div style="font-family:'Architects Daughter',cursive;font-size:.88rem;color:#555;border-bottom:1px dashed #ddd;padding-bottom:3px;margin-bottom:5px;">Serology / Immunology</div>
+                <div class="lab-test-item">
+                  <label style="display:flex;align-items:center;gap:4px;padding:2px 0;font-size:.85rem;cursor:pointer;">
+                    <input type="checkbox" onchange="toggleLabTest(this)" value="HIV" data-specimen="Blood" data-name="HIV Screening" data-type="Single"> HIV Screening
+                  </label>
+                  <div class="lab-test-note" style="display:none;margin:2px 0 6px 22px;">
+                    <input class="wf-input" style="font-size:.8rem;" placeholder="Notes for lab tech...">
+                  </div>
+                </div>
+                <div class="lab-test-item">
+                  <label style="display:flex;align-items:center;gap:4px;padding:2px 0;font-size:.85rem;cursor:pointer;">
+                    <input type="checkbox" onchange="toggleLabTest(this)" value="HBSAG" data-specimen="Blood" data-name="Hepatitis B (HBsAg)" data-type="Single"> Hepatitis B (HBsAg)
+                  </label>
+                  <div class="lab-test-note" style="display:none;margin:2px 0 6px 22px;">
+                    <input class="wf-input" style="font-size:.8rem;" placeholder="Notes for lab tech...">
+                  </div>
+                </div>
+                <div class="lab-test-item">
+                  <label style="display:flex;align-items:center;gap:4px;padding:2px 0;font-size:.85rem;cursor:pointer;">
+                    <input type="checkbox" onchange="toggleLabTest(this)" value="HCV" data-specimen="Blood" data-name="Hepatitis C (Anti-HCV)" data-type="Single"> Hepatitis C (Anti-HCV)
+                  </label>
+                  <div class="lab-test-note" style="display:none;margin:2px 0 6px 22px;">
+                    <input class="wf-input" style="font-size:.8rem;" placeholder="Notes for lab tech...">
+                  </div>
+                </div>
+                <div class="lab-test-item">
+                  <label style="display:flex;align-items:center;gap:4px;padding:2px 0;font-size:.85rem;cursor:pointer;">
+                    <input type="checkbox" onchange="toggleLabTest(this)" value="VDRL" data-specimen="Blood" data-name="VDRL / RPR (Syphilis)" data-type="Single"> VDRL / RPR (Syphilis)
+                  </label>
+                  <div class="lab-test-note" style="display:none;margin:2px 0 6px 22px;">
+                    <input class="wf-input" style="font-size:.8rem;" placeholder="Notes for lab tech...">
+                  </div>
+                </div>
+                <div class="lab-test-item">
+                  <label style="display:flex;align-items:center;gap:4px;padding:2px 0;font-size:.85rem;cursor:pointer;">
+                    <input type="checkbox" onchange="toggleLabTest(this)" value="WIDAL" data-specimen="Blood" data-name="Widal Test" data-type="Single"> Widal Test
+                  </label>
+                  <div class="lab-test-note" style="display:none;margin:2px 0 6px 22px;">
+                    <input class="wf-input" style="font-size:.8rem;" placeholder="Notes for lab tech...">
+                  </div>
+                </div>
+                <div class="lab-test-item">
+                  <label style="display:flex;align-items:center;gap:4px;padding:2px 0;font-size:.85rem;cursor:pointer;">
+                    <input type="checkbox" onchange="toggleLabTest(this)" value="CRP" data-specimen="Blood" data-name="CRP (C-Reactive Protein)" data-type="Single"> CRP (C-Reactive Protein)
+                  </label>
+                  <div class="lab-test-note" style="display:none;margin:2px 0 6px 22px;">
+                    <input class="wf-input" style="font-size:.8rem;" placeholder="Notes for lab tech...">
+                  </div>
+                </div>
               </div>
+
             </div>
           </div>
-          <div style="margin-top:8px;margin-bottom:12px;">
+
+          <!-- Selected Tests Summary -->
+          <div style="margin-top:10px;margin-bottom:12px;">
             <span class="text-small text-muted">Selected tests:</span>
             <div id="lab-selected-tags" class="flex gap-1 mt-1" style="flex-wrap:wrap;min-height:24px;"></div>
           </div>
-          <div class="wf-form-row">
-            <div class="wf-form-group">
+
+          <!-- External Referral Info (hidden by default, shown when external test selected) -->
+          <div id="external-referral-callout" style="display:none;background:#fff3e0;padding:10px 14px;border-radius:3px;margin-bottom:12px;border-left:3px solid #e65100;">
+            <div class="text-small" style="font-weight:600;color:#e65100;margin-bottom:4px;">External Lab Referral Required</div>
+            <div class="text-small" style="color:#333;margin-bottom:6px;">The following selected tests are not available at this branch's lab and require an external laboratory referral:</div>
+            <div id="external-test-list" style="margin-bottom:6px;"></div>
+            <div class="text-small" style="color:#555;">Use "Generate External Lab Referral" below to create a referral document for the patient. Results are entered by you when they return.</div>
+          </div>
+
+          <div class="wf-form-group">
               <label>Urgency <span class="required">*</span></label>
               <div class="wf-radio-group">
                 <label><input type="radio" name="urgency" checked> Routine</label>
                 <label><input type="radio" name="urgency"> Urgent</label>
               </div>
             </div>
-            ${renderFormField("Specimen Type", "select", { options: ["Blood (auto-detected)", "Urine", "Swab"] })}
-          </div>
-          ${renderFormField("Clinical Notes", "textarea", { placeholder: "Notes for the lab technician..." })}
+          ${renderFormField("General Clinical Notes", "textarea", { placeholder: "Additional notes for the entire order (optional)..." })}
           <div class="wf-action-bar">
             <button class="wf-btn primary">Submit Lab Order</button>
-            <span class="text-small text-muted">→ Creates payment request in Finance queue</span>
+            <a href="../lab_tech/external_referral_document.html" id="external-referral-btn" style="display:none;"><button class="wf-btn">Generate External Lab Referral</button></a>
+            <span class="text-small text-muted">&rarr; Creates payment request in Finance queue</span>
           </div>
         </div>
 
         <hr class="wf-divider">
         <h4 class="mb-1">Previously Submitted Lab Orders (this encounter)</h4>
-        ${renderTable(
-          ["Tests", "Urgency", "Status"],
-          [
-            [
-              "CBC, Lipid Profile",
-              "Routine",
-              '<span class="wf-badge green">Results Available</span>',
-            ],
-          ],
-        )}
+        <p class="text-small text-muted" style="margin-top:-4px;margin-bottom:8px;">Click a row to view lab results.</p>
+        <table style="width:100%;border-collapse:collapse;font-size:.85rem;">
+          <thead>
+            <tr style="border-bottom:1.5px solid #ccc;background:#fafafa;text-align:left;">
+              <th style="padding:6px 10px;">Tests</th>
+              <th style="padding:6px 10px;">Notes</th>
+              <th style="padding:6px 10px;">Urgency</th>
+              <th style="padding:6px 10px;">Mode</th>
+              <th style="padding:6px 10px;">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px solid #eee;cursor:pointer;background:#f0f8ff;" onclick="toggleLabResults()">
+              <td style="padding:6px 10px;"><strong>CBC, Lipid Profile</strong></td>
+              <td style="padding:6px 10px;">CBC: check eosinophilia; Lipid: fasting confirmed</td>
+              <td style="padding:6px 10px;">Routine</td>
+              <td style="padding:6px 10px;"><span class="wf-badge green" style="font-size:.6rem;">In-House</span></td>
+              <td style="padding:6px 10px;"><span class="wf-badge green">Results Available</span></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Lab Results detail panel (shown on row click) -->
+        <div id="lab-results-panel" style="display:block;border:1.5px solid #90caf9;border-radius:0 0 4px 4px;border-top:none;margin-bottom:12px;overflow:hidden;">
+          <div style="background:#e3f2fd;padding:8px 14px;display:flex;align-items:center;justify-content:space-between;">
+            <div style="font-weight:700;font-size:.88rem;color:#1565c0;">Lab Results — CBC, Lipid Profile</div>
+            <button class="wf-btn small" onclick="toggleLabResults()">Close</button>
+          </div>
+          <table style="width:100%;border-collapse:collapse;font-size:.82rem;">
+            <thead>
+              <tr style="border-bottom:1px solid #ddd;background:#f8fbff;text-align:left;">
+                <th style="padding:5px 10px;">Test</th>
+                <th style="padding:5px 10px;">Result</th>
+                <th style="padding:5px 10px;">Ref. Range</th>
+                <th style="padding:5px 10px;">Flag</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom:1px solid #ddd;background:#f2f7ff;">
+                <td colspan="4" style="padding:5px 10px;font-weight:700;color:#1565c0;">CBC (Complete Blood Count)</td>
+              </tr>
+              <tr style="border-bottom:1px solid #eee;">
+                <td style="padding:4px 10px 4px 24px;">WBC</td>
+                <td style="padding:4px 10px;"><strong>7.2</strong> &times;10&sup3;/&mu;L</td>
+                <td style="padding:4px 10px;color:#888;">4.0 &ndash; 11.0</td>
+                <td style="padding:4px 10px;"><span class="wf-badge green" style="font-size:.55rem;">Normal</span></td>
+              </tr>
+              <tr style="border-bottom:1px solid #eee;">
+                <td style="padding:4px 10px 4px 24px;">RBC</td>
+                <td style="padding:4px 10px;"><strong>4.8</strong> &times;10&sup6;/&mu;L</td>
+                <td style="padding:4px 10px;color:#888;">4.0 &ndash; 5.5</td>
+                <td style="padding:4px 10px;"><span class="wf-badge green" style="font-size:.55rem;">Normal</span></td>
+              </tr>
+              <tr style="border-bottom:1px solid #eee;">
+                <td style="padding:4px 10px 4px 24px;">Hgb</td>
+                <td style="padding:4px 10px;"><strong>14.1</strong> g/dL</td>
+                <td style="padding:4px 10px;color:#888;">12.0 &ndash; 16.0</td>
+                <td style="padding:4px 10px;"><span class="wf-badge green" style="font-size:.55rem;">Normal</span></td>
+              </tr>
+              <tr style="border-bottom:1px solid #eee;">
+                <td style="padding:4px 10px 4px 24px;">Platelets</td>
+                <td style="padding:4px 10px;"><strong>245</strong> &times;10&sup3;/&mu;L</td>
+                <td style="padding:4px 10px;color:#888;">150 &ndash; 400</td>
+                <td style="padding:4px 10px;"><span class="wf-badge green" style="font-size:.55rem;">Normal</span></td>
+              </tr>
+              <tr style="border-bottom:1px solid #eee;">
+                <td style="padding:4px 10px 4px 24px;">Eosinophils</td>
+                <td style="padding:4px 10px;"><strong style="color:#c62828;">8.2</strong> %</td>
+                <td style="padding:4px 10px;color:#888;">1.0 &ndash; 4.0</td>
+                <td style="padding:4px 10px;"><span class="wf-badge" style="font-size:.55rem;background:#ffebee;color:#c62828;">High</span></td>
+              </tr>
+              <tr style="border-bottom:1px solid #ddd;background:#f2f7ff;">
+                <td colspan="4" style="padding:5px 10px;font-weight:700;color:#1565c0;">Lipid Profile</td>
+              </tr>
+              <tr style="border-bottom:1px solid #eee;">
+                <td style="padding:4px 10px 4px 24px;">Total Cholesterol</td>
+                <td style="padding:4px 10px;"><strong>198</strong> mg/dL</td>
+                <td style="padding:4px 10px;color:#888;">&lt; 200</td>
+                <td style="padding:4px 10px;"><span class="wf-badge green" style="font-size:.55rem;">Normal</span></td>
+              </tr>
+              <tr style="border-bottom:1px solid #eee;">
+                <td style="padding:4px 10px 4px 24px;">LDL</td>
+                <td style="padding:4px 10px;"><strong style="color:#e65100;">142</strong> mg/dL</td>
+                <td style="padding:4px 10px;color:#888;">&lt; 130</td>
+                <td style="padding:4px 10px;"><span class="wf-badge" style="font-size:.55rem;background:#fff3e0;color:#e65100;">Borderline High</span></td>
+              </tr>
+              <tr style="border-bottom:1px solid #eee;">
+                <td style="padding:4px 10px 4px 24px;">HDL</td>
+                <td style="padding:4px 10px;"><strong>52</strong> mg/dL</td>
+                <td style="padding:4px 10px;color:#888;">&gt; 40</td>
+                <td style="padding:4px 10px;"><span class="wf-badge green" style="font-size:.55rem;">Normal</span></td>
+              </tr>
+              <tr>
+                <td style="padding:4px 10px 4px 24px;">Triglycerides</td>
+                <td style="padding:4px 10px;"><strong>165</strong> mg/dL</td>
+                <td style="padding:4px 10px;color:#888;">&lt; 150</td>
+                <td style="padding:4px 10px;"><span class="wf-badge" style="font-size:.55rem;background:#fff3e0;color:#e65100;">Borderline High</span></td>
+              </tr>
+            </tbody>
+          </table>
+          <div style="padding:8px 14px;background:#f8fbff;border-top:1px solid #ddd;">
+            <div class="text-small text-muted" style="margin-bottom:4px;"><strong>Lab Tech Notes:</strong> CBC: check eosinophilia — confirmed elevated. Lipid: fasting confirmed, sample quality good.</div>
+            <div class="text-small" style="color:#c62828;font-weight:600;">Attention: 1 abnormal (Eosinophils), 2 borderline (LDL, Triglycerides)</div>
+          </div>
+        </div>
+
+        <!-- Pending order row (external) -->
+        <table style="width:100%;border-collapse:collapse;font-size:.85rem;margin-top:-1px;">
+          <tbody>
+            <tr style="border-bottom:1px solid #eee;cursor:default;opacity:.7;">
+              <td style="padding:6px 10px;"><strong>Thyroid Panel (T3, T4, TSH)</strong></td>
+              <td style="padding:6px 10px;">Baseline thyroid screening</td>
+              <td style="padding:6px 10px;">Routine</td>
+              <td style="padding:6px 10px;"><span class="wf-badge orange" style="font-size:.6rem;">External Referral</span></td>
+              <td style="padding:6px 10px;"><span class="wf-badge orange">Pending External Results</span></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
+
 
       <!-- Tab 4: Order-Sheet -->
       <div id="tab-ordersheet" class="wf-tab-content">
         <div class="wf-form-section">
           <div class="section-title">Create Order-Sheet (Nursing Procedures)</div>
+          <p class="text-small text-muted" style="margin-top:-6px;margin-bottom:8px;">Procedure catalog is configured via Admin &rarr; Master Data Management. Select procedures and add per-procedure instructions for the nurse.</p>
           <div class="wf-form-group">
             <label>Select Procedure(s) from Catalog <span class="required">*</span></label>
-            <div id="proc-picker" style="border:1.5px solid #999;border-radius:3px;max-height:220px;overflow-y:auto;padding:8px 12px;background:#fff;">
-              <div style="margin-bottom:8px;">
-                <div style="font-family:'Architects Daughter',cursive;font-size:.88rem;color:#555;border-bottom:1px dashed #ddd;padding-bottom:3px;margin-bottom:5px;">💉 Injections</div>
-                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshProcTags()" value="IM Injection (Intramuscular)" checked> IM Injection (Intramuscular)</label>
-                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshProcTags()" value="SC Injection (Subcutaneous)"> SC Injection (Subcutaneous)</label>
-                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshProcTags()" value="IV Injection (Intravenous bolus)"> IV Injection (Intravenous bolus)</label>
+            <div id="proc-picker" style="border:1.5px solid #999;border-radius:3px;max-height:340px;overflow-y:auto;padding:8px 12px;background:#fff;">
+
+              <!-- Injections -->
+              <div style="margin-bottom:10px;">
+                <div style="font-family:'Architects Daughter',cursive;font-size:.88rem;color:#555;border-bottom:1px dashed #ddd;padding-bottom:3px;margin-bottom:5px;">Injections</div>
+                <div class="proc-item">
+                  <label style="display:flex;align-items:center;gap:4px;padding:2px 0;font-size:.85rem;cursor:pointer;">
+                    <input type="checkbox" onchange="toggleProc(this)" value="IM-INJ" data-name="IM Injection (Intramuscular)" checked> IM Injection (Intramuscular)
+                  </label>
+                  <div class="proc-note" style="display:block;margin:4px 0 10px 22px;padding:8px;border:1px solid #ddd;border-radius:3px;background:#fafafa;">
+                    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:4px;">
+                      <input class="wf-input" style="flex:2;font-size:.8rem;min-width:120px;" placeholder="Drug name *" value="Diclofenac">
+                      <input class="wf-input" style="flex:1;font-size:.8rem;min-width:80px;" placeholder="Dosage *" value="75mg/3ml">
+                      <select class="wf-input" style="flex:1;font-size:.8rem;min-width:90px;"><option selected>Intramuscular (IM)</option><option>Subcutaneous (SC)</option><option>Intravenous (IV)</option></select>
+                    </div>
+                    <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                      <input class="wf-input" style="flex:1;font-size:.8rem;min-width:100px;" placeholder="Site (e.g., Left deltoid) *" value="Left deltoid">
+                      <select class="wf-input" style="flex:1;font-size:.8rem;min-width:100px;"><option>Single dose</option><option>Once daily</option><option>BID</option><option>TDS</option><option>STAT</option></select>
+                      <input class="wf-input" style="flex:1;font-size:.8rem;min-width:100px;" placeholder="Additional notes">
+                    </div>
+                  </div>
+                </div>
+                <div class="proc-item">
+                  <label style="display:flex;align-items:center;gap:4px;padding:2px 0;font-size:.85rem;cursor:pointer;">
+                    <input type="checkbox" onchange="toggleProc(this)" value="SC-INJ" data-name="SC Injection (Subcutaneous)"> SC Injection (Subcutaneous)
+                  </label>
+                  <div class="proc-note" style="display:none;margin:4px 0 10px 22px;padding:8px;border:1px solid #ddd;border-radius:3px;background:#fafafa;">
+                    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:4px;">
+                      <input class="wf-input" style="flex:2;font-size:.8rem;min-width:120px;" placeholder="Drug name *" >
+                      <input class="wf-input" style="flex:1;font-size:.8rem;min-width:80px;" placeholder="Dosage *" >
+                      <select class="wf-input" style="flex:1;font-size:.8rem;min-width:90px;"><option>Intramuscular (IM)</option><option selected>Subcutaneous (SC)</option><option>Intravenous (IV)</option></select>
+                    </div>
+                    <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                      <input class="wf-input" style="flex:1;font-size:.8rem;min-width:100px;" placeholder="Site (e.g., Left deltoid) *" >
+                      <select class="wf-input" style="flex:1;font-size:.8rem;min-width:100px;"><option>Single dose</option><option>Once daily</option><option>BID</option><option>TDS</option><option>STAT</option></select>
+                      <input class="wf-input" style="flex:1;font-size:.8rem;min-width:100px;" placeholder="Additional notes">
+                    </div>
+                  </div>
+                </div>
+                <div class="proc-item">
+                  <label style="display:flex;align-items:center;gap:4px;padding:2px 0;font-size:.85rem;cursor:pointer;">
+                    <input type="checkbox" onchange="toggleProc(this)" value="IV-INJ" data-name="IV Injection (Intravenous bolus)"> IV Injection (Intravenous bolus)
+                  </label>
+                  <div class="proc-note" style="display:none;margin:4px 0 10px 22px;padding:8px;border:1px solid #ddd;border-radius:3px;background:#fafafa;">
+                    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:4px;">
+                      <input class="wf-input" style="flex:2;font-size:.8rem;min-width:120px;" placeholder="Drug name *" >
+                      <input class="wf-input" style="flex:1;font-size:.8rem;min-width:80px;" placeholder="Dosage *" >
+                      <select class="wf-input" style="flex:1;font-size:.8rem;min-width:90px;"><option>Intramuscular (IM)</option><option>Subcutaneous (SC)</option><option selected>Intravenous (IV)</option></select>
+                    </div>
+                    <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                      <input class="wf-input" style="flex:1;font-size:.8rem;min-width:100px;" placeholder="Site (e.g., Left deltoid) *" >
+                      <select class="wf-input" style="flex:1;font-size:.8rem;min-width:100px;"><option>Single dose</option><option>Once daily</option><option>BID</option><option>TDS</option><option>STAT</option></select>
+                      <input class="wf-input" style="flex:1;font-size:.8rem;min-width:100px;" placeholder="Additional notes">
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div style="margin-bottom:8px;">
-                <div style="font-family:'Architects Daughter',cursive;font-size:.88rem;color:#555;border-bottom:1px dashed #ddd;padding-bottom:3px;margin-bottom:5px;">🩹 Wound Care</div>
-                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshProcTags()" value="Wound Dressing"> Wound Dressing</label>
-                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshProcTags()" value="Wound Debridement"> Wound Debridement</label>
-                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshProcTags()" value="Suture Removal"> Suture Removal</label>
+
+              <!-- Wound Care -->
+              <div style="margin-bottom:10px;">
+                <div style="font-family:'Architects Daughter',cursive;font-size:.88rem;color:#555;border-bottom:1px dashed #ddd;padding-bottom:3px;margin-bottom:5px;">Wound Care</div>
+                <div class="proc-item">
+                  <label style="display:flex;align-items:center;gap:4px;padding:2px 0;font-size:.85rem;cursor:pointer;">
+                    <input type="checkbox" onchange="toggleProc(this)" value="WND-DRS" data-name="Wound Dressing"> Wound Dressing
+                  </label>
+                  <div class="proc-note" style="display:none;margin:4px 0 10px 22px;padding:8px;border:1px solid #ddd;border-radius:3px;background:#fafafa;">
+                    <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                      <input class="wf-input" style="flex:2;font-size:.8rem;min-width:120px;" placeholder="Wound location *">
+                      <input class="wf-input" style="flex:1;font-size:.8rem;min-width:80px;" placeholder="Size (e.g., 4cm)">
+                      <select class="wf-input" style="flex:1;font-size:.8rem;min-width:100px;"><option>-- Wound type --</option><option>Laceration</option><option>Abrasion</option><option>Puncture</option><option>Surgical</option><option>Burn</option></select>
+                      <input class="wf-input" style="flex:2;font-size:.8rem;min-width:120px;" placeholder="Special instructions">
+                    </div>
+                  </div>
+                </div>
+                <div class="proc-item">
+                  <label style="display:flex;align-items:center;gap:4px;padding:2px 0;font-size:.85rem;cursor:pointer;">
+                    <input type="checkbox" onchange="toggleProc(this)" value="WND-DEB" data-name="Wound Debridement"> Wound Debridement
+                  </label>
+                  <div class="proc-note" style="display:none;margin:4px 0 10px 22px;padding:8px;border:1px solid #ddd;border-radius:3px;background:#fafafa;">
+                    <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                      <input class="wf-input" style="flex:2;font-size:.8rem;min-width:120px;" placeholder="Wound location *">
+                      <input class="wf-input" style="flex:1;font-size:.8rem;min-width:80px;" placeholder="Size (e.g., 4cm)">
+                      <select class="wf-input" style="flex:1;font-size:.8rem;min-width:100px;"><option>-- Wound type --</option><option>Laceration</option><option>Abrasion</option><option>Puncture</option><option>Surgical</option><option>Burn</option></select>
+                      <input class="wf-input" style="flex:2;font-size:.8rem;min-width:120px;" placeholder="Special instructions">
+                    </div>
+                  </div>
+                </div>
+                <div class="proc-item">
+                  <label style="display:flex;align-items:center;gap:4px;padding:2px 0;font-size:.85rem;cursor:pointer;">
+                    <input type="checkbox" onchange="toggleProc(this)" value="SUT-REM" data-name="Suture Removal"> Suture Removal
+                  </label>
+                  <div class="proc-note" style="display:none;margin:4px 0 10px 22px;padding:8px;border:1px solid #ddd;border-radius:3px;background:#fafafa;">
+                    <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                      <input class="wf-input" style="flex:2;font-size:.8rem;min-width:120px;" placeholder="Suture location *">
+                      <input class="wf-input" style="flex:1;font-size:.8rem;min-width:80px;" placeholder="Size (e.g., 4cm)">
+                      <select class="wf-input" style="flex:1;font-size:.8rem;min-width:100px;"><option>-- Details --</option><option>Laceration</option><option>Abrasion</option><option>Puncture</option><option>Surgical</option><option>Burn</option></select>
+                      <input class="wf-input" style="flex:2;font-size:.8rem;min-width:120px;" placeholder="Special instructions">
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div style="margin-bottom:8px;">
-                <div style="font-family:'Architects Daughter',cursive;font-size:.88rem;color:#555;border-bottom:1px dashed #ddd;padding-bottom:3px;margin-bottom:5px;">💧 IV Therapy</div>
-                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshProcTags()" value="IV Infusion (Fluid/Medication)"> IV Infusion (Fluid/Medication)</label>
-                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshProcTags()" value="IV Cannulation"> IV Cannulation</label>
+
+              <!-- IV Therapy -->
+              <div style="margin-bottom:10px;">
+                <div style="font-family:'Architects Daughter',cursive;font-size:.88rem;color:#555;border-bottom:1px dashed #ddd;padding-bottom:3px;margin-bottom:5px;">IV Therapy</div>
+                <div class="proc-item">
+                  <label style="display:flex;align-items:center;gap:4px;padding:2px 0;font-size:.85rem;cursor:pointer;">
+                    <input type="checkbox" onchange="toggleProc(this)" value="IV-INF" data-name="IV Infusion (Fluid/Medication)"> IV Infusion (Fluid/Medication)
+                  </label>
+                  <div class="proc-note" style="display:none;margin:4px 0 10px 22px;padding:8px;border:1px solid #ddd;border-radius:3px;background:#fafafa;">
+                    <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                      <input class="wf-input" style="flex:2;font-size:.8rem;min-width:120px;" placeholder="Fluid / Medication *">
+                      <input class="wf-input" style="flex:1;font-size:.8rem;min-width:80px;" placeholder="Volume (e.g., 1000ml) *">
+                      <input class="wf-input" style="flex:1;font-size:.8rem;min-width:80px;" placeholder="Rate (e.g., 100ml/hr) *">
+                      <input class="wf-input" style="flex:1;font-size:.8rem;min-width:80px;" placeholder="Duration">
+                    </div>
+                  </div>
+                </div>
+                <div class="proc-item">
+                  <label style="display:flex;align-items:center;gap:4px;padding:2px 0;font-size:.85rem;cursor:pointer;">
+                    <input type="checkbox" onchange="toggleProc(this)" value="IV-CAN" data-name="IV Cannulation"> IV Cannulation
+                  </label>
+                  <div class="proc-note" style="display:none;margin:4px 0 10px 22px;padding:8px;border:1px solid #ddd;border-radius:3px;background:#fafafa;">
+                    <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                      <select class="wf-input" style="flex:1;font-size:.8rem;min-width:90px;"><option>-- Gauge --</option><option>18G</option><option>20G</option><option>22G</option><option>24G</option></select>
+                      <input class="wf-input" style="flex:1;font-size:.8rem;min-width:100px;" placeholder="Preferred site">
+                      <input class="wf-input" style="flex:1;font-size:.8rem;min-width:100px;" placeholder="Additional notes">
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div style="margin-bottom:8px;">
-                <div style="font-family:'Architects Daughter',cursive;font-size:.88rem;color:#555;border-bottom:1px dashed #ddd;padding-bottom:3px;margin-bottom:5px;">📋 Diagnostic</div>
-                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshProcTags()" value="ECG (Electrocardiogram)"> ECG (Electrocardiogram)</label>
-                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshProcTags()" value="Blood Pressure Monitoring (Serial)"> Blood Pressure Monitoring (Serial)</label>
-                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshProcTags()" value="Blood Sugar Monitoring (Serial)"> Blood Sugar Monitoring (Serial)</label>
+
+              <!-- Diagnostic -->
+              <div style="margin-bottom:10px;">
+                <div style="font-family:'Architects Daughter',cursive;font-size:.88rem;color:#555;border-bottom:1px dashed #ddd;padding-bottom:3px;margin-bottom:5px;">Diagnostic</div>
+                <div class="proc-item">
+                  <label style="display:flex;align-items:center;gap:4px;padding:2px 0;font-size:.85rem;cursor:pointer;">
+                    <input type="checkbox" onchange="toggleProc(this)" value="ECG" data-name="ECG (Electrocardiogram)"> ECG (Electrocardiogram)
+                  </label>
+                  <div class="proc-note" style="display:none;margin:4px 0 10px 22px;padding:8px;border:1px solid #ddd;border-radius:3px;background:#fafafa;">
+                    <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                      <input class="wf-input" style="flex:2;font-size:.8rem;min-width:200px;" placeholder="Special instructions for nurse">
+                    </div>
+                  </div>
+                </div>
+                <div class="proc-item">
+                  <label style="display:flex;align-items:center;gap:4px;padding:2px 0;font-size:.85rem;cursor:pointer;">
+                    <input type="checkbox" onchange="toggleProc(this)" value="BP-SER" data-name="Blood Pressure Monitoring (Serial)"> Blood Pressure Monitoring (Serial)
+                  </label>
+                  <div class="proc-note" style="display:none;margin:4px 0 10px 22px;padding:8px;border:1px solid #ddd;border-radius:3px;background:#fafafa;">
+                    <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                      <select class="wf-input" style="flex:1;font-size:.8rem;min-width:100px;"><option>-- Frequency --</option><option>Every 15 min</option><option>Every 30 min</option><option>Hourly</option><option>Every 2 hours</option><option>Every 4 hours</option></select>
+                      <input class="wf-input" style="flex:1;font-size:.8rem;min-width:80px;" placeholder="Duration (e.g., 2 hours)">
+                      <input class="wf-input" style="flex:1;font-size:.8rem;min-width:120px;" placeholder="Additional instructions">
+                    </div>
+                  </div>
+                </div>
+                <div class="proc-item">
+                  <label style="display:flex;align-items:center;gap:4px;padding:2px 0;font-size:.85rem;cursor:pointer;">
+                    <input type="checkbox" onchange="toggleProc(this)" value="BS-SER" data-name="Blood Sugar Monitoring (Serial)"> Blood Sugar Monitoring (Serial)
+                  </label>
+                  <div class="proc-note" style="display:none;margin:2px 0 6px 22px;">
+                    <input class="wf-input" style="font-size:.8rem;" placeholder="Instructions (frequency, duration)...">
+                  </div>
+                </div>
               </div>
-              <div style="margin-bottom:8px;">
-                <div style="font-family:'Architects Daughter',cursive;font-size:.88rem;color:#555;border-bottom:1px dashed #ddd;padding-bottom:3px;margin-bottom:5px;">🫁 Respiratory</div>
-                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshProcTags()" value="Nebulization"> Nebulization</label>
-                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshProcTags()" value="Oxygen Therapy"> Oxygen Therapy</label>
+
+              <!-- Respiratory -->
+              <div style="margin-bottom:10px;">
+                <div style="font-family:'Architects Daughter',cursive;font-size:.88rem;color:#555;border-bottom:1px dashed #ddd;padding-bottom:3px;margin-bottom:5px;">Respiratory</div>
+                <div class="proc-item">
+                  <label style="display:flex;align-items:center;gap:4px;padding:2px 0;font-size:.85rem;cursor:pointer;">
+                    <input type="checkbox" onchange="toggleProc(this)" value="NEB" data-name="Nebulization"> Nebulization
+                  </label>
+                  <div class="proc-note" style="display:none;margin:4px 0 10px 22px;padding:8px;border:1px solid #ddd;border-radius:3px;background:#fafafa;">
+                    <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                      <input class="wf-input" style="flex:2;font-size:.8rem;min-width:120px;" placeholder="Medication *">
+                      <input class="wf-input" style="flex:1;font-size:.8rem;min-width:80px;" placeholder="Dosage *">
+                      <input class="wf-input" style="flex:1;font-size:.8rem;min-width:80px;" placeholder="Duration (e.g., 15 min)">
+                      <select class="wf-input" style="flex:1;font-size:.8rem;min-width:80px;"><option>Single dose</option><option>BID</option><option>TDS</option><option>QID</option></select>
+                    </div>
+                  </div>
+                </div>
+                <div class="proc-item">
+                  <label style="display:flex;align-items:center;gap:4px;padding:2px 0;font-size:.85rem;cursor:pointer;">
+                    <input type="checkbox" onchange="toggleProc(this)" value="O2" data-name="Oxygen Therapy"> Oxygen Therapy
+                  </label>
+                  <div class="proc-note" style="display:none;margin:4px 0 10px 22px;padding:8px;border:1px solid #ddd;border-radius:3px;background:#fafafa;">
+                    <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                      <input class="wf-input" style="flex:1;font-size:.8rem;min-width:80px;" placeholder="Flow rate (e.g., 2 L/min) *">
+                      <select class="wf-input" style="flex:1;font-size:.8rem;min-width:100px;"><option>-- Delivery --</option><option>Nasal cannula</option><option>Face mask</option><option>Non-rebreather</option><option>Venturi mask</option></select>
+                      <input class="wf-input" style="flex:1;font-size:.8rem;min-width:80px;" placeholder="Duration">
+                      <input class="wf-input" style="flex:1;font-size:.8rem;min-width:100px;" placeholder="Target SpO2 (e.g., >94%)">
+                    </div>
+                  </div>
+                </div>
               </div>
+
+              <!-- Other -->
               <div>
-                <div style="font-family:'Architects Daughter',cursive;font-size:.88rem;color:#555;border-bottom:1px dashed #ddd;padding-bottom:3px;margin-bottom:5px;">🏥 Other</div>
-                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshProcTags()" value="Catheterization (Urinary)"> Catheterization (Urinary)</label>
-                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshProcTags()" value="NGT Insertion"> NGT Insertion</label>
-                <label style="display:block;padding:2px 0;font-size:.85rem;cursor:pointer;"><input type="checkbox" onchange="refreshProcTags()" value="Enema Administration"> Enema Administration</label>
+                <div style="font-family:'Architects Daughter',cursive;font-size:.88rem;color:#555;border-bottom:1px dashed #ddd;padding-bottom:3px;margin-bottom:5px;">Other</div>
+                <div class="proc-item">
+                  <label style="display:flex;align-items:center;gap:4px;padding:2px 0;font-size:.85rem;cursor:pointer;">
+                    <input type="checkbox" onchange="toggleProc(this)" value="CATH" data-name="Catheterization (Urinary)"> Catheterization (Urinary)
+                  </label>
+                  <div class="proc-note" style="display:none;margin:4px 0 10px 22px;padding:8px;border:1px solid #ddd;border-radius:3px;background:#fafafa;">
+                    <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                      <select class="wf-input" style="flex:1;font-size:.8rem;min-width:90px;"><option>-- Size --</option><option>12 Fr</option><option>14 Fr</option><option>16 Fr</option><option>18 Fr</option></select>
+                      <select class="wf-input" style="flex:1;font-size:.8rem;min-width:100px;"><option>-- Type --</option><option>Foley (indwelling)</option><option>Intermittent</option><option>Condom catheter</option></select>
+                      <input class="wf-input" style="flex:1;font-size:.8rem;min-width:100px;" placeholder="Duration / instructions">
+                    </div>
+                  </div>
+                </div>
+                <div class="proc-item">
+                  <label style="display:flex;align-items:center;gap:4px;padding:2px 0;font-size:.85rem;cursor:pointer;">
+                    <input type="checkbox" onchange="toggleProc(this)" value="NGT" data-name="NGT Insertion"> NGT Insertion
+                  </label>
+                  <div class="proc-note" style="display:none;margin:4px 0 10px 22px;padding:8px;border:1px solid #ddd;border-radius:3px;background:#fafafa;">
+                    <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                      <select class="wf-input" style="flex:1;font-size:.8rem;min-width:90px;"><option>-- Size --</option><option>12 Fr</option><option>14 Fr</option><option>16 Fr</option><option>18 Fr</option></select>
+                      <select class="wf-input" style="flex:1;font-size:.8rem;min-width:100px;"><option>-- Purpose --</option><option>Feeding</option><option>Drainage / Decompression</option><option>Medication administration</option></select>
+                      <input class="wf-input" style="flex:1;font-size:.8rem;min-width:100px;" placeholder="Additional instructions">
+                    </div>
+                  </div>
+                </div>
+                <div class="proc-item">
+                  <label style="display:flex;align-items:center;gap:4px;padding:2px 0;font-size:.85rem;cursor:pointer;">
+                    <input type="checkbox" onchange="toggleProc(this)" value="ENEMA" data-name="Enema Administration"> Enema Administration
+                  </label>
+                  <div class="proc-note" style="display:none;margin:4px 0 10px 22px;padding:8px;border:1px solid #ddd;border-radius:3px;background:#fafafa;">
+                    <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                      <select class="wf-input" style="flex:1;font-size:.8rem;min-width:100px;"><option>-- Type --</option><option>Cleansing (tap water)</option><option>Saline</option><option>Fleet</option><option>Retention</option><option>Medicated</option></select>
+                      <input class="wf-input" style="flex:1;font-size:.8rem;min-width:80px;" placeholder="Volume (e.g., 500ml)">
+                      <input class="wf-input" style="flex:1;font-size:.8rem;min-width:100px;" placeholder="Additional instructions">
+                    </div>
+                  </div>
+                </div>
               </div>
+
             </div>
           </div>
-          <div style="margin-top:8px;margin-bottom:12px;">
+
+          <!-- Selected Procedures Summary -->
+          <div style="margin-top:10px;margin-bottom:12px;">
             <span class="text-small text-muted">Selected procedures:</span>
             <div id="proc-selected-tags" class="flex gap-1 mt-1" style="flex-wrap:wrap;min-height:24px;"></div>
           </div>
-          <div class="wf-form-row">
-            ${renderFormField("Dosage", "text", { placeholder: "e.g., Diclofenac 75mg/3ml" })}
-            ${renderFormField("Frequency & Duration", "text", { placeholder: "e.g., Once, Single dose" })}
-          </div>
-          ${renderFormField("Practitioner Notes", "textarea", { placeholder: "Special instructions for the nurse..." })}
+
+          ${renderFormField("General Practitioner Notes", "textarea", { placeholder: "Additional instructions for the entire order (optional)..." })}
           <div class="wf-action-bar">
             <button class="wf-btn primary">Submit Order-Sheet</button>
-            <span class="text-small text-muted">→ Creates payment request in Finance queue</span>
+            <span class="text-small text-muted">&rarr; Creates payment request in Finance queue</span>
           </div>
         </div>
 
         <hr class="wf-divider">
         <h4 class="mb-1">Previously Submitted Order-Sheets (this encounter)</h4>
-        <div class="wf-empty-state">No order-sheets submitted for this encounter yet.</div>
+        <p class="text-small text-muted" style="margin-top:-4px;margin-bottom:8px;">Click a row to view procedure status and nurse notes.</p>
+        <table style="width:100%;border-collapse:collapse;font-size:.85rem;">
+          <thead>
+            <tr style="border-bottom:1.5px solid #ccc;background:#fafafa;text-align:left;">
+              <th style="padding:6px 10px;">Procedures</th>
+              <th style="padding:6px 10px;">Items</th>
+              <th style="padding:6px 10px;">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px solid #eee;cursor:pointer;background:#f0fff0;" onclick="toggleProcStatus()">
+              <td style="padding:6px 10px;"><strong>IM Injection, Wound Dressing, Nebulisation</strong></td>
+              <td style="padding:6px 10px;">3 procedures</td>
+              <td style="padding:6px 10px;"><span class="wf-badge orange">2/3 Completed</span></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Procedure Status detail panel (shown on row click) -->
+        <div id="proc-status-panel" style="display:block;border:1.5px solid #a5d6a7;border-radius:0 0 4px 4px;border-top:none;margin-bottom:12px;overflow:hidden;">
+          <div style="background:#e8f5e9;padding:8px 14px;display:flex;align-items:center;justify-content:space-between;">
+            <div style="font-weight:700;font-size:.88rem;color:#2e7d32;">Procedure Status — Order-Sheet #1</div>
+            <button class="wf-btn small" onclick="toggleProcStatus()">Close</button>
+          </div>
+          <table style="width:100%;border-collapse:collapse;font-size:.82rem;">
+            <thead>
+              <tr style="border-bottom:1px solid #ddd;background:#f5faf5;text-align:left;">
+                <th style="padding:5px 10px;">Procedure</th>
+                <th style="padding:5px 10px;">Drug / Details</th>
+                <th style="padding:5px 10px;">Nurse</th>
+                <th style="padding:5px 10px;">Time</th>
+                <th style="padding:5px 10px;">Status</th>
+                <th style="padding:5px 10px;">Nurse Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom:1px solid #eee;">
+                <td style="padding:5px 10px;"><strong>IM Injection</strong></td>
+                <td style="padding:5px 10px;">Diclofenac 75mg/3ml</td>
+                <td style="padding:5px 10px;">Nurse Abeba K.</td>
+                <td style="padding:5px 10px;">11:15 AM</td>
+                <td style="padding:5px 10px;"><span class="wf-badge green" style="font-size:.6rem;">Completed</span></td>
+                <td style="padding:5px 10px;"><span class="text-small">L. deltoid, no adverse reaction. Patient tolerated well.</span></td>
+              </tr>
+              <tr style="border-bottom:1px solid #eee;">
+                <td style="padding:5px 10px;"><strong>Wound Dressing</strong></td>
+                <td style="padding:5px 10px;">R. forearm laceration</td>
+                <td style="padding:5px 10px;">Nurse Abeba K.</td>
+                <td style="padding:5px 10px;">11:22 AM</td>
+                <td style="padding:5px 10px;"><span class="wf-badge green" style="font-size:.6rem;">Completed</span></td>
+                <td style="padding:5px 10px;"><span class="text-small">Clean, no signs of infection. Sterile gauze applied.</span></td>
+              </tr>
+              <tr>
+                <td style="padding:5px 10px;"><strong>Nebulisation</strong></td>
+                <td style="padding:5px 10px;">Salbutamol 2.5mg</td>
+                <td style="padding:5px 10px;">&mdash;</td>
+                <td style="padding:5px 10px;">&mdash;</td>
+                <td style="padding:5px 10px;"><span class="wf-badge orange" style="font-size:.6rem;">In Progress</span></td>
+                <td style="padding:5px 10px;"><span class="text-small text-muted">Currently administering</span></td>
+              </tr>
+            </tbody>
+          </table>
+          <div style="padding:6px 14px;background:#f5faf5;border-top:1px solid #ddd;display:flex;align-items:center;justify-content:space-between;">
+            <span class="text-small text-muted">2 of 3 procedures completed</span>
+            <span class="text-small" style="color:#e65100;font-weight:600;">1 in progress — encounter cannot be finalized until all complete</span>
+          </div>
+        </div>
       </div>
+
 
       <!-- Tab 5: Prescription -->
       <div id="tab-prescription" class="wf-tab-content">
@@ -619,9 +1529,81 @@ Hypertension Stage 1 - adequately controlled on current medication (Amlodipine 5
         </div>
       </div>
 
+      <!-- Suspension Confirmation Panel (shown on Suspend click) -->
+      <div id="suspend-panel" class="wf-card mt-2" style="display:none;border-color:#e65100;border-width:3px;">
+        <div class="card-title" style="color:#e65100;">Suspend Encounter — Awaiting External Results</div>
+        <p class="text-small text-muted" style="margin-top:-4px;margin-bottom:12px;">This encounter will be suspended and the patient will be discharged. All clinical data is preserved. The receptionist will manage resumption when the patient returns with the required items.</p>
+
+        <div class="wf-kv-grid mb-2">
+          <div class="wf-kv"><div class="kv-label">Assessment So Far</div><div class="kv-value">Tension-type headache; Hypertension (controlled)</div></div>
+          <div class="wf-kv"><div class="kv-label">In-House Lab</div><div class="kv-value">CBC, Lipid Profile — <span class="wf-badge green">Results Available</span></div></div>
+          <div class="wf-kv"><div class="kv-label">Order-Sheets</div><div class="kv-value">IM Injection, Wound Dressing, Nebulisation — <span class="wf-badge orange">2/3 Completed</span></div></div>
+          <div class="wf-kv"><div class="kv-label">Prescriptions</div><div class="kv-value">Ibuprofen 400mg PRN x 7 days</div></div>
+        </div>
+
+        <hr class="wf-divider">
+
+        <div class="wf-form-row">
+          <div class="wf-form-group">
+            <label>Suspension Reason <span class="required">*</span></label>
+            <select class="wf-input">
+              <option selected>Awaiting External Lab Results</option>
+              <option>Patient Requested Delay</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="wf-form-group">
+            <label>Resumption Date Limit <span class="required">*</span></label>
+            <input type="date" class="wf-input" value="2026-04-24">
+            <p class="text-small text-muted" style="margin-top:2px;">Patient's card remains valid for resumption until this date. No re-activation fee if they return before this date.</p>
+          </div>
+        </div>
+
+        <div class="wf-form-group">
+          <label>Required Items for Resumption <span class="required">*</span></label>
+          <div style="background:#fff8e1;border:1px solid #ffe082;border-radius:3px;padding:8px 12px;margin-bottom:6px;">
+            <div style="font-size:.82rem;">
+              <label style="display:flex;align-items:center;gap:6px;margin-bottom:4px;cursor:default;">
+                <input type="checkbox" checked disabled>
+                <strong>Thyroid Panel (T3, T4, TSH)</strong> — External Referral, Routine
+              </label>
+            </div>
+            <p class="text-small text-muted" style="margin:4px 0 0;">Auto-populated from pending external lab orders in this encounter.</p>
+          </div>
+          <textarea class="wf-input" rows="2" placeholder="Additional items required (optional)..."></textarea>
+        </div>
+
+        <div class="wf-form-group">
+          <label>Practitioner Notes for Resumption</label>
+          <textarea class="wf-input" rows="2" placeholder="Instructions for when results arrive...">Review thyroid panel results. If TSH > 10 mIU/L, consider Levothyroxine initiation. If normal, reassess symptoms.</textarea>
+        </div>
+
+        <div style="background:#f5f5f5;border:1px solid #ddd;border-radius:3px;padding:8px 12px;margin-bottom:8px;">
+          <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:.85rem;">
+            <input type="checkbox">
+            <strong>Require nurse re-triage on resumption</strong>
+          </label>
+          <p class="text-small text-muted" style="margin:4px 0 0 22px;">If checked, the patient must complete vitals with the nurse before returning to consultation. New vitals are appended to this encounter.</p>
+          <p class="text-small" style="margin:4px 0 0 22px;color:#e65100;">Re-triage becomes <strong>mandatory</strong> if the patient returns after the resumption date limit has passed.</p>
+        </div>
+
+        <div style="background:#f5f5f5;border:1px solid #ddd;border-radius:3px;padding:8px 12px;margin-bottom:12px;">
+          <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:.85rem;">
+            <input type="checkbox" checked>
+            <strong>Release prescription and other finalized documents now</strong>
+          </label>
+          <p class="text-small text-muted" style="margin:4px 0 0 22px;">Sends current prescription (Ibuprofen 400mg) to the Receptionist's Encounter Outputs for printing, even though the encounter isn't fully finalized.</p>
+        </div>
+
+        <div class="wf-action-bar">
+          <a href="session_dashboard.html"><button class="wf-btn" style="background:#e65100;color:#fff;border-color:#e65100;">Confirm Suspension</button></a>
+          <button class="wf-btn" onclick="document.getElementById('suspend-panel').style.display='none'">Cancel</button>
+        </div>
+      </div>
+
       <!-- Encounter Summary (shown on Finalise) -->
       <div id="encounter-summary" class="wf-card mt-2" style="display:none;border-color:#333;border-width:3px;">
-        <div class="card-title">📋 Encounter Summary — Review & Close</div>
+        <div class="card-title">Encounter Summary — Review & Close</div>
         <div class="wf-kv-grid mb-2">
           <div class="wf-kv"><div class="kv-label">Assessment</div><div class="kv-value">Tension-type headache; Hypertension (controlled)</div></div>
           <div class="wf-kv"><div class="kv-label">Lab Orders</div><div class="kv-value">CBC, Renal Function Panel — <span class="wf-badge orange">Pending Payment</span></div></div>
@@ -630,7 +1612,7 @@ Hypertension Stage 1 - adequately controlled on current medication (Amlodipine 5
           <div class="wf-kv"><div class="kv-label">Consultation Fee</div><div class="kv-value">ETB 300.00 — will be sent to Finance</div></div>
         </div>
         <div class="wf-action-bar">
-          <a href="session_dashboard.html"><button class="wf-btn primary">✓ Confirm & Close Encounter</button></a>
+          <a href="session_dashboard.html"><button class="wf-btn primary">Confirm & Close Encounter</button></a>
           <button class="wf-btn" onclick="document.getElementById('encounter-summary').style.display='none'">Cancel</button>
         </div>
       </div>
@@ -647,6 +1629,85 @@ Hypertension Stage 1 - adequately controlled on current medication (Amlodipine 5
         });
       });
 
+      function toggleEdit(btn, viewId, editId) {
+        const view = document.getElementById(viewId);
+        const edit = document.getElementById(editId);
+        if (!view || !edit) return;
+        const isEditing = edit.style.display !== 'none';
+        view.style.display = isEditing ? 'block' : 'none';
+        edit.style.display = isEditing ? 'none' : 'block';
+        btn.innerHTML = isEditing ? '&#9998; Edit' : '&#10005; Cancel';
+      }
+
+      // --- Medication Add with Searchable Drug Dropdown ---
+      function showAddMed() {
+        const row = document.getElementById('med-add-row');
+        row.style.display = 'block';
+        const dateInput = document.getElementById('med-add-date');
+        if (dateInput) dateInput.value = new Date().toISOString().split('T')[0];
+        document.getElementById('med-search-input').value = '';
+        document.getElementById('med-add-dosage').value = '';
+        document.getElementById('med-add-freq').value = '';
+        document.getElementById('med-search-input').focus();
+      }
+
+      function filterMedDrugs(query) {
+        const dropdown = document.getElementById('med-drug-dropdown');
+        if (!query || query.length < 1) { dropdown.style.display = 'none'; return; }
+        const q = query.toLowerCase();
+        const matches = DRUG_FORMULARY.filter(d => d.name.toLowerCase().includes(q)).slice(0, 8);
+        if (matches.length === 0) {
+          dropdown.innerHTML = '<div style="padding:8px;color:#999;font-size:.82rem;">No drugs found</div>';
+        } else {
+          dropdown.innerHTML = matches.map(d => {
+            const hl = d.name.replace(new RegExp('(' + q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&') + ')', 'gi'), '<strong>$1</strong>');
+            return '<div style="padding:6px 10px;cursor:pointer;font-size:.85rem;border-bottom:1px solid #eee;" onmouseover="this.style.background=\'#fffde7\'" onmouseout="this.style.background=\'#fff\'" onclick="selectMedDrug(\'' + d.name.replace(/'/g,"\\'") + '\',\'' + (d.strengths ? d.strengths[0] : '') + '\',\'' + (d.forms ? d.forms[0] : '') + '\')">' + hl + ' <span style="color:#888;font-size:.75rem;">(' + (d.forms ? d.forms.join(', ') : '') + ')</span></div>';
+          }).join('');
+        }
+        dropdown.style.display = 'block';
+      }
+
+      function selectMedDrug(name, strength, form) {
+        document.getElementById('med-search-input').value = name;
+        document.getElementById('med-drug-dropdown').style.display = 'none';
+        if (strength) document.getElementById('med-add-dosage').value = strength;
+        document.getElementById('med-add-dosage').focus();
+      }
+
+      function confirmAddMed() {
+        const name = document.getElementById('med-search-input').value;
+        const dosage = document.getElementById('med-add-dosage').value;
+        const freq = document.getElementById('med-add-freq').value;
+        const date = document.getElementById('med-add-date').value;
+        if (!name) { alert('Please select a drug.'); return; }
+
+        const newRow = document.createElement('div');
+        newRow.className = 'wf-form-group';
+        newRow.style.marginBottom = '6px';
+        newRow.innerHTML = '<label class="text-small" style="font-weight:600;margin-bottom:4px;">' + name + ' <span class="wf-badge green" style="font-size:.65rem;">NEW</span></label>' +
+          '<div style="display:flex;gap:6px;flex-wrap:wrap;">' +
+            '<input class="wf-input" value="' + name + '" style="flex:2;min-width:100px;" readonly>' +
+            '<input class="wf-input" value="' + dosage + '" style="flex:1;min-width:50px;" placeholder="Dosage">' +
+            '<input class="wf-input" value="' + freq + '" style="flex:1;min-width:70px;" placeholder="Frequency">' +
+            '<div style="flex:1;min-width:100px;"><label class="text-small" style="font-size:.65rem;color:#888;">Started</label><input class="wf-input" type="date" value="' + date + '"></div>' +
+            '<div style="flex:1;min-width:100px;"><label class="text-small" style="font-size:.65rem;color:#888;">Ended</label><input class="wf-input" type="date" value=""></div>' +
+            '<select class="wf-input" style="flex:1;min-width:90px;"><option selected>Active</option><option>Discontinued</option><option>On Hold</option><option>Completed</option></select>' +
+          '</div>';
+
+        const addRow = document.getElementById('med-add-row');
+        addRow.parentNode.insertBefore(newRow, addRow);
+        addRow.style.display = 'none';
+      }
+
+      // Close med dropdown on outside click
+      document.addEventListener('click', function(e) {
+        const dropdown = document.getElementById('med-drug-dropdown');
+        const input = document.getElementById('med-search-input');
+        if (dropdown && input && !input.contains(e.target) && !dropdown.contains(e.target)) {
+          dropdown.style.display = 'none';
+        }
+      });
+
       function togglePE() {
         const cb = document.getElementById("pe-toggle");
         const body = document.getElementById("pe-body");
@@ -658,68 +1719,146 @@ Hypertension Stage 1 - adequately controlled on current medication (Amlodipine 5
         }
       }
 
+      function toggleLabResults() {
+        const p = document.getElementById('lab-results-panel');
+        if (p) p.style.display = p.style.display === 'none' ? 'block' : 'none';
+      }
+      function toggleProcStatus() {
+        const p = document.getElementById('proc-status-panel');
+        if (p) p.style.display = p.style.display === 'none' ? 'block' : 'none';
+      }
+
+      function toggleLabTest(cb) {
+        const item = cb.closest('.lab-test-item');
+        const noteDiv = item.querySelector('.lab-test-note');
+        if (noteDiv) {
+          noteDiv.style.display = cb.checked ? 'block' : 'none';
+          if (!cb.checked) noteDiv.querySelector('input').value = '';
+        }
+        // Show specimen checkboxes if multiple specimen types configured
+        let specDiv = item.querySelector('.lab-specimen-select');
+        if (specDiv) specDiv.remove();
+        const specimens = (cb.getAttribute('data-specimen') || '').split(',').filter(s => s);
+        if (cb.checked && specimens.length > 1) {
+          specDiv = document.createElement('div');
+          specDiv.className = 'lab-specimen-select';
+          specDiv.style.cssText = 'margin:2px 0 4px 22px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;';
+          specDiv.innerHTML = '<span class="text-small" style="color:#888;font-size:.75rem;white-space:nowrap;">Specimen(s):</span>' +
+            specimens.map((s,i) => '<label style="font-size:.78rem;cursor:pointer;display:flex;align-items:center;gap:3px;">' +
+              '<input type="checkbox" class="spec-cb" onchange="refreshLabTags()"' + (i===0?' checked':'') + '> ' + s.trim() + '</label>').join('');
+          noteDiv.parentNode.insertBefore(specDiv, noteDiv);
+        }
+        refreshLabTags();
+      }
+
       function refreshLabTags() {
         const container = document.getElementById("lab-selected-tags");
         if (!container) return;
-        const checkboxes = document.querySelectorAll(
-          '#lab-test-picker input[type="checkbox"]',
-        );
+        const items = document.querySelectorAll('#lab-test-picker .lab-test-item');
         let html = "";
-        checkboxes.forEach((cb) => {
-          if (cb.checked) {
-            html +=
-              '<span class="wf-tag">' +
-              cb.value +
-              ' <span class="remove" onclick="removeLabTag(\'' +
-              cb.value.replace(/'/g, "\\'") +
-              '\')" style="cursor:pointer;">×</span></span>';
+        items.forEach(item => {
+          const cb = item.querySelector('input[type="checkbox"]');
+          if (cb && cb.checked) {
+            const code = cb.value;
+            const name = cb.getAttribute('data-name') || cb.value;
+            const specCbs = item.querySelectorAll('.lab-specimen-select .spec-cb');
+            const rawSpecimen = cb.getAttribute('data-specimen') || '';
+            let specimen = '';
+            if (specCbs.length > 0) {
+              const checked = [];
+              specCbs.forEach(s => { if (s.checked) checked.push(s.parentElement.textContent.trim()); });
+              specimen = checked.join(', ');
+            } else {
+              specimen = rawSpecimen.includes(',') ? rawSpecimen.split(',')[0] : rawSpecimen;
+            }
+            const noteInput = item.querySelector('.lab-test-note input');
+            const note = noteInput ? noteInput.value : '';
+            html += '<span class="wf-tag" style="display:inline-flex;align-items:center;gap:4px;">' +
+              '<strong>' + code + '</strong> ' + name.split('(')[0].trim() +
+              (specimen ? ' <span style="background:#eef;color:#446;font-size:.65rem;padding:1px 4px;border-radius:2px;">' + specimen + '</span>' : '') +
+              (note ? ' <span style="color:#888;font-size:.72rem;font-style:italic;">— ' + note + '</span>' : '') +
+              ' <span class="remove" onclick="removeLabTag(\'' + code.replace(/'/g, "\\'") + '\')" style="cursor:pointer;">×</span></span>';
           }
         });
         if (!html)
-          html =
-            '<span class="text-small text-muted" style="font-style:italic;">No tests selected</span>';
+          html = '<span class="text-small text-muted" style="font-style:italic;">No tests selected</span>';
         container.innerHTML = html;
+
+        // Show/hide external referral callout and button based on selected external tests
+        const externalTests = Array.from(document.querySelectorAll('#lab-test-picker .lab-test-item input[type="checkbox"]:checked'))
+          .filter(cb => cb.getAttribute('data-external') === 'true');
+        const hasExternal = externalTests.length > 0;
+        const callout = document.getElementById('external-referral-callout');
+        const btn = document.getElementById('external-referral-btn');
+        const testList = document.getElementById('external-test-list');
+        if (callout) callout.style.display = hasExternal ? 'block' : 'none';
+        if (btn) btn.style.display = hasExternal ? 'inline-block' : 'none';
+        if (testList && hasExternal) {
+          testList.innerHTML = externalTests.map(cb => {
+            const name = cb.getAttribute('data-name') || cb.value;
+            return '<div style="display:flex;align-items:center;gap:6px;padding:3px 0;">' +
+              '<span class="wf-badge orange" style="font-size:.6rem;">External Only</span>' +
+              '<strong class="text-small">' + name + '</strong></div>';
+          }).join('');
+        }
       }
 
       function removeLabTag(val) {
-        const checkboxes = document.querySelectorAll(
-          '#lab-test-picker input[type="checkbox"]',
-        );
-        checkboxes.forEach((cb) => {
-          if (cb.value === val) cb.checked = false;
+        const items = document.querySelectorAll('#lab-test-picker .lab-test-item');
+        items.forEach(item => {
+          const cb = item.querySelector('input[type="checkbox"]');
+          if (cb && cb.value === val) {
+            cb.checked = false;
+            const noteDiv = item.querySelector('.lab-test-note');
+            if (noteDiv) { noteDiv.style.display = 'none'; noteDiv.querySelector('input').value = ''; }
+            const specDiv = item.querySelector('.lab-specimen-select');
+            if (specDiv) specDiv.remove();
+          }
         });
         refreshLabTags();
+      }
+
+      function toggleProc(cb) {
+        const noteDiv = cb.closest('.proc-item').querySelector('.proc-note');
+        if (noteDiv) {
+          noteDiv.style.display = cb.checked ? 'block' : 'none';
+          if (!cb.checked) noteDiv.querySelector('input').value = '';
+        }
+        refreshProcTags();
       }
 
       function refreshProcTags() {
         const container = document.getElementById("proc-selected-tags");
         if (!container) return;
-        const checkboxes = document.querySelectorAll(
-          '#proc-picker input[type="checkbox"]',
-        );
+        const items = document.querySelectorAll('#proc-picker .proc-item');
         let html = "";
-        checkboxes.forEach((cb) => {
-          if (cb.checked) {
-            html +=
-              '<span class="wf-tag">' +
-              cb.value +
-              ' <span class="remove" onclick="removeProcTag(\'' +
-              cb.value.replace(/'/g, "\\'") +
-              '\')" style="cursor:pointer;">×</span></span>';
+        items.forEach(item => {
+          const cb = item.querySelector('input[type="checkbox"]');
+          if (cb && cb.checked) {
+            const code = cb.value;
+            const name = cb.getAttribute('data-name') || cb.value;
+            const noteInput = item.querySelector('.proc-note input');
+            const note = noteInput ? noteInput.value : '';
+            html += '<span class="wf-tag" style="display:inline-flex;align-items:center;gap:4px;">' +
+              '<strong>' + code + '</strong> ' + name +
+              (note ? ' <span style="color:#888;font-size:.72rem;font-style:italic;">— ' + note + '</span>' : '') +
+              ' <span class="remove" onclick="removeProcTag(\'' + code.replace(/'/g, "\\'") + '\')" style="cursor:pointer;">×</span></span>';
           }
         });
         if (!html)
-          html =
-            '<span class="text-small text-muted" style="font-style:italic;">No procedures selected</span>';
+          html = '<span class="text-small text-muted" style="font-style:italic;">No procedures selected</span>';
         container.innerHTML = html;
       }
 
       function removeProcTag(val) {
-        const checkboxes = document.querySelectorAll(
-          '#proc-picker input[type="checkbox"]',
-        );
-        checkboxes.forEach((cb) => {
-          if (cb.value === val) cb.checked = false;
+        const items = document.querySelectorAll('#proc-picker .proc-item');
+        items.forEach(item => {
+          const cb = item.querySelector('input[type="checkbox"]');
+          if (cb && cb.value === val) {
+            cb.checked = false;
+            const noteDiv = item.querySelector('.proc-note');
+            if (noteDiv) { noteDiv.style.display = 'none'; noteDiv.querySelector('input').value = ''; }
+          }
         });
         refreshProcTags();
       }

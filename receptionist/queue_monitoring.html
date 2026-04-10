@@ -18,10 +18,30 @@
           userName: "Hana G. (Receptionist)",
           content: `
       <h2 class="page-title">Queue Monitoring Dashboard</h2>
-      <p class="text-muted text-small mb-2">Real-time practitioner queue status at this branch. Auto-refreshes.</p>
+      <p class="text-muted text-small mb-1">Real-time practitioner queue status at this branch. Auto-refreshes.</p>
+
+      <!-- Branch Summary Bar -->
+      <div class="wf-card" style="display:flex;justify-content:space-around;padding:12px 16px;margin-bottom:16px;background:#f5f5f5;">
+        <div style="text-align:center;">
+          <div style="font-size:.7rem;color:#888;text-transform:uppercase;">Patients Seen Today</div>
+          <div style="font-size:1.4rem;font-family:'Architects Daughter',cursive;color:#2e7d32;">12</div>
+        </div>
+        <div style="text-align:center;">
+          <div style="font-size:.7rem;color:#888;text-transform:uppercase;">In Queue Now</div>
+          <div style="font-size:1.4rem;font-family:'Architects Daughter',cursive;color:#1565c0;">9</div>
+        </div>
+        <div style="text-align:center;">
+          <div style="font-size:.7rem;color:#888;text-transform:uppercase;">Avg. Wait Time</div>
+          <div style="font-size:1.4rem;font-family:'Architects Daughter',cursive;color:#e65100;">18 min</div>
+        </div>
+        <div style="text-align:center;">
+          <div style="font-size:.7rem;color:#888;text-transform:uppercase;">Pending Payments</div>
+          <div style="font-size:1.4rem;font-family:'Architects Daughter',cursive;color:#c62828;">2</div>
+        </div>
+      </div>
 
       <div class="wf-grid-3">
-        <!-- Card 1 -->
+        <!-- Card 1: Dr. Solomon -->
         <div class="wf-card">
           <div class="card-title flex-between">
             Dr. Solomon T.
@@ -32,27 +52,39 @@
           <div class="wf-kv mb-2"><div class="kv-label">Est. Wait Time</div><div class="kv-value">~25 min</div></div>
 
           <details>
-            <summary style="cursor:pointer;font-size:.85rem;color:#666;">▸ Show patient list</summary>
+            <summary style="cursor:pointer;font-size:.85rem;color:#666;">Show patient list</summary>
             <div style="margin-top:8px;">
               ${renderTable(
-                ["Patient", "Enlisted", "Status", ""],
+                ["Patient", "MRN", "Type", "Enlisted", "Wait", "Payment", "Status", ""],
                 [
                   [
                     "Abebe K.",
+                    "MRN-0015",
+                    '<span class="wf-badge" style="font-size:.6rem;background:#e3f2fd;color:#1565c0;">Appt</span>',
                     "08:45",
-                    '<span class="wf-badge blue">Vitals Complete</span>',
+                    '<span style="color:#2e7d32;font-size:.8rem;">12 min</span>',
+                    '<span class="wf-badge green" style="font-size:.55rem;">Paid</span>',
+                    '<span class="wf-badge blue">Vitals Done</span>',
                     "",
                   ],
                   [
                     "Fatima A.",
+                    "MRN-0078",
+                    '<span class="wf-badge" style="font-size:.6rem;background:#fff3e0;color:#e65100;">Walk-in</span>',
                     "09:10",
-                    '<span class="wf-badge">Waiting for Vitals</span>',
+                    '<span style="color:#e65100;font-size:.8rem;">22 min</span>',
+                    '<span class="wf-badge green" style="font-size:.55rem;">Paid</span>',
+                    '<span class="wf-badge">Waiting Vitals</span>',
                     '<button class="wf-btn small">Reassign</button>',
                   ],
                   [
                     "Meron H.",
+                    "MRN-0091",
+                    '<span class="wf-badge" style="font-size:.6rem;background:#fce4ec;color:#c62828;">Emergency</span>',
                     "09:30",
-                    '<span class="wf-badge">Waiting for Vitals</span>',
+                    '<span style="color:#c62828;font-size:.8rem;">35 min</span>',
+                    '<span class="wf-badge orange" style="font-size:.55rem;">Pending</span>',
+                    '<span class="wf-badge">Waiting Vitals</span>',
                     '<button class="wf-btn small">Reassign</button>',
                   ],
                 ],
@@ -61,7 +93,7 @@
           </details>
         </div>
 
-        <!-- Card 2 -->
+        <!-- Card 2: Dr. Miriam -->
         <div class="wf-card">
           <div class="card-title flex-between">
             Dr. Miriam K.
@@ -72,14 +104,18 @@
           <div class="wf-kv mb-2"><div class="kv-label">Est. Wait Time</div><div class="kv-value">~10 min</div></div>
 
           <details>
-            <summary style="cursor:pointer;font-size:.85rem;color:#666;">▸ Show patient list</summary>
+            <summary style="cursor:pointer;font-size:.85rem;color:#666;">Show patient list</summary>
             <div style="margin-top:8px;">
               ${renderTable(
-                ["Patient", "Enlisted", "Status", ""],
+                ["Patient", "MRN", "Type", "Enlisted", "Wait", "Payment", "Status", ""],
                 [
                   [
                     "Yonas G.",
+                    "MRN-0103",
+                    '<span class="wf-badge" style="font-size:.6rem;background:#e8f5e9;color:#2e7d32;">Follow-up</span>',
                     "09:15",
+                    '<span style="color:#2e7d32;font-size:.8rem;">8 min</span>',
+                    '<span class="wf-badge green" style="font-size:.55rem;">Paid</span>',
                     '<span class="wf-badge blue">In Consultation</span>',
                     "",
                   ],
@@ -89,7 +125,7 @@
           </details>
         </div>
 
-        <!-- Card 3 -->
+        <!-- Card 3: Dr. Alem -->
         <div class="wf-card">
           <div class="card-title flex-between">
             Dr. Alem B.
@@ -97,42 +133,62 @@
           </div>
           <div class="wf-kv mb-1"><div class="kv-label">Specialisation</div><div class="kv-value">Internal Medicine</div></div>
           <div class="wf-kv mb-1"><div class="kv-label">Patients in Queue</div><div class="kv-value" style="font-size:1.4rem;font-family:'Architects Daughter',cursive;">5</div></div>
-          <div class="wf-kv mb-2"><div class="kv-label">Est. Wait Time</div><div class="kv-value">~40 min</div></div>
+          <div class="wf-kv mb-2"><div class="kv-label">Est. Wait Time</div><div class="kv-value" style="color:#c62828;">~40 min</div></div>
 
           <details>
-            <summary style="cursor:pointer;font-size:.85rem;color:#666;">▸ Show patient list</summary>
+            <summary style="cursor:pointer;font-size:.85rem;color:#666;">Show patient list</summary>
             <div style="margin-top:8px;">
               ${renderTable(
-                ["Patient", "Enlisted", "Status", ""],
+                ["Patient", "MRN", "Type", "Enlisted", "Wait", "Payment", "Status", ""],
                 [
                   [
                     "Tigist M.",
+                    "MRN-0042",
+                    '<span class="wf-badge" style="font-size:.6rem;background:#e3f2fd;color:#1565c0;">Appt</span>',
                     "08:30",
+                    '<span style="color:#2e7d32;font-size:.8rem;">5 min</span>',
+                    '<span class="wf-badge green" style="font-size:.55rem;">Paid</span>',
                     '<span class="wf-badge blue">In Consultation</span>',
                     "",
                   ],
                   [
                     "Bereket D.",
+                    "MRN-0034",
+                    '<span class="wf-badge" style="font-size:.6rem;background:#e3f2fd;color:#1565c0;">Appt</span>',
                     "08:50",
-                    '<span class="wf-badge blue">Vitals Complete</span>',
+                    '<span style="color:#2e7d32;font-size:.8rem;">10 min</span>',
+                    '<span class="wf-badge green" style="font-size:.55rem;">Paid</span>',
+                    '<span class="wf-badge blue">Vitals Done</span>',
                     "",
                   ],
                   [
                     "Selam W.",
+                    "MRN-0102",
+                    '<span class="wf-badge" style="font-size:.6rem;background:#fff3e0;color:#e65100;">Walk-in</span>',
                     "09:00",
-                    '<span class="wf-badge">Waiting for Vitals</span>',
+                    '<span style="color:#e65100;font-size:.8rem;">20 min</span>',
+                    '<span class="wf-badge green" style="font-size:.55rem;">Paid</span>',
+                    '<span class="wf-badge">Waiting Vitals</span>',
                     '<button class="wf-btn small">Reassign</button>',
                   ],
                   [
                     "Henok T.",
+                    "MRN-0056",
+                    '<span class="wf-badge" style="font-size:.6rem;background:#fff3e0;color:#e65100;">Walk-in</span>',
                     "09:20",
-                    '<span class="wf-badge">Waiting for Vitals</span>',
+                    '<span style="color:#c62828;font-size:.8rem;">32 min</span>',
+                    '<span class="wf-badge green" style="font-size:.55rem;">Paid</span>',
+                    '<span class="wf-badge">Waiting Vitals</span>',
                     '<button class="wf-btn small">Reassign</button>',
                   ],
                   [
                     "Sara A.",
+                    "MRN-0067",
+                    '<span class="wf-badge" style="font-size:.6rem;background:#fff3e0;color:#e65100;">Walk-in</span>',
                     "09:35",
-                    '<span class="wf-badge">Waiting for Vitals</span>',
+                    '<span style="color:#c62828;font-size:.8rem;">45 min</span>',
+                    '<span class="wf-badge orange" style="font-size:.55rem;">Pending</span>',
+                    '<span class="wf-badge">Waiting Vitals</span>',
                     '<button class="wf-btn small">Reassign</button>',
                   ],
                 ],
@@ -141,6 +197,8 @@
           </details>
         </div>
       </div>
+
+      <p class="text-small text-muted" style="margin-top:12px;">Wait time colours: <span style="color:#2e7d32;">Green (&lt;15 min)</span> &mdash; <span style="color:#e65100;">Yellow (15-30 min)</span> &mdash; <span style="color:#c62828;">Red (&gt;30 min)</span>. Payment "Pending" blocks queue progression until Finance confirms.</p>
     `,
         });
       });

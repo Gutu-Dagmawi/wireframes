@@ -1,0 +1,435 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>DocuMed — Today's Dashboard</title>
+    <link rel="stylesheet" href="../wireframe.css" />
+    <script src="../wireframe.js"></script>
+  </head>
+  <body>
+    <script>
+      ready(() => {
+        renderPageShell({
+          title: "Today's Dashboard",
+          role: "receptionist",
+          activeId: "today_dashboard",
+          screenId: "SCR_today_dashboard",
+          workflow: "Receptionist Entry Flow",
+          userName: "Hana G. (Receptionist)",
+          content: function (main) {
+            main.innerHTML = `
+      <h2 class="page-title">Today's Dashboard</h2>
+      <p class="text-small text-muted" style="margin-bottom:8px;">Apr 10, 2026 &mdash; Main Branch &mdash; Auto-refreshes</p>
+
+      <!-- Summary Cards -->
+      <div class="wf-grid-4" style="margin-bottom:16px;">
+        <div class="wf-card" style="text-align:center;padding:16px;">
+          <div style="font-size:.75rem;color:#888;text-transform:uppercase;letter-spacing:.5px;">Scheduled Today</div>
+          <div style="font-size:2rem;font-family:'Architects Daughter',cursive;color:#333;">8</div>
+          <div class="text-small text-muted">5 checked-in, 2 remaining, 1 no-show</div>
+        </div>
+        <div class="wf-card" style="text-align:center;padding:16px;">
+          <div style="font-size:.75rem;color:#888;text-transform:uppercase;letter-spacing:.5px;">Walk-Ins Today</div>
+          <div style="font-size:2rem;font-family:'Architects Daughter',cursive;color:#333;">3</div>
+          <div class="text-small text-muted">All checked in</div>
+        </div>
+        <div class="wf-card" style="text-align:center;padding:16px;">
+          <div style="font-size:.75rem;color:#888;text-transform:uppercase;letter-spacing:.5px;">Special Services</div>
+          <div style="font-size:2rem;font-family:'Architects Daughter',cursive;color:#333;">3</div>
+          <div class="text-small text-muted">1 completed, 1 in progress, 1 pending</div>
+        </div>
+        <div class="wf-card" style="text-align:center;padding:16px;">
+          <div style="font-size:.75rem;color:#888;text-transform:uppercase;letter-spacing:.5px;">Pending Payments</div>
+          <div style="font-size:2rem;font-family:'Architects Daughter',cursive;color:#c62828;">2</div>
+          <div class="text-small text-muted">Blocking queue entry</div>
+        </div>
+      </div>
+
+      <!-- Quick Links (global, non-tab-specific) -->
+      <div class="wf-action-bar between mb-2" style="padding:4px 0;">
+        <div style="display:flex;gap:8px;">
+          <a href="queue_monitoring.html"><button class="wf-btn small">View Queue</button></a>
+          <a href="appointment_management.html"><button class="wf-btn small">Manage Appointments</button></a>
+        </div>
+      </div>
+
+      <!-- ========== TABBED VIEW ========== -->
+      <div class="wf-tabs">
+        <div class="tab active" data-tab="tab-scheduled">Scheduled Appointments</div>
+        <div class="tab" data-tab="tab-walkins">Walk-Ins</div>
+        <div class="tab" data-tab="tab-special">Special Services</div>
+      </div>
+
+      <!-- ==================== TAB 1: SCHEDULED ==================== -->
+      <div id="tab-scheduled" class="wf-tab-content active">
+
+        <!-- Tab-scoped action bar -->
+        <div class="wf-action-bar between" style="padding:8px 0;margin-bottom:8px;">
+          <div style="display:flex;gap:8px;align-items:center;">
+            <select class="wf-input" style="font-size:.8rem;max-width:200px;">
+              <option>All Practitioners</option>
+              <option>Dr. Solomon T. (General Practice)</option>
+              <option>Dr. Miriam K. (Paediatrics)</option>
+              <option>Dr. Alem B. (Internal Medicine)</option>
+            </select>
+            <select class="wf-input" style="font-size:.8rem;max-width:140px;">
+              <option>All Statuses</option>
+              <option>Expected</option>
+              <option>Checked-In</option>
+              <option>In Queue</option>
+              <option>In Consultation</option>
+              <option>Completed</option>
+              <option>No-Show</option>
+            </select>
+          </div>
+          <div class="text-small text-muted">Check In expected patients below. No-Show auto-flagged after 30 min grace.</div>
+        </div>
+
+        ${renderTable(
+          ["Time", "MRN", "Patient", "Practitioner", "Reason", "Status", "Payment", "Actions"],
+          [
+            [
+              "08:30", "MRN-0042",
+              '<div style="display:flex;align-items:center;gap:6px;"><div class="wf-placeholder" style="width:28px;height:28px;border-radius:50%;font-size:.5rem;display:flex;align-items:center;justify-content:center;">Foto</div><strong>Tigist Mekonnen</strong></div>',
+              "Dr. Alem B.", "Diabetes follow-up",
+              '<span class="wf-badge green">Completed</span>',
+              '<span class="wf-badge green">Paid</span>', '',
+            ],
+            [
+              "09:00", "MRN-0015",
+              '<div style="display:flex;align-items:center;gap:6px;"><div class="wf-placeholder" style="width:28px;height:28px;border-radius:50%;font-size:.5rem;display:flex;align-items:center;justify-content:center;">Foto</div><strong>Abebe Kebede</strong></div>',
+              "Dr. Solomon T.", "Follow-up check",
+              '<span class="wf-badge blue">In Consultation</span>',
+              '<span class="wf-badge green">Paid</span>', '',
+            ],
+            [
+              "09:30", "MRN-0078",
+              '<div style="display:flex;align-items:center;gap:6px;"><div class="wf-placeholder" style="width:28px;height:28px;border-radius:50%;font-size:.5rem;display:flex;align-items:center;justify-content:center;">Foto</div><strong>Fatima Ali</strong></div>',
+              "Dr. Solomon T.", "Blood pressure review",
+              '<span class="wf-badge blue">In Queue</span>',
+              '<span class="wf-badge green">Paid</span>', '',
+            ],
+            [
+              "10:00", "MRN-0023",
+              '<div style="display:flex;align-items:center;gap:6px;"><div class="wf-placeholder" style="width:28px;height:28px;border-radius:50%;font-size:.5rem;display:flex;align-items:center;justify-content:center;">Foto</div><strong>Dawit Tadesse</strong></div>',
+              "Dr. Solomon T.", "Lab result discussion",
+              '<span class="wf-badge" style="background:#e3f2fd;color:#1565c0;">Checked-In</span>',
+              '<span class="wf-badge orange">Pending</span>', '',
+            ],
+            [
+              "10:30", "MRN-0091",
+              '<div style="display:flex;align-items:center;gap:6px;"><div class="wf-placeholder" style="width:28px;height:28px;border-radius:50%;font-size:.5rem;display:flex;align-items:center;justify-content:center;">Foto</div><strong>Meron Hailu</strong></div>',
+              "Dr. Miriam K.", "Prenatal check",
+              '<span class="wf-badge orange">Expected</span>',
+              '<span class="wf-badge gray">&mdash;</span>',
+              '<button class="wf-btn small primary" onclick="showCheckIn()">Check In</button>',
+            ],
+            [
+              "11:00", "MRN-0034",
+              '<div style="display:flex;align-items:center;gap:6px;"><div class="wf-placeholder" style="width:28px;height:28px;border-radius:50%;font-size:.5rem;display:flex;align-items:center;justify-content:center;">Foto</div><strong>Bereket Desta</strong></div>',
+              "Dr. Alem B.", "Chest X-ray review",
+              '<span class="wf-badge orange">Expected</span>',
+              '<span class="wf-badge gray">&mdash;</span>',
+              '<button class="wf-btn small primary" onclick="showCheckIn()">Check In</button>',
+            ],
+            [
+              "11:30", "MRN-0056",
+              '<div style="display:flex;align-items:center;gap:6px;"><div class="wf-placeholder" style="width:28px;height:28px;border-radius:50%;font-size:.5rem;display:flex;align-items:center;justify-content:center;">Foto</div><strong>Henok Tadesse</strong></div>',
+              "Dr. Solomon T.", "Persistent cough",
+              '<span class="wf-badge red">No-Show</span>',
+              '<span class="wf-badge gray">&mdash;</span>',
+              '<button class="wf-btn small" onclick="addToWaitlist()">Waitlist</button>',
+            ],
+            [
+              "14:00", "MRN-0067",
+              '<div style="display:flex;align-items:center;gap:6px;"><div class="wf-placeholder" style="width:28px;height:28px;border-radius:50%;font-size:.5rem;display:flex;align-items:center;justify-content:center;">Foto</div><strong>Sara Alemu</strong></div>',
+              "Dr. Miriam K.", "Vaccination",
+              '<span class="wf-badge orange">Expected</span>',
+              '<span class="wf-badge gray">&mdash;</span>',
+              '<button class="wf-btn small primary" onclick="showCheckIn()">Check In</button>',
+            ],
+          ],
+          { clickable: true },
+        )}
+
+        <!-- Check-In Confirmation Panel (inline, tab-scoped) -->
+        <div class="wf-inline-panel" id="checkin-panel" style="display:none;">
+          <div class="section-title">Scheduled Check-In Confirmation</div>
+          <div class="wf-kv-grid">
+            <div class="wf-kv"><div class="kv-label">Patient</div><div class="kv-value"><div style="display:flex;align-items:center;gap:8px;"><div class="wf-placeholder" style="width:36px;height:36px;border-radius:50%;font-size:.5rem;display:flex;align-items:center;justify-content:center;">Foto</div> <strong>Meron Hailu</strong> (MRN-0091)</div></div></div>
+            <div class="wf-kv"><div class="kv-label">Sex / Age</div><div class="kv-value">Female, 31 yrs</div></div>
+            <div class="wf-kv"><div class="kv-label">Blood Type</div><div class="kv-value">B+</div></div>
+            <div class="wf-kv"><div class="kv-label">Phone</div><div class="kv-value">0944-567-890</div></div>
+            <div class="wf-kv"><div class="kv-label">Appointment</div><div class="kv-value">10:30 with Dr. Miriam K. (Paediatrics) &mdash; Prenatal check</div></div>
+            <div class="wf-kv"><div class="kv-label">Known Allergies</div><div class="kv-value" style="color:#c62828;">Penicillin</div></div>
+          </div>
+          <div style="margin-top:12px;">
+            <div style="font-size:.82rem;font-weight:600;color:#555;margin-bottom:6px;">Recent Visits (last 3):</div>
+            ${renderTable(
+              ["Date", "Practitioner", "Chief Complaint", "Outcome"],
+              [
+                ["28 Mar 2026", "Dr. Miriam K.", "Prenatal check-up (28w)", "Normal. Next visit scheduled."],
+                ["14 Mar 2026", "Dr. Miriam K.", "Prenatal check-up (26w)", "Mild anaemia — iron supplementation started."],
+                ["01 Mar 2026", "Dr. Miriam K.", "Prenatal check-up (24w)", "All normal. Ultrasound ordered."],
+              ],
+            )}
+          </div>
+          <div class="wf-action-bar" style="margin-top:12px;">
+            <button class="wf-btn primary" onclick="confirmCheckIn()">Confirm Check-In</button>
+            <button class="wf-btn" onclick="document.getElementById('checkin-panel').style.display='none'">Cancel</button>
+            <span class="text-small text-muted">Creates payment request in Finance queue. On payment, patient enters Nurse's vitals queue.</span>
+          </div>
+          <div style="margin-top:8px;padding:8px 12px;background:#e8f5e9;border-radius:3px;display:none;" id="checkin-success">
+            <span style="color:#2e7d32;font-size:.85rem;font-weight:600;">Check-in confirmed. Payment request sent. Estimated wait: ~15 min.</span>
+          </div>
+        </div>
+
+        <!-- Waitlist (tab-scoped) -->
+        <div class="wf-form-section" style="margin-top:16px;">
+          <div class="section-title flex-between">
+            <span>Waitlist</span>
+            <span class="wf-badge">1 patient</span>
+          </div>
+          ${renderTable(
+            ["Patient", "MRN", "Requested Practitioner", "Reason", "Added", "Actions"],
+            [
+              [
+                '<strong>Selam Worku</strong>', "MRN-0102",
+                "Dr. Alem B. (Internal Medicine)",
+                "Chronic back pain — all afternoon slots full", "09:45 AM",
+                '<button class="wf-btn small primary">Book Next Available</button> <button class="wf-btn small danger">Remove</button>',
+              ],
+            ],
+          )}
+        </div>
+
+        <div style="margin-top:8px;padding:8px;border:1px dashed #ccc;border-radius:3px;text-align:center;color:#888;font-size:.82rem;">
+          <strong>Print:</strong> Queue Ticket | Appointment Slip &mdash; available after check-in
+        </div>
+      </div>
+
+      <!-- ==================== TAB 2: WALK-INS ==================== -->
+      <div id="tab-walkins" class="wf-tab-content">
+
+        <!-- Tab-scoped action bar -->
+        <div class="wf-action-bar between" style="padding:8px 0;margin-bottom:8px;">
+          <div style="display:flex;gap:8px;">
+            <button class="wf-btn primary" onclick="showWalkinSearch()">Walk-In Check-In</button>
+            <a href="patient_registration.html"><button class="wf-btn">Register New Patient</button></a>
+          </div>
+          <div class="text-small text-muted">Search an existing patient or register a new one, then check them in.</div>
+        </div>
+
+        <!-- Walk-In Search (inline, scoped to this tab) -->
+        <div class="wf-card" id="walkin-search" style="display:none;margin-bottom:12px;padding:12px 16px;border:2px solid #666;background:#fcfcfc;">
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div style="flex:1;">
+              <input class="wf-input" type="text" placeholder="Search patient by Name, MRN, Phone, or National ID..." style="font-size:1rem;padding:8px 12px;border:2px solid #999;border-radius:4px;width:100%;">
+            </div>
+            <button class="wf-btn primary" style="padding:8px 20px;">Search</button>
+          </div>
+          <div style="margin-top:10px;">
+            <div style="font-size:.82rem;font-weight:600;color:#555;margin-bottom:4px;">Results:</div>
+            ${renderTable(
+              ["MRN", "Patient", "Sex/Age", "Phone", "Today's Status", ""],
+              [
+                [
+                  "MRN-0115",
+                  "<strong>Yared Tekle</strong>",
+                  "M, 42",
+                  "0933-456-789",
+                  '<span class="wf-badge gray">Not activated</span>',
+                  '<button class="wf-btn small primary" onclick="doWalkinCheckin()">Check In as Walk-In</button>',
+                ],
+              ],
+            )}
+            <div class="text-small text-muted">Not found? <a href="patient_registration.html">Register New Patient</a> first, then check in.</div>
+          </div>
+        </div>
+
+        <!-- Walk-In Check-In Confirmation -->
+        <div class="wf-inline-panel" id="walkin-confirm" style="display:none;margin-bottom:12px;">
+          <div class="section-title">Walk-In Check-In</div>
+          <div class="wf-kv-grid">
+            <div class="wf-kv"><div class="kv-label">Patient</div><div class="kv-value"><strong>Yared Tekle</strong> (MRN-0115) &mdash; M, 42 yrs</div></div>
+            <div class="wf-kv"><div class="kv-label">Phone</div><div class="kv-value">0933-456-789</div></div>
+          </div>
+          <div class="wf-form-row" style="margin-top:8px;">
+            ${renderFormField("Select Practitioner <span class='required'>*</span>", "select", { options: ["Dr. Solomon T. (General Practice)", "Dr. Miriam K. (Paediatrics)", "Dr. Alem B. (Internal Medicine)"] })}
+            ${renderFormField("Visit Reason", "text", { placeholder: "Brief reason for visit..." })}
+          </div>
+          <div class="wf-action-bar" style="margin-top:8px;">
+            <button class="wf-btn primary" onclick="confirmWalkin()">Confirm Walk-In Check-In</button>
+            <button class="wf-btn" onclick="document.getElementById('walkin-confirm').style.display='none'">Cancel</button>
+          </div>
+          <div style="margin-top:8px;padding:8px 12px;background:#e8f5e9;border-radius:3px;display:none;" id="walkin-success">
+            <span style="color:#2e7d32;font-size:.85rem;font-weight:600;">Walk-in checked in. Card activation payment sent to Finance. On payment, patient enters Nurse's vitals queue.</span>
+          </div>
+        </div>
+
+        <!-- Today's Walk-In List -->
+        <div class="wf-form-section">
+          <div class="section-title flex-between">
+            <span>Today's Walk-In Patients</span>
+            <span class="wf-badge">3 patients</span>
+          </div>
+          ${renderTable(
+            ["Time", "MRN", "Patient", "Practitioner", "Visit Reason", "Status", "Payment"],
+            [
+              [
+                "08:45", "MRN-0105",
+                '<div style="display:flex;align-items:center;gap:6px;"><div class="wf-placeholder" style="width:28px;height:28px;border-radius:50%;font-size:.5rem;display:flex;align-items:center;justify-content:center;">Foto</div><strong>Aster Belay</strong></div>',
+                "Dr. Solomon T.", "Persistent headache",
+                '<span class="wf-badge green">Completed</span>',
+                '<span class="wf-badge green">Paid</span>',
+              ],
+              [
+                "09:20", "MRN-0110",
+                '<div style="display:flex;align-items:center;gap:6px;"><div class="wf-placeholder" style="width:28px;height:28px;border-radius:50%;font-size:.5rem;display:flex;align-items:center;justify-content:center;">Foto</div><strong>Kedir Mohammed</strong></div>',
+                "Dr. Alem B.", "Back pain",
+                '<span class="wf-badge blue">In Queue</span>',
+                '<span class="wf-badge green">Paid</span>',
+              ],
+              [
+                "10:10", "MRN-0078",
+                '<div style="display:flex;align-items:center;gap:6px;"><div class="wf-placeholder" style="width:28px;height:28px;border-radius:50%;font-size:.5rem;display:flex;align-items:center;justify-content:center;">Foto</div><strong>Fatima Ali</strong></div>',
+                "Dr. Solomon T.", "Skin rash",
+                '<span class="wf-badge" style="background:#e3f2fd;color:#1565c0;">Checked-In</span>',
+                '<span class="wf-badge orange">Pending</span>',
+              ],
+            ],
+            { clickable: true },
+          )}
+        </div>
+
+        <div style="margin-top:8px;padding:8px;border:1px dashed #ccc;border-radius:3px;text-align:center;color:#888;font-size:.82rem;">
+          <strong>Print:</strong> Queue Ticket &mdash; available after walk-in check-in
+        </div>
+      </div>
+
+      <!-- ==================== TAB 3: SPECIAL SERVICES ==================== -->
+      <div id="tab-special" class="wf-tab-content">
+
+        <!-- Tab-scoped action bar -->
+        <div class="wf-action-bar between" style="padding:8px 0;margin-bottom:8px;">
+          <a href="special_service_order.html"><button class="wf-btn primary">+ New Special Service Order</button></a>
+          <div class="text-small text-muted">Order walk-in services (BP, blood sugar, injections, etc.) that don't require a doctor.</div>
+        </div>
+
+        <div class="wf-form-section">
+          <div class="section-title flex-between">
+            <span>Today's Special Service Orders</span>
+            <span class="wf-badge">4 orders</span>
+          </div>
+          ${renderTable(
+            ["Order #", "Time", "MRN", "Patient", "Services", "Amount", "Payment", "Nurse Status", "Lab Status", "Result Delivery"],
+            [
+              [
+                "SSO-001", "09:15", "MRN-0034",
+                "<strong>Bereket Desta</strong>",
+                "BP Check", "ETB 50.00",
+                '<span class="wf-badge green">Paid</span>',
+                '<span class="wf-badge green">Completed</span>',
+                '<span class="wf-badge gray">&mdash;</span>',
+                '<span class="wf-badge green">Delivered</span>',
+              ],
+              [
+                "SSO-002", "10:25", "MRN-0078",
+                "<strong>Fatima Ali</strong>",
+                "BP Check, Blood Sugar", "ETB 150.00",
+                '<span class="wf-badge green">Paid</span>',
+                '<span class="wf-badge green">Completed</span>',
+                '<span class="wf-badge" style="background:#e8f5e9;color:#2e7d32;">Results Ready</span>',
+                '<button class="wf-btn small primary" onclick="printResults()">Print Results</button>',
+              ],
+              [
+                "SSO-003", "10:40", "MRN-0056",
+                "<strong>Henok Tadesse</strong>",
+                "Injection (Patient Drug)", "ETB 80.00",
+                '<span class="wf-badge orange">Pending</span>',
+                '<span class="wf-badge gray">Awaiting Payment</span>',
+                '<span class="wf-badge gray">&mdash;</span>',
+                '<span class="wf-badge gray">&mdash;</span>',
+              ],
+              [
+                "SSO-004", "11:00", "MRN-0099",
+                "<strong>Almaz Girma</strong>",
+                "Pregnancy Test", "ETB 150.00",
+                '<span class="wf-badge green">Paid</span>',
+                '<span class="wf-badge blue">In Progress</span>',
+                '<span class="wf-badge blue">Awaiting Specimen</span>',
+                '<span class="wf-badge gray">Pending</span>',
+              ],
+            ],
+          )}
+          <p class="text-small text-muted">Lifecycle: <strong>Payment Pending</strong> &rarr; <strong>Paid</strong> &rarr; <strong>Nurse/Lab In Progress</strong> &rarr; <strong>Results Ready</strong> &rarr; <strong>Delivered</strong>. Lab results are sent here by the lab tech. The receptionist prints and delivers to the patient.</p>
+        </div>
+
+        <!-- Result delivery confirmation -->
+        <div class="wf-inline-panel" id="print-results" style="display:none;margin-top:8px;">
+          <div class="section-title">Lab Result — Ready for Delivery</div>
+          <div class="wf-kv-grid">
+            <div class="wf-kv"><div class="kv-label">Patient</div><div class="kv-value"><strong>Fatima Ali</strong> (MRN-0078)</div></div>
+            <div class="wf-kv"><div class="kv-label">Order</div><div class="kv-value">SSO-002 — Blood Sugar Check</div></div>
+            <div class="wf-kv"><div class="kv-label">Lab Test</div><div class="kv-value">Blood Glucose (Fasting) [FBS]</div></div>
+            <div class="wf-kv"><div class="kv-label">Result</div><div class="kv-value"><strong>92 mg/dL</strong> (Normal: 70–100 mg/dL) — <span class="wf-badge green">Normal</span></div></div>
+            <div class="wf-kv"><div class="kv-label">Processed By</div><div class="kv-value">Daniel A. (Lab Tech)</div></div>
+          </div>
+          <div class="wf-action-bar" style="margin-top:10px;">
+            <button class="wf-btn primary" onclick="confirmDelivery()">Print and Mark as Delivered</button>
+            <button class="wf-btn" onclick="document.getElementById('print-results').style.display='none'">Close</button>
+          </div>
+          <div style="margin-top:8px;padding:8px 12px;background:#e8f5e9;border-radius:3px;display:none;" id="delivery-success">
+            <span style="color:#2e7d32;font-size:.85rem;font-weight:600;">Results printed and marked as delivered. Patient can collect from reception.</span>
+          </div>
+        </div>
+
+        <div style="margin-top:8px;padding:8px;border:1px dashed #ccc;border-radius:3px;text-align:center;color:#888;font-size:.82rem;">
+          <strong>Print:</strong> Order Summary | Lab Results &mdash; available when results are ready
+        </div>
+      </div>
+    `;
+            initTabs();
+          },
+        });
+
+        // JS handlers — scoped per tab
+        window.showCheckIn = function() {
+          document.getElementById('checkin-panel').style.display = 'block';
+          document.getElementById('checkin-success').style.display = 'none';
+          document.getElementById('checkin-panel').scrollIntoView({ behavior: 'smooth' });
+        };
+        window.confirmCheckIn = function() {
+          document.getElementById('checkin-success').style.display = 'block';
+        };
+        window.addToWaitlist = function() {
+          alert('Patient added to waitlist.');
+        };
+
+        // Walk-In tab
+        window.showWalkinSearch = function() {
+          document.getElementById('walkin-search').style.display = 'block';
+          document.getElementById('walkin-confirm').style.display = 'none';
+        };
+        window.doWalkinCheckin = function() {
+          document.getElementById('walkin-search').style.display = 'none';
+          document.getElementById('walkin-confirm').style.display = 'block';
+          document.getElementById('walkin-confirm').scrollIntoView({ behavior: 'smooth' });
+        };
+        window.confirmWalkin = function() {
+          document.getElementById('walkin-success').style.display = 'block';
+        };
+
+        // Special Services tab
+        window.printResults = function() {
+          document.getElementById('print-results').style.display = 'block';
+          document.getElementById('delivery-success').style.display = 'none';
+          document.getElementById('print-results').scrollIntoView({ behavior: 'smooth' });
+        };
+        window.confirmDelivery = function() {
+          document.getElementById('delivery-success').style.display = 'block';
+        };
+      });
+    </script>
+  </body>
+</html>

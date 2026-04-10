@@ -99,17 +99,6 @@
       .flow-section h2 {
         margin-bottom: 14px;
       }
-      .flow-diagram {
-        font-family: "Patrick Hand", sans-serif;
-        font-size: 0.88rem;
-        line-height: 1.7;
-        background: #fafafa;
-        border: 1.5px solid #ccc;
-        border-radius: 4px;
-        padding: 16px;
-        white-space: pre;
-        overflow-x: auto;
-      }
     </style>
   </head>
   <body>
@@ -127,26 +116,116 @@
           <span>Logo</span>
         </div>
         <h1>DocuMed — Wireframes</h1>
-        <p>Clinic Management System · 28 Screens · 7 Roles</p>
+        <p>Clinic Management System &middot; 32 Screens &middot; 7 Roles &middot; <strong>v0.2.0</strong></p>
         <p class="text-small text-muted" style="margin-top: 8px">
           Sketch-style wireframes — not production mockups
         </p>
+        <a href="guide.html" style="display:inline-block;margin-top:10px;text-decoration:none;background:#333;color:#fff;padding:6px 16px;border-radius:3px;font-size:.85rem;font-family:'Architects Daughter',cursive;">View System Guide</a>
       </div>
 
-      <!-- Patient Journey Flow -->
+      <!-- Patient Journey Flows -->
       <div class="flow-section">
-        <h2>Patient Journey Flow</h2>
-        <div class="flow-diagram">
-          Receptionist Finance Nurse Practitioner ─────────── ─────── ─────
-          ──────────── Register/activate → Card-activation → Vitals &amp; →
-          Assessment, patient &amp; select payment processing triage diagnosis,
-          practitioner (must complete lab orders, before patient order-sheets,
-          enters MD queue) prescriptions ↑ │ │ │ │
-          ┌──────────────────────────────┘ │ │ (lab order / procedure created) │
-          ▼ Finance ← Lab order fee Lab Tech Nurse Finance ← Procedure fee
-          (in-house / (administer │ external) procedures) │ │ │ │ └─────────┘ │
-          │ ▼ ▼ Results released Order completed │ │ └───────► Practitioner ◄──┘
-          (review &amp; finalize)
+        <h2>Patient Journey Flows</h2>
+
+        <!-- Flow 1: Clinical Visit -->
+        <div style="margin-bottom:20px;">
+          <div style="font-weight:700;font-size:.95rem;margin-bottom:8px;color:#333;">1. Clinical Visit (Practitioner Encounter)</div>
+          <div style="display:flex;align-items:flex-start;gap:0;flex-wrap:wrap;font-size:.8rem;">
+            <!-- Step boxes -->
+            <div style="background:#e3f2fd;border:1.5px solid #90caf9;border-radius:4px;padding:8px 12px;min-width:120px;text-align:center;">
+              <div style="font-weight:700;color:#1565c0;margin-bottom:3px;">Receptionist</div>
+              <div>Register patient</div>
+              <div>Check in</div>
+              <div style="font-size:.7rem;color:#888;margin-top:3px;">Select practitioner</div>
+            </div>
+            <div style="display:flex;align-items:center;padding:0 4px;color:#999;font-size:1.2rem;">&rarr;</div>
+            <div style="background:#fff8e1;border:1.5px solid #ffe082;border-radius:4px;padding:8px 12px;min-width:120px;text-align:center;">
+              <div style="font-weight:700;color:#f57f17;margin-bottom:3px;">Finance</div>
+              <div>Card activation</div>
+              <div>payment</div>
+              <div style="font-size:.7rem;color:#888;margin-top:3px;">Must pay before queue</div>
+            </div>
+            <div style="display:flex;align-items:center;padding:0 4px;color:#999;font-size:1.2rem;">&rarr;</div>
+            <div style="background:#e8f5e9;border:1.5px solid #a5d6a7;border-radius:4px;padding:8px 12px;min-width:120px;text-align:center;">
+              <div style="font-weight:700;color:#2e7d32;margin-bottom:3px;">Nurse</div>
+              <div>Vitals &amp; triage</div>
+              <div style="font-size:.7rem;color:#888;margin-top:3px;">BP, temp, pulse, etc.</div>
+            </div>
+            <div style="display:flex;align-items:center;padding:0 4px;color:#999;font-size:1.2rem;">&rarr;</div>
+            <div style="background:#f3e5f5;border:1.5px solid #ce93d8;border-radius:4px;padding:8px 12px;min-width:140px;text-align:center;">
+              <div style="font-weight:700;color:#7b1fa2;margin-bottom:3px;">Practitioner</div>
+              <div>Assessment, diagnosis</div>
+              <div>Lab orders, prescriptions</div>
+              <div>Order-sheets, referrals</div>
+            </div>
+          </div>
+          <!-- Sub-flows -->
+          <div style="margin-top:8px;margin-left:40px;display:flex;gap:16px;flex-wrap:wrap;font-size:.78rem;">
+            <div style="background:#fafafa;border:1px solid #ddd;border-radius:3px;padding:6px 10px;">
+              <div style="font-weight:600;color:#555;margin-bottom:2px;">Lab Order Path</div>
+              <div>Practitioner &rarr; Finance (pay) &rarr; <span style="color:#1565c0;font-weight:600;">Lab Tech</span> (in-house) &rarr; Results &rarr; Practitioner</div>
+              <div style="color:#888;font-size:.7rem;">External tests: Practitioner generates referral directly</div>
+            </div>
+            <div style="background:#fafafa;border:1px solid #ddd;border-radius:3px;padding:6px 10px;">
+              <div style="font-weight:600;color:#555;margin-bottom:2px;">Order-Sheet Path</div>
+              <div>Practitioner &rarr; Finance (pay) &rarr; <span style="color:#2e7d32;font-weight:600;">Nurse</span> (administer) &rarr; Completed &rarr; Practitioner</div>
+            </div>
+            <div style="background:#fafafa;border:1px solid #ddd;border-radius:3px;padding:6px 10px;">
+              <div style="font-weight:600;color:#555;margin-bottom:2px;">Encounter Finalized</div>
+              <div>Practitioner &rarr; <span style="color:#1565c0;font-weight:600;">Receptionist</span> (Encounter Outputs) &rarr; Print &rarr; Patient</div>
+              <div style="color:#888;font-size:.7rem;">Prescriptions, referral letters, certificates</div>
+            </div>
+            <div style="background:#fff3e0;border:1.5px solid #ffb74d;border-radius:3px;padding:6px 10px;">
+              <div style="font-weight:600;color:#e65100;margin-bottom:2px;">Encounter Suspended</div>
+              <div>Practitioner suspends &rarr; <span style="color:#1565c0;font-weight:600;">Receptionist</span> (Suspended Encounters) &rarr; Patient returns</div>
+              <div>Resumption: Receptionist activates &rarr; Nurse (re-triage) &rarr; Practitioner (Resumed queue)</div>
+              <div style="color:#888;font-size:.7rem;">For external lab results taking days/weeks. Card valid until practitioner's declared limit.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Flow 2: Special Service -->
+        <div style="margin-bottom:12px;">
+          <div style="font-weight:700;font-size:.95rem;margin-bottom:8px;color:#333;">2. Special Service (Walk-In, No Doctor)</div>
+          <div style="display:flex;align-items:flex-start;gap:0;flex-wrap:wrap;font-size:.8rem;">
+            <div style="background:#e3f2fd;border:1.5px solid #90caf9;border-radius:4px;padding:8px 12px;min-width:130px;text-align:center;">
+              <div style="font-weight:700;color:#1565c0;margin-bottom:3px;">Receptionist</div>
+              <div>Create special</div>
+              <div>service order</div>
+              <div style="font-size:.7rem;color:#888;margin-top:3px;">BP, blood sugar, injection…</div>
+            </div>
+            <div style="display:flex;align-items:center;padding:0 4px;color:#999;font-size:1.2rem;">&rarr;</div>
+            <div style="background:#fff8e1;border:1.5px solid #ffe082;border-radius:4px;padding:8px 12px;min-width:110px;text-align:center;">
+              <div style="font-weight:700;color:#f57f17;margin-bottom:3px;">Finance</div>
+              <div>Service payment</div>
+              <div style="font-size:.7rem;color:#888;margin-top:3px;">Auto-priced from admin</div>
+            </div>
+            <div style="display:flex;align-items:center;padding:0 4px;color:#999;font-size:1.2rem;">&rarr;</div>
+            <div style="background:#e8f5e9;border:1.5px solid #a5d6a7;border-radius:4px;padding:8px 12px;min-width:120px;text-align:center;">
+              <div style="font-weight:700;color:#2e7d32;margin-bottom:3px;">Nurse / Lab Tech</div>
+              <div>Perform service</div>
+              <div>or process specimen</div>
+            </div>
+            <div style="display:flex;align-items:center;padding:0 4px;color:#999;font-size:1.2rem;">&rarr;</div>
+            <div style="background:#e3f2fd;border:1.5px solid #90caf9;border-radius:4px;padding:8px 12px;min-width:130px;text-align:center;">
+              <div style="font-weight:700;color:#1565c0;margin-bottom:3px;">Receptionist</div>
+              <div>Results routed back</div>
+              <div>Print &amp; deliver</div>
+              <div style="font-size:.7rem;color:#888;margin-top:3px;">No practitioner involved</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Result Routing Key -->
+        <div style="background:#f5f5f5;border:1px solid #ddd;border-radius:3px;padding:8px 14px;font-size:.78rem;">
+          <div style="font-weight:700;margin-bottom:4px;">Result Routing Key</div>
+          <div style="display:flex;gap:20px;flex-wrap:wrap;">
+            <div><span style="color:#7b1fa2;">&#9632;</span> Practitioner-ordered lab &rarr; results to <strong>Practitioner</strong></div>
+            <div><span style="color:#1565c0;">&#9632;</span> Special service lab &rarr; results to <strong>Receptionist</strong></div>
+            <div><span style="color:#e65100;">&#9632;</span> External-only test &rarr; <strong>Practitioner</strong> generates referral (not lab tech)</div>
+            <div><span style="color:#2e7d32;">&#9632;</span> Encounter outputs &rarr; prescriptions/referrals to <strong>Receptionist</strong> for printing</div>
+            <div><span style="color:#e65100;">&#9632;</span> Suspended encounter &rarr; <strong>Receptionist</strong> manages resumption (walk-in or appointment)</div>
+          </div>
         </div>
       </div>
 
@@ -154,13 +233,18 @@
       <div class="role-section">
         <div class="role-header">
           <h2>🔑 Shared</h2>
-          <span class="count">1 screen</span>
+          <span class="count">2 screens</span>
         </div>
         <div class="screen-grid">
           <a class="screen-card" href="shared/login.html">
             <div class="card-icon">🔑</div>
             <div class="card-name">Login</div>
             <div class="card-id">SCR_login</div>
+          </a>
+          <a class="screen-card" href="shared/patient_profile.html">
+            <div class="card-icon">👤</div>
+            <div class="card-name">Patient Profile Dashboard</div>
+            <div class="card-id">SCR_patient_profile</div>
           </a>
         </div>
       </div>
@@ -169,9 +253,14 @@
       <div class="role-section">
         <div class="role-header">
           <h2>📋 Receptionist</h2>
-          <span class="count">4 screens</span>
+          <span class="count">8 screens</span>
         </div>
         <div class="screen-grid">
+          <a class="screen-card" href="receptionist/today_dashboard.html">
+            <div class="card-icon">📋</div>
+            <div class="card-name">Today's Dashboard</div>
+            <div class="card-id">SCR_today_dashboard</div>
+          </a>
           <a class="screen-card" href="receptionist/patient_search.html">
             <div class="card-icon">🔍</div>
             <div class="card-name">Patient Search & List</div>
@@ -182,10 +271,7 @@
             <div class="card-name">Patient Registration Form</div>
             <div class="card-id">SCR_patient_registration_form</div>
           </a>
-          <a
-            class="screen-card"
-            href="receptionist/appointment_management.html"
-          >
+          <a class="screen-card" href="receptionist/appointment_management.html">
             <div class="card-icon">📅</div>
             <div class="card-name">Appointment Management</div>
             <div class="card-id">SCR_appointment_management</div>
@@ -194,6 +280,21 @@
             <div class="card-icon">📊</div>
             <div class="card-name">Queue Monitoring Dashboard</div>
             <div class="card-id">SCR_queue_monitoring_dashboard</div>
+          </a>
+          <a class="screen-card" href="receptionist/special_service_order.html">
+            <div class="card-icon">⚕️</div>
+            <div class="card-name">Special Service Order</div>
+            <div class="card-id">SCR_special_service_order</div>
+          </a>
+          <a class="screen-card" href="receptionist/encounter_outputs.html">
+            <div class="card-icon">📄</div>
+            <div class="card-name">Encounter Outputs</div>
+            <div class="card-id">SCR_encounter_outputs</div>
+          </a>
+          <a class="screen-card" href="receptionist/suspended_encounters.html">
+            <div class="card-icon">⏸️</div>
+            <div class="card-name">Suspended Encounters</div>
+            <div class="card-id">SCR_suspended_encounters</div>
           </a>
         </div>
       </div>
@@ -295,7 +396,7 @@
       <div class="role-section">
         <div class="role-header">
           <h2>🔬 Lab Technician</h2>
-          <span class="count">3 screens</span>
+          <span class="count">2 screens</span>
         </div>
         <div class="screen-grid">
           <a class="screen-card" href="lab_tech/lab_dashboard.html">
@@ -307,14 +408,6 @@
             <div class="card-icon">🧪</div>
             <div class="card-name">Lab Order Detail</div>
             <div class="card-id">SCR_lab_order_detail</div>
-          </a>
-          <a
-            class="screen-card"
-            href="lab_tech/external_referral_document.html"
-          >
-            <div class="card-icon">📤</div>
-            <div class="card-name">External Referral Document</div>
-            <div class="card-id">SCR_external_referral_document</div>
           </a>
         </div>
       </div>
@@ -372,13 +465,19 @@
       <div
         style="
           text-align: center;
-          padding: 20px;
-          color: #bbb;
-          font-size: 0.8rem;
+          padding: 24px 20px;
+          color: #999;
+          font-size: 0.78rem;
+          border-top: 1px solid #ddd;
+          margin-top: 20px;
         "
       >
-        DocuMed Wireframes · Generated 2026-04-08 · Sketch-style, not production
-        mockups
+        <div>DocuMed Wireframes &middot; 32 Screens &middot; 7 Roles &middot; Sketch-style, not production mockups</div>
+        <div style="margin-top:8px;padding-top:8px;border-top:1px solid #eee;color:#bbb;font-size:.72rem;">
+          &copy; 2026 <strong style="color:#999;">Trivium Technical Marvels Inc.</strong> &mdash; DocuMed Team.<br>
+          All rights reserved. This document and all associated wireframes are proprietary and confidential.<br>
+          Unauthorized reproduction, distribution, or use is strictly prohibited.
+        </div>
       </div>
     </div>
   </body>

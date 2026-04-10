@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>DocuMed — Special Service Order</title>
+    <link rel="stylesheet" href="../wireframe.css" />
+    <script src="../wireframe.js"></script>
+  </head>
+  <body>
+    <script>
+      ready(() => {
+        renderPageShell({
+          title: "Special Service Order",
+          role: "receptionist",
+          activeId: "special_service",
+          screenId: "SCR_special_service_order",
+          workflow: "Special Service Order Flow",
+          userName: "Hana G. (Receptionist)",
+          content: `
+      <h2 class="page-title">Special Service Order</h2>
+      <p class="text-small text-muted mb-2">Order walk-in services that do not require a doctor's consultation. Flow: Receptionist → Finance → Nurse (and/or Lab Tech for linked tests).</p>
+
+      <!-- Patient Selection -->
+      <div class="wf-form-section">
+        <div class="section-title">1. Select Patient</div>
+        <div class="wf-form-row" style="max-width:700px;">
+          ${renderFormField("Search Patient <span class='required'>*</span>", "text", { required: true, placeholder: "Search by Name, MRN, Phone, or National ID..." })}
+        </div>
+        <!-- Selected patient card -->
+        <div class="wf-card" style="margin-top:8px;padding:12px 16px;display:flex;align-items:center;gap:12px;">
+          <div class="wf-placeholder" style="width:40px;height:40px;border-radius:50%;font-size:.5rem;display:flex;align-items:center;justify-content:center;">Foto</div>
+          <div>
+            <strong>Fatima Ali</strong> (MRN-0078) &mdash; F, 35 yrs &mdash; 0922-345-678
+            <div class="text-small text-muted">Known allergies: None known</div>
+          </div>
+          <button class="wf-btn small" style="margin-left:auto;">Change Patient</button>
+        </div>
+      </div>
+
+      <!-- Service Selection -->
+      <div class="wf-form-section">
+        <div class="section-title">2. Select Services</div>
+        <p class="text-small text-muted" style="margin-top:-4px;margin-bottom:8px;">Only walk-in special services available at this branch are shown. Select one or more.</p>
+
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
+          <!-- BP Check -->
+          <label class="wf-card" style="padding:12px;cursor:pointer;display:flex;gap:8px;align-items:flex-start;">
+            <input type="checkbox" checked style="margin-top:4px;">
+            <div>
+              <div style="font-weight:600;">Blood Pressure Check</div>
+              <div class="text-small text-muted">BP-CHK &mdash; Screening</div>
+              <div style="font-family:'Architects Daughter',cursive;font-size:1rem;color:#333;">ETB 50.00</div>
+            </div>
+          </label>
+          <!-- Blood Sugar -->
+          <label class="wf-card" style="padding:12px;cursor:pointer;display:flex;gap:8px;align-items:flex-start;">
+            <input type="checkbox" checked style="margin-top:4px;">
+            <div>
+              <div style="font-weight:600;">Blood Sugar Check</div>
+              <div class="text-small text-muted">BS-CHK &mdash; Screening</div>
+              <div style="font-family:'Architects Daughter',cursive;font-size:1rem;color:#333;">ETB 100.00</div>
+              <span class="wf-badge blue" style="font-size:.55rem;margin-top:4px;">Auto-creates Lab: FBS</span>
+            </div>
+          </label>
+          <!-- BMI -->
+          <label class="wf-card" style="padding:12px;cursor:pointer;display:flex;gap:8px;align-items:flex-start;">
+            <input type="checkbox" style="margin-top:4px;">
+            <div>
+              <div style="font-weight:600;">BMI Measurement</div>
+              <div class="text-small text-muted">BMI &mdash; Screening</div>
+              <div style="font-family:'Architects Daughter',cursive;font-size:1rem;color:#333;">ETB 30.00</div>
+            </div>
+          </label>
+          <!-- Pregnancy Test -->
+          <label class="wf-card" style="padding:12px;cursor:pointer;display:flex;gap:8px;align-items:flex-start;">
+            <input type="checkbox" style="margin-top:4px;">
+            <div>
+              <div style="font-weight:600;">Pregnancy Test</div>
+              <div class="text-small text-muted">PREG-TST &mdash; Screening</div>
+              <div style="font-family:'Architects Daughter',cursive;font-size:1rem;color:#333;">ETB 150.00</div>
+              <span class="wf-badge blue" style="font-size:.55rem;margin-top:4px;">Auto-creates Lab: HCG</span>
+            </div>
+          </label>
+          <!-- Injection Own Drug -->
+          <label class="wf-card" style="padding:12px;cursor:pointer;display:flex;gap:8px;align-items:flex-start;">
+            <input type="checkbox" style="margin-top:4px;">
+            <div>
+              <div style="font-weight:600;">Injection (Patient Drug)</div>
+              <div class="text-small text-muted">INJ-OWN &mdash; Injections</div>
+              <div style="font-family:'Architects Daughter',cursive;font-size:1rem;color:#333;">ETB 80.00</div>
+            </div>
+          </label>
+          <!-- Wound Dressing Walk-In -->
+          <label class="wf-card" style="padding:12px;cursor:pointer;display:flex;gap:8px;align-items:flex-start;">
+            <input type="checkbox" style="margin-top:4px;">
+            <div>
+              <div style="font-weight:600;">Wound Dressing (Walk-In)</div>
+              <div class="text-small text-muted">WND-WI &mdash; Wound Care</div>
+              <div style="font-family:'Architects Daughter',cursive;font-size:1rem;color:#333;">ETB 150.00</div>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <!-- Notes -->
+      <div class="wf-form-section">
+        <div class="section-title">3. Notes for Nurse</div>
+        ${renderFormField("Instructions", "textarea", { placeholder: "Any instructions for the nurse (optional). e.g., 'Patient is fasting for FBS'" })}
+      </div>
+
+      <!-- Order Summary -->
+      <div class="wf-form-section">
+        <div class="section-title">Order Summary</div>
+        ${renderTable(
+          ["#", "Service", "Code", "Unit Price (ETB)", "Linked Lab", "Subtotal (ETB)"],
+          [
+            ["1", "Blood Pressure Check", "BP-CHK", "50.00", "—", "50.00"],
+            ["2", "Blood Sugar Check", "BS-CHK", "100.00", '<span class="wf-badge blue" style="font-size:.55rem;">FBS → Lab Tech Queue</span>', "100.00"],
+          ],
+        )}
+        <div style="display:flex;justify-content:flex-end;padding:8px 12px;">
+          <div style="text-align:right;">
+            <div class="text-small text-muted">Price from: Branch Config (Main Branch)</div>
+            <div style="font-family:'Architects Daughter',cursive;font-size:1.8rem;color:#222;margin-top:4px;">Total: ETB 150.00</div>
+          </div>
+        </div>
+      </div>
+
+      <hr class="wf-divider">
+
+      <div class="wf-action-bar">
+        <button class="wf-btn primary" onclick="showSuccess()">Submit Order</button>
+        <a href="today_dashboard.html"><button class="wf-btn">Cancel</button></a>
+      </div>
+
+      <!-- Success -->
+      <div class="wf-inline-panel" id="order-success" style="display:none;margin-top:16px;background:#e8f5e9;">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="font-size:1.5rem;color:#2e7d32;">&#10003;</div>
+          <div>
+            <div style="font-weight:600;color:#2e7d32;">Special service order submitted</div>
+            <div class="text-small" style="color:#555;">
+              Payment request (ETB 150.00) sent to Finance queue.<br>
+              Lab order (FBS) auto-created and sent to Lab Tech queue.<br>
+              Nurse order (BP Check) sent to Nurse queue.<br>
+              All orders activate after Finance confirms payment.
+            </div>
+          </div>
+        </div>
+        <div class="wf-action-bar" style="margin-top:10px;">
+          <a href="today_dashboard.html"><button class="wf-btn primary">Back to Dashboard</button></a>
+          <button class="wf-btn" onclick="window.print()">Print Order Summary</button>
+        </div>
+      </div>
+    `,
+        });
+
+        window.showSuccess = function() {
+          document.getElementById('order-success').style.display = 'block';
+          document.getElementById('order-success').scrollIntoView({ behavior: 'smooth' });
+        };
+      });
+    </script>
+  </body>
+</html>

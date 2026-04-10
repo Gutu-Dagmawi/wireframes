@@ -84,6 +84,28 @@
           <p class="text-small text-muted">Patients returning after lab results are released.</p>
         </div>
       </div>
+
+      <!-- Resumed Encounters Queue -->
+      <div class="wf-form-section" style="margin-top:16px;border-color:#e65100;">
+        <div class="section-title flex-between" style="color:#e65100;">
+          <span>Resumed Encounters</span>
+          <span class="wf-badge orange">1 waiting</span>
+        </div>
+        ${renderTable(
+          ["Patient Name", "Original Encounter", "Suspension Reason", "Returned Items", "Time Waiting"],
+          [
+            [
+              '<a href="patient_encounter.html"><strong>Dawit Tadesse</strong></a>',
+              "28 Mar 2026",
+              '<span class="wf-badge orange" style="font-size:.6rem;">External Lab Results</span>',
+              "Thyroid Panel (T3, T4, TSH) results received",
+              "15 min",
+            ],
+          ],
+          { clickable: true },
+        )}
+        <p class="text-small text-muted">Patients returning from suspended encounters. Click to reopen the original encounter with all prior data + new vitals.</p>
+      </div>
     `,
         });
       });

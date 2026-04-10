@@ -18,14 +18,33 @@
           userName: "Hana G. (Receptionist)",
           content: `
       <h2 class="page-title">Patient Registration Form</h2>
+      <p class="text-small text-muted mb-2">Fields marked with <span class="required">*</span> are required. MRN is auto-generated on submission.</p>
 
       <!-- Patient Demographics -->
       <div class="wf-form-section">
         <div class="section-title">Patient Demographics</div>
         <div class="wf-form-row">
-          ${renderFormField("Full Name", "text", { required: true, placeholder: "Patient full legal name" })}
-          ${renderFormField("Date of Birth", "date", { required: true })}
-          ${renderFormField("Sex", "select", { required: true, options: ["— Select —", "Male", "Female"] })}
+          ${renderFormField("Full Name <span class='required'>*</span>", "text", { required: true, placeholder: "Patient full legal name" })}
+          ${renderFormField("Date of Birth <span class='required'>*</span>", "date", { required: true })}
+          ${renderFormField("Sex <span class='required'>*</span>", "select", { required: true, options: ["— Select —", "Male", "Female"] })}
+        </div>
+        <div class="wf-form-row">
+          ${renderFormField("National ID <span class='required'>*</span>", "text", { required: true, placeholder: "National identification number" })}
+          ${renderFormField("Blood Type", "select", { options: ["— Unknown —", "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"] })}
+          ${renderFormField("Preferred Language", "select", { options: ["Amharic", "Afaan Oromoo", "Tigrinya", "Somali", "English", "Other"] })}
+        </div>
+      </div>
+
+      <!-- Patient Photo -->
+      <div class="wf-form-section">
+        <div class="section-title">Patient Photo</div>
+        <div style="display:flex;align-items:center;gap:16px;">
+          <div class="wf-placeholder" style="width:80px;height:80px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.7rem;">Photo</div>
+          <div>
+            <button class="wf-btn small">Capture from Camera</button>
+            <button class="wf-btn small" style="margin-left:6px;">Upload File</button>
+            <p class="text-small text-muted" style="margin-top:4px;">Optional. Used for patient identity verification at check-in.</p>
+          </div>
         </div>
       </div>
 
@@ -33,19 +52,30 @@
       <div class="wf-form-section">
         <div class="section-title">Contact Information</div>
         <div class="wf-form-row">
-          ${renderFormField("Phone Number", "text", { required: true, placeholder: "09XX-XXX-XXXX" })}
-          ${renderFormField("Email", "email", { placeholder: "email@example.com" })}
+          ${renderFormField("Phone Number <span class='required'>*</span>", "text", { required: true, placeholder: "09XX-XXX-XXXX" })}
+          ${renderFormField("Secondary Phone", "text", { placeholder: "09XX-XXX-XXXX (optional)" })}
+          ${renderFormField("Email", "email", { placeholder: "email@example.com (optional)" })}
         </div>
-        ${renderFormField("Address", "textarea", { required: true, placeholder: "Residential address..." })}
+        ${renderFormField("Address <span class='required'>*</span>", "textarea", { required: true, placeholder: "Sub-city, Woreda, Kebele, House No." })}
       </div>
 
       <!-- Emergency Contact -->
       <div class="wf-form-section">
         <div class="section-title">Emergency Contact</div>
         <div class="wf-form-row">
-          ${renderFormField("Contact Name", "text", { required: true, placeholder: "Emergency contact name" })}
-          ${renderFormField("Contact Phone", "text", { required: true, placeholder: "09XX-XXX-XXXX" })}
-          ${renderFormField("Relationship", "select", { required: true, options: ["— Select —", "Spouse", "Parent", "Sibling", "Child", "Other"] })}
+          ${renderFormField("Contact Name <span class='required'>*</span>", "text", { required: true, placeholder: "Emergency contact name" })}
+          ${renderFormField("Contact Phone <span class='required'>*</span>", "text", { required: true, placeholder: "09XX-XXX-XXXX" })}
+          ${renderFormField("Relationship <span class='required'>*</span>", "select", { required: true, options: ["— Select —", "Spouse", "Parent", "Sibling", "Child", "Other"] })}
+        </div>
+      </div>
+
+      <!-- Quick Clinical Flags -->
+      <div class="wf-form-section">
+        <div class="section-title">Quick Clinical Flags</div>
+        <p class="text-small text-muted" style="margin-top:-4px;margin-bottom:8px;">Optional quick-capture at registration. Full medical history is documented by the practitioner.</p>
+        <div class="wf-form-row">
+          ${renderFormField("Known Drug Allergies", "text", { placeholder: "e.g., Penicillin, Sulfa drugs (or 'None known')" })}
+          ${renderFormField("Chronic Conditions", "text", { placeholder: "e.g., Diabetes, Hypertension (or 'None known')" })}
         </div>
       </div>
 
@@ -53,17 +83,36 @@
 
       <!-- Actions -->
       <div class="wf-action-bar">
-        <button class="wf-btn primary">✓ Submit</button>
+        <button class="wf-btn primary" onclick="showMRN()">Submit Registration</button>
         <a href="patient_search.html"><button class="wf-btn">Cancel</button></a>
-        <span class="text-small text-muted">→ On submit: returns to Patient Search with new patient pre-selected</span>
+      </div>
+
+      <!-- Success State -->
+      <div class="wf-inline-panel" id="reg-success" style="display:none;margin-top:16px;background:#e8f5e9;">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="font-size:1.5rem;color:#2e7d32;">&#10003;</div>
+          <div>
+            <div style="font-weight:600;color:#2e7d32;">Patient registered successfully</div>
+            <div class="text-small" style="color:#555;">MRN: <strong>MRN-0103</strong> &mdash; Auto-generated. Patient is now available for card activation.</div>
+          </div>
+        </div>
+        <div class="wf-action-bar" style="margin-top:10px;">
+          <a href="patient_search.html"><button class="wf-btn primary">Proceed to Check-In</button></a>
+          <button class="wf-btn" onclick="window.print()">Print Registration Summary</button>
+        </div>
       </div>
 
       <!-- Validation Error State -->
-      <div class="wf-error-box" style="margin-top:16px;">
-        ⚠ Please fill in all required fields: Full Name, Date of Birth, Phone Number.
+      <div class="wf-error-box" style="margin-top:16px;display:none;" id="reg-error">
+        Please fill in all required fields: Full Name, Date of Birth, National ID, Phone Number.
       </div>
     `,
         });
+
+        window.showMRN = function() {
+          document.getElementById('reg-success').style.display = 'block';
+          document.getElementById('reg-success').scrollIntoView({ behavior: 'smooth' });
+        };
       });
     </script>
   </body>
