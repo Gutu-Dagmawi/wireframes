@@ -219,13 +219,33 @@ const ROLE_LABELS = {
 // ---------- Path Helper ----------
 function getBasePath() {
   const path = window.location.pathname;
-  // We're in a subfolder like /wireframes/receptionist/
-  const parts = path.split("/");
+  const parts = path.split("/").filter(Boolean); // remove empty segments
+  // Known role sub-directories (pages inside these are one level deep)
+  const roleDirs = [
+    "receptionist", "finance", "nurse", "practitioner",
+    "lab_tech", "admin", "shared",
+  ];
+  // Check if "wireframes" appears in the path (local dev / non-root deploy)
   const wireframesIdx = parts.indexOf("wireframes");
-  if (wireframesIdx === -1) return "./";
-  const depth = parts.length - wireframesIdx - 2; // -2 for wireframes dir + filename
-  if (depth <= 0) return "./";
-  return "../".repeat(depth);
+  if (wireframesIdx !== -1) {
+    const depth = parts.length - wireframesIdx - 2; // -2 for wireframes dir + filename
+    if (depth <= 0) return "./";
+    return "../".repeat(depth);
+  }
+  // Netlify / root-deploy: no "wireframes" in the path.
+  // Detect depth by checking if any path segment is a known role directory.
+  for (let i = 0; i < parts.length; i++) {
+    if (roleDirs.includes(parts[i])) {
+      // depth = number of directory segments after the role dir
+      // e.g. /receptionist/encounter_outputs.html → parts = ["receptionist","encounter_outputs.html"]
+      //   i = 0, remaining segments after role dir = parts.length - i - 2 (subtract role dir + filename)
+      const depth = parts.length - i - 1; // -1 for the filename
+      if (depth <= 0) return "./";
+      return "../".repeat(depth);
+    }
+  }
+  // Top-level page (e.g. /index.html)
+  return "./";
 }
 
 function resolveLink(file) {
