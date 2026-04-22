@@ -21,7 +21,7 @@
       <!-- Patient Header (persistent) -->
       <div class="wf-patient-header">
         <div class="ph-top-row">
-          <div class="ph-name">Abebe Kebede</div>
+          <div class="ph-name">Abebe Kebede <span class="wf-badge red" style="margin-left:10px;font-size:.8rem;padding:4px 10px;">Red - Emergency</span></div>
           <div class="ph-visit-badge">📅 Visit: 08 Apr 2026 · Encounter #E-2026-0412</div>
         </div>
 
@@ -174,13 +174,29 @@
             </div>
             <div id="pmh-view">
               ${renderTable(
-                ['Condition', 'Year', 'Status'],
+                ["Condition", "Year", "Status"],
                 [
-                  ['Hypertension', '2024', '<span class="wf-badge orange">Active</span>'],
-                  ['Pre-diabetes', '2025', '<span class="wf-badge orange">Active</span>'],
-                  ['Malaria', '2020', '<span class="wf-badge green">Resolved</span>'],
-                  ['Typhoid Fever', '2018', '<span class="wf-badge green">Resolved</span>'],
-                ]
+                  [
+                    "Hypertension",
+                    "2024",
+                    '<span class="wf-badge orange">Active</span>',
+                  ],
+                  [
+                    "Pre-diabetes",
+                    "2025",
+                    '<span class="wf-badge orange">Active</span>',
+                  ],
+                  [
+                    "Malaria",
+                    "2020",
+                    '<span class="wf-badge green">Resolved</span>',
+                  ],
+                  [
+                    "Typhoid Fever",
+                    "2018",
+                    '<span class="wf-badge green">Resolved</span>',
+                  ],
+                ],
               )}
             </div>
             <div id="pmh-edit" style="display:none;">
@@ -216,10 +232,14 @@
             </div>
             <div id="psh-view">
               ${renderTable(
-                ['Procedure', 'Date', 'Notes'],
+                ["Procedure", "Date", "Notes"],
                 [
-                  ['Appendectomy', 'Mar 2015', 'Laparoscopic, no complications'],
-                ]
+                  [
+                    "Appendectomy",
+                    "Mar 2015",
+                    "Laparoscopic, no complications",
+                  ],
+                ],
               )}
             </div>
             <div id="psh-edit" style="display:none;">
@@ -245,12 +265,12 @@
             </div>
             <div id="fh-view">
               ${renderTable(
-                ['Relation', 'Condition', 'Notes'],
+                ["Relation", "Condition", "Notes"],
                 [
-                  ['Father', 'Type 2 Diabetes', 'Diagnosed age 50'],
-                  ['Father', 'Hypertension', 'On medication'],
-                  ['Mother', 'Asthma', 'Childhood onset'],
-                ]
+                  ["Father", "Type 2 Diabetes", "Diagnosed age 50"],
+                  ["Father", "Hypertension", "On medication"],
+                  ["Mother", "Asthma", "Childhood onset"],
+                ],
               )}
             </div>
             <div id="fh-edit" style="display:none;">
@@ -372,13 +392,41 @@
             </div>
             <div id="med-view">
               ${renderTable(
-                ['Drug', 'Dosage', 'Frequency', 'Started', 'Ended', 'Status'],
+                ["Drug", "Dosage", "Frequency", "Started", "Ended", "Status"],
                 [
-                  ['Amlodipine', '5mg', 'Once daily', '15 Jun 2024', '&mdash;', '<span class="wf-badge green">Active</span>'],
-                  ['Metformin', '500mg', 'Twice daily', '20 Jan 2025', '&mdash;', '<span class="wf-badge green">Active</span>'],
-                  ['Amoxicillin', '500mg', 'TDS x 5 days', '20 Feb 2026', '25 Feb 2026', '<span class="wf-badge gray">Completed</span>'],
-                  ['Lisinopril', '10mg', 'Once daily', '10 Mar 2024', '14 Jun 2024', '<span class="wf-badge red">Discontinued</span>'],
-                ]
+                  [
+                    "Amlodipine",
+                    "5mg",
+                    "Once daily",
+                    "15 Jun 2024",
+                    "&mdash;",
+                    '<span class="wf-badge green">Active</span>',
+                  ],
+                  [
+                    "Metformin",
+                    "500mg",
+                    "Twice daily",
+                    "20 Jan 2025",
+                    "&mdash;",
+                    '<span class="wf-badge green">Active</span>',
+                  ],
+                  [
+                    "Amoxicillin",
+                    "500mg",
+                    "TDS x 5 days",
+                    "20 Feb 2026",
+                    "25 Feb 2026",
+                    '<span class="wf-badge gray">Completed</span>',
+                  ],
+                  [
+                    "Lisinopril",
+                    "10mg",
+                    "Once daily",
+                    "10 Mar 2024",
+                    "14 Jun 2024",
+                    '<span class="wf-badge red">Discontinued</span>',
+                  ],
+                ],
               )}
             </div>
             <div id="med-edit" style="display:none;">
@@ -457,12 +505,27 @@
           <div class="wf-form-section">
             <div class="section-title">Previous Lab Results</div>
             ${renderTable(
-              ['Date', 'Test', 'Result', 'Flag'],
+              ["Date", "Test", "Result", "Flag"],
               [
-                ['15 Mar', 'CBC', 'Normal', '<span class="wf-badge green">Normal</span>'],
-                ['15 Mar', 'HbA1c', '6.1%', '<span class="wf-badge orange">High</span>'],
-                ['15 Mar', 'Lipid Profile', 'LDL 142', '<span class="wf-badge orange">High</span>'],
-              ]
+                [
+                  "15 Mar",
+                  "CBC",
+                  "Normal",
+                  '<span class="wf-badge green">Normal</span>',
+                ],
+                [
+                  "15 Mar",
+                  "HbA1c",
+                  "6.1%",
+                  '<span class="wf-badge orange">High</span>',
+                ],
+                [
+                  "15 Mar",
+                  "Lipid Profile",
+                  "LDL 142",
+                  '<span class="wf-badge orange">High</span>',
+                ],
+              ],
             )}
           </div>
         </div>
@@ -471,13 +534,31 @@
         <div class="wf-form-section">
           <div class="section-title">Past Encounters</div>
           ${renderTable(
-            ['Date', 'Branch', 'Practitioner', 'Diagnosis', 'Treatment'],
+            ["Date", "Branch", "Practitioner", "Diagnosis", "Treatment"],
             [
-              ['15 Mar 2026', 'Main Branch', 'Dr. Alem B.', 'Hypertension Stage 1', 'Amlodipine 5mg daily'],
-              ['20 Feb 2026', 'Main Branch', 'Dr. Solomon T.', 'URTI', 'Amoxicillin 500mg TDS x 5 days'],
-              ['05 Jan 2026', 'Main Branch', 'Dr. Solomon T.', 'Annual checkup', 'No treatment needed'],
+              [
+                "15 Mar 2026",
+                "Main Branch",
+                "Dr. Alem B.",
+                "Hypertension Stage 1",
+                "Amlodipine 5mg daily",
+              ],
+              [
+                "20 Feb 2026",
+                "Main Branch",
+                "Dr. Solomon T.",
+                "URTI",
+                "Amoxicillin 500mg TDS x 5 days",
+              ],
+              [
+                "05 Jan 2026",
+                "Main Branch",
+                "Dr. Solomon T.",
+                "Annual checkup",
+                "No treatment needed",
+              ],
             ],
-            { clickable: true }
+            { clickable: true },
           )}
         </div>
 
@@ -502,7 +583,7 @@
           <div style="margin-top:8px;padding-top:8px;border-top:1px dashed #ccc;display:flex;gap:20px;flex-wrap:wrap;align-items:center;">
             <div style="display:flex;align-items:center;gap:6px;">
               <span style="font-size:.78rem;color:#888;">⏱ <strong style="color:#555;">Encounter Timer:</strong></span>
-              <span class="wf-badge green" style="font-size:.78rem;" id="encounter-timer">● Active — 00:32:15</span>
+              <span class="wf-badge green" style="font-size:.78rem;" id="encounter-timer">Active — 00:32:15</span>
             </div>
             <div style="display:flex;align-items:center;gap:6px;">
               <span style="font-size:.78rem;color:#888;">🕐 <strong style="color:#555;">Total Visit Duration:</strong></span>
@@ -536,6 +617,19 @@ The headache is worse in the mornings upon waking and tends to improve slightly 
 Patient reports increased work-related stress over the past 2 weeks (project deadline). Sleep has been disrupted — averaging 5 hours/night vs. usual 7-8 hours. Denies head trauma, fever, weight loss, or recent travel.
 
 No previous history of migraines or cluster headaches. Takes Amlodipine 5mg daily for hypertension (diagnosed Jun 2024) and Metformin 500mg BID for pre-diabetes. No recent medication changes. Known allergy to Penicillin.</textarea>
+          </div>
+        </div>
+
+        <!-- Medical History Notes -->
+        <div class="wf-form-section">
+          <div class="section-title">Medical History Notes</div>
+          <div class="wf-form-group">
+            <label>Notes on Medical History</label>
+            <textarea
+              class="wf-input"
+              rows="3"
+              placeholder="Record any additional notes on the patient's medical history relevant to this encounter (PMH, PSH, Family History, etc.)..."
+            ></textarea>
           </div>
         </div>
 
@@ -968,7 +1062,8 @@ Hypertension Stage 1 - adequately controlled on current medication (Amlodipine 5
                 <td style="padding:4px 10px;"><span class="wf-badge" style="font-size:.55rem;background:#ffebee;color:#c62828;">High</span></td>
               </tr>
               <tr style="border-bottom:1px solid #ddd;background:#f2f7ff;">
-                <td colspan="4" style="padding:5px 10px;font-weight:700;color:#1565c0;">Lipid Profile</td>
+                <td colspan="3" style="padding:5px 10px;font-weight:700;color:#1565c0;">Lipid Profile <span class="wf-badge" style="font-size:.5rem;background:#e8f5e9;color:#2e7d32;">Tracked</span></td>
+                <td style="padding:5px 10px;"><button class="wf-btn small" style="font-size:.65rem;padding:2px 6px;" onclick="alert('Trend graph would open for Lipid Profile (wireframe demo).')">📈 Trend</button></td>
               </tr>
               <tr style="border-bottom:1px solid #eee;">
                 <td style="padding:4px 10px 4px 24px;">Total Cholesterol</td>
@@ -1031,7 +1126,7 @@ Hypertension Stage 1 - adequately controlled on current medication (Amlodipine 5
                 <div style="font-family:'Architects Daughter',cursive;font-size:.88rem;color:#555;border-bottom:1px dashed #ddd;padding-bottom:3px;margin-bottom:5px;">Injections</div>
                 <div class="proc-item">
                   <label style="display:flex;align-items:center;gap:4px;padding:2px 0;font-size:.85rem;cursor:pointer;">
-                    <input type="checkbox" onchange="toggleProc(this)" value="IM-INJ" data-name="IM Injection (Intramuscular)" checked> IM Injection (Intramuscular)
+                    <input type="checkbox" onchange="toggleProc(this)" value="IM-INJ" data-name="Injection" checked> Injection
                   </label>
                   <div class="proc-note" style="display:block;margin:4px 0 10px 22px;padding:8px;border:1px solid #ddd;border-radius:3px;background:#fafafa;">
                     <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:4px;">
@@ -1041,8 +1136,22 @@ Hypertension Stage 1 - adequately controlled on current medication (Amlodipine 5
                     </div>
                     <div style="display:flex;gap:6px;flex-wrap:wrap;">
                       <input class="wf-input" style="flex:1;font-size:.8rem;min-width:100px;" placeholder="Site (e.g., Left deltoid) *" value="Left deltoid">
-                      <select class="wf-input" style="flex:1;font-size:.8rem;min-width:100px;"><option>Single dose</option><option>Once daily</option><option>BID</option><option>TDS</option><option>STAT</option></select>
+                      <select class="wf-input" style="flex:1;font-size:.8rem;min-width:100px;"><option>Single dose</option><option selected>Once daily</option><option>BID</option><option>TDS</option><option>STAT</option></select>
                       <input class="wf-input" style="flex:1;font-size:.8rem;min-width:100px;" placeholder="Additional notes">
+                    </div>
+                    <div style="margin-top:6px;padding:6px 8px;background:#e3f2fd;border-radius:3px;border:1px solid #90caf9;">
+                      <label style="display:flex;align-items:center;gap:6px;font-size:.8rem;cursor:pointer;font-weight:600;color:#1565c0;">
+                        <input type="checkbox" checked onchange="this.parentElement.parentElement.querySelector('.recur-fields').style.display=this.checked?'flex':'none'"> Recurring Order (multi-day)
+                      </label>
+                      <div class="recur-fields" style="display:flex;gap:6px;margin-top:5px;align-items:center;">
+                        <label style="font-size:.75rem;color:#555;">Duration:</label>
+                        <input class="wf-input" type="number" style="width:60px;font-size:.8rem;" value="5" min="2" max="30">
+                        <label style="font-size:.75rem;color:#555;">days</label>
+                        <label style="font-size:.75rem;color:#555;margin-left:8px;">Start:</label>
+                        <input class="wf-input" type="date" style="font-size:.8rem;" value="2026-04-22">
+                        <span style="font-size:.72rem;color:#888;margin-left:4px;">→ ends 26 Apr 2026</span>
+                      </div>
+                      <div class="text-small text-muted" style="margin-top:4px;">Creates a recurring nurse order. Each session appears on the nurse's Recurring Orders calendar. You'll receive progress notifications.</div>
                     </div>
                   </div>
                 </div>
@@ -1292,7 +1401,7 @@ Hypertension Stage 1 - adequately controlled on current medication (Amlodipine 5
           </thead>
           <tbody>
             <tr style="border-bottom:1px solid #eee;cursor:pointer;background:#f0fff0;" onclick="toggleProcStatus()">
-              <td style="padding:6px 10px;"><strong>IM Injection, Wound Dressing, Nebulisation</strong></td>
+              <td style="padding:6px 10px;"><strong>Injection, Wound Dressing, Nebulisation</strong></td>
               <td style="padding:6px 10px;">3 procedures</td>
               <td style="padding:6px 10px;"><span class="wf-badge orange">2/3 Completed</span></td>
             </tr>
@@ -1318,7 +1427,7 @@ Hypertension Stage 1 - adequately controlled on current medication (Amlodipine 5
             </thead>
             <tbody>
               <tr style="border-bottom:1px solid #eee;">
-                <td style="padding:5px 10px;"><strong>IM Injection</strong></td>
+                <td style="padding:5px 10px;"><strong>Injection</strong></td>
                 <td style="padding:5px 10px;">Diclofenac 75mg/3ml</td>
                 <td style="padding:5px 10px;">Nurse Abeba K.</td>
                 <td style="padding:5px 10px;">11:15 AM</td>
@@ -1537,7 +1646,7 @@ Hypertension Stage 1 - adequately controlled on current medication (Amlodipine 5
         <div class="wf-kv-grid mb-2">
           <div class="wf-kv"><div class="kv-label">Assessment So Far</div><div class="kv-value">Tension-type headache; Hypertension (controlled)</div></div>
           <div class="wf-kv"><div class="kv-label">In-House Lab</div><div class="kv-value">CBC, Lipid Profile — <span class="wf-badge green">Results Available</span></div></div>
-          <div class="wf-kv"><div class="kv-label">Order-Sheets</div><div class="kv-value">IM Injection, Wound Dressing, Nebulisation — <span class="wf-badge orange">2/3 Completed</span></div></div>
+          <div class="wf-kv"><div class="kv-label">Order-Sheets</div><div class="kv-value">Injection, Wound Dressing, Nebulisation — <span class="wf-badge orange">2/3 Completed</span></div></div>
           <div class="wf-kv"><div class="kv-label">Prescriptions</div><div class="kv-value">Ibuprofen 400mg PRN x 7 days</div></div>
         </div>
 
@@ -1633,78 +1742,124 @@ Hypertension Stage 1 - adequately controlled on current medication (Amlodipine 5
         const view = document.getElementById(viewId);
         const edit = document.getElementById(editId);
         if (!view || !edit) return;
-        const isEditing = edit.style.display !== 'none';
-        view.style.display = isEditing ? 'block' : 'none';
-        edit.style.display = isEditing ? 'none' : 'block';
-        btn.innerHTML = isEditing ? '&#9998; Edit' : '&#10005; Cancel';
+        const isEditing = edit.style.display !== "none";
+        view.style.display = isEditing ? "block" : "none";
+        edit.style.display = isEditing ? "none" : "block";
+        btn.innerHTML = isEditing ? "&#9998; Edit" : "&#10005; Cancel";
       }
 
       // --- Medication Add with Searchable Drug Dropdown ---
       function showAddMed() {
-        const row = document.getElementById('med-add-row');
-        row.style.display = 'block';
-        const dateInput = document.getElementById('med-add-date');
-        if (dateInput) dateInput.value = new Date().toISOString().split('T')[0];
-        document.getElementById('med-search-input').value = '';
-        document.getElementById('med-add-dosage').value = '';
-        document.getElementById('med-add-freq').value = '';
-        document.getElementById('med-search-input').focus();
+        const row = document.getElementById("med-add-row");
+        row.style.display = "block";
+        const dateInput = document.getElementById("med-add-date");
+        if (dateInput) dateInput.value = new Date().toISOString().split("T")[0];
+        document.getElementById("med-search-input").value = "";
+        document.getElementById("med-add-dosage").value = "";
+        document.getElementById("med-add-freq").value = "";
+        document.getElementById("med-search-input").focus();
       }
 
       function filterMedDrugs(query) {
-        const dropdown = document.getElementById('med-drug-dropdown');
-        if (!query || query.length < 1) { dropdown.style.display = 'none'; return; }
-        const q = query.toLowerCase();
-        const matches = DRUG_FORMULARY.filter(d => d.name.toLowerCase().includes(q)).slice(0, 8);
-        if (matches.length === 0) {
-          dropdown.innerHTML = '<div style="padding:8px;color:#999;font-size:.82rem;">No drugs found</div>';
-        } else {
-          dropdown.innerHTML = matches.map(d => {
-            const hl = d.name.replace(new RegExp('(' + q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&') + ')', 'gi'), '<strong>$1</strong>');
-            return '<div style="padding:6px 10px;cursor:pointer;font-size:.85rem;border-bottom:1px solid #eee;" onmouseover="this.style.background=\'#fffde7\'" onmouseout="this.style.background=\'#fff\'" onclick="selectMedDrug(\'' + d.name.replace(/'/g,"\\'") + '\',\'' + (d.strengths ? d.strengths[0] : '') + '\',\'' + (d.forms ? d.forms[0] : '') + '\')">' + hl + ' <span style="color:#888;font-size:.75rem;">(' + (d.forms ? d.forms.join(', ') : '') + ')</span></div>';
-          }).join('');
+        const dropdown = document.getElementById("med-drug-dropdown");
+        if (!query || query.length < 1) {
+          dropdown.style.display = "none";
+          return;
         }
-        dropdown.style.display = 'block';
+        const q = query.toLowerCase();
+        const matches = DRUG_FORMULARY.filter((d) =>
+          d.name.toLowerCase().includes(q),
+        ).slice(0, 8);
+        if (matches.length === 0) {
+          dropdown.innerHTML =
+            '<div style="padding:8px;color:#999;font-size:.82rem;">No drugs found</div>';
+        } else {
+          dropdown.innerHTML = matches
+            .map((d) => {
+              const hl = d.name.replace(
+                new RegExp(
+                  "(" + q.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + ")",
+                  "gi",
+                ),
+                "<strong>$1</strong>",
+              );
+              return (
+                '<div style="padding:6px 10px;cursor:pointer;font-size:.85rem;border-bottom:1px solid #eee;" onmouseover="this.style.background=\'#fffde7\'" onmouseout="this.style.background=\'#fff\'" onclick="selectMedDrug(\'' +
+                d.name.replace(/'/g, "\\'") +
+                "','" +
+                (d.strengths ? d.strengths[0] : "") +
+                "','" +
+                (d.forms ? d.forms[0] : "") +
+                "')\">" +
+                hl +
+                ' <span style="color:#888;font-size:.75rem;">(' +
+                (d.forms ? d.forms.join(", ") : "") +
+                ")</span></div>"
+              );
+            })
+            .join("");
+        }
+        dropdown.style.display = "block";
       }
 
       function selectMedDrug(name, strength, form) {
-        document.getElementById('med-search-input').value = name;
-        document.getElementById('med-drug-dropdown').style.display = 'none';
-        if (strength) document.getElementById('med-add-dosage').value = strength;
-        document.getElementById('med-add-dosage').focus();
+        document.getElementById("med-search-input").value = name;
+        document.getElementById("med-drug-dropdown").style.display = "none";
+        if (strength)
+          document.getElementById("med-add-dosage").value = strength;
+        document.getElementById("med-add-dosage").focus();
       }
 
       function confirmAddMed() {
-        const name = document.getElementById('med-search-input').value;
-        const dosage = document.getElementById('med-add-dosage').value;
-        const freq = document.getElementById('med-add-freq').value;
-        const date = document.getElementById('med-add-date').value;
-        if (!name) { alert('Please select a drug.'); return; }
+        const name = document.getElementById("med-search-input").value;
+        const dosage = document.getElementById("med-add-dosage").value;
+        const freq = document.getElementById("med-add-freq").value;
+        const date = document.getElementById("med-add-date").value;
+        if (!name) {
+          alert("Please select a drug.");
+          return;
+        }
 
-        const newRow = document.createElement('div');
-        newRow.className = 'wf-form-group';
-        newRow.style.marginBottom = '6px';
-        newRow.innerHTML = '<label class="text-small" style="font-weight:600;margin-bottom:4px;">' + name + ' <span class="wf-badge green" style="font-size:.65rem;">NEW</span></label>' +
+        const newRow = document.createElement("div");
+        newRow.className = "wf-form-group";
+        newRow.style.marginBottom = "6px";
+        newRow.innerHTML =
+          '<label class="text-small" style="font-weight:600;margin-bottom:4px;">' +
+          name +
+          ' <span class="wf-badge green" style="font-size:.65rem;">NEW</span></label>' +
           '<div style="display:flex;gap:6px;flex-wrap:wrap;">' +
-            '<input class="wf-input" value="' + name + '" style="flex:2;min-width:100px;" readonly>' +
-            '<input class="wf-input" value="' + dosage + '" style="flex:1;min-width:50px;" placeholder="Dosage">' +
-            '<input class="wf-input" value="' + freq + '" style="flex:1;min-width:70px;" placeholder="Frequency">' +
-            '<div style="flex:1;min-width:100px;"><label class="text-small" style="font-size:.65rem;color:#888;">Started</label><input class="wf-input" type="date" value="' + date + '"></div>' +
-            '<div style="flex:1;min-width:100px;"><label class="text-small" style="font-size:.65rem;color:#888;">Ended</label><input class="wf-input" type="date" value=""></div>' +
-            '<select class="wf-input" style="flex:1;min-width:90px;"><option selected>Active</option><option>Discontinued</option><option>On Hold</option><option>Completed</option></select>' +
-          '</div>';
+          '<input class="wf-input" value="' +
+          name +
+          '" style="flex:2;min-width:100px;" readonly>' +
+          '<input class="wf-input" value="' +
+          dosage +
+          '" style="flex:1;min-width:50px;" placeholder="Dosage">' +
+          '<input class="wf-input" value="' +
+          freq +
+          '" style="flex:1;min-width:70px;" placeholder="Frequency">' +
+          '<div style="flex:1;min-width:100px;"><label class="text-small" style="font-size:.65rem;color:#888;">Started</label><input class="wf-input" type="date" value="' +
+          date +
+          '"></div>' +
+          '<div style="flex:1;min-width:100px;"><label class="text-small" style="font-size:.65rem;color:#888;">Ended</label><input class="wf-input" type="date" value=""></div>' +
+          '<select class="wf-input" style="flex:1;min-width:90px;"><option selected>Active</option><option>Discontinued</option><option>On Hold</option><option>Completed</option></select>' +
+          "</div>";
 
-        const addRow = document.getElementById('med-add-row');
+        const addRow = document.getElementById("med-add-row");
         addRow.parentNode.insertBefore(newRow, addRow);
-        addRow.style.display = 'none';
+        addRow.style.display = "none";
       }
 
       // Close med dropdown on outside click
-      document.addEventListener('click', function(e) {
-        const dropdown = document.getElementById('med-drug-dropdown');
-        const input = document.getElementById('med-search-input');
-        if (dropdown && input && !input.contains(e.target) && !dropdown.contains(e.target)) {
-          dropdown.style.display = 'none';
+      document.addEventListener("click", function (e) {
+        const dropdown = document.getElementById("med-drug-dropdown");
+        const input = document.getElementById("med-search-input");
+        if (
+          dropdown &&
+          input &&
+          !input.contains(e.target) &&
+          !dropdown.contains(e.target)
+        ) {
+          dropdown.style.display = "none";
         }
       });
 
@@ -1720,32 +1875,45 @@ Hypertension Stage 1 - adequately controlled on current medication (Amlodipine 5
       }
 
       function toggleLabResults() {
-        const p = document.getElementById('lab-results-panel');
-        if (p) p.style.display = p.style.display === 'none' ? 'block' : 'none';
+        const p = document.getElementById("lab-results-panel");
+        if (p) p.style.display = p.style.display === "none" ? "block" : "none";
       }
       function toggleProcStatus() {
-        const p = document.getElementById('proc-status-panel');
-        if (p) p.style.display = p.style.display === 'none' ? 'block' : 'none';
+        const p = document.getElementById("proc-status-panel");
+        if (p) p.style.display = p.style.display === "none" ? "block" : "none";
       }
 
       function toggleLabTest(cb) {
-        const item = cb.closest('.lab-test-item');
-        const noteDiv = item.querySelector('.lab-test-note');
+        const item = cb.closest(".lab-test-item");
+        const noteDiv = item.querySelector(".lab-test-note");
         if (noteDiv) {
-          noteDiv.style.display = cb.checked ? 'block' : 'none';
-          if (!cb.checked) noteDiv.querySelector('input').value = '';
+          noteDiv.style.display = cb.checked ? "block" : "none";
+          if (!cb.checked) noteDiv.querySelector("input").value = "";
         }
         // Show specimen checkboxes if multiple specimen types configured
-        let specDiv = item.querySelector('.lab-specimen-select');
+        let specDiv = item.querySelector(".lab-specimen-select");
         if (specDiv) specDiv.remove();
-        const specimens = (cb.getAttribute('data-specimen') || '').split(',').filter(s => s);
+        const specimens = (cb.getAttribute("data-specimen") || "")
+          .split(",")
+          .filter((s) => s);
         if (cb.checked && specimens.length > 1) {
-          specDiv = document.createElement('div');
-          specDiv.className = 'lab-specimen-select';
-          specDiv.style.cssText = 'margin:2px 0 4px 22px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;';
-          specDiv.innerHTML = '<span class="text-small" style="color:#888;font-size:.75rem;white-space:nowrap;">Specimen(s):</span>' +
-            specimens.map((s,i) => '<label style="font-size:.78rem;cursor:pointer;display:flex;align-items:center;gap:3px;">' +
-              '<input type="checkbox" class="spec-cb" onchange="refreshLabTags()"' + (i===0?' checked':'') + '> ' + s.trim() + '</label>').join('');
+          specDiv = document.createElement("div");
+          specDiv.className = "lab-specimen-select";
+          specDiv.style.cssText =
+            "margin:2px 0 4px 22px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;";
+          specDiv.innerHTML =
+            '<span class="text-small" style="color:#888;font-size:.75rem;white-space:nowrap;">Specimen(s):</span>' +
+            specimens
+              .map(
+                (s, i) =>
+                  '<label style="font-size:.78rem;cursor:pointer;display:flex;align-items:center;gap:3px;">' +
+                  '<input type="checkbox" class="spec-cb" onchange="refreshLabTags()"' +
+                  (i === 0 ? " checked" : "") +
+                  "> " +
+                  s.trim() +
+                  "</label>",
+              )
+              .join("");
           noteDiv.parentNode.insertBefore(specDiv, noteDiv);
         }
         refreshLabTags();
@@ -1754,64 +1922,101 @@ Hypertension Stage 1 - adequately controlled on current medication (Amlodipine 5
       function refreshLabTags() {
         const container = document.getElementById("lab-selected-tags");
         if (!container) return;
-        const items = document.querySelectorAll('#lab-test-picker .lab-test-item');
+        const items = document.querySelectorAll(
+          "#lab-test-picker .lab-test-item",
+        );
         let html = "";
-        items.forEach(item => {
+        items.forEach((item) => {
           const cb = item.querySelector('input[type="checkbox"]');
           if (cb && cb.checked) {
             const code = cb.value;
-            const name = cb.getAttribute('data-name') || cb.value;
-            const specCbs = item.querySelectorAll('.lab-specimen-select .spec-cb');
-            const rawSpecimen = cb.getAttribute('data-specimen') || '';
-            let specimen = '';
+            const name = cb.getAttribute("data-name") || cb.value;
+            const specCbs = item.querySelectorAll(
+              ".lab-specimen-select .spec-cb",
+            );
+            const rawSpecimen = cb.getAttribute("data-specimen") || "";
+            let specimen = "";
             if (specCbs.length > 0) {
               const checked = [];
-              specCbs.forEach(s => { if (s.checked) checked.push(s.parentElement.textContent.trim()); });
-              specimen = checked.join(', ');
+              specCbs.forEach((s) => {
+                if (s.checked) checked.push(s.parentElement.textContent.trim());
+              });
+              specimen = checked.join(", ");
             } else {
-              specimen = rawSpecimen.includes(',') ? rawSpecimen.split(',')[0] : rawSpecimen;
+              specimen = rawSpecimen.includes(",")
+                ? rawSpecimen.split(",")[0]
+                : rawSpecimen;
             }
-            const noteInput = item.querySelector('.lab-test-note input');
-            const note = noteInput ? noteInput.value : '';
-            html += '<span class="wf-tag" style="display:inline-flex;align-items:center;gap:4px;">' +
-              '<strong>' + code + '</strong> ' + name.split('(')[0].trim() +
-              (specimen ? ' <span style="background:#eef;color:#446;font-size:.65rem;padding:1px 4px;border-radius:2px;">' + specimen + '</span>' : '') +
-              (note ? ' <span style="color:#888;font-size:.72rem;font-style:italic;">— ' + note + '</span>' : '') +
-              ' <span class="remove" onclick="removeLabTag(\'' + code.replace(/'/g, "\\'") + '\')" style="cursor:pointer;">×</span></span>';
+            const noteInput = item.querySelector(".lab-test-note input");
+            const note = noteInput ? noteInput.value : "";
+            html +=
+              '<span class="wf-tag" style="display:inline-flex;align-items:center;gap:4px;">' +
+              "<strong>" +
+              code +
+              "</strong> " +
+              name.split("(")[0].trim() +
+              (specimen
+                ? ' <span style="background:#eef;color:#446;font-size:.65rem;padding:1px 4px;border-radius:2px;">' +
+                  specimen +
+                  "</span>"
+                : "") +
+              (note
+                ? ' <span style="color:#888;font-size:.72rem;font-style:italic;">— ' +
+                  note +
+                  "</span>"
+                : "") +
+              ' <span class="remove" onclick="removeLabTag(\'' +
+              code.replace(/'/g, "\\'") +
+              '\')" style="cursor:pointer;">×</span></span>';
           }
         });
         if (!html)
-          html = '<span class="text-small text-muted" style="font-style:italic;">No tests selected</span>';
+          html =
+            '<span class="text-small text-muted" style="font-style:italic;">No tests selected</span>';
         container.innerHTML = html;
 
         // Show/hide external referral callout and button based on selected external tests
-        const externalTests = Array.from(document.querySelectorAll('#lab-test-picker .lab-test-item input[type="checkbox"]:checked'))
-          .filter(cb => cb.getAttribute('data-external') === 'true');
+        const externalTests = Array.from(
+          document.querySelectorAll(
+            '#lab-test-picker .lab-test-item input[type="checkbox"]:checked',
+          ),
+        ).filter((cb) => cb.getAttribute("data-external") === "true");
         const hasExternal = externalTests.length > 0;
-        const callout = document.getElementById('external-referral-callout');
-        const btn = document.getElementById('external-referral-btn');
-        const testList = document.getElementById('external-test-list');
-        if (callout) callout.style.display = hasExternal ? 'block' : 'none';
-        if (btn) btn.style.display = hasExternal ? 'inline-block' : 'none';
+        const callout = document.getElementById("external-referral-callout");
+        const btn = document.getElementById("external-referral-btn");
+        const testList = document.getElementById("external-test-list");
+        if (callout) callout.style.display = hasExternal ? "block" : "none";
+        if (btn) btn.style.display = hasExternal ? "inline-block" : "none";
         if (testList && hasExternal) {
-          testList.innerHTML = externalTests.map(cb => {
-            const name = cb.getAttribute('data-name') || cb.value;
-            return '<div style="display:flex;align-items:center;gap:6px;padding:3px 0;">' +
-              '<span class="wf-badge orange" style="font-size:.6rem;">External Only</span>' +
-              '<strong class="text-small">' + name + '</strong></div>';
-          }).join('');
+          testList.innerHTML = externalTests
+            .map((cb) => {
+              const name = cb.getAttribute("data-name") || cb.value;
+              return (
+                '<div style="display:flex;align-items:center;gap:6px;padding:3px 0;">' +
+                '<span class="wf-badge orange" style="font-size:.6rem;">External Only</span>' +
+                '<strong class="text-small">' +
+                name +
+                "</strong></div>"
+              );
+            })
+            .join("");
         }
       }
 
       function removeLabTag(val) {
-        const items = document.querySelectorAll('#lab-test-picker .lab-test-item');
-        items.forEach(item => {
+        const items = document.querySelectorAll(
+          "#lab-test-picker .lab-test-item",
+        );
+        items.forEach((item) => {
           const cb = item.querySelector('input[type="checkbox"]');
           if (cb && cb.value === val) {
             cb.checked = false;
-            const noteDiv = item.querySelector('.lab-test-note');
-            if (noteDiv) { noteDiv.style.display = 'none'; noteDiv.querySelector('input').value = ''; }
-            const specDiv = item.querySelector('.lab-specimen-select');
+            const noteDiv = item.querySelector(".lab-test-note");
+            if (noteDiv) {
+              noteDiv.style.display = "none";
+              noteDiv.querySelector("input").value = "";
+            }
+            const specDiv = item.querySelector(".lab-specimen-select");
             if (specDiv) specDiv.remove();
           }
         });
@@ -1819,10 +2024,10 @@ Hypertension Stage 1 - adequately controlled on current medication (Amlodipine 5
       }
 
       function toggleProc(cb) {
-        const noteDiv = cb.closest('.proc-item').querySelector('.proc-note');
+        const noteDiv = cb.closest(".proc-item").querySelector(".proc-note");
         if (noteDiv) {
-          noteDiv.style.display = cb.checked ? 'block' : 'none';
-          if (!cb.checked) noteDiv.querySelector('input').value = '';
+          noteDiv.style.display = cb.checked ? "block" : "none";
+          if (!cb.checked) noteDiv.querySelector("input").value = "";
         }
         refreshProcTags();
       }
@@ -1830,34 +2035,48 @@ Hypertension Stage 1 - adequately controlled on current medication (Amlodipine 5
       function refreshProcTags() {
         const container = document.getElementById("proc-selected-tags");
         if (!container) return;
-        const items = document.querySelectorAll('#proc-picker .proc-item');
+        const items = document.querySelectorAll("#proc-picker .proc-item");
         let html = "";
-        items.forEach(item => {
+        items.forEach((item) => {
           const cb = item.querySelector('input[type="checkbox"]');
           if (cb && cb.checked) {
             const code = cb.value;
-            const name = cb.getAttribute('data-name') || cb.value;
-            const noteInput = item.querySelector('.proc-note input');
-            const note = noteInput ? noteInput.value : '';
-            html += '<span class="wf-tag" style="display:inline-flex;align-items:center;gap:4px;">' +
-              '<strong>' + code + '</strong> ' + name +
-              (note ? ' <span style="color:#888;font-size:.72rem;font-style:italic;">— ' + note + '</span>' : '') +
-              ' <span class="remove" onclick="removeProcTag(\'' + code.replace(/'/g, "\\'") + '\')" style="cursor:pointer;">×</span></span>';
+            const name = cb.getAttribute("data-name") || cb.value;
+            const noteInput = item.querySelector(".proc-note input");
+            const note = noteInput ? noteInput.value : "";
+            html +=
+              '<span class="wf-tag" style="display:inline-flex;align-items:center;gap:4px;">' +
+              "<strong>" +
+              code +
+              "</strong> " +
+              name +
+              (note
+                ? ' <span style="color:#888;font-size:.72rem;font-style:italic;">— ' +
+                  note +
+                  "</span>"
+                : "") +
+              ' <span class="remove" onclick="removeProcTag(\'' +
+              code.replace(/'/g, "\\'") +
+              '\')" style="cursor:pointer;">×</span></span>';
           }
         });
         if (!html)
-          html = '<span class="text-small text-muted" style="font-style:italic;">No procedures selected</span>';
+          html =
+            '<span class="text-small text-muted" style="font-style:italic;">No procedures selected</span>';
         container.innerHTML = html;
       }
 
       function removeProcTag(val) {
-        const items = document.querySelectorAll('#proc-picker .proc-item');
-        items.forEach(item => {
+        const items = document.querySelectorAll("#proc-picker .proc-item");
+        items.forEach((item) => {
           const cb = item.querySelector('input[type="checkbox"]');
           if (cb && cb.value === val) {
             cb.checked = false;
-            const noteDiv = item.querySelector('.proc-note');
-            if (noteDiv) { noteDiv.style.display = 'none'; noteDiv.querySelector('input').value = ''; }
+            const noteDiv = item.querySelector(".proc-note");
+            if (noteDiv) {
+              noteDiv.style.display = "none";
+              noteDiv.querySelector("input").value = "";
+            }
           }
         });
         refreshProcTags();

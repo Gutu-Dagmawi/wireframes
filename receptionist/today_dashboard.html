@@ -86,67 +86,105 @@
         </div>
 
         ${renderTable(
-          ["Time", "MRN", "Patient", "Practitioner", "Reason", "Status", "Payment", "Actions"],
+          [
+            "Time",
+            "MRN",
+            "Patient",
+            "Card",
+            "Practitioner",
+            "Reason",
+            "Status",
+            "Payment",
+            "Actions",
+          ],
           [
             [
-              "08:30", "MRN-0042",
-              '<div style="display:flex;align-items:center;gap:6px;"><div class="wf-placeholder" style="width:28px;height:28px;border-radius:50%;font-size:.5rem;display:flex;align-items:center;justify-content:center;">Foto</div><strong>Tigist Mekonnen</strong></div>',
-              "Dr. Alem B.", "Diabetes follow-up",
+              "08:30",
+              "MRN-0042",
+              '<div style="display:flex;align-items:center;gap:6px;"><div class="wf-placeholder" style="width:28px;height:28px;border-radius:50%;font-size:.5rem;display:flex;align-items:center;justify-content:center;">Foto</div><a href="patient_profile_admin.html"><strong>Tigist Mekonnen</strong></a> <span style="display:none;">🟢 Green</span></div>',
+              '<span class="wf-badge green" style="font-size:.55rem;" title="Expires 24 Apr 2026">Active</span>',
+              "Dr. Alem B.",
+              "Diabetes follow-up",
               '<span class="wf-badge green">Completed</span>',
-              '<span class="wf-badge green">Paid</span>', '',
+              '<span class="wf-badge green">Paid</span>',
+              "",
             ],
             [
-              "09:00", "MRN-0015",
-              '<div style="display:flex;align-items:center;gap:6px;"><div class="wf-placeholder" style="width:28px;height:28px;border-radius:50%;font-size:.5rem;display:flex;align-items:center;justify-content:center;">Foto</div><strong>Abebe Kebede</strong></div>',
-              "Dr. Solomon T.", "Follow-up check",
+              "09:00",
+              "MRN-0015",
+              '<div style="display:flex;align-items:center;gap:6px;"><div class="wf-placeholder" style="width:28px;height:28px;border-radius:50%;font-size:.5rem;display:flex;align-items:center;justify-content:center;">Foto</div><a href="patient_profile_admin.html"><strong>Abebe Kebede</strong></a> <span style="display:none;">🔴 Red</span></div>',
+              '<span class="wf-badge green" style="font-size:.55rem;" title="Expires 22 Apr 2026">Active</span>',
+              "Dr. Solomon T.",
+              "Follow-up check",
               '<span class="wf-badge blue">In Consultation</span>',
-              '<span class="wf-badge green">Paid</span>', '',
+              '<span class="wf-badge green">Paid</span>',
+              "",
             ],
             [
-              "09:30", "MRN-0078",
-              '<div style="display:flex;align-items:center;gap:6px;"><div class="wf-placeholder" style="width:28px;height:28px;border-radius:50%;font-size:.5rem;display:flex;align-items:center;justify-content:center;">Foto</div><strong>Fatima Ali</strong></div>',
-              "Dr. Solomon T.", "Blood pressure review",
+              "09:30",
+              "MRN-0078",
+              '<div style="display:flex;align-items:center;gap:6px;"><div class="wf-placeholder" style="width:28px;height:28px;border-radius:50%;font-size:.5rem;display:flex;align-items:center;justify-content:center;">Foto</div><a href="patient_profile_admin.html"><strong>Fatima Ali</strong></a> <span style="display:none;">🟡 Yellow</span></div>',
+              '<span class="wf-badge green" style="font-size:.55rem;" title="Expires 23 Apr 2026">Active</span>',
+              "Dr. Solomon T.",
+              "Blood pressure review",
               '<span class="wf-badge blue">In Queue</span>',
-              '<span class="wf-badge green">Paid</span>', '',
+              '<span class="wf-badge green">Paid</span>',
+              "",
             ],
             [
-              "10:00", "MRN-0023",
-              '<div style="display:flex;align-items:center;gap:6px;"><div class="wf-placeholder" style="width:28px;height:28px;border-radius:50%;font-size:.5rem;display:flex;align-items:center;justify-content:center;">Foto</div><strong>Dawit Tadesse</strong></div>',
-              "Dr. Solomon T.", "Lab result discussion",
+              "10:00",
+              "MRN-0023",
+              '<div style="display:flex;align-items:center;gap:6px;"><div class="wf-placeholder" style="width:28px;height:28px;border-radius:50%;font-size:.5rem;display:flex;align-items:center;justify-content:center;">Foto</div><a href="patient_profile_admin.html"><strong>Dawit Tadesse</strong></a> <span style="display:none;">🟢 Green</span></div>',
+              '<span class="wf-badge green" style="font-size:.55rem;" title="Expires 24 Apr 2026">Active</span>',
+              "Dr. Solomon T.",
+              "Lab result discussion",
               '<span class="wf-badge" style="background:#e3f2fd;color:#1565c0;">Checked-In</span>',
-              '<span class="wf-badge orange">Pending</span>', '',
+              '<span class="wf-badge orange">Pending</span>',
+              "",
             ],
             [
-              "10:30", "MRN-0091",
-              '<div style="display:flex;align-items:center;gap:6px;"><div class="wf-placeholder" style="width:28px;height:28px;border-radius:50%;font-size:.5rem;display:flex;align-items:center;justify-content:center;">Foto</div><strong>Meron Hailu</strong></div>',
-              "Dr. Miriam K.", "Prenatal check",
+              "10:30",
+              "MRN-0091",
+              '<div style="display:flex;align-items:center;gap:6px;"><div class="wf-placeholder" style="width:28px;height:28px;border-radius:50%;font-size:.5rem;display:flex;align-items:center;justify-content:center;">Foto</div><a href="patient_profile_admin.html"><strong>Meron Hailu</strong></a></div>',
+              '<span class="wf-badge red" style="font-size:.55rem;">Inactive</span>',
+              "Dr. Miriam K.",
+              "Prenatal check",
               '<span class="wf-badge orange">Expected</span>',
               '<span class="wf-badge gray">&mdash;</span>',
               '<button class="wf-btn small primary" onclick="showCheckIn()">Check In</button>',
             ],
             [
-              "11:00", "MRN-0034",
-              '<div style="display:flex;align-items:center;gap:6px;"><div class="wf-placeholder" style="width:28px;height:28px;border-radius:50%;font-size:.5rem;display:flex;align-items:center;justify-content:center;">Foto</div><strong>Bereket Desta</strong></div>',
-              "Dr. Alem B.", "Chest X-ray review",
+              "11:00",
+              "MRN-0034",
+              '<div style="display:flex;align-items:center;gap:6px;"><div class="wf-placeholder" style="width:28px;height:28px;border-radius:50%;font-size:.5rem;display:flex;align-items:center;justify-content:center;">Foto</div><a href="patient_profile_admin.html"><strong>Bereket Desta</strong></a></div>',
+              '<span class="wf-badge green" style="font-size:.55rem;" title="Expires 25 Apr 2026">Active</span>',
+              "Dr. Alem B.",
+              "Chest X-ray review",
               '<span class="wf-badge orange">Expected</span>',
               '<span class="wf-badge gray">&mdash;</span>',
               '<button class="wf-btn small primary" onclick="showCheckIn()">Check In</button>',
             ],
             [
-              "11:30", "MRN-0056",
-              '<div style="display:flex;align-items:center;gap:6px;"><div class="wf-placeholder" style="width:28px;height:28px;border-radius:50%;font-size:.5rem;display:flex;align-items:center;justify-content:center;">Foto</div><strong>Henok Tadesse</strong></div>',
-              "Dr. Solomon T.", "Persistent cough",
+              "11:30",
+              "MRN-0056",
+              '<div style="display:flex;align-items:center;gap:6px;"><div class="wf-placeholder" style="width:28px;height:28px;border-radius:50%;font-size:.5rem;display:flex;align-items:center;justify-content:center;">Foto</div><a href="patient_profile_admin.html"><strong>Henok Tadesse</strong></a></div>',
+              '<span class="wf-badge red" style="font-size:.55rem;">Inactive</span>',
+              "Dr. Solomon T.",
+              "Persistent cough",
               '<span class="wf-badge red">No-Show</span>',
               '<span class="wf-badge gray">&mdash;</span>',
               '<button class="wf-btn small" onclick="addToWaitlist()">Waitlist</button>',
             ],
             [
-              "14:00", "MRN-0067",
-              '<div style="display:flex;align-items:center;gap:6px;"><div class="wf-placeholder" style="width:28px;height:28px;border-radius:50%;font-size:.5rem;display:flex;align-items:center;justify-content:center;">Foto</div><strong>Sara Alemu</strong></div>',
-              "Dr. Miriam K.", "Vaccination",
-              '<span class="wf-badge orange">Expected</span>',
-              '<span class="wf-badge gray">&mdash;</span>',
-              '<button class="wf-btn small primary" onclick="showCheckIn()">Check In</button>',
+              "14:00",
+              "MRN-0067",
+              '<div style="display:flex;align-items:center;gap:6px;"><div class="wf-placeholder" style="width:28px;height:28px;border-radius:50%;font-size:.5rem;display:flex;align-items:center;justify-content:center;">Foto</div><a href="patient_profile_admin.html"><strong>Sara Alemu</strong></a></div>',
+              '<span class="wf-badge green" style="font-size:.55rem;" title="Expires 21 Apr 2026">Active</span>',
+              "Dr. Miriam K.",
+              "Vaccination",
+              '<span class="wf-badge gray">Conf. Pending</span>',
+              '<span class="wf-badge" style="background:#f3e5f5;color:#8e24aa;">Credit</span>',
+              '<button class="wf-btn small primary">Check-In (Credit)</button>',
             ],
           ],
           { clickable: true },
@@ -161,6 +199,7 @@
             <div class="wf-kv"><div class="kv-label">Blood Type</div><div class="kv-value">B+</div></div>
             <div class="wf-kv"><div class="kv-label">Phone</div><div class="kv-value">0944-567-890</div></div>
             <div class="wf-kv"><div class="kv-label">Appointment</div><div class="kv-value">10:30 with Dr. Miriam K. (Paediatrics) &mdash; Prenatal check</div></div>
+            <div class="wf-kv"><div class="kv-label">Card Status</div><div class="kv-value"><span class="wf-badge red">Inactive</span> &mdash; Expired 15 Apr 2026. Re-activation fee required.</div></div>
             <div class="wf-kv"><div class="kv-label">Known Allergies</div><div class="kv-value" style="color:#c62828;">Penicillin</div></div>
           </div>
           <div style="margin-top:12px;">
@@ -168,9 +207,24 @@
             ${renderTable(
               ["Date", "Practitioner", "Chief Complaint", "Outcome"],
               [
-                ["28 Mar 2026", "Dr. Miriam K.", "Prenatal check-up (28w)", "Normal. Next visit scheduled."],
-                ["14 Mar 2026", "Dr. Miriam K.", "Prenatal check-up (26w)", "Mild anaemia — iron supplementation started."],
-                ["01 Mar 2026", "Dr. Miriam K.", "Prenatal check-up (24w)", "All normal. Ultrasound ordered."],
+                [
+                  "28 Mar 2026",
+                  "Dr. Miriam K.",
+                  "Prenatal check-up (28w)",
+                  "Normal. Next visit scheduled.",
+                ],
+                [
+                  "14 Mar 2026",
+                  "Dr. Miriam K.",
+                  "Prenatal check-up (26w)",
+                  "Mild anaemia — iron supplementation started.",
+                ],
+                [
+                  "01 Mar 2026",
+                  "Dr. Miriam K.",
+                  "Prenatal check-up (24w)",
+                  "All normal. Ultrasound ordered.",
+                ],
               ],
             )}
           </div>
@@ -191,12 +245,21 @@
             <span class="wf-badge">1 patient</span>
           </div>
           ${renderTable(
-            ["Patient", "MRN", "Requested Practitioner", "Reason", "Added", "Actions"],
+            [
+              "Patient",
+              "MRN",
+              "Requested Practitioner",
+              "Reason",
+              "Added",
+              "Actions",
+            ],
             [
               [
-                '<strong>Selam Worku</strong>', "MRN-0102",
+                "<strong>Selam Worku</strong>",
+                "MRN-0102",
                 "Dr. Alem B. (Internal Medicine)",
-                "Chronic back pain — all afternoon slots full", "09:45 AM",
+                "Chronic back pain — all afternoon slots full",
+                "09:45 AM",
                 '<button class="wf-btn small primary">Book Next Available</button> <button class="wf-btn small danger">Remove</button>',
               ],
             ],
@@ -235,7 +298,7 @@
               [
                 [
                   "MRN-0115",
-                  "<strong>Yared Tekle</strong>",
+                  '<a href="patient_profile_admin.html"><strong>Yared Tekle</strong></a>',
                   "M, 42",
                   "0933-456-789",
                   '<span class="wf-badge gray">Not activated</span>',
@@ -274,26 +337,44 @@
             <span class="wf-badge">3 patients</span>
           </div>
           ${renderTable(
-            ["Time", "MRN", "Patient", "Practitioner", "Visit Reason", "Status", "Payment"],
+            [
+              "Time",
+              "MRN",
+              "Patient",
+              "Card",
+              "Practitioner",
+              "Visit Reason",
+              "Status",
+              "Payment",
+            ],
             [
               [
-                "08:45", "MRN-0105",
-                '<div style="display:flex;align-items:center;gap:6px;"><div class="wf-placeholder" style="width:28px;height:28px;border-radius:50%;font-size:.5rem;display:flex;align-items:center;justify-content:center;">Foto</div><strong>Aster Belay</strong></div>',
-                "Dr. Solomon T.", "Persistent headache",
+                "08:45",
+                "MRN-0105",
+                '<div style="display:flex;align-items:center;gap:6px;"><div class="wf-placeholder" style="width:28px;height:28px;border-radius:50%;font-size:.5rem;display:flex;align-items:center;justify-content:center;">Foto</div><a href="patient_profile_admin.html"><strong>Aster Belay</strong></a></div>',
+                '<span class="wf-badge green" style="font-size:.55rem;" title="Expires 22 Apr 2026">Active</span>',
+                "Dr. Solomon T.",
+                "Persistent headache",
                 '<span class="wf-badge green">Completed</span>',
                 '<span class="wf-badge green">Paid</span>',
               ],
               [
-                "09:20", "MRN-0110",
-                '<div style="display:flex;align-items:center;gap:6px;"><div class="wf-placeholder" style="width:28px;height:28px;border-radius:50%;font-size:.5rem;display:flex;align-items:center;justify-content:center;">Foto</div><strong>Kedir Mohammed</strong></div>',
-                "Dr. Alem B.", "Back pain",
+                "09:20",
+                "MRN-0110",
+                '<div style="display:flex;align-items:center;gap:6px;"><div class="wf-placeholder" style="width:28px;height:28px;border-radius:50%;font-size:.5rem;display:flex;align-items:center;justify-content:center;">Foto</div><a href="patient_profile_admin.html"><strong>Kedir Mohammed</strong></a></div>',
+                '<span class="wf-badge green" style="font-size:.55rem;" title="Expires 24 Apr 2026">Active</span>',
+                "Dr. Alem B.",
+                "Back pain",
                 '<span class="wf-badge blue">In Queue</span>',
                 '<span class="wf-badge green">Paid</span>',
               ],
               [
-                "10:10", "MRN-0078",
-                '<div style="display:flex;align-items:center;gap:6px;"><div class="wf-placeholder" style="width:28px;height:28px;border-radius:50%;font-size:.5rem;display:flex;align-items:center;justify-content:center;">Foto</div><strong>Fatima Ali</strong></div>',
-                "Dr. Solomon T.", "Skin rash",
+                "10:10",
+                "MRN-0078",
+                '<div style="display:flex;align-items:center;gap:6px;"><div class="wf-placeholder" style="width:28px;height:28px;border-radius:50%;font-size:.5rem;display:flex;align-items:center;justify-content:center;">Foto</div><a href="patient_profile_admin.html"><strong>Fatima Ali</strong></a></div>',
+                '<span class="wf-badge green" style="font-size:.55rem;" title="Expires 23 Apr 2026">Active</span>',
+                "Dr. Solomon T.",
+                "Skin rash",
                 '<span class="wf-badge" style="background:#e3f2fd;color:#1565c0;">Checked-In</span>',
                 '<span class="wf-badge orange">Pending</span>',
               ],
@@ -322,39 +403,67 @@
             <span class="wf-badge">4 orders</span>
           </div>
           ${renderTable(
-            ["Order #", "Time", "MRN", "Patient", "Services", "Amount", "Payment", "Nurse Status", "Lab Status", "Result Delivery"],
+            [
+              "Order #",
+              "Time",
+              "MRN",
+              "Patient",
+              "Source",
+              "Services",
+              "Amount",
+              "Payment",
+              "Nurse Status",
+              "Lab Status",
+              "Result Delivery",
+            ],
             [
               [
-                "SSO-001", "09:15", "MRN-0034",
-                "<strong>Bereket Desta</strong>",
-                "BP Check", "ETB 50.00",
+                "SSO-001",
+                "09:15",
+                "MRN-0034",
+                '<a href="patient_profile_admin.html"><strong>Bereket Desta</strong></a>',
+                '<span class="wf-badge gray" style="font-size:.55rem;">In-house</span>',
+                "BP Check",
+                "ETB 50.00",
                 '<span class="wf-badge green">Paid</span>',
                 '<span class="wf-badge green">Completed</span>',
                 '<span class="wf-badge gray">&mdash;</span>',
                 '<span class="wf-badge green">Delivered</span>',
               ],
               [
-                "SSO-002", "10:25", "MRN-0078",
-                "<strong>Fatima Ali</strong>",
-                "BP Check, Blood Sugar", "ETB 150.00",
+                "SSO-002",
+                "10:25",
+                "MRN-0078",
+                '<a href="patient_profile_admin.html"><strong>Fatima Ali</strong></a>',
+                '<span class="wf-badge gray" style="font-size:.55rem;">In-house</span>',
+                "BP Check, Blood Sugar",
+                "ETB 150.00",
                 '<span class="wf-badge green">Paid</span>',
                 '<span class="wf-badge green">Completed</span>',
                 '<span class="wf-badge" style="background:#e8f5e9;color:#2e7d32;">Results Ready</span>',
                 '<button class="wf-btn small primary" onclick="printResults()">Print Results</button>',
               ],
               [
-                "SSO-003", "10:40", "MRN-0056",
-                "<strong>Henok Tadesse</strong>",
-                "Injection (Patient Drug)", "ETB 80.00",
+                "SSO-003",
+                "10:40",
+                "MRN-0056",
+                '<a href="patient_profile_admin.html"><strong>Henok Tadesse</strong></a>',
+                '<span class="wf-badge" style="font-size:.55rem;background:#e3f2fd;color:#1565c0;">External</span>',
+                "Injection (Patient Drug)",
+                "ETB 80.00",
                 '<span class="wf-badge orange">Pending</span>',
                 '<span class="wf-badge gray">Awaiting Payment</span>',
                 '<span class="wf-badge gray">&mdash;</span>',
                 '<span class="wf-badge gray">&mdash;</span>',
               ],
               [
-                "SSO-004", "11:00", "MRN-0099",
-                "<strong>Almaz Girma</strong>",
-                "Pregnancy Test", "ETB 150.00",
+                "SSO-004",
+                "11:00",
+                "MRN-0099",
+                '<a href="patient_profile_admin.html"><strong>Almaz Girma</strong></a>',
+                '<span class="wf-badge gray" style="font-size:.55rem;">In-house</span>',
+                "Pregnancy Test",
+                "ETB 150.00",
                 '<span class="wf-badge green">Paid</span>',
                 '<span class="wf-badge blue">In Progress</span>',
                 '<span class="wf-badge blue">Awaiting Specimen</span>',
@@ -394,40 +503,46 @@
         });
 
         // JS handlers — scoped per tab
-        window.showCheckIn = function() {
-          document.getElementById('checkin-panel').style.display = 'block';
-          document.getElementById('checkin-success').style.display = 'none';
-          document.getElementById('checkin-panel').scrollIntoView({ behavior: 'smooth' });
+        window.showCheckIn = function () {
+          document.getElementById("checkin-panel").style.display = "block";
+          document.getElementById("checkin-success").style.display = "none";
+          document
+            .getElementById("checkin-panel")
+            .scrollIntoView({ behavior: "smooth" });
         };
-        window.confirmCheckIn = function() {
-          document.getElementById('checkin-success').style.display = 'block';
+        window.confirmCheckIn = function () {
+          document.getElementById("checkin-success").style.display = "block";
         };
-        window.addToWaitlist = function() {
-          alert('Patient added to waitlist.');
+        window.addToWaitlist = function () {
+          alert("Patient added to waitlist.");
         };
 
         // Walk-In tab
-        window.showWalkinSearch = function() {
-          document.getElementById('walkin-search').style.display = 'block';
-          document.getElementById('walkin-confirm').style.display = 'none';
+        window.showWalkinSearch = function () {
+          document.getElementById("walkin-search").style.display = "block";
+          document.getElementById("walkin-confirm").style.display = "none";
         };
-        window.doWalkinCheckin = function() {
-          document.getElementById('walkin-search').style.display = 'none';
-          document.getElementById('walkin-confirm').style.display = 'block';
-          document.getElementById('walkin-confirm').scrollIntoView({ behavior: 'smooth' });
+        window.doWalkinCheckin = function () {
+          document.getElementById("walkin-search").style.display = "none";
+          document.getElementById("walkin-confirm").style.display = "block";
+          document
+            .getElementById("walkin-confirm")
+            .scrollIntoView({ behavior: "smooth" });
         };
-        window.confirmWalkin = function() {
-          document.getElementById('walkin-success').style.display = 'block';
+        window.confirmWalkin = function () {
+          document.getElementById("walkin-success").style.display = "block";
         };
 
         // Special Services tab
-        window.printResults = function() {
-          document.getElementById('print-results').style.display = 'block';
-          document.getElementById('delivery-success').style.display = 'none';
-          document.getElementById('print-results').scrollIntoView({ behavior: 'smooth' });
+        window.printResults = function () {
+          document.getElementById("print-results").style.display = "block";
+          document.getElementById("delivery-success").style.display = "none";
+          document
+            .getElementById("print-results")
+            .scrollIntoView({ behavior: "smooth" });
         };
-        window.confirmDelivery = function() {
-          document.getElementById('delivery-success').style.display = 'block';
+        window.confirmDelivery = function () {
+          document.getElementById("delivery-success").style.display = "block";
         };
       });
     </script>

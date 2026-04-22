@@ -1,606 +1,1447 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>DocuMed — System Guide</title>
-  <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body { font-family:'Inter',sans-serif; background:#f5f5f5; color:#333; line-height:1.6; }
-    .guide-header { background:#1a1a2e; color:#fff; padding:32px 0; text-align:center; }
-    .guide-header h1 { font-family:'Architects Daughter',cursive; font-size:2.2rem; margin-bottom:4px; }
-    .guide-header p { color:#aaa; font-size:.95rem; }
-    .guide-header .back-link { display:inline-block; margin-top:10px; color:#90caf9; text-decoration:none; font-size:.85rem; }
-    .guide-header .back-link:hover { text-decoration:underline; }
+  <head>
+    <meta charset="UTF-8" />
+    <title>DocuMed — System Guide</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Inter", sans-serif;
+        background: #f5f5f5;
+        color: #333;
+        line-height: 1.6;
+      }
+      .guide-header {
+        background: #1a1a2e;
+        color: #fff;
+        padding: 32px 0;
+        text-align: center;
+      }
+      .guide-header h1 {
+        font-family: "Architects Daughter", cursive;
+        font-size: 2.2rem;
+        margin-bottom: 4px;
+      }
+      .guide-header p {
+        color: #aaa;
+        font-size: 0.95rem;
+      }
+      .guide-header .back-link {
+        display: inline-block;
+        margin-top: 10px;
+        color: #90caf9;
+        text-decoration: none;
+        font-size: 0.85rem;
+      }
+      .guide-header .back-link:hover {
+        text-decoration: underline;
+      }
 
-    .page-layout { display:flex; max-width:1200px; margin:0 auto; gap:0; }
+      .page-layout {
+        display: flex;
+        max-width: 1200px;
+        margin: 0 auto;
+        gap: 0;
+      }
 
-    /* Sticky Sidebar TOC */
-    .toc-sidebar { width:260px; min-width:260px; background:#fff; border-right:1px solid #ddd; height:calc(100vh - 90px); position:sticky; top:0; overflow-y:auto; padding:16px 0; font-size:.82rem; }
-    .toc-sidebar h2 { font-size:.9rem; padding:0 16px 8px; color:#333; border-bottom:1px solid #eee; margin-bottom:4px; }
-    .toc-sidebar .toc-role { font-weight:700; font-size:.68rem; text-transform:uppercase; letter-spacing:.5px; color:#888; padding:10px 16px 3px; }
-    .toc-sidebar a { display:block; padding:3px 16px 3px 24px; color:#555; text-decoration:none; transition:background .15s, color .15s; }
-    .toc-sidebar a:hover { background:#e3f2fd; color:#1565c0; }
-    .toc-sidebar a.active { background:#e3f2fd; color:#1565c0; font-weight:600; border-left:3px solid #1565c0; padding-left:21px; }
+      /* Sticky Sidebar TOC */
+      .toc-sidebar {
+        width: 260px;
+        min-width: 260px;
+        background: #fff;
+        border-right: 1px solid #ddd;
+        height: calc(100vh - 90px);
+        position: sticky;
+        top: 0;
+        overflow-y: auto;
+        padding: 16px 0;
+        font-size: 0.82rem;
+      }
+      .toc-sidebar h2 {
+        font-size: 0.9rem;
+        padding: 0 16px 8px;
+        color: #333;
+        border-bottom: 1px solid #eee;
+        margin-bottom: 4px;
+      }
+      .toc-sidebar .toc-role {
+        font-weight: 700;
+        font-size: 0.68rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: #888;
+        padding: 10px 16px 3px;
+      }
+      .toc-sidebar a {
+        display: block;
+        padding: 3px 16px 3px 24px;
+        color: #555;
+        text-decoration: none;
+        transition:
+          background 0.15s,
+          color 0.15s;
+      }
+      .toc-sidebar a:hover {
+        background: #e3f2fd;
+        color: #1565c0;
+      }
+      .toc-sidebar a.active {
+        background: #e3f2fd;
+        color: #1565c0;
+        font-weight: 600;
+        border-left: 3px solid #1565c0;
+        padding-left: 21px;
+      }
 
-    /* Main Content */
-    .main-content { flex:1; padding:20px 28px; min-width:0; }
+      /* Main Content */
+      .main-content {
+        flex: 1;
+        padding: 20px 28px;
+        min-width: 0;
+      }
 
-    section { background:#fff; border:1px solid #ddd; border-radius:6px; padding:24px; margin-bottom:16px; }
-    section h2 { font-size:1.3rem; color:#1a1a2e; margin-bottom:4px; padding-bottom:6px; border-bottom:2px solid #eee; }
-    section h3 { font-size:1.05rem; color:#333; margin:16px 0 6px; }
-    section p { margin:6px 0; font-size:.9rem; }
-    section ul, section ol { margin:6px 0 6px 20px; font-size:.88rem; }
-    section li { margin-bottom:4px; }
+      section {
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        padding: 24px;
+        margin-bottom: 16px;
+      }
+      section h2 {
+        font-size: 1.3rem;
+        color: #1a1a2e;
+        margin-bottom: 4px;
+        padding-bottom: 6px;
+        border-bottom: 2px solid #eee;
+      }
+      section h3 {
+        font-size: 1.05rem;
+        color: #333;
+        margin: 16px 0 6px;
+      }
+      section p {
+        margin: 6px 0;
+        font-size: 0.9rem;
+      }
+      section ul,
+      section ol {
+        margin: 6px 0 6px 20px;
+        font-size: 0.88rem;
+      }
+      section li {
+        margin-bottom: 4px;
+      }
 
-    .role-tag { display:inline-block; font-size:.65rem; font-weight:600; text-transform:uppercase; letter-spacing:.5px; padding:2px 8px; border-radius:3px; margin-left:6px; vertical-align:middle; }
-    .role-tag.receptionist { background:#e3f2fd; color:#1565c0; }
-    .role-tag.finance { background:#fff8e1; color:#f57f17; }
-    .role-tag.nurse { background:#e8f5e9; color:#2e7d32; }
-    .role-tag.practitioner { background:#f3e5f5; color:#7b1fa2; }
-    .role-tag.lab { background:#e0f7fa; color:#00695c; }
-    .role-tag.admin { background:#fce4ec; color:#c62828; }
-    .role-tag.shared { background:#f5f5f5; color:#555; }
+      .role-tag {
+        display: inline-block;
+        font-size: 0.65rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        padding: 2px 8px;
+        border-radius: 3px;
+        margin-left: 6px;
+        vertical-align: middle;
+      }
+      .role-tag.receptionist {
+        background: #e3f2fd;
+        color: #1565c0;
+      }
+      .role-tag.finance {
+        background: #fff8e1;
+        color: #f57f17;
+      }
+      .role-tag.nurse {
+        background: #e8f5e9;
+        color: #2e7d32;
+      }
+      .role-tag.practitioner {
+        background: #f3e5f5;
+        color: #7b1fa2;
+      }
+      .role-tag.lab {
+        background: #e0f7fa;
+        color: #00695c;
+      }
+      .role-tag.admin {
+        background: #fce4ec;
+        color: #c62828;
+      }
+      .role-tag.shared {
+        background: #f5f5f5;
+        color: #555;
+      }
 
-    .screen-link { color:#1565c0; text-decoration:none; font-weight:600; }
-    .screen-link:hover { text-decoration:underline; }
+      .screen-link {
+        color: #1565c0;
+        text-decoration: none;
+        font-weight: 600;
+      }
+      .screen-link:hover {
+        text-decoration: underline;
+      }
 
-    .flow-box { background:#fafafa; border:1px solid #ddd; border-radius:4px; padding:12px 16px; margin:8px 0; font-size:.85rem; }
-    .flow-box .flow-title { font-weight:700; margin-bottom:4px; color:#555; }
-    .flow-arrow { color:#999; margin:0 4px; }
+      .flow-box {
+        background: #fafafa;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 12px 16px;
+        margin: 8px 0;
+        font-size: 0.85rem;
+      }
+      .flow-box .flow-title {
+        font-weight: 700;
+        margin-bottom: 4px;
+        color: #555;
+      }
+      .flow-arrow {
+        color: #999;
+        margin: 0 4px;
+      }
 
-    .concept-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:12px 0; }
-    .concept-card { background:#f9f9f9; border:1px solid #e0e0e0; border-radius:4px; padding:10px 14px; }
-    .concept-card strong { display:block; margin-bottom:3px; font-size:.88rem; }
-    .concept-card span { font-size:.82rem; color:#666; }
+      .concept-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin: 12px 0;
+      }
+      .concept-card {
+        background: #f9f9f9;
+        border: 1px solid #e0e0e0;
+        border-radius: 4px;
+        padding: 10px 14px;
+      }
+      .concept-card strong {
+        display: block;
+        margin-bottom: 3px;
+        font-size: 0.88rem;
+      }
+      .concept-card span {
+        font-size: 0.82rem;
+        color: #666;
+      }
 
-    .callout { padding:10px 14px; border-radius:4px; margin:10px 0; font-size:.85rem; }
-    .callout.info { background:#e3f2fd; border-left:4px solid #1565c0; }
-    .callout.warn { background:#fff3e0; border-left:4px solid #e65100; }
-    .callout.success { background:#e8f5e9; border-left:4px solid #2e7d32; }
+      .callout {
+        padding: 10px 14px;
+        border-radius: 4px;
+        margin: 10px 0;
+        font-size: 0.85rem;
+      }
+      .callout.info {
+        background: #e3f2fd;
+        border-left: 4px solid #1565c0;
+      }
+      .callout.warn {
+        background: #fff3e0;
+        border-left: 4px solid #e65100;
+      }
+      .callout.success {
+        background: #e8f5e9;
+        border-left: 4px solid #2e7d32;
+      }
 
-    .divider { border:none; border-top:1px solid #eee; margin:20px 0; }
+      .divider {
+        border: none;
+        border-top: 1px solid #eee;
+        margin: 20px 0;
+      }
 
-    @media (max-width:860px) {
-      .page-layout { flex-direction:column; }
-      .toc-sidebar { width:100%; min-width:0; height:auto; position:static; border-right:none; border-bottom:1px solid #ddd; padding:12px 0; }
-      .concept-grid { grid-template-columns:1fr; }
-    }
-  </style>
-</head>
-<body>
+      @media (max-width: 860px) {
+        .page-layout {
+          flex-direction: column;
+        }
+        .toc-sidebar {
+          width: 100%;
+          min-width: 0;
+          height: auto;
+          position: static;
+          border-right: none;
+          border-bottom: 1px solid #ddd;
+          padding: 12px 0;
+        }
+        .concept-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="guide-header">
+      <h1>DocuMed — System Guide</h1>
+      <p>Complete reference for all screens, workflows, and business rules</p>
+      <a class="back-link" href="index.html">&larr; Back to Wireframes Index</a>
+    </div>
 
-<div class="guide-header">
-  <h1>DocuMed — System Guide</h1>
-  <p>Complete reference for all screens, workflows, and business rules</p>
-  <a class="back-link" href="index.html">&larr; Back to Wireframes Index</a>
-</div>
+    <div class="page-layout">
+      <!-- Sticky Sidebar TOC -->
+      <nav class="toc-sidebar">
+        <h2>Navigation</h2>
+        <div class="toc-role">System Overview</div>
+        <a href="#overview">Architecture &amp; Roles</a>
+        <a href="#patient-journeys">Patient Journey Flows</a>
 
-<div class="page-layout">
+        <div class="toc-role">Receptionist</div>
+        <a href="#scr-today-dashboard">Today's Dashboard</a>
+        <a href="#scr-patient-search">Patient Search</a>
+        <a href="#scr-patient-registration">Registration Form</a>
+        <a href="#scr-appointment-management">Appointments</a>
+        <a href="#scr-queue-monitoring">Queue Monitor</a>
+        <a href="#scr-special-service">Special Service</a>
+        <a href="#scr-encounter-outputs">Encounter Outputs</a>
+        <a href="#scr-suspended-encounters">Suspended Encounters</a>
 
-  <!-- Sticky Sidebar TOC -->
-  <nav class="toc-sidebar">
-    <h2>Navigation</h2>
-    <div class="toc-role">System Overview</div>
-    <a href="#overview">Architecture &amp; Roles</a>
-    <a href="#patient-journeys">Patient Journey Flows</a>
+        <div class="toc-role">Finance</div>
+        <a href="#scr-pending-payments">Pending Payments</a>
+        <a href="#scr-payment-detail">Payment Detail</a>
+        <a href="#scr-payment-receipt">Payment Receipt</a>
 
-    <div class="toc-role">Receptionist</div>
-    <a href="#scr-today-dashboard">Today's Dashboard</a>
-    <a href="#scr-patient-search">Patient Search</a>
-    <a href="#scr-patient-registration">Registration Form</a>
-    <a href="#scr-appointment-management">Appointments</a>
-    <a href="#scr-queue-monitoring">Queue Monitor</a>
-    <a href="#scr-special-service">Special Service</a>
-    <a href="#scr-encounter-outputs">Encounter Outputs</a>
-    <a href="#scr-suspended-encounters">Suspended Encounters</a>
+        <div class="toc-role">Nurse</div>
+        <a href="#scr-nurse-dashboard">Nurse Dashboard</a>
+        <a href="#scr-vitals-triage">Vitals &amp; Triage</a>
+        <a href="#scr-nursing-order">Nursing Order</a>
 
-    <div class="toc-role">Finance</div>
-    <a href="#scr-pending-payments">Pending Payments</a>
-    <a href="#scr-payment-detail">Payment Detail</a>
-    <a href="#scr-payment-receipt">Payment Receipt</a>
+        <div class="toc-role">Practitioner</div>
+        <a href="#scr-practitioner-dashboard">Dashboard</a>
+        <a href="#scr-calendar-view">Calendar View</a>
+        <a href="#scr-session-dashboard">Session Dashboard</a>
+        <a href="#scr-patient-encounter">Patient Encounter</a>
+        <a href="#scr-schedule-appointment">Schedule Appt.</a>
+        <a href="#scr-referral-form">Referral Form</a>
+        <a href="#scr-patient-profile">Patient Profile</a>
 
-    <div class="toc-role">Nurse</div>
-    <a href="#scr-nurse-dashboard">Nurse Dashboard</a>
-    <a href="#scr-vitals-triage">Vitals &amp; Triage</a>
-    <a href="#scr-nursing-order">Nursing Order</a>
+        <div class="toc-role">Lab Technician</div>
+        <a href="#scr-lab-dashboard">Lab Dashboard</a>
+        <a href="#scr-lab-order-detail">Lab Order Detail</a>
 
-    <div class="toc-role">Practitioner</div>
-    <a href="#scr-practitioner-dashboard">Dashboard</a>
-    <a href="#scr-calendar-view">Calendar View</a>
-    <a href="#scr-session-dashboard">Session Dashboard</a>
-    <a href="#scr-patient-encounter">Patient Encounter</a>
-    <a href="#scr-schedule-appointment">Schedule Appt.</a>
-    <a href="#scr-referral-form">Referral Form</a>
-    <a href="#scr-patient-profile">Patient Profile</a>
+        <div class="toc-role">Administrator</div>
+        <a href="#scr-branch-management">Branch Mgmt</a>
+        <a href="#scr-branch-form">Branch Form</a>
+        <a href="#scr-user-management">User Mgmt</a>
+        <a href="#scr-user-form">User Form</a>
+        <a href="#scr-branch-config">Branch Config</a>
+        <a href="#scr-master-data">Master Data</a>
+        <a href="#scr-catalog-form">Catalog Form</a>
+        <a href="#scr-system-settings">System Settings</a>
 
-    <div class="toc-role">Lab Technician</div>
-    <a href="#scr-lab-dashboard">Lab Dashboard</a>
-    <a href="#scr-lab-order-detail">Lab Order Detail</a>
+        <div class="toc-role">Key Concepts</div>
+        <a href="#encounter-lifecycle">Encounter Lifecycle</a>
+        <a href="#suspension-flow">Suspension &amp; Resumption</a>
+        <a href="#card-validity">Card Validity</a>
+        <a href="#pricing-model">Pricing Model</a>
+      </nav>
 
-    <div class="toc-role">Administrator</div>
-    <a href="#scr-branch-management">Branch Mgmt</a>
-    <a href="#scr-branch-form">Branch Form</a>
-    <a href="#scr-user-management">User Mgmt</a>
-    <a href="#scr-user-form">User Form</a>
-    <a href="#scr-branch-config">Branch Config</a>
-    <a href="#scr-master-data">Master Data</a>
-    <a href="#scr-catalog-form">Catalog Form</a>
-    <a href="#scr-system-settings">System Settings</a>
+      <!-- Main Content -->
+      <div class="main-content">
+        <!-- ========== OVERVIEW ========== -->
+        <section id="overview">
+          <h2>System Architecture &amp; Roles</h2>
+          <p>
+            DocuMed is a
+            <strong>multi-branch clinic management system</strong> with 32
+            screens across 7 roles. Every user is scoped to a branch — they only
+            see data, queues, and patients relevant to their assigned branch.
+          </p>
 
-    <div class="toc-role">Key Concepts</div>
-    <a href="#encounter-lifecycle">Encounter Lifecycle</a>
-    <a href="#suspension-flow">Suspension &amp; Resumption</a>
-    <a href="#card-validity">Card Validity</a>
-    <a href="#pricing-model">Pricing Model</a>
-  </nav>
+          <div class="concept-grid">
+            <div class="concept-card">
+              <strong
+                >Receptionist
+                <span class="role-tag receptionist">8 screens</span></strong
+              >
+              <span
+                >First point of contact. Manages check-ins, appointments,
+                patient registration, document delivery, and suspended
+                encounters. Does <em>not</em> access clinical data.</span
+              >
+            </div>
+            <div class="concept-card">
+              <strong
+                >Finance Clerk
+                <span class="role-tag finance">3 screens</span></strong
+              >
+              <span
+                >Processes all payments: card activation, lab orders,
+                procedures, consultations. Auto-priced from admin — clerks
+                confirm payment and select method only.</span
+              >
+            </div>
+            <div class="concept-card">
+              <strong
+                >Nurse <span class="role-tag nurse">3 screens</span></strong
+              >
+              <span
+                >Collects vitals, performs triage, administers nursing
+                procedures (injections, dressings, nebulisation). Two queues:
+                vitals and nursing orders.</span
+              >
+            </div>
+            <div class="concept-card">
+              <strong
+                >Practitioner (MD)
+                <span class="role-tag practitioner">7 screens</span></strong
+              >
+              <span
+                >Clinical core. Assesses patients, orders labs, writes
+                prescriptions, creates procedure orders, can suspend and resume
+                encounters. Three queues: initial, lab results, resumed.</span
+              >
+            </div>
+            <div class="concept-card">
+              <strong
+                >Lab Technician
+                <span class="role-tag lab">2 screens</span></strong
+              >
+              <span
+                >Processes in-house lab orders, records results, releases them
+                to requesting practitioner or receptionist. Does not handle
+                external referrals.</span
+              >
+            </div>
+            <div class="concept-card">
+              <strong
+                >Administrator
+                <span class="role-tag admin">8 screens</span></strong
+              >
+              <span
+                >System configuration: branches, users, fee schedules,
+                service/lab catalogs, card validity settings. No clinical
+                access.</span
+              >
+            </div>
+          </div>
 
-  <!-- Main Content -->
-  <div class="main-content">
+          <div class="callout info">
+            <strong>Branch Scoping:</strong> All data is branch-scoped. A
+            receptionist at Branch A cannot see Branch B's queues, patients, or
+            payments. Admins can manage all branches.
+          </div>
+        </section>
 
-  <!-- ========== OVERVIEW ========== -->
-  <section id="overview">
-    <h2>System Architecture &amp; Roles</h2>
-    <p>DocuMed is a <strong>multi-branch clinic management system</strong> with 32 screens across 7 roles. Every user is scoped to a branch — they only see data, queues, and patients relevant to their assigned branch.</p>
+        <!-- ========== PATIENT JOURNEYS ========== -->
+        <section id="patient-journeys">
+          <h2>Patient Journey Flows</h2>
+          <p>There are two primary patient journeys through the system.</p>
 
-    <div class="concept-grid">
-      <div class="concept-card">
-        <strong>Receptionist <span class="role-tag receptionist">8 screens</span></strong>
-        <span>First point of contact. Manages check-ins, appointments, patient registration, document delivery, and suspended encounters. Does <em>not</em> access clinical data.</span>
+          <h3>1. Clinical Visit (Practitioner Encounter)</h3>
+          <p>
+            The standard doctor-patient visit. The patient sees a practitioner
+            for diagnosis and treatment.
+          </p>
+          <div class="flow-box">
+            <div class="flow-title">Main Flow</div>
+            <strong>Receptionist</strong> (check-in, select practitioner)
+            <span class="flow-arrow">&rarr;</span>
+            <strong>Finance</strong> (card activation payment)
+            <span class="flow-arrow">&rarr;</span>
+            <strong>Nurse</strong> (vitals &amp; triage)
+            <span class="flow-arrow">&rarr;</span>
+            <strong>Practitioner</strong> (assessment, diagnosis, orders,
+            prescriptions)
+          </div>
+          <div class="flow-box">
+            <div class="flow-title">Lab Order Path (in-house)</div>
+            Practitioner orders lab tests
+            <span class="flow-arrow">&rarr;</span> Finance (lab payment)
+            <span class="flow-arrow">&rarr;</span>
+            <strong>Lab Tech</strong> processes specimen
+            <span class="flow-arrow">&rarr;</span> Results released
+            <span class="flow-arrow">&rarr;</span>
+            <strong>Practitioner</strong> reviews
+          </div>
+          <div class="flow-box">
+            <div class="flow-title">Lab Order Path (external)</div>
+            Practitioner orders external test
+            <span class="flow-arrow">&rarr;</span> Generates referral document
+            <span class="flow-arrow">&rarr;</span> May
+            <strong>suspend encounter</strong>
+            <span class="flow-arrow">&rarr;</span> Patient goes to external lab
+            <span class="flow-arrow">&rarr;</span> Returns days/weeks later with
+            results <span class="flow-arrow">&rarr;</span>
+            <strong>Receptionist</strong> activates resumption
+            <span class="flow-arrow">&rarr;</span> Nurse (re-triage)
+            <span class="flow-arrow">&rarr;</span> Practitioner resumes
+            encounter
+          </div>
+          <div class="flow-box">
+            <div class="flow-title">Order-Sheet Path (nursing procedures)</div>
+            Practitioner orders procedures
+            <span class="flow-arrow">&rarr;</span> Finance (procedure payment)
+            <span class="flow-arrow">&rarr;</span>
+            <strong>Nurse</strong> administers (injections, dressings, etc.)
+            <span class="flow-arrow">&rarr;</span> Status reported to
+            <strong>Practitioner</strong>
+          </div>
+          <div class="flow-box">
+            <div class="flow-title">Encounter Finalized</div>
+            Practitioner finalises <span class="flow-arrow">&rarr;</span> Output
+            documents sent to <strong>Receptionist</strong> (Encounter Outputs)
+            <span class="flow-arrow">&rarr;</span> Print &amp; deliver to
+            patient
+          </div>
+
+          <h3>2. Special Service (Walk-In, No Doctor)</h3>
+          <p>
+            For services that don't require a practitioner: blood pressure
+            checks, blood sugar tests, injections, etc.
+          </p>
+          <div class="flow-box">
+            <div class="flow-title">Main Flow</div>
+            <strong>Receptionist</strong> (creates special service order)
+            <span class="flow-arrow">&rarr;</span>
+            <strong>Finance</strong> (service payment)
+            <span class="flow-arrow">&rarr;</span>
+            <strong>Nurse / Lab Tech</strong> (perform service or process
+            specimen) <span class="flow-arrow">&rarr;</span>
+            <strong>Receptionist</strong> (results routed back, print &amp;
+            deliver)
+          </div>
+          <div class="callout info">
+            <strong>Result Routing Rule:</strong> "Order source = result
+            destination." Practitioner-ordered results go back to the
+            Practitioner. Receptionist-ordered special service results go back
+            to the Receptionist.
+          </div>
+        </section>
+
+        <!-- ========== RECEPTIONIST SCREENS ========== -->
+        <section id="scr-today-dashboard">
+          <h2>
+            Today's Dashboard
+            <span class="role-tag receptionist">Receptionist</span>
+          </h2>
+          <p>
+            The receptionist's landing screen. Shows today's scheduled
+            appointments, branch summary metrics (expected, walk-ins, in queue,
+            pending payments), and quick-action buttons for check-in and walk-in
+            processing.
+          </p>
+          <ul>
+            <li>
+              <strong>Scheduled Appointments Table</strong> — shows all
+              appointments for today with status badges, patient info, and
+              per-row actions (Check In, Reschedule, Cancel).
+            </li>
+            <li>
+              <strong>Quick Actions</strong> — Walk-In Check-In, Schedule
+              Appointment, View Queue.
+            </li>
+            <li><strong>Entry Point</strong> — Default screen after login.</li>
+          </ul>
+          <p>
+            <a class="screen-link" href="receptionist/today_dashboard.html"
+              >Open Wireframe &rarr;</a
+            >
+          </p>
+        </section>
+
+        <section id="scr-patient-search">
+          <h2>
+            Patient Search &amp; List
+            <span class="role-tag receptionist">Receptionist</span>
+          </h2>
+          <p>
+            Search for existing patients by name, phone, National ID, or MRN.
+            Used for walk-in check-in when the patient has existing records. If
+            no records are found, the receptionist can register a new patient
+            from here.
+          </p>
+          <ul>
+            <li>
+              <strong>Search Criteria</strong> — full name, phone, national ID,
+              MRN.
+            </li>
+            <li>
+              <strong>Results Table</strong> — patient photo, MRN, name,
+              sex/age, phone, last visit date.
+            </li>
+            <li>
+              <strong>Actions</strong> — Walk-In Check-In, View Profile,
+              Register New Patient.
+            </li>
+          </ul>
+          <p>
+            <a class="screen-link" href="receptionist/patient_search.html"
+              >Open Wireframe &rarr;</a
+            >
+          </p>
+        </section>
+
+        <section id="scr-patient-registration">
+          <h2>
+            Patient Registration Form
+            <span class="role-tag receptionist">Receptionist</span>
+          </h2>
+          <p>
+            Register a new patient in the system. Captures demographic
+            information, contact details, emergency contact, and optional photo.
+            MRN is auto-generated.
+          </p>
+          <p>
+            <a class="screen-link" href="receptionist/patient_registration.html"
+              >Open Wireframe &rarr;</a
+            >
+          </p>
+        </section>
+
+        <section id="scr-appointment-management">
+          <h2>
+            Appointment Management
+            <span class="role-tag receptionist">Receptionist</span>
+          </h2>
+          <p>
+            Book, reschedule, cancel, and check in appointments. Left panel
+            shows a calendar with practitioner selector; right panel shows
+            appointments for the selected date.
+          </p>
+          <ul>
+            <li>
+              <strong>Appointment Lifecycle</strong> — Expected &rarr;
+              Checked-In &rarr; In Queue &rarr; In Consultation &rarr; Completed
+              / No-Show / Cancelled.
+            </li>
+            <li>
+              <strong>Per-Status Actions</strong> — contextual buttons change
+              based on appointment state.
+            </li>
+          </ul>
+          <p>
+            <a
+              class="screen-link"
+              href="receptionist/appointment_management.html"
+              >Open Wireframe &rarr;</a
+            >
+          </p>
+        </section>
+
+        <section id="scr-queue-monitoring">
+          <h2>
+            Queue Monitoring Dashboard
+            <span class="role-tag receptionist">Receptionist</span>
+          </h2>
+          <p>
+            Real-time view of all branch queues: nurse vitals queue,
+            practitioner assessment queues, lab processing queue. Shows patient
+            flow and wait times across the entire branch.
+          </p>
+          <p>
+            <a class="screen-link" href="receptionist/queue_monitoring.html"
+              >Open Wireframe &rarr;</a
+            >
+          </p>
+        </section>
+
+        <section id="scr-special-service">
+          <h2>
+            Special Service Order
+            <span class="role-tag receptionist">Receptionist</span>
+          </h2>
+          <p>
+            Create walk-in service orders for procedures that don't require a
+            practitioner (blood pressure, blood sugar, injections, lab-only
+            tests). Services are filtered by branch availability. Creates a
+            payment request in Finance.
+          </p>
+          <p>
+            <a
+              class="screen-link"
+              href="receptionist/special_service_order.html"
+              >Open Wireframe &rarr;</a
+            >
+          </p>
+        </section>
+
+        <section id="scr-encounter-outputs">
+          <h2>
+            Encounter Outputs
+            <span class="role-tag receptionist">Receptionist</span>
+          </h2>
+          <p>
+            Document delivery queue. When a practitioner finalises an encounter,
+            all printable documents (prescriptions, referral letters, medical
+            certificates) are sent here. Documents are grouped by patient with
+            collapsible headers.
+          </p>
+          <ul>
+            <li>
+              <strong>One row per document</strong> — each prescription,
+              referral, or certificate is a distinct printable row.
+            </li>
+            <li>
+              <strong>Print All</strong> per patient group, or individual print
+              buttons per document.
+            </li>
+            <li>
+              <strong>Status tracking</strong> — Pending &rarr; Delivered.
+            </li>
+          </ul>
+          <p>
+            <a class="screen-link" href="receptionist/encounter_outputs.html"
+              >Open Wireframe &rarr;</a
+            >
+          </p>
+        </section>
+
+        <section id="scr-suspended-encounters">
+          <h2>
+            Suspended Encounters
+            <span class="role-tag receptionist">Receptionist</span>
+          </h2>
+          <p>
+            Manages encounters suspended by practitioners (typically awaiting
+            external lab results that take days or weeks). The receptionist
+            tracks pending suspensions and facilitates resumption.
+          </p>
+          <ul>
+            <li>
+              <strong>Two resumption paths:</strong>
+              <ul>
+                <li>
+                  <strong>Walk-In Activation</strong> — patient arrives with
+                  results; receptionist checks card validity, confirms items,
+                  and sends patient through Nurse &rarr; Practitioner.
+                </li>
+                <li>
+                  <strong>Appointment-Based</strong> — receptionist schedules a
+                  return appointment linked to the suspended encounter.
+                </li>
+              </ul>
+            </li>
+            <li>
+              <strong>Card Validity</strong> — checked against the
+              practitioner's declared resumption date limit. Within limit = no
+              re-activation fee. Past limit = re-activation fee required.
+            </li>
+            <li>
+              <strong>Days Remaining</strong> — color-coded: green (within
+              limit), orange (&lt;3 days), red (overdue).
+            </li>
+          </ul>
+          <p>
+            <a class="screen-link" href="receptionist/suspended_encounters.html"
+              >Open Wireframe &rarr;</a
+            >
+          </p>
+        </section>
+
+        <hr class="divider" />
+
+        <!-- ========== FINANCE SCREENS ========== -->
+        <section id="scr-pending-payments">
+          <h2>
+            Pending Payments <span class="role-tag finance">Finance</span>
+          </h2>
+          <p>
+            The finance clerk's main queue. Shows all pending payment requests:
+            card activations, lab orders, procedure orders, consultations,
+            special services. Prices are auto-populated from admin configuration
+            — the clerk cannot modify amounts.
+          </p>
+          <p>
+            <a class="screen-link" href="finance/pending_payments.html"
+              >Open Wireframe &rarr;</a
+            >
+          </p>
+        </section>
+
+        <section id="scr-payment-detail">
+          <h2>Payment Detail <span class="role-tag finance">Finance</span></h2>
+          <p>
+            Detailed view of a single payment request. Shows itemised breakdown,
+            patient info, and payment method selection (cash, card, mobile,
+            insurance). On confirmation, the downstream workflow is triggered
+            (e.g., patient enters nurse queue).
+          </p>
+          <p>
+            <a class="screen-link" href="finance/payment_detail.html"
+              >Open Wireframe &rarr;</a
+            >
+          </p>
+        </section>
+
+        <section id="scr-payment-receipt">
+          <h2>Payment Receipt <span class="role-tag finance">Finance</span></h2>
+          <p>
+            Generated after payment confirmation. Printable receipt with clinic
+            branding, patient details, itemised charges, payment method, and
+            receipt number.
+          </p>
+          <p>
+            <a class="screen-link" href="finance/payment_receipt.html"
+              >Open Wireframe &rarr;</a
+            >
+          </p>
+        </section>
+
+        <hr class="divider" />
+
+        <!-- ========== NURSE SCREENS ========== -->
+        <section id="scr-nurse-dashboard">
+          <h2>Nurse Dashboard <span class="role-tag nurse">Nurse</span></h2>
+          <p>
+            The nurse's main screen with two queues:
+            <strong>Vitals Queue</strong> (patients needing vitals and triage
+            before seeing the practitioner) and
+            <strong>Nursing Orders Queue</strong> (procedure orders from
+            practitioners requiring administration).
+          </p>
+          <p>
+            <a class="screen-link" href="nurse/nurse_dashboard.html"
+              >Open Wireframe &rarr;</a
+            >
+          </p>
+        </section>
+
+        <section id="scr-vitals-triage">
+          <h2>
+            Vitals &amp; Triage Form <span class="role-tag nurse">Nurse</span>
+          </h2>
+          <p>
+            Comprehensive vitals collection form: blood pressure (with
+            auto-flagging), temperature, pulse, respiratory rate, SpO₂, weight,
+            height, BMI (auto-calculated). Includes chief complaint, pain
+            assessment (0-10 scale with body location), and allergy/medication
+            documentation.
+          </p>
+          <p>
+            <a class="screen-link" href="nurse/vitals_triage.html"
+              >Open Wireframe &rarr;</a
+            >
+          </p>
+        </section>
+
+        <section id="scr-nursing-order">
+          <h2>
+            Nursing Order Detail <span class="role-tag nurse">Nurse</span>
+          </h2>
+          <p>
+            Detailed view of a practitioner's procedure order. Shows patient
+            info, ordered procedures with dosages and instructions, and
+            per-procedure action buttons (Start, Complete). Nurse adds notes for
+            each procedure (e.g., "L. deltoid, no adverse reaction").
+          </p>
+          <p>
+            <a class="screen-link" href="nurse/nursing_order_detail.html"
+              >Open Wireframe &rarr;</a
+            >
+          </p>
+        </section>
+
+        <hr class="divider" />
+
+        <!-- ========== PRACTITIONER SCREENS ========== -->
+        <section id="scr-practitioner-dashboard">
+          <h2>
+            Practitioner Dashboard
+            <span class="role-tag practitioner">Practitioner</span>
+          </h2>
+          <p>
+            Landing page showing branch-scoped summary: patients scheduled
+            today, patients in queue, pending lab results. Entry point to start
+            a session or view the calendar.
+          </p>
+          <p>
+            <a
+              class="screen-link"
+              href="practitioner/practitioner_dashboard.html"
+              >Open Wireframe &rarr;</a
+            >
+          </p>
+        </section>
+
+        <section id="scr-calendar-view">
+          <h2>
+            Calendar View
+            <span class="role-tag practitioner">Practitioner</span>
+          </h2>
+          <p>
+            Full-page calendar showing the practitioner's sessions and
+            appointments across active days. Today's entry shows a "Start
+            Session" button. Historical dates show read-only session data.
+          </p>
+          <p>
+            <a class="screen-link" href="practitioner/calendar_view.html"
+              >Open Wireframe &rarr;</a
+            >
+          </p>
+        </section>
+
+        <section id="scr-session-dashboard">
+          <h2>
+            Session Dashboard
+            <span class="role-tag practitioner">Practitioner</span>
+          </h2>
+          <p>
+            The practitioner's active working screen during a session. Three
+            patient queues:
+          </p>
+          <ul>
+            <li>
+              <strong>Initial Assessment Queue</strong> — patients who completed
+              nurse vitals, waiting for first consultation.
+            </li>
+            <li>
+              <strong>Lab Result Granted Queue</strong> — patients returning
+              same-day after in-house lab results are released.
+            </li>
+            <li>
+              <strong>Resumed Encounters Queue</strong> — patients returning
+              from suspended encounters (days/weeks later) with external lab
+              results. Original encounter data is preserved.
+            </li>
+          </ul>
+          <p>
+            <a class="screen-link" href="practitioner/session_dashboard.html"
+              >Open Wireframe &rarr;</a
+            >
+          </p>
+        </section>
+
+        <section id="scr-patient-encounter">
+          <h2>
+            Patient Encounter
+            <span class="role-tag practitioner">Practitioner</span>
+          </h2>
+          <p>
+            The most complex screen in the system. A tabbed interface for full
+            clinical documentation during a patient visit.
+          </p>
+          <ul>
+            <li>
+              <strong>Patient Profile Tab</strong> — longitudinal patient record
+              (history, allergies, medications, past encounters). Editable
+              within encounter context.
+            </li>
+            <li>
+              <strong>Encounter Form Tab</strong> — visit-specific SOAP
+              documentation. Includes subjective (from nurse triage), objective
+              (examination systems), assessment/diagnosis (ICD catalog), and
+              plan/management. <em>Lab Results</em> and
+              <em>Procedure Status</em> panels appear on click within their
+              respective order tabs.
+            </li>
+            <li>
+              <strong>Lab Order Tab</strong> — order lab tests from the branch
+              catalog. In-house vs. external referral modes. Previously
+              submitted orders show clickable rows that expand to reveal full
+              lab results with values, reference ranges, and abnormal flags.
+            </li>
+            <li>
+              <strong>Order-Sheet Tab</strong> — order nursing procedures.
+              Previously submitted order-sheets show clickable rows that expand
+              to reveal procedure status with nurse notes and completion times.
+            </li>
+            <li>
+              <strong>Prescription Tab</strong> — drug formulary search, dosage,
+              frequency, duration. Generates printable prescription.
+            </li>
+          </ul>
+          <h3>Key Actions</h3>
+          <ul>
+            <li>
+              <strong>Finalise Encounter</strong> — reviews summary, closes the
+              visit, sends outputs to receptionist.
+            </li>
+            <li>
+              <strong>Suspend Encounter</strong> — for external lab results
+              taking days/weeks. Preserves all clinical data. Documents reason,
+              required items, and resumption date limit. Sends record to
+              receptionist's Suspended Encounters screen.
+            </li>
+            <li>
+              <strong>Create Referral</strong> — generates a formal referral
+              letter for specialist care.
+            </li>
+            <li>
+              <strong>Schedule Follow-Up</strong> — books a return appointment
+              pre-populated with patient data.
+            </li>
+          </ul>
+          <p>
+            <a class="screen-link" href="practitioner/patient_encounter.html"
+              >Open Wireframe &rarr;</a
+            >
+          </p>
+        </section>
+
+        <section id="scr-schedule-appointment">
+          <h2>
+            Schedule Appointment
+            <span class="role-tag practitioner">Practitioner</span>
+          </h2>
+          <p>
+            Scheduling form accessible from within an encounter or the calendar.
+            Pre-populates patient details for follow-up appointments. Also used
+            by reception for resumption appointments linked to suspended
+            encounters.
+          </p>
+          <p>
+            <a class="screen-link" href="practitioner/schedule_appointment.html"
+              >Open Wireframe &rarr;</a
+            >
+          </p>
+        </section>
+
+        <section id="scr-referral-form">
+          <h2>
+            Referral Form
+            <span class="role-tag practitioner">Practitioner</span>
+          </h2>
+          <p>
+            Generates formal referral letters to specialists or external
+            facilities. Auto-populates referring practitioner and patient
+            details. Includes clinical summary, reason, and optional
+            attachments.
+          </p>
+          <p>
+            <a class="screen-link" href="practitioner/referral_form.html"
+              >Open Wireframe &rarr;</a
+            >
+          </p>
+        </section>
+
+        <section id="scr-patient-profile">
+          <h2>
+            Patient Profile Dashboard
+            <span class="role-tag shared">Shared</span>
+          </h2>
+          <p>
+            Comprehensive longitudinal patient record accessible from
+            practitioner and shared contexts. Shows full medical history, past
+            encounters, lab results, medications, allergies, and demographic
+            data. Read-only outside of an active encounter context.
+          </p>
+          <p>
+            <a class="screen-link" href="shared/patient_profile.html"
+              >Open Wireframe &rarr;</a
+            >
+          </p>
+        </section>
+
+        <hr class="divider" />
+
+        <!-- ========== LAB TECH SCREENS ========== -->
+        <section id="scr-lab-dashboard">
+          <h2>Lab Dashboard <span class="role-tag lab">Lab Tech</span></h2>
+          <p>
+            The lab technician's main queue. Shows all pending lab orders at the
+            branch, sorted by urgency (urgent first, then routine). Each row
+            shows patient, ordered tests, specimen type, ordering practitioner,
+            and payment status.
+          </p>
+          <p>
+            <a class="screen-link" href="lab_tech/lab_dashboard.html"
+              >Open Wireframe &rarr;</a
+            >
+          </p>
+        </section>
+
+        <section id="scr-lab-order-detail">
+          <h2>Lab Order Detail <span class="role-tag lab">Lab Tech</span></h2>
+          <p>
+            Process an individual lab order. Record specimen collection, enter
+            test results with values and units, flag abnormals, add technician
+            notes, and release results. Released results are routed to the
+            ordering practitioner (or receptionist for special services).
+          </p>
+          <p>
+            <a class="screen-link" href="lab_tech/lab_order_detail.html"
+              >Open Wireframe &rarr;</a
+            >
+          </p>
+        </section>
+
+        <hr class="divider" />
+
+        <!-- ========== ADMIN SCREENS ========== -->
+        <section id="scr-branch-management">
+          <h2>Branch Management <span class="role-tag admin">Admin</span></h2>
+          <p>
+            View, create, edit, and deactivate clinic branches. Table lists all
+            branches with name, location, status, and staff count.
+          </p>
+          <p>
+            <a class="screen-link" href="admin/branch_management.html"
+              >Open Wireframe &rarr;</a
+            >
+          </p>
+        </section>
+
+        <section id="scr-branch-form">
+          <h2>Branch Form <span class="role-tag admin">Admin</span></h2>
+          <p>
+            Create or edit a branch. Fields: name, location/address, contact
+            information, operating hours, status toggle.
+          </p>
+          <p>
+            <a class="screen-link" href="admin/branch_form.html"
+              >Open Wireframe &rarr;</a
+            >
+          </p>
+        </section>
+
+        <section id="scr-user-management">
+          <h2>User Management <span class="role-tag admin">Admin</span></h2>
+          <p>
+            Manage system users across all roles. Assign users to branches, set
+            roles, and manage account status (active/inactive).
+          </p>
+          <p>
+            <a class="screen-link" href="admin/user_management.html"
+              >Open Wireframe &rarr;</a
+            >
+          </p>
+        </section>
+
+        <section id="scr-user-form">
+          <h2>User Creation Form <span class="role-tag admin">Admin</span></h2>
+          <p>
+            Create or edit a user account. Fields: name, email, phone, role
+            assignment, branch assignment, credentials.
+          </p>
+          <p>
+            <a class="screen-link" href="admin/user_creation_form.html"
+              >Open Wireframe &rarr;</a
+            >
+          </p>
+        </section>
+
+        <section id="scr-branch-config">
+          <h2>
+            Branch Configuration <span class="role-tag admin">Admin</span>
+          </h2>
+          <p>
+            Per-branch settings across multiple tabs: General Info, Operating
+            Hours, Schedules, Fee Schedule &amp; Pricing (with card
+            auto-deactivation duration), and Service Availability.
+          </p>
+          <div class="callout warn">
+            <strong>Card Validity Setting:</strong> Configurable per branch.
+            Cards auto-deactivate after a set period (default: 14 days). For
+            <strong>suspended encounters</strong>, the practitioner's declared
+            resumption date limit overrides this — the card stays valid until
+            the practitioner's declared date.
+          </div>
+          <p>
+            <a class="screen-link" href="admin/branch_configuration.html"
+              >Open Wireframe &rarr;</a
+            >
+          </p>
+        </section>
+
+        <section id="scr-master-data">
+          <h2>
+            Master Data Management <span class="role-tag admin">Admin</span>
+          </h2>
+          <p>
+            System-wide catalogs for lab tests, clinical services/procedures,
+            special services, and drug formulary. Each item has a code, name,
+            category, default price, and active status. Branches can override
+            prices in Branch Configuration.
+          </p>
+          <p>
+            <a class="screen-link" href="admin/master_data_management.html"
+              >Open Wireframe &rarr;</a
+            >
+          </p>
+        </section>
+
+        <section id="scr-catalog-form">
+          <h2>Catalog Item Form <span class="role-tag admin">Admin</span></h2>
+          <p>
+            Create or edit a catalog item (lab test, service, drug). Fields vary
+            by catalog type.
+          </p>
+          <p>
+            <a class="screen-link" href="admin/catalog_item_form.html"
+              >Open Wireframe &rarr;</a
+            >
+          </p>
+        </section>
+
+        <section id="scr-system-settings">
+          <h2>System Settings <span class="role-tag admin">Admin</span></h2>
+          <p>
+            Global system configuration: clinic name, logo, default timezone,
+            notification preferences, and system-wide defaults.
+          </p>
+          <p>
+            <a class="screen-link" href="admin/system_settings.html"
+              >Open Wireframe &rarr;</a
+            >
+          </p>
+        </section>
+
+        <hr class="divider" />
+
+        <!-- ========== KEY CONCEPTS ========== -->
+        <section id="encounter-lifecycle">
+          <h2>Encounter Lifecycle</h2>
+          <p>
+            An encounter is a single clinical visit between a patient and a
+            practitioner. It has the following states:
+          </p>
+          <div class="concept-grid">
+            <div class="concept-card">
+              <strong>In Consultation</strong>
+              <span
+                >Active encounter. Practitioner is documenting findings,
+                ordering tests, writing prescriptions.</span
+              >
+            </div>
+            <div class="concept-card">
+              <strong>Paused — Lab Wait</strong>
+              <span
+                >Same-day pause while waiting for in-house lab results. Patient
+                stays in the building. Timer pauses. Auto-resumes when results
+                are released.</span
+              >
+            </div>
+            <div class="concept-card">
+              <strong>Suspended</strong>
+              <span
+                >Multi-day pause for external lab results. Patient leaves the
+                clinic. All clinical data preserved. Receptionist manages
+                resumption.</span
+              >
+            </div>
+            <div class="concept-card">
+              <strong>Resumed</strong>
+              <span
+                >Patient returns from suspension. Original encounter reopened
+                with all prior data + new vitals from nurse re-triage.</span
+              >
+            </div>
+            <div class="concept-card">
+              <strong>Finalized</strong>
+              <span
+                >Encounter complete. Output documents sent to receptionist. No
+                further edits (read-only).</span
+              >
+            </div>
+            <div class="concept-card">
+              <strong>Historical (Read-Only)</strong>
+              <span
+                >Past encounter viewed from the patient profile. All data is
+                read-only with full audit trail.</span
+              >
+            </div>
+          </div>
+        </section>
+
+        <section id="suspension-flow">
+          <h2>Encounter Suspension &amp; Resumption</h2>
+          <p>
+            When a practitioner orders an external lab test whose results may
+            take days or weeks, the encounter can be
+            <strong>suspended</strong> rather than finalized. This preserves the
+            clinical thread.
+          </p>
+
+          <h3>Suspension (Practitioner)</h3>
+          <ol>
+            <li>
+              Practitioner clicks <strong>Suspend Encounter</strong> on the
+              encounter screen.
+            </li>
+            <li>
+              Documents: suspension reason, required items for resumption,
+              <strong>resumption date limit</strong> (based on expected test
+              turnaround), and clinical notes for when results arrive.
+            </li>
+            <li>
+              Sets <strong>re-triage preference</strong> (default:
+              unchecked/skip). If checked, the returning patient will go through
+              nurse vitals before seeing the practitioner.
+            </li>
+            <li>
+              Optionally releases current prescriptions to reception immediately
+              ("partial outputs").
+            </li>
+            <li>
+              Encounter status changes to <strong>Suspended</strong>. Record
+              appears in the receptionist's Suspended Encounters screen.
+            </li>
+          </ol>
+
+          <h3>Resumption Path 1: Walk-In</h3>
+          <ol>
+            <li>Patient arrives with external results.</li>
+            <li>
+              Receptionist opens <strong>Suspended Encounters</strong>, clicks
+              <strong>Activate Now</strong>.
+            </li>
+            <li>
+              System checks card validity against the practitioner's declared
+              resumption date limit.
+            </li>
+            <li>
+              Within limit: no fee. Past limit: re-activation payment through
+              Finance.
+            </li>
+            <li>
+              <strong>Re-triage rules:</strong>
+              <ul>
+                <li>
+                  Within limit + re-triage requested → Nurse (vitals) →
+                  Practitioner queue
+                </li>
+                <li>
+                  Within limit + no re-triage → directly to Practitioner queue
+                </li>
+                <li>
+                  Past limit → <strong>mandatory</strong> re-triage (regardless
+                  of practitioner's setting) → Nurse → Practitioner queue
+                </li>
+              </ul>
+            </li>
+            <li>
+              Practitioner reopens the original encounter with all prior data
+              intact.
+            </li>
+          </ol>
+
+          <h3>Resumption Path 2: Appointment</h3>
+          <ol>
+            <li>
+              Receptionist schedules a return appointment linked to the
+              suspended encounter.
+            </li>
+            <li>
+              On the appointment date, check-in routes the patient to the
+              Resumed Encounters queue (not Initial Assessment).
+            </li>
+            <li>Same card validity and re-triage rules apply.</li>
+          </ol>
+
+          <div class="callout success">
+            <strong>Clinical Continuity:</strong> The resumed encounter is the
+            <em>same</em> encounter — not a new one. Assessment, examination,
+            orders, prescriptions, and the full clinical context are preserved
+            as a single thread.
+          </div>
+          <div class="callout warn">
+            <strong>Re-Triage Default:</strong> Within the declared limit,
+            re-triage is <em>optional</em> (practitioner's choice at suspension
+            time, default: skip). Past the limit, re-triage is
+            <em>mandatory</em> since the patient's condition may have changed
+            significantly.
+          </div>
+        </section>
+
+        <section id="card-validity">
+          <h2>Card Activation &amp; Validity</h2>
+          <p>
+            Every patient visit requires a
+            <strong>card activation payment</strong> processed through Finance.
+            The card has a validity period:
+          </p>
+          <ul>
+            <li>
+              <strong>Normal visits:</strong> Card auto-deactivates after the
+              admin-configured duration (default: 14 days).
+            </li>
+            <li>
+              <strong>Suspended encounters:</strong> The practitioner's
+              <strong>resumption date limit</strong> overrides the system
+              auto-deactivation. The card remains valid for resumption until the
+              practitioner's declared date, even if the general window has
+              passed.
+            </li>
+            <li>
+              <strong>After expiry:</strong> A re-activation fee is charged
+              through Finance before the patient can re-enter the clinical flow.
+            </li>
+          </ul>
+          <div class="callout info">
+            <strong>Configuration:</strong> Card auto-deactivation duration is
+            set in Admin &rarr; Branch Configuration &rarr; Fee Schedule &rarr;
+            Card Validity Settings. Configurable per branch.
+          </div>
+        </section>
+
+        <section id="pricing-model">
+          <h2>Pricing Model</h2>
+          <p>
+            All prices are admin-configured. Finance clerks see auto-populated
+            prices and <strong>cannot modify amounts</strong> — they only
+            confirm payment and select payment method.
+          </p>
+          <ul>
+            <li>
+              <strong>System fees</strong> (card activation, consultation,
+              appointment) — configured in Admin &rarr; Branch Configuration
+              &rarr; Fee Schedule.
+            </li>
+            <li>
+              <strong>Service/procedure prices</strong> — configured in Admin
+              &rarr; Master Data &rarr; Services/Procedures.
+            </li>
+            <li>
+              <strong>Lab test prices</strong> — configured in Admin &rarr;
+              Master Data &rarr; Lab Tests.
+            </li>
+            <li>
+              <strong>Branch price overrides</strong> — optional per-branch
+              overrides in Branch Configuration. If set, they take precedence
+              over master data defaults.
+            </li>
+          </ul>
+        </section>
       </div>
-      <div class="concept-card">
-        <strong>Finance Clerk <span class="role-tag finance">3 screens</span></strong>
-        <span>Processes all payments: card activation, lab orders, procedures, consultations. Auto-priced from admin — clerks confirm payment and select method only.</span>
-      </div>
-      <div class="concept-card">
-        <strong>Nurse <span class="role-tag nurse">3 screens</span></strong>
-        <span>Collects vitals, performs triage, administers nursing procedures (injections, dressings, nebulisation). Two queues: vitals and nursing orders.</span>
-      </div>
-      <div class="concept-card">
-        <strong>Practitioner (MD) <span class="role-tag practitioner">7 screens</span></strong>
-        <span>Clinical core. Assesses patients, orders labs, writes prescriptions, creates procedure orders, can suspend and resume encounters. Three queues: initial, lab results, resumed.</span>
-      </div>
-      <div class="concept-card">
-        <strong>Lab Technician <span class="role-tag lab">2 screens</span></strong>
-        <span>Processes in-house lab orders, records results, releases them to requesting practitioner or receptionist. Does not handle external referrals.</span>
-      </div>
-      <div class="concept-card">
-        <strong>Administrator <span class="role-tag admin">8 screens</span></strong>
-        <span>System configuration: branches, users, fee schedules, service/lab catalogs, card validity settings. No clinical access.</span>
-      </div>
+      <!-- /main-content -->
     </div>
+    <!-- /page-layout -->
 
-    <div class="callout info">
-      <strong>Branch Scoping:</strong> All data is branch-scoped. A receptionist at Branch A cannot see Branch B's queues, patients, or payments. Admins can manage all branches.
-    </div>
-  </section>
-
-  <!-- ========== PATIENT JOURNEYS ========== -->
-  <section id="patient-journeys">
-    <h2>Patient Journey Flows</h2>
-    <p>There are two primary patient journeys through the system.</p>
-
-    <h3>1. Clinical Visit (Practitioner Encounter)</h3>
-    <p>The standard doctor-patient visit. The patient sees a practitioner for diagnosis and treatment.</p>
-    <div class="flow-box">
-      <div class="flow-title">Main Flow</div>
-      <strong>Receptionist</strong> (check-in, select practitioner)
-      <span class="flow-arrow">&rarr;</span> <strong>Finance</strong> (card activation payment)
-      <span class="flow-arrow">&rarr;</span> <strong>Nurse</strong> (vitals &amp; triage)
-      <span class="flow-arrow">&rarr;</span> <strong>Practitioner</strong> (assessment, diagnosis, orders, prescriptions)
-    </div>
-    <div class="flow-box">
-      <div class="flow-title">Lab Order Path (in-house)</div>
-      Practitioner orders lab tests <span class="flow-arrow">&rarr;</span> Finance (lab payment) <span class="flow-arrow">&rarr;</span> <strong>Lab Tech</strong> processes specimen <span class="flow-arrow">&rarr;</span> Results released <span class="flow-arrow">&rarr;</span> <strong>Practitioner</strong> reviews
-    </div>
-    <div class="flow-box">
-      <div class="flow-title">Lab Order Path (external)</div>
-      Practitioner orders external test <span class="flow-arrow">&rarr;</span> Generates referral document <span class="flow-arrow">&rarr;</span> May <strong>suspend encounter</strong> <span class="flow-arrow">&rarr;</span> Patient goes to external lab <span class="flow-arrow">&rarr;</span> Returns days/weeks later with results <span class="flow-arrow">&rarr;</span> <strong>Receptionist</strong> activates resumption <span class="flow-arrow">&rarr;</span> Nurse (re-triage) <span class="flow-arrow">&rarr;</span> Practitioner resumes encounter
-    </div>
-    <div class="flow-box">
-      <div class="flow-title">Order-Sheet Path (nursing procedures)</div>
-      Practitioner orders procedures <span class="flow-arrow">&rarr;</span> Finance (procedure payment) <span class="flow-arrow">&rarr;</span> <strong>Nurse</strong> administers (injections, dressings, etc.) <span class="flow-arrow">&rarr;</span> Status reported to <strong>Practitioner</strong>
-    </div>
-    <div class="flow-box">
-      <div class="flow-title">Encounter Finalized</div>
-      Practitioner finalises <span class="flow-arrow">&rarr;</span> Output documents sent to <strong>Receptionist</strong> (Encounter Outputs) <span class="flow-arrow">&rarr;</span> Print &amp; deliver to patient
-    </div>
-
-    <h3>2. Special Service (Walk-In, No Doctor)</h3>
-    <p>For services that don't require a practitioner: blood pressure checks, blood sugar tests, injections, etc.</p>
-    <div class="flow-box">
-      <div class="flow-title">Main Flow</div>
-      <strong>Receptionist</strong> (creates special service order)
-      <span class="flow-arrow">&rarr;</span> <strong>Finance</strong> (service payment)
-      <span class="flow-arrow">&rarr;</span> <strong>Nurse / Lab Tech</strong> (perform service or process specimen)
-      <span class="flow-arrow">&rarr;</span> <strong>Receptionist</strong> (results routed back, print &amp; deliver)
-    </div>
-    <div class="callout info">
-      <strong>Result Routing Rule:</strong> "Order source = result destination." Practitioner-ordered results go back to the Practitioner. Receptionist-ordered special service results go back to the Receptionist.
-    </div>
-  </section>
-
-  <!-- ========== RECEPTIONIST SCREENS ========== -->
-  <section id="scr-today-dashboard">
-    <h2>Today's Dashboard <span class="role-tag receptionist">Receptionist</span></h2>
-    <p>The receptionist's landing screen. Shows today's scheduled appointments, branch summary metrics (expected, walk-ins, in queue, pending payments), and quick-action buttons for check-in and walk-in processing.</p>
-    <ul>
-      <li><strong>Scheduled Appointments Table</strong> — shows all appointments for today with status badges, patient info, and per-row actions (Check In, Reschedule, Cancel).</li>
-      <li><strong>Quick Actions</strong> — Walk-In Check-In, Schedule Appointment, View Queue.</li>
-      <li><strong>Entry Point</strong> — Default screen after login.</li>
-    </ul>
-    <p><a class="screen-link" href="receptionist/today_dashboard.html">Open Wireframe &rarr;</a></p>
-  </section>
-
-  <section id="scr-patient-search">
-    <h2>Patient Search &amp; List <span class="role-tag receptionist">Receptionist</span></h2>
-    <p>Search for existing patients by name, phone, National ID, or MRN. Used for walk-in check-in when the patient has existing records. If no records are found, the receptionist can register a new patient from here.</p>
-    <ul>
-      <li><strong>Search Criteria</strong> — full name, phone, national ID, MRN.</li>
-      <li><strong>Results Table</strong> — patient photo, MRN, name, sex/age, phone, last visit date.</li>
-      <li><strong>Actions</strong> — Walk-In Check-In, View Profile, Register New Patient.</li>
-    </ul>
-    <p><a class="screen-link" href="receptionist/patient_search.html">Open Wireframe &rarr;</a></p>
-  </section>
-
-  <section id="scr-patient-registration">
-    <h2>Patient Registration Form <span class="role-tag receptionist">Receptionist</span></h2>
-    <p>Register a new patient in the system. Captures demographic information, contact details, emergency contact, and optional photo. MRN is auto-generated.</p>
-    <p><a class="screen-link" href="receptionist/patient_registration.html">Open Wireframe &rarr;</a></p>
-  </section>
-
-  <section id="scr-appointment-management">
-    <h2>Appointment Management <span class="role-tag receptionist">Receptionist</span></h2>
-    <p>Book, reschedule, cancel, and check in appointments. Left panel shows a calendar with practitioner selector; right panel shows appointments for the selected date.</p>
-    <ul>
-      <li><strong>Appointment Lifecycle</strong> — Expected &rarr; Checked-In &rarr; In Queue &rarr; In Consultation &rarr; Completed / No-Show / Cancelled.</li>
-      <li><strong>Per-Status Actions</strong> — contextual buttons change based on appointment state.</li>
-    </ul>
-    <p><a class="screen-link" href="receptionist/appointment_management.html">Open Wireframe &rarr;</a></p>
-  </section>
-
-  <section id="scr-queue-monitoring">
-    <h2>Queue Monitoring Dashboard <span class="role-tag receptionist">Receptionist</span></h2>
-    <p>Real-time view of all branch queues: nurse vitals queue, practitioner assessment queues, lab processing queue. Shows patient flow and wait times across the entire branch.</p>
-    <p><a class="screen-link" href="receptionist/queue_monitoring.html">Open Wireframe &rarr;</a></p>
-  </section>
-
-  <section id="scr-special-service">
-    <h2>Special Service Order <span class="role-tag receptionist">Receptionist</span></h2>
-    <p>Create walk-in service orders for procedures that don't require a practitioner (blood pressure, blood sugar, injections, lab-only tests). Services are filtered by branch availability. Creates a payment request in Finance.</p>
-    <p><a class="screen-link" href="receptionist/special_service_order.html">Open Wireframe &rarr;</a></p>
-  </section>
-
-  <section id="scr-encounter-outputs">
-    <h2>Encounter Outputs <span class="role-tag receptionist">Receptionist</span></h2>
-    <p>Document delivery queue. When a practitioner finalises an encounter, all printable documents (prescriptions, referral letters, medical certificates) are sent here. Documents are grouped by patient with collapsible headers.</p>
-    <ul>
-      <li><strong>One row per document</strong> — each prescription, referral, or certificate is a distinct printable row.</li>
-      <li><strong>Print All</strong> per patient group, or individual print buttons per document.</li>
-      <li><strong>Status tracking</strong> — Pending &rarr; Delivered.</li>
-    </ul>
-    <p><a class="screen-link" href="receptionist/encounter_outputs.html">Open Wireframe &rarr;</a></p>
-  </section>
-
-  <section id="scr-suspended-encounters">
-    <h2>Suspended Encounters <span class="role-tag receptionist">Receptionist</span></h2>
-    <p>Manages encounters suspended by practitioners (typically awaiting external lab results that take days or weeks). The receptionist tracks pending suspensions and facilitates resumption.</p>
-    <ul>
-      <li><strong>Two resumption paths:</strong>
-        <ul>
-          <li><strong>Walk-In Activation</strong> — patient arrives with results; receptionist checks card validity, confirms items, and sends patient through Nurse &rarr; Practitioner.</li>
-          <li><strong>Appointment-Based</strong> — receptionist schedules a return appointment linked to the suspended encounter.</li>
-        </ul>
-      </li>
-      <li><strong>Card Validity</strong> — checked against the practitioner's declared resumption date limit. Within limit = no re-activation fee. Past limit = re-activation fee required.</li>
-      <li><strong>Days Remaining</strong> — color-coded: green (within limit), orange (&lt;3 days), red (overdue).</li>
-    </ul>
-    <p><a class="screen-link" href="receptionist/suspended_encounters.html">Open Wireframe &rarr;</a></p>
-  </section>
-
-  <hr class="divider">
-
-  <!-- ========== FINANCE SCREENS ========== -->
-  <section id="scr-pending-payments">
-    <h2>Pending Payments <span class="role-tag finance">Finance</span></h2>
-    <p>The finance clerk's main queue. Shows all pending payment requests: card activations, lab orders, procedure orders, consultations, special services. Prices are auto-populated from admin configuration — the clerk cannot modify amounts.</p>
-    <p><a class="screen-link" href="finance/pending_payments.html">Open Wireframe &rarr;</a></p>
-  </section>
-
-  <section id="scr-payment-detail">
-    <h2>Payment Detail <span class="role-tag finance">Finance</span></h2>
-    <p>Detailed view of a single payment request. Shows itemised breakdown, patient info, and payment method selection (cash, card, mobile, insurance). On confirmation, the downstream workflow is triggered (e.g., patient enters nurse queue).</p>
-    <p><a class="screen-link" href="finance/payment_detail.html">Open Wireframe &rarr;</a></p>
-  </section>
-
-  <section id="scr-payment-receipt">
-    <h2>Payment Receipt <span class="role-tag finance">Finance</span></h2>
-    <p>Generated after payment confirmation. Printable receipt with clinic branding, patient details, itemised charges, payment method, and receipt number.</p>
-    <p><a class="screen-link" href="finance/payment_receipt.html">Open Wireframe &rarr;</a></p>
-  </section>
-
-  <hr class="divider">
-
-  <!-- ========== NURSE SCREENS ========== -->
-  <section id="scr-nurse-dashboard">
-    <h2>Nurse Dashboard <span class="role-tag nurse">Nurse</span></h2>
-    <p>The nurse's main screen with two queues: <strong>Vitals Queue</strong> (patients needing vitals and triage before seeing the practitioner) and <strong>Nursing Orders Queue</strong> (procedure orders from practitioners requiring administration).</p>
-    <p><a class="screen-link" href="nurse/nurse_dashboard.html">Open Wireframe &rarr;</a></p>
-  </section>
-
-  <section id="scr-vitals-triage">
-    <h2>Vitals &amp; Triage Form <span class="role-tag nurse">Nurse</span></h2>
-    <p>Comprehensive vitals collection form: blood pressure (with auto-flagging), temperature, pulse, respiratory rate, SpO₂, weight, height, BMI (auto-calculated). Includes chief complaint, pain assessment (0-10 scale with body location), and allergy/medication documentation.</p>
-    <p><a class="screen-link" href="nurse/vitals_triage.html">Open Wireframe &rarr;</a></p>
-  </section>
-
-  <section id="scr-nursing-order">
-    <h2>Nursing Order Detail <span class="role-tag nurse">Nurse</span></h2>
-    <p>Detailed view of a practitioner's procedure order. Shows patient info, ordered procedures with dosages and instructions, and per-procedure action buttons (Start, Complete). Nurse adds notes for each procedure (e.g., "L. deltoid, no adverse reaction").</p>
-    <p><a class="screen-link" href="nurse/nursing_order_detail.html">Open Wireframe &rarr;</a></p>
-  </section>
-
-  <hr class="divider">
-
-  <!-- ========== PRACTITIONER SCREENS ========== -->
-  <section id="scr-practitioner-dashboard">
-    <h2>Practitioner Dashboard <span class="role-tag practitioner">Practitioner</span></h2>
-    <p>Landing page showing branch-scoped summary: patients scheduled today, patients in queue, pending lab results. Entry point to start a session or view the calendar.</p>
-    <p><a class="screen-link" href="practitioner/practitioner_dashboard.html">Open Wireframe &rarr;</a></p>
-  </section>
-
-  <section id="scr-calendar-view">
-    <h2>Calendar View <span class="role-tag practitioner">Practitioner</span></h2>
-    <p>Full-page calendar showing the practitioner's sessions and appointments across active days. Today's entry shows a "Start Session" button. Historical dates show read-only session data.</p>
-    <p><a class="screen-link" href="practitioner/calendar_view.html">Open Wireframe &rarr;</a></p>
-  </section>
-
-  <section id="scr-session-dashboard">
-    <h2>Session Dashboard <span class="role-tag practitioner">Practitioner</span></h2>
-    <p>The practitioner's active working screen during a session. Three patient queues:</p>
-    <ul>
-      <li><strong>Initial Assessment Queue</strong> — patients who completed nurse vitals, waiting for first consultation.</li>
-      <li><strong>Lab Result Granted Queue</strong> — patients returning same-day after in-house lab results are released.</li>
-      <li><strong>Resumed Encounters Queue</strong> — patients returning from suspended encounters (days/weeks later) with external lab results. Original encounter data is preserved.</li>
-    </ul>
-    <p><a class="screen-link" href="practitioner/session_dashboard.html">Open Wireframe &rarr;</a></p>
-  </section>
-
-  <section id="scr-patient-encounter">
-    <h2>Patient Encounter <span class="role-tag practitioner">Practitioner</span></h2>
-    <p>The most complex screen in the system. A tabbed interface for full clinical documentation during a patient visit.</p>
-    <ul>
-      <li><strong>Patient Profile Tab</strong> — longitudinal patient record (history, allergies, medications, past encounters). Editable within encounter context.</li>
-      <li><strong>Encounter Form Tab</strong> — visit-specific SOAP documentation. Includes subjective (from nurse triage), objective (examination systems), assessment/diagnosis (ICD catalog), and plan/management. <em>Lab Results</em> and <em>Procedure Status</em> panels appear on click within their respective order tabs.</li>
-      <li><strong>Lab Order Tab</strong> — order lab tests from the branch catalog. In-house vs. external referral modes. Previously submitted orders show clickable rows that expand to reveal full lab results with values, reference ranges, and abnormal flags.</li>
-      <li><strong>Order-Sheet Tab</strong> — order nursing procedures. Previously submitted order-sheets show clickable rows that expand to reveal procedure status with nurse notes and completion times.</li>
-      <li><strong>Prescription Tab</strong> — drug formulary search, dosage, frequency, duration. Generates printable prescription.</li>
-    </ul>
-    <h3>Key Actions</h3>
-    <ul>
-      <li><strong>Finalise Encounter</strong> — reviews summary, closes the visit, sends outputs to receptionist.</li>
-      <li><strong>Suspend Encounter</strong> — for external lab results taking days/weeks. Preserves all clinical data. Documents reason, required items, and resumption date limit. Sends record to receptionist's Suspended Encounters screen.</li>
-      <li><strong>Create Referral</strong> — generates a formal referral letter for specialist care.</li>
-      <li><strong>Schedule Follow-Up</strong> — books a return appointment pre-populated with patient data.</li>
-    </ul>
-    <p><a class="screen-link" href="practitioner/patient_encounter.html">Open Wireframe &rarr;</a></p>
-  </section>
-
-  <section id="scr-schedule-appointment">
-    <h2>Schedule Appointment <span class="role-tag practitioner">Practitioner</span></h2>
-    <p>Scheduling form accessible from within an encounter or the calendar. Pre-populates patient details for follow-up appointments. Also used by reception for resumption appointments linked to suspended encounters.</p>
-    <p><a class="screen-link" href="practitioner/schedule_appointment.html">Open Wireframe &rarr;</a></p>
-  </section>
-
-  <section id="scr-referral-form">
-    <h2>Referral Form <span class="role-tag practitioner">Practitioner</span></h2>
-    <p>Generates formal referral letters to specialists or external facilities. Auto-populates referring practitioner and patient details. Includes clinical summary, reason, and optional attachments.</p>
-    <p><a class="screen-link" href="practitioner/referral_form.html">Open Wireframe &rarr;</a></p>
-  </section>
-
-  <section id="scr-patient-profile">
-    <h2>Patient Profile Dashboard <span class="role-tag shared">Shared</span></h2>
-    <p>Comprehensive longitudinal patient record accessible from practitioner and shared contexts. Shows full medical history, past encounters, lab results, medications, allergies, and demographic data. Read-only outside of an active encounter context.</p>
-    <p><a class="screen-link" href="shared/patient_profile.html">Open Wireframe &rarr;</a></p>
-  </section>
-
-  <hr class="divider">
-
-  <!-- ========== LAB TECH SCREENS ========== -->
-  <section id="scr-lab-dashboard">
-    <h2>Lab Dashboard <span class="role-tag lab">Lab Tech</span></h2>
-    <p>The lab technician's main queue. Shows all pending lab orders at the branch, sorted by urgency (urgent first, then routine). Each row shows patient, ordered tests, specimen type, ordering practitioner, and payment status.</p>
-    <p><a class="screen-link" href="lab_tech/lab_dashboard.html">Open Wireframe &rarr;</a></p>
-  </section>
-
-  <section id="scr-lab-order-detail">
-    <h2>Lab Order Detail <span class="role-tag lab">Lab Tech</span></h2>
-    <p>Process an individual lab order. Record specimen collection, enter test results with values and units, flag abnormals, add technician notes, and release results. Released results are routed to the ordering practitioner (or receptionist for special services).</p>
-    <p><a class="screen-link" href="lab_tech/lab_order_detail.html">Open Wireframe &rarr;</a></p>
-  </section>
-
-  <hr class="divider">
-
-  <!-- ========== ADMIN SCREENS ========== -->
-  <section id="scr-branch-management">
-    <h2>Branch Management <span class="role-tag admin">Admin</span></h2>
-    <p>View, create, edit, and deactivate clinic branches. Table lists all branches with name, location, status, and staff count.</p>
-    <p><a class="screen-link" href="admin/branch_management.html">Open Wireframe &rarr;</a></p>
-  </section>
-
-  <section id="scr-branch-form">
-    <h2>Branch Form <span class="role-tag admin">Admin</span></h2>
-    <p>Create or edit a branch. Fields: name, location/address, contact information, operating hours, status toggle.</p>
-    <p><a class="screen-link" href="admin/branch_form.html">Open Wireframe &rarr;</a></p>
-  </section>
-
-  <section id="scr-user-management">
-    <h2>User Management <span class="role-tag admin">Admin</span></h2>
-    <p>Manage system users across all roles. Assign users to branches, set roles, and manage account status (active/inactive).</p>
-    <p><a class="screen-link" href="admin/user_management.html">Open Wireframe &rarr;</a></p>
-  </section>
-
-  <section id="scr-user-form">
-    <h2>User Creation Form <span class="role-tag admin">Admin</span></h2>
-    <p>Create or edit a user account. Fields: name, email, phone, role assignment, branch assignment, credentials.</p>
-    <p><a class="screen-link" href="admin/user_creation_form.html">Open Wireframe &rarr;</a></p>
-  </section>
-
-  <section id="scr-branch-config">
-    <h2>Branch Configuration <span class="role-tag admin">Admin</span></h2>
-    <p>Per-branch settings across multiple tabs: General Info, Operating Hours, Schedules, Fee Schedule &amp; Pricing (with card auto-deactivation duration), and Service Availability.</p>
-    <div class="callout warn">
-      <strong>Card Validity Setting:</strong> Configurable per branch. Cards auto-deactivate after a set period (default: 14 days). For <strong>suspended encounters</strong>, the practitioner's declared resumption date limit overrides this — the card stays valid until the practitioner's declared date.
-    </div>
-    <p><a class="screen-link" href="admin/branch_configuration.html">Open Wireframe &rarr;</a></p>
-  </section>
-
-  <section id="scr-master-data">
-    <h2>Master Data Management <span class="role-tag admin">Admin</span></h2>
-    <p>System-wide catalogs for lab tests, clinical services/procedures, special services, and drug formulary. Each item has a code, name, category, default price, and active status. Branches can override prices in Branch Configuration.</p>
-    <p><a class="screen-link" href="admin/master_data_management.html">Open Wireframe &rarr;</a></p>
-  </section>
-
-  <section id="scr-catalog-form">
-    <h2>Catalog Item Form <span class="role-tag admin">Admin</span></h2>
-    <p>Create or edit a catalog item (lab test, service, drug). Fields vary by catalog type.</p>
-    <p><a class="screen-link" href="admin/catalog_item_form.html">Open Wireframe &rarr;</a></p>
-  </section>
-
-  <section id="scr-system-settings">
-    <h2>System Settings <span class="role-tag admin">Admin</span></h2>
-    <p>Global system configuration: clinic name, logo, default timezone, notification preferences, and system-wide defaults.</p>
-    <p><a class="screen-link" href="admin/system_settings.html">Open Wireframe &rarr;</a></p>
-  </section>
-
-  <hr class="divider">
-
-  <!-- ========== KEY CONCEPTS ========== -->
-  <section id="encounter-lifecycle">
-    <h2>Encounter Lifecycle</h2>
-    <p>An encounter is a single clinical visit between a patient and a practitioner. It has the following states:</p>
-    <div class="concept-grid">
-      <div class="concept-card">
-        <strong>In Consultation</strong>
-        <span>Active encounter. Practitioner is documenting findings, ordering tests, writing prescriptions.</span>
+    <div
+      style="
+        background: #1a1a2e;
+        color: #666;
+        text-align: center;
+        padding: 20px;
+        font-size: 0.8rem;
+        margin-top: 0;
+      "
+    >
+      <div>
+        DocuMed System Guide &middot; 32 Screens &middot; 7 Roles &middot;
+        v0.2.0
       </div>
-      <div class="concept-card">
-        <strong>Paused — Lab Wait</strong>
-        <span>Same-day pause while waiting for in-house lab results. Patient stays in the building. Timer pauses. Auto-resumes when results are released.</span>
-      </div>
-      <div class="concept-card">
-        <strong>Suspended</strong>
-        <span>Multi-day pause for external lab results. Patient leaves the clinic. All clinical data preserved. Receptionist manages resumption.</span>
-      </div>
-      <div class="concept-card">
-        <strong>Resumed</strong>
-        <span>Patient returns from suspension. Original encounter reopened with all prior data + new vitals from nurse re-triage.</span>
-      </div>
-      <div class="concept-card">
-        <strong>Finalized</strong>
-        <span>Encounter complete. Output documents sent to receptionist. No further edits (read-only).</span>
-      </div>
-      <div class="concept-card">
-        <strong>Historical (Read-Only)</strong>
-        <span>Past encounter viewed from the patient profile. All data is read-only with full audit trail.</span>
+      <div style="margin-top: 6px; color: #888; font-size: 0.75rem">
+        &copy; 2026 Trivium Technical Marvels Inc. &mdash; DocuMed Team. All
+        rights reserved. Proprietary and confidential.
       </div>
     </div>
-  </section>
 
-  <section id="suspension-flow">
-    <h2>Encounter Suspension &amp; Resumption</h2>
-    <p>When a practitioner orders an external lab test whose results may take days or weeks, the encounter can be <strong>suspended</strong> rather than finalized. This preserves the clinical thread.</p>
-
-    <h3>Suspension (Practitioner)</h3>
-    <ol>
-      <li>Practitioner clicks <strong>Suspend Encounter</strong> on the encounter screen.</li>
-      <li>Documents: suspension reason, required items for resumption, <strong>resumption date limit</strong> (based on expected test turnaround), and clinical notes for when results arrive.</li>
-      <li>Sets <strong>re-triage preference</strong> (default: unchecked/skip). If checked, the returning patient will go through nurse vitals before seeing the practitioner.</li>
-      <li>Optionally releases current prescriptions to reception immediately ("partial outputs").</li>
-      <li>Encounter status changes to <strong>Suspended</strong>. Record appears in the receptionist's Suspended Encounters screen.</li>
-    </ol>
-
-    <h3>Resumption Path 1: Walk-In</h3>
-    <ol>
-      <li>Patient arrives with external results.</li>
-      <li>Receptionist opens <strong>Suspended Encounters</strong>, clicks <strong>Activate Now</strong>.</li>
-      <li>System checks card validity against the practitioner's declared resumption date limit.</li>
-      <li>Within limit: no fee. Past limit: re-activation payment through Finance.</li>
-      <li><strong>Re-triage rules:</strong>
-        <ul>
-          <li>Within limit + re-triage requested → Nurse (vitals) → Practitioner queue</li>
-          <li>Within limit + no re-triage → directly to Practitioner queue</li>
-          <li>Past limit → <strong>mandatory</strong> re-triage (regardless of practitioner's setting) → Nurse → Practitioner queue</li>
-        </ul>
-      </li>
-      <li>Practitioner reopens the original encounter with all prior data intact.</li>
-    </ol>
-
-    <h3>Resumption Path 2: Appointment</h3>
-    <ol>
-      <li>Receptionist schedules a return appointment linked to the suspended encounter.</li>
-      <li>On the appointment date, check-in routes the patient to the Resumed Encounters queue (not Initial Assessment).</li>
-      <li>Same card validity and re-triage rules apply.</li>
-    </ol>
-
-    <div class="callout success">
-      <strong>Clinical Continuity:</strong> The resumed encounter is the <em>same</em> encounter — not a new one. Assessment, examination, orders, prescriptions, and the full clinical context are preserved as a single thread.
-    </div>
-    <div class="callout warn">
-      <strong>Re-Triage Default:</strong> Within the declared limit, re-triage is <em>optional</em> (practitioner's choice at suspension time, default: skip). Past the limit, re-triage is <em>mandatory</em> since the patient's condition may have changed significantly.
-    </div>
-  </section>
-
-  <section id="card-validity">
-    <h2>Card Activation &amp; Validity</h2>
-    <p>Every patient visit requires a <strong>card activation payment</strong> processed through Finance. The card has a validity period:</p>
-    <ul>
-      <li><strong>Normal visits:</strong> Card auto-deactivates after the admin-configured duration (default: 14 days).</li>
-      <li><strong>Suspended encounters:</strong> The practitioner's <strong>resumption date limit</strong> overrides the system auto-deactivation. The card remains valid for resumption until the practitioner's declared date, even if the general window has passed.</li>
-      <li><strong>After expiry:</strong> A re-activation fee is charged through Finance before the patient can re-enter the clinical flow.</li>
-    </ul>
-    <div class="callout info">
-      <strong>Configuration:</strong> Card auto-deactivation duration is set in Admin &rarr; Branch Configuration &rarr; Fee Schedule &rarr; Card Validity Settings. Configurable per branch.
-    </div>
-  </section>
-
-  <section id="pricing-model">
-    <h2>Pricing Model</h2>
-    <p>All prices are admin-configured. Finance clerks see auto-populated prices and <strong>cannot modify amounts</strong> — they only confirm payment and select payment method.</p>
-    <ul>
-      <li><strong>System fees</strong> (card activation, consultation, appointment) — configured in Admin &rarr; Branch Configuration &rarr; Fee Schedule.</li>
-      <li><strong>Service/procedure prices</strong> — configured in Admin &rarr; Master Data &rarr; Services/Procedures.</li>
-      <li><strong>Lab test prices</strong> — configured in Admin &rarr; Master Data &rarr; Lab Tests.</li>
-      <li><strong>Branch price overrides</strong> — optional per-branch overrides in Branch Configuration. If set, they take precedence over master data defaults.</li>
-    </ul>
-  </section>
-
-  </div><!-- /main-content -->
-</div><!-- /page-layout -->
-
-<div style="background:#1a1a2e;color:#666;text-align:center;padding:20px;font-size:.8rem;margin-top:0;">
-  <div>DocuMed System Guide &middot; 32 Screens &middot; 7 Roles &middot; v0.2.0</div>
-  <div style="margin-top:6px;color:#888;font-size:.75rem;">&copy; 2026 Trivium Technical Marvels Inc. &mdash; DocuMed Team. All rights reserved. Proprietary and confidential.</div>
-</div>
-
-<script>
-// Highlight active TOC item on scroll
-const tocLinks = document.querySelectorAll('.toc-sidebar a');
-const sections = [];
-tocLinks.forEach(a => {
-  const id = a.getAttribute('href')?.replace('#','');
-  if (id) { const el = document.getElementById(id); if (el) sections.push({ el, a }); }
-});
-function updateToc() {
-  let current = sections[0];
-  for (const s of sections) { if (s.el.getBoundingClientRect().top <= 120) current = s; }
-  tocLinks.forEach(a => a.classList.remove('active'));
-  if (current) current.a.classList.add('active');
-}
-window.addEventListener('scroll', updateToc);
-updateActiveToc = updateToc;
-setTimeout(updateToc, 100);
-</script>
-
-</body>
+    <script>
+      // Highlight active TOC item on scroll
+      const tocLinks = document.querySelectorAll(".toc-sidebar a");
+      const sections = [];
+      tocLinks.forEach((a) => {
+        const id = a.getAttribute("href")?.replace("#", "");
+        if (id) {
+          const el = document.getElementById(id);
+          if (el) sections.push({ el, a });
+        }
+      });
+      function updateToc() {
+        let current = sections[0];
+        for (const s of sections) {
+          if (s.el.getBoundingClientRect().top <= 120) current = s;
+        }
+        tocLinks.forEach((a) => a.classList.remove("active"));
+        if (current) current.a.classList.add("active");
+      }
+      window.addEventListener("scroll", updateToc);
+      updateActiveToc = updateToc;
+      setTimeout(updateToc, 100);
+    </script>
+  </body>
 </html>

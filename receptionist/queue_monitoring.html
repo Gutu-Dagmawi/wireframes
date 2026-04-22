@@ -55,11 +55,22 @@
             <summary style="cursor:pointer;font-size:.85rem;color:#666;">Show patient list</summary>
             <div style="margin-top:8px;">
               ${renderTable(
-                ["Patient", "MRN", "Type", "Enlisted", "Wait", "Payment", "Status", ""],
+                [
+                  "Patient",
+                  "MRN",
+                  "Card",
+                  "Type",
+                  "Enlisted",
+                  "Wait",
+                  "Payment",
+                  "Status",
+                  "",
+                ],
                 [
                   [
-                    "Abebe K.",
+                    "Abebe K. <span style='display:none;'>🔴 Red</span>",
                     "MRN-0015",
+                    '<span class="wf-badge green" style="font-size:.55rem;">Active</span>',
                     '<span class="wf-badge" style="font-size:.6rem;background:#e3f2fd;color:#1565c0;">Appt</span>',
                     "08:45",
                     '<span style="color:#2e7d32;font-size:.8rem;">12 min</span>',
@@ -68,8 +79,9 @@
                     "",
                   ],
                   [
-                    "Fatima A.",
+                    "Fatima A. <span style='display:none;'>🟡 Yellow</span>",
                     "MRN-0078",
+                    '<span class="wf-badge green" style="font-size:.55rem;">Active</span>',
                     '<span class="wf-badge" style="font-size:.6rem;background:#fff3e0;color:#e65100;">Walk-in</span>',
                     "09:10",
                     '<span style="color:#e65100;font-size:.8rem;">22 min</span>',
@@ -78,8 +90,9 @@
                     '<button class="wf-btn small">Reassign</button>',
                   ],
                   [
-                    "Meron H.",
+                    "Meron H. <span style='display:none;'>🔴 Red</span>",
                     "MRN-0091",
+                    '<span class="wf-badge red" style="font-size:.55rem;">Inactive</span>',
                     '<span class="wf-badge" style="font-size:.6rem;background:#fce4ec;color:#c62828;">Emergency</span>',
                     "09:30",
                     '<span style="color:#c62828;font-size:.8rem;">35 min</span>',
@@ -107,11 +120,22 @@
             <summary style="cursor:pointer;font-size:.85rem;color:#666;">Show patient list</summary>
             <div style="margin-top:8px;">
               ${renderTable(
-                ["Patient", "MRN", "Type", "Enlisted", "Wait", "Payment", "Status", ""],
+                [
+                  "Patient",
+                  "MRN",
+                  "Card",
+                  "Type",
+                  "Enlisted",
+                  "Wait",
+                  "Payment",
+                  "Status",
+                  "",
+                ],
                 [
                   [
                     "Yonas G.",
                     "MRN-0103",
+                    '<span class="wf-badge green" style="font-size:.55rem;">Active</span>',
                     '<span class="wf-badge" style="font-size:.6rem;background:#e8f5e9;color:#2e7d32;">Follow-up</span>',
                     "09:15",
                     '<span style="color:#2e7d32;font-size:.8rem;">8 min</span>',
@@ -139,11 +163,23 @@
             <summary style="cursor:pointer;font-size:.85rem;color:#666;">Show patient list</summary>
             <div style="margin-top:8px;">
               ${renderTable(
-                ["Patient", "MRN", "Type", "Enlisted", "Wait", "Payment", "Status", ""],
+                [
+                  "Patient",
+                  "MRN",
+                  "Card",
+                  "Type",
+                  "Enlisted",
+                  "Wait",
+                  "Payment",
+                  "Status",
+                  "",
+                ],
                 [
                   [
                     "Tigist M.",
                     "MRN-0042",
+                    '<span class="wf-badge orange">🟡 Yellow</span>',
+                    '<span class="wf-badge green" style="font-size:.55rem;">Active</span>',
                     '<span class="wf-badge" style="font-size:.6rem;background:#e3f2fd;color:#1565c0;">Appt</span>',
                     "08:30",
                     '<span style="color:#2e7d32;font-size:.8rem;">5 min</span>',
@@ -154,6 +190,8 @@
                   [
                     "Bereket D.",
                     "MRN-0034",
+                    '<span class="wf-badge green">🟢 Green</span>',
+                    '<span class="wf-badge green" style="font-size:.55rem;">Active</span>',
                     '<span class="wf-badge" style="font-size:.6rem;background:#e3f2fd;color:#1565c0;">Appt</span>',
                     "08:50",
                     '<span style="color:#2e7d32;font-size:.8rem;">10 min</span>',
@@ -164,6 +202,8 @@
                   [
                     "Selam W.",
                     "MRN-0102",
+                    '<span class="wf-badge green">🟢 Green</span>',
+                    '<span class="wf-badge green" style="font-size:.55rem;">Active</span>',
                     '<span class="wf-badge" style="font-size:.6rem;background:#fff3e0;color:#e65100;">Walk-in</span>',
                     "09:00",
                     '<span style="color:#e65100;font-size:.8rem;">20 min</span>',
@@ -174,6 +214,8 @@
                   [
                     "Henok T.",
                     "MRN-0056",
+                    '<span class="wf-badge blue">🔵 Blue</span>',
+                    '<span class="wf-badge red" style="font-size:.55rem;">Inactive</span>',
                     '<span class="wf-badge" style="font-size:.6rem;background:#fff3e0;color:#e65100;">Walk-in</span>',
                     "09:20",
                     '<span style="color:#c62828;font-size:.8rem;">32 min</span>',
@@ -184,6 +226,8 @@
                   [
                     "Sara A.",
                     "MRN-0067",
+                    '<span class="wf-badge green">🟢 Green</span>',
+                    '<span class="wf-badge green" style="font-size:.55rem;">Active</span>',
                     '<span class="wf-badge" style="font-size:.6rem;background:#fff3e0;color:#e65100;">Walk-in</span>',
                     "09:35",
                     '<span style="color:#c62828;font-size:.8rem;">45 min</span>',

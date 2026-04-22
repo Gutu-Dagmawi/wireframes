@@ -16,7 +16,7 @@
           screenId: "SCR_nursing_order_detail",
           workflow: "Nursing Orders Administration Flow",
           userName: "Selam D. (Nurse)",
-          content: function(main) {
+          content: function (main) {
             main.innerHTML = `
       <!-- Patient & Order Header -->
       <div class="wf-form-section">
@@ -34,12 +34,12 @@
       <h2 class="page-title">Ordered Procedures</h2>
       <p class="text-small text-muted mb-2">Document each procedure as you administer it. Click the header to expand/collapse. <span class="required">*</span> marks required fields.</p>
 
-      <!-- Procedure 1: IM Injection (completed, collapsed by default) -->
+      <!-- Procedure 1: Injection (completed, collapsed by default) -->
       <div class="wf-card proc-card" style="margin-bottom:16px;" id="proc-card-1">
         <div class="card-title flex-between" style="cursor:pointer;" onclick="toggleProcCard('proc-card-1')">
           <span>
             <span id="proc-arrow-1" style="font-size:.85rem;margin-right:4px;">&#x25B6;</span>
-            <strong>IM-INJ</strong> &mdash; IM Injection (Intramuscular)
+            <strong>INJ</strong> &mdash; Injection
           </span>
           <span class="wf-badge green" id="proc-status-1">Completed</span>
         </div>
@@ -164,17 +164,23 @@
     `;
 
             // Toggle function for collapsible procedure cards
-            window.toggleProcCard = function(cardId) {
-              const body = document.getElementById(cardId.replace('proc-card', 'proc-body'));
-              const summary = document.getElementById(cardId.replace('proc-card', 'proc-summary'));
-              const arrow = document.getElementById(cardId.replace('proc-card', 'proc-arrow'));
+            window.toggleProcCard = function (cardId) {
+              const body = document.getElementById(
+                cardId.replace("proc-card", "proc-body"),
+              );
+              const summary = document.getElementById(
+                cardId.replace("proc-card", "proc-summary"),
+              );
+              const arrow = document.getElementById(
+                cardId.replace("proc-card", "proc-arrow"),
+              );
               if (!body || !summary) return;
-              const isOpen = body.style.display !== 'none';
-              body.style.display = isOpen ? 'none' : 'block';
-              summary.style.display = isOpen ? 'block' : 'none';
-              if (arrow) arrow.innerHTML = isOpen ? '&#x25B6;' : '&#x25BC;';
+              const isOpen = body.style.display !== "none";
+              body.style.display = isOpen ? "none" : "block";
+              summary.style.display = isOpen ? "block" : "none";
+              if (arrow) arrow.innerHTML = isOpen ? "&#x25B6;" : "&#x25BC;";
             };
-          }
+          },
         });
       });
     </script>

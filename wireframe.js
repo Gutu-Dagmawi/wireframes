@@ -56,6 +56,12 @@ const NAV = {
       file: "receptionist/suspended_encounters.html",
       icon: "⏸️",
     },
+    {
+      id: "recurring_services",
+      label: "Recurring Services",
+      file: "receptionist/recurring_services.html",
+      icon: "🔄",
+    },
   ],
   finance: [
     {
@@ -95,6 +101,24 @@ const NAV = {
       label: "Nursing Order",
       file: "nurse/nursing_order_detail.html",
       icon: "💉",
+    },
+    {
+      id: "recurring_orders",
+      label: "Recurring Orders",
+      file: "nurse/recurring_orders.html",
+      icon: "🔄",
+    },
+    {
+      id: "recurring_series_detail",
+      label: "Series Detail",
+      file: "nurse/recurring_series_detail.html",
+      icon: "📋",
+    },
+    {
+      id: "external_orders",
+      label: "External Orders",
+      file: "nurse/external_orders.html",
+      icon: "📋",
     },
   ],
   practitioner: [
@@ -222,8 +246,13 @@ function getBasePath() {
   const parts = path.split("/").filter(Boolean); // remove empty segments
   // Known role sub-directories (pages inside these are one level deep)
   const roleDirs = [
-    "receptionist", "finance", "nurse", "practitioner",
-    "lab_tech", "admin", "shared",
+    "receptionist",
+    "finance",
+    "nurse",
+    "practitioner",
+    "lab_tech",
+    "admin",
+    "shared",
   ];
   // Check if "wireframes" appears in the path (local dev / non-root deploy)
   const wireframesIdx = parts.indexOf("wireframes");
@@ -380,7 +409,14 @@ function renderTable(columns, rows, opts) {
   });
   html += "</tr></thead><tbody>";
   rows.forEach((row, i) => {
-    html += `<tr class="${clickable}" ${opts.onClickAttr ? opts.onClickAttr(i) : ""}>`;
+    let rowClass = clickable;
+    const rowStr = JSON.stringify(row);
+    if (rowStr.includes("🔴 Red")) rowClass += " priority-red";
+    else if (rowStr.includes("🟡 Yellow")) rowClass += " priority-yellow";
+    else if (rowStr.includes("🟢 Green")) rowClass += " priority-green";
+    else if (rowStr.includes("🔵 Blue")) rowClass += " priority-blue";
+
+    html += `<tr class="${rowClass}" ${opts.onClickAttr ? opts.onClickAttr(i) : ""}>`;
     row.forEach((cell) => {
       html += `<td>${cell}</td>`;
     });

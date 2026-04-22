@@ -1,30 +1,30 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>DocuMed — Patient Profile</title>
-  <link rel="stylesheet" href="../wireframe.css">
-  <script src="../wireframe.js"></script>
-</head>
-<body>
-<script>
-ready(() => {
-  renderPageShell({
-    title: 'Patient Profile Dashboard',
-    role: 'practitioner',
-    activeId: 'patient_profile',
-    screenId: 'SCR_patient_profile',
-    workflow: 'Longitudinal Patient Record',
-    userName: 'Dr. Solomon T.',
-    content: function(main) {
-      main.innerHTML = `
+  <head>
+    <meta charset="UTF-8" />
+    <title>DocuMed — Patient Profile</title>
+    <link rel="stylesheet" href="../wireframe.css" />
+    <script src="../wireframe.js"></script>
+  </head>
+  <body>
+    <script>
+      ready(() => {
+        renderPageShell({
+          title: "Patient Profile Dashboard",
+          role: "practitioner",
+          activeId: "patient_profile",
+          screenId: "SCR_patient_profile",
+          workflow: "Longitudinal Patient Record",
+          userName: "Dr. Solomon T.",
+          content: function (main) {
+            main.innerHTML = `
       <!-- Patient Identity Banner -->
       <div class="wf-patient-header">
         <div class="ph-top-row">
           <div style="display:flex;align-items:center;gap:14px;">
             <div class="wf-placeholder" style="width:60px;height:60px;border-radius:50%;border-width:1.5px;flex-shrink:0;"><span style="font-size:.55rem;">Photo</span></div>
             <div>
-              <div class="ph-name">Abebe Kebede</div>
+              <div class="ph-name">Abebe Kebede <span class="wf-badge red" style="font-size:.7rem;vertical-align:middle;margin-left:8px;">🔴 Emergency</span> <span class="wf-badge green" style="font-size:.65rem;vertical-align:middle;margin-left:4px;">Card Active</span></div>
               <div style="font-size:.82rem;color:#888;">Registered: 15 Jan 2024 · Last Visit: 08 Apr 2026</div>
             </div>
           </div>
@@ -65,13 +65,33 @@ ready(() => {
             <button class="wf-btn small">✏ Edit</button>
           </div>
           ${renderTable(
-            ['Condition', 'Year', 'Status', 'Notes'],
+            ["Condition", "Year", "Status", "Notes"],
             [
-              ['Hypertension', '2024', '<span class="wf-badge orange">Active</span>', 'Managed with Amlodipine'],
-              ['Pre-diabetes', '2025', '<span class="wf-badge orange">Active</span>', 'HbA1c 6.1%, on Metformin'],
-              ['Malaria', '2020', '<span class="wf-badge green">Resolved</span>', 'P. falciparum, treated'],
-              ['Typhoid Fever', '2018', '<span class="wf-badge green">Resolved</span>', 'Full recovery'],
-            ]
+              [
+                "Hypertension",
+                "2024",
+                '<span class="wf-badge orange">Active</span>',
+                "Managed with Amlodipine",
+              ],
+              [
+                "Pre-diabetes",
+                "2025",
+                '<span class="wf-badge orange">Active</span>',
+                "HbA1c 6.1%, on Metformin",
+              ],
+              [
+                "Malaria",
+                "2020",
+                '<span class="wf-badge green">Resolved</span>',
+                "P. falciparum, treated",
+              ],
+              [
+                "Typhoid Fever",
+                "2018",
+                '<span class="wf-badge green">Resolved</span>',
+                "Full recovery",
+              ],
+            ],
           )}
         </div>
 
@@ -82,10 +102,15 @@ ready(() => {
             <button class="wf-btn small">✏ Edit</button>
           </div>
           ${renderTable(
-            ['Procedure', 'Date', 'Facility', 'Notes'],
+            ["Procedure", "Date", "Facility", "Notes"],
             [
-              ['Appendectomy', 'Mar 2015', 'Tikur Anbessa Hospital', 'Laparoscopic, no complications'],
-            ]
+              [
+                "Appendectomy",
+                "Mar 2015",
+                "Tikur Anbessa Hospital",
+                "Laparoscopic, no complications",
+              ],
+            ],
           )}
           <button class="wf-btn small" style="margin-top:8px;">+ Add Entry</button>
         </div>
@@ -99,13 +124,13 @@ ready(() => {
             <button class="wf-btn small">✏ Edit</button>
           </div>
           ${renderTable(
-            ['Relation', 'Condition', 'Notes'],
+            ["Relation", "Condition", "Notes"],
             [
-              ['Father', 'Type 2 Diabetes', 'Diagnosed age 50, on insulin'],
-              ['Father', 'Hypertension', 'On medication'],
-              ['Mother', 'Asthma', 'Childhood onset, managed'],
-              ['Brother', 'None reported', '—'],
-            ]
+              ["Father", "Type 2 Diabetes", "Diagnosed age 50, on insulin"],
+              ["Father", "Hypertension", "On medication"],
+              ["Mother", "Asthma", "Childhood onset, managed"],
+              ["Brother", "None reported", "—"],
+            ],
           )}
           <button class="wf-btn small" style="margin-top:8px;">+ Add Entry</button>
         </div>
@@ -133,11 +158,21 @@ ready(() => {
             <button class="wf-btn small">✏ Edit</button>
           </div>
           ${renderTable(
-            ['Condition', 'Onset', 'Status', 'Managing Provider'],
+            ["Condition", "Onset", "Status", "Managing Provider"],
             [
-              ['Hypertension Stage 1', 'Jun 2024', '<span class="wf-badge orange">Active</span>', 'Dr. Solomon T.'],
-              ['Pre-diabetes', 'Jan 2025', '<span class="wf-badge orange">Monitoring</span>', 'Dr. Solomon T.'],
-            ]
+              [
+                "Hypertension Stage 1",
+                "Jun 2024",
+                '<span class="wf-badge orange">Active</span>',
+                "Dr. Solomon T.",
+              ],
+              [
+                "Pre-diabetes",
+                "Jan 2025",
+                '<span class="wf-badge orange">Monitoring</span>',
+                "Dr. Solomon T.",
+              ],
+            ],
           )}
           <button class="wf-btn small" style="margin-top:8px;">+ Add Condition</button>
         </div>
@@ -148,11 +183,21 @@ ready(() => {
             <button class="wf-btn small">✏ Edit</button>
           </div>
           ${renderTable(
-            ['Allergen', 'Type', 'Reaction', 'Severity'],
+            ["Allergen", "Type", "Reaction", "Severity"],
             [
-              ['Penicillin', 'Drug', 'Rash, urticaria', '<span class="wf-badge red">Severe</span>'],
-              ['Peanuts', 'Food', 'Oral itching, swelling', '<span class="wf-badge orange">Moderate</span>'],
-            ]
+              [
+                "Penicillin",
+                "Drug",
+                "Rash, urticaria",
+                '<span class="wf-badge red">Severe</span>',
+              ],
+              [
+                "Peanuts",
+                "Food",
+                "Oral itching, swelling",
+                '<span class="wf-badge orange">Moderate</span>',
+              ],
+            ],
           )}
           <button class="wf-btn small" style="margin-top:8px;">+ Add Allergy</button>
         </div>
@@ -165,13 +210,48 @@ ready(() => {
           <button class="wf-btn small">✏ Edit</button>
         </div>
         ${renderTable(
-          ['Drug', 'Dosage', 'Frequency', 'Prescribed By', 'Start Date', 'Status'],
           [
-            ['Amlodipine', '5mg tablets', 'Once daily', 'Dr. Solomon T.', '15 Jun 2024', '<span class="wf-badge green">Active</span>'],
-            ['Metformin', '500mg tablets', 'Twice daily', 'Dr. Solomon T.', '20 Jan 2025', '<span class="wf-badge green">Active</span>'],
-            ['Ibuprofen', '400mg tablets', 'PRN', 'Dr. Solomon T.', '08 Apr 2026', '<span class="wf-badge green">Active</span>'],
-            ['Amoxicillin', '500mg capsules', 'TDS x 5 days', 'Dr. Solomon T.', '20 Feb 2026', '<span class="wf-badge gray">Completed</span>'],
-          ]
+            "Drug",
+            "Dosage",
+            "Frequency",
+            "Prescribed By",
+            "Start Date",
+            "Status",
+          ],
+          [
+            [
+              "Amlodipine",
+              "5mg tablets",
+              "Once daily",
+              "Dr. Solomon T.",
+              "15 Jun 2024",
+              '<span class="wf-badge green">Active</span>',
+            ],
+            [
+              "Metformin",
+              "500mg tablets",
+              "Twice daily",
+              "Dr. Solomon T.",
+              "20 Jan 2025",
+              '<span class="wf-badge green">Active</span>',
+            ],
+            [
+              "Ibuprofen",
+              "400mg tablets",
+              "PRN",
+              "Dr. Solomon T.",
+              "08 Apr 2026",
+              '<span class="wf-badge green">Active</span>',
+            ],
+            [
+              "Amoxicillin",
+              "500mg capsules",
+              "TDS x 5 days",
+              "Dr. Solomon T.",
+              "20 Feb 2026",
+              '<span class="wf-badge gray">Completed</span>',
+            ],
+          ],
         )}
       </div>
 
@@ -179,50 +259,294 @@ ready(() => {
       <div class="wf-card">
         <div class="card-title">Encounter History</div>
         ${renderTable(
-          ['Date', 'Branch', 'Practitioner', 'Visit Type', 'Diagnosis', 'Status'],
           [
-            ['08 Apr 2026', 'Main Branch', 'Dr. Solomon T.', '<span class="wf-badge blue">Walk-in</span>', 'Tension headache; HTN (controlled)', '<span class="wf-badge green">Completed</span>'],
-            ['15 Mar 2026', 'Main Branch', 'Dr. Alem B.', '<span class="wf-badge blue">Appointment</span>', 'Hypertension Stage 1', '<span class="wf-badge green">Completed</span>'],
-            ['20 Feb 2026', 'Main Branch', 'Dr. Solomon T.', '<span class="wf-badge blue">Walk-in</span>', 'URTI', '<span class="wf-badge green">Completed</span>'],
-            ['05 Jan 2026', 'Main Branch', 'Dr. Solomon T.', '<span class="wf-badge blue">Appointment</span>', 'Annual checkup', '<span class="wf-badge green">Completed</span>'],
+            "Date",
+            "Branch",
+            "Practitioner",
+            "Visit Type",
+            "Diagnosis",
+            "Status",
           ],
-          { clickable: true }
+          [
+            [
+              "08 Apr 2026",
+              "Main Branch",
+              "Dr. Solomon T.",
+              '<span class="wf-badge blue">Walk-in</span>',
+              "Tension headache; HTN (controlled)",
+              '<span class="wf-badge green">Completed</span>',
+            ],
+            [
+              "15 Mar 2026",
+              "Main Branch",
+              "Dr. Alem B.",
+              '<span class="wf-badge blue">Appointment</span>',
+              "Hypertension Stage 1",
+              '<span class="wf-badge green">Completed</span>',
+            ],
+            [
+              "20 Feb 2026",
+              "Main Branch",
+              "Dr. Solomon T.",
+              '<span class="wf-badge blue">Walk-in</span>',
+              "URTI",
+              '<span class="wf-badge green">Completed</span>',
+            ],
+            [
+              "05 Jan 2026",
+              "Main Branch",
+              "Dr. Solomon T.",
+              '<span class="wf-badge blue">Appointment</span>',
+              "Annual checkup",
+              '<span class="wf-badge green">Completed</span>',
+            ],
+          ],
+          { clickable: true },
         )}
+      </div>
+
+      <!-- Card Activation History -->
+      <div class="wf-card">
+        <div class="card-title">Card Activation History</div>
+        ${renderTable(
+          [
+            "Activation Date",
+            "Deactivation Date",
+            "Duration",
+            "Activated By",
+            "Status",
+          ],
+          [
+            [
+              "08 Apr 2026",
+              "—",
+              "14 days (active)",
+              "Walk-in (E-2026-0412)",
+              '<span class="wf-badge green">Active</span>',
+            ],
+            [
+              "15 Mar 2026",
+              "28 Mar 2026",
+              "13 days",
+              "Appointment (E-2026-0315)",
+              '<span class="wf-badge gray">Expired</span>',
+            ],
+            [
+              "20 Feb 2026",
+              "06 Mar 2026",
+              "14 days",
+              "Walk-in (E-2026-0220)",
+              '<span class="wf-badge gray">Expired</span>',
+            ],
+            [
+              "05 Jan 2026",
+              "19 Jan 2026",
+              "14 days",
+              "Appointment (E-2026-0105)",
+              '<span class="wf-badge gray">Expired</span>',
+            ],
+          ],
+        )}
+        <p class="text-small text-muted">Card validity period is configured per branch (default: 14 days). Each encounter activation creates a new card period.</p>
       </div>
 
       <!-- Lab Results History -->
       <div class="wf-card">
         <div class="card-title">Lab Results History</div>
         ${renderTable(
-          ['Date', 'Test', 'Result', 'Flag', 'Ordered By'],
+          ["Date", "Test", "Result", "Flag", "Ordered By", "Trend"],
           [
-            ['08 Apr 2026', 'Blood Glucose (Fasting)', '105 mg/dL', '<span class="wf-badge orange">Borderline</span>', 'Dr. Solomon T.'],
-            ['08 Apr 2026', 'Renal Function Panel', 'Normal', '<span class="wf-badge green">Normal</span>', 'Dr. Solomon T.'],
-            ['15 Mar 2026', 'CBC', 'Normal', '<span class="wf-badge green">Normal</span>', 'Dr. Alem B.'],
-            ['15 Mar 2026', 'HbA1c', '6.1%', '<span class="wf-badge orange">High</span>', 'Dr. Alem B.'],
-            ['15 Mar 2026', 'Lipid Profile', 'LDL 142 mg/dL', '<span class="wf-badge orange">High</span>', 'Dr. Alem B.'],
-          ]
+            [
+              "08 Apr 2026",
+              "Blood Glucose (Fasting)",
+              "105 mg/dL",
+              '<span class="wf-badge orange">Borderline</span>',
+              "Dr. Solomon T.",
+              '<button class="wf-btn small" onclick="showTrend()">View Trend 📈</button>',
+            ],
+            [
+              "08 Apr 2026",
+              "Renal Function Panel",
+              "Normal",
+              '<span class="wf-badge green">Normal</span>',
+              "Dr. Solomon T.",
+              '<button class="wf-btn small" onclick="showTrendRFT()">View Trend 📈</button>',
+            ],
+            [
+              "15 Mar 2026",
+              "CBC",
+              "Normal",
+              '<span class="wf-badge green">Normal</span>',
+              "Dr. Alem B.",
+              "—",
+            ],
+            [
+              "15 Mar 2026",
+              "HbA1c",
+              "6.1%",
+              '<span class="wf-badge orange">High</span>',
+              "Dr. Alem B.",
+              '<button class="wf-btn small" onclick="showTrendHbA1c()">View Trend 📈</button>',
+            ],
+            [
+              "15 Mar 2026",
+              "Lipid Profile",
+              "LDL 142 mg/dL",
+              '<span class="wf-badge orange">High</span>',
+              "Dr. Alem B.",
+              '<button class="wf-btn small" onclick="showTrendLipid()">View Trend 📈</button>',
+            ],
+          ],
         )}
+        <p class="text-small text-muted">"View Trend" is available for <strong>tracked</strong> lab tests with ≥2 historical results. Tracked tests are configured in Admin → Master Data.</p>
+
+        <!-- Trend Graph Panel (shown on View Trend click) -->
+        <div id="trend-panel" style="display:none;margin-top:12px;border:1.5px solid #90caf9;border-radius:4px;overflow:hidden;">
+          <div style="background:#e3f2fd;padding:8px 14px;display:flex;align-items:center;justify-content:space-between;">
+            <div style="font-weight:700;font-size:.88rem;color:#1565c0;">Blood Glucose (Fasting) — Trend <span class="wf-badge" style="font-size:.55rem;background:#e8f5e9;color:#2e7d32;">Tracked</span></div>
+            <button class="wf-btn small" onclick="document.getElementById('trend-panel').style.display='none'">Close</button>
+          </div>
+          <div style="padding:16px;background:#fafcff;">
+            <!-- Wireframe SVG trend graph -->
+            <svg viewBox="0 0 500 200" style="width:100%;max-width:500px;height:auto;font-family:'Architects Daughter',cursive;display:block;margin:0 auto;">
+              <!-- Reference range band -->
+              <rect x="60" y="40" width="420" height="80" fill="#e8f5e9" opacity="0.5" rx="2"/>
+              <text x="485" y="48" font-size="9" fill="#2e7d32" text-anchor="end">Normal: 70–100</text>
+              <!-- Axes -->
+              <line x1="60" y1="10" x2="60" y2="170" stroke="#999" stroke-width="1"/>
+              <line x1="60" y1="170" x2="480" y2="170" stroke="#999" stroke-width="1"/>
+              <!-- Y-axis labels -->
+              <text x="55" y="24" font-size="9" fill="#888" text-anchor="end">130</text>
+              <text x="55" y="54" font-size="9" fill="#888" text-anchor="end">110</text>
+              <text x="55" y="84" font-size="9" fill="#888" text-anchor="end">100</text>
+              <text x="55" y="124" font-size="9" fill="#888" text-anchor="end">80</text>
+              <text x="55" y="164" font-size="9" fill="#888" text-anchor="end">60</text>
+              <!-- X-axis labels -->
+              <text x="100" y="185" font-size="8" fill="#888" text-anchor="middle">Jan 2025</text>
+              <text x="200" y="185" font-size="8" fill="#888" text-anchor="middle">Jun 2025</text>
+              <text x="300" y="185" font-size="8" fill="#888" text-anchor="middle">Jan 2026</text>
+              <text x="400" y="185" font-size="8" fill="#888" text-anchor="middle">Mar 2026</text>
+              <text x="460" y="185" font-size="8" fill="#888" text-anchor="middle">Apr 2026</text>
+              <!-- Trend line -->
+              <polyline points="100,104 200,84 300,64 400,50 460,44" fill="none" stroke="#1565c0" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <!-- Data points -->
+              <circle cx="100" cy="104" r="5" fill="#2e7d32" stroke="#fff" stroke-width="1.5"/>
+              <text x="100" y="98" font-size="9" fill="#2e7d32" text-anchor="middle" font-weight="bold">82</text>
+              <circle cx="200" cy="84" r="5" fill="#2e7d32" stroke="#fff" stroke-width="1.5"/>
+              <text x="200" y="78" font-size="9" fill="#2e7d32" text-anchor="middle" font-weight="bold">90</text>
+              <circle cx="300" cy="64" r="5" fill="#e65100" stroke="#fff" stroke-width="1.5"/>
+              <text x="300" y="58" font-size="9" fill="#e65100" text-anchor="middle" font-weight="bold">98</text>
+              <circle cx="400" cy="50" r="5" fill="#e65100" stroke="#fff" stroke-width="1.5"/>
+              <text x="400" y="44" font-size="9" fill="#e65100" text-anchor="middle" font-weight="bold">102</text>
+              <circle cx="460" cy="44" r="5" fill="#c62828" stroke="#fff" stroke-width="1.5"/>
+              <text x="460" y="38" font-size="9" fill="#c62828" text-anchor="middle" font-weight="bold">105</text>
+            </svg>
+            <div style="text-align:center;margin-top:8px;font-size:.75rem;color:#888;">mg/dL over time — green = normal range, orange/red = outside range</div>
+          </div>
+          <!-- Raw data below graph -->
+          <div style="padding:8px 14px;border-top:1px solid #ddd;background:#f8fbff;">
+            ${renderTable(
+              ["Date", "Result", "Flag", "Practitioner"],
+              [
+                [
+                  "08 Apr 2026",
+                  "<strong>105</strong> mg/dL",
+                  '<span class="wf-badge" style="font-size:.55rem;background:#ffebee;color:#c62828;">High</span>',
+                  "Dr. Solomon T.",
+                ],
+                [
+                  "15 Mar 2026",
+                  "<strong>102</strong> mg/dL",
+                  '<span class="wf-badge" style="font-size:.55rem;background:#fff3e0;color:#e65100;">Borderline</span>',
+                  "Dr. Alem B.",
+                ],
+                [
+                  "05 Jan 2026",
+                  "<strong>98</strong> mg/dL",
+                  '<span class="wf-badge green" style="font-size:.55rem;">Normal</span>',
+                  "Dr. Solomon T.",
+                ],
+                [
+                  "15 Jun 2025",
+                  "<strong>90</strong> mg/dL",
+                  '<span class="wf-badge green" style="font-size:.55rem;">Normal</span>',
+                  "Dr. Solomon T.",
+                ],
+                [
+                  "20 Jan 2025",
+                  "<strong>82</strong> mg/dL",
+                  '<span class="wf-badge green" style="font-size:.55rem;">Normal</span>',
+                  "Dr. Solomon T.",
+                ],
+              ],
+            )}
+          </div>
+        </div>
       </div>
 
       <!-- Version History -->
       <div class="wf-card">
         <div class="card-title">Profile Change History</div>
         ${renderTable(
-          ['Date/Time', 'Changed By', 'Encounter', 'Section', 'Summary'],
+          ["Date/Time", "Changed By", "Encounter", "Section", "Summary"],
           [
-            ['08 Apr 2026, 10:45', 'Dr. Solomon T.', 'E-2026-0412', 'Medications', 'Added Ibuprofen 400mg PRN'],
-            ['15 Mar 2026, 11:20', 'Dr. Alem B.', 'E-2026-0315', 'Problem List', 'Updated HTN status to "controlled"'],
-            ['20 Jan 2025, 09:30', 'Dr. Solomon T.', 'E-2025-0120', 'Medications', 'Added Metformin 500mg BID'],
-            ['20 Jan 2025, 09:30', 'Dr. Solomon T.', 'E-2025-0120', 'Problem List', 'Added Pre-diabetes'],
-            ['15 Jun 2024, 14:15', 'Dr. Solomon T.', 'E-2024-0615', 'Allergies', 'Added Penicillin allergy (severe)'],
-          ]
+            [
+              "08 Apr 2026, 10:45",
+              "Dr. Solomon T.",
+              "E-2026-0412",
+              "Medications",
+              "Added Ibuprofen 400mg PRN",
+            ],
+            [
+              "15 Mar 2026, 11:20",
+              "Dr. Alem B.",
+              "E-2026-0315",
+              "Problem List",
+              'Updated HTN status to "controlled"',
+            ],
+            [
+              "20 Jan 2025, 09:30",
+              "Dr. Solomon T.",
+              "E-2025-0120",
+              "Medications",
+              "Added Metformin 500mg BID",
+            ],
+            [
+              "20 Jan 2025, 09:30",
+              "Dr. Solomon T.",
+              "E-2025-0120",
+              "Problem List",
+              "Added Pre-diabetes",
+            ],
+            [
+              "15 Jun 2024, 14:15",
+              "Dr. Solomon T.",
+              "E-2024-0615",
+              "Allergies",
+              "Added Penicillin allergy (severe)",
+            ],
+          ],
         )}
       </div>
       `;
-    }
-  });
-});
-</script>
-</body>
+
+            window.showTrend = function () {
+              document.getElementById("trend-panel").style.display = "block";
+              document
+                .getElementById("trend-panel")
+                .scrollIntoView({ behavior: "smooth" });
+            };
+            window.showTrendRFT =
+              window.showTrendHbA1c =
+              window.showTrendLipid =
+                function () {
+                  alert(
+                    "Trend graph would open for this tracked test (wireframe shows FBS as example).",
+                  );
+                };
+          },
+        });
+      });
+    </script>
+  </body>
 </html>

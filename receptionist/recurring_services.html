@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>DocuMed — Recurring Services Tracker</title>
+    <link rel="stylesheet" href="../wireframe.css" />
+    <script src="../wireframe.js"></script>
+  </head>
+  <body>
+    <script>
+      ready(() => {
+        renderPageShell({
+          title: "Recurring Services Tracker",
+          role: "receptionist",
+          activeId: "recurring_services",
+          screenId: "SCR_recurring_services",
+          workflow: "Recurring Special Service Flow",
+          userName: "Hana G. (Receptionist)",
+          content: function (main) {
+            main.innerHTML = `
+      <h2 class="page-title">Recurring Services Tracker</h2>
+      <p class="text-small text-muted mb-2">Track and manage recurring special service series. On check-in, the system validates upfront payment: if paid, routes directly to the Nurse queue; if not paid, routes to Finance first.</p>
+
+      <!-- Summary Cards -->
+      <div class="wf-grid-4" style="margin-bottom:16px;">
+        <div class="wf-card" style="text-align:center;padding:16px;">
+          <div style="font-size:.75rem;color:#888;text-transform:uppercase;letter-spacing:.5px;">Active Series</div>
+          <div style="font-size:2rem;font-family:'Architects Daughter',cursive;color:#1565c0;">3</div>
+        </div>
+        <div class="wf-card" style="text-align:center;padding:16px;">
+          <div style="font-size:.75rem;color:#888;text-transform:uppercase;letter-spacing:.5px;">Sessions Due Today</div>
+          <div style="font-size:2rem;font-family:'Architects Daughter',cursive;color:#e65100;">2</div>
+        </div>
+        <div class="wf-card" style="text-align:center;padding:16px;">
+          <div style="font-size:.75rem;color:#888;text-transform:uppercase;letter-spacing:.5px;">Completed Today</div>
+          <div style="font-size:2rem;font-family:'Architects Daughter',cursive;color:#2e7d32;">1</div>
+        </div>
+        <div class="wf-card" style="text-align:center;padding:16px;">
+          <div style="font-size:.75rem;color:#888;text-transform:uppercase;letter-spacing:.5px;">Missed Sessions</div>
+          <div style="font-size:2rem;font-family:'Architects Daughter',cursive;color:#c62828;">0</div>
+        </div>
+      </div>
+
+      <!-- Calendar View -->
+      <div class="wf-card" style="margin-bottom:16px;">
+        <div class="card-title flex-between">
+          <span>Weekly Calendar — 21–27 Apr 2026</span>
+          <div class="flex gap-1">
+            <button class="wf-btn small">◀ Prev</button>
+            <button class="wf-btn small primary">Today</button>
+            <button class="wf-btn small">Next ▶</button>
+          </div>
+        </div>
+        <table style="width:100%;border-collapse:collapse;font-size:.82rem;">
+          <thead>
+            <tr style="border-bottom:1.5px solid #ccc;background:#fafafa;">
+              <th style="padding:6px 10px;width:14.3%;">Mon 21</th>
+              <th style="padding:6px 10px;width:14.3%;background:#e3f2fd;border:2px solid #1565c0;border-radius:3px;"><strong>Tue 22 (Today)</strong></th>
+              <th style="padding:6px 10px;width:14.3%;">Wed 23</th>
+              <th style="padding:6px 10px;width:14.3%;">Thu 24</th>
+              <th style="padding:6px 10px;width:14.3%;">Fri 25</th>
+              <th style="padding:6px 10px;width:14.3%;">Sat 26</th>
+              <th style="padding:6px 10px;width:14.3%;">Sun 27</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="vertical-align:top;">
+              <td style="padding:6px;border-right:1px solid #eee;">
+                <div style="background:#e8f5e9;padding:3px 6px;border-radius:2px;margin-bottom:4px;font-size:.72rem;">
+                  <strong>AK</strong> INJ-OWN <span class="wf-badge green" style="font-size:.5rem;">Done</span>
+                </div>
+                <div style="background:#e3f2fd;padding:3px 6px;border-radius:2px;font-size:.72rem;">
+                  <strong>FA</strong> WND-WI <span class="wf-badge green" style="font-size:.5rem;">Done</span>
+                </div>
+              </td>
+              <td style="padding:6px;border-right:1px solid #eee;background:#f8fbff;">
+                <div style="background:#fff3e0;padding:3px 6px;border-radius:2px;margin-bottom:4px;font-size:.72rem;">
+                  <strong>AK</strong> INJ-OWN <span class="wf-badge orange" style="font-size:.5rem;">Due</span>
+                </div>
+                <div style="background:#fff3e0;padding:3px 6px;border-radius:2px;font-size:.72rem;">
+                  <strong>FA</strong> WND-WI <span class="wf-badge orange" style="font-size:.5rem;">Due</span>
+                </div>
+              </td>
+              <td style="padding:6px;border-right:1px solid #eee;">
+                <div style="background:#f5f5f5;padding:3px 6px;border-radius:2px;margin-bottom:4px;font-size:.72rem;">
+                  <strong>AK</strong> INJ-OWN
+                </div>
+                <div style="background:#f5f5f5;padding:3px 6px;border-radius:2px;font-size:.72rem;">
+                  <strong>FA</strong> WND-WI
+                </div>
+              </td>
+              <td style="padding:6px;border-right:1px solid #eee;">
+                <div style="background:#f5f5f5;padding:3px 6px;border-radius:2px;margin-bottom:4px;font-size:.72rem;">
+                  <strong>AK</strong> INJ-OWN
+                </div>
+                <div style="background:#f5f5f5;padding:3px 6px;border-radius:2px;font-size:.72rem;">
+                  <strong>FA</strong> WND-WI
+                </div>
+              </td>
+              <td style="padding:6px;border-right:1px solid #eee;">
+                <div style="background:#f5f5f5;padding:3px 6px;border-radius:2px;font-size:.72rem;">
+                  <strong>AK</strong> INJ-OWN <span style="font-size:.55rem;color:#888;">(last)</span>
+                </div>
+              </td>
+              <td style="padding:6px;border-right:1px solid #eee;color:#ccc;text-align:center;font-size:.7rem;">—</td>
+              <td style="padding:6px;color:#ccc;text-align:center;font-size:.7rem;">—</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="text-small text-muted" style="margin-top:8px;">Legend: <span style="background:#e8f5e9;padding:2px 6px;border-radius:2px;font-size:.7rem;">Completed</span> &middot; <span style="background:#fff3e0;padding:2px 6px;border-radius:2px;font-size:.7rem;">Due Today</span> &middot; <span style="background:#ffebee;padding:2px 6px;border-radius:2px;font-size:.7rem;">Missed</span> &middot; <span style="background:#f5f5f5;padding:2px 6px;border-radius:2px;font-size:.7rem;">Upcoming</span></p>
+      </div>
+
+      <!-- Active Recurring Series -->
+      <div class="wf-form-section">
+        <div class="section-title flex-between">
+          <span>Active Recurring Series</span>
+          <span class="wf-badge">3 series</span>
+        </div>
+        ${renderTable(
+          [
+            "Series",
+            "Patient",
+            "MRN",
+            "Service",
+            "Schedule",
+            "Progress",
+            "Next Session",
+            "Paid",
+            "Status",
+            "Actions",
+          ],
+          [
+            [
+              "RS-001",
+              "<strong>Almaz Kidane</strong>",
+              "MRN-0120",
+              "Injection (Patient Drug)",
+              "Daily &times; 5 days",
+              "<span style=\"font-family:'Architects Daughter',cursive;font-size:1rem;\">2/5</span>",
+              "<strong>Today</strong> (22 Apr)",
+              '<span class="wf-badge green">ETB 400</span>',
+              '<span class="wf-badge orange">Session Due</span>',
+              '<button class="wf-btn small primary" onclick="showCheckin()">Check In</button> <a href="../nurse/recurring_series_detail.html"><button class="wf-btn small">View</button></a>',
+            ],
+            [
+              "RS-002",
+              "<strong>Fatima Ali</strong>",
+              "MRN-0078",
+              "Wound Dressing (Walk-In)",
+              "Daily &times; 5 days",
+              "<span style=\"font-family:'Architects Daughter',cursive;font-size:1rem;\">1/5</span>",
+              "<strong>Today</strong> (22 Apr)",
+              '<span class="wf-badge green">ETB 750</span>',
+              '<span class="wf-badge orange">Session Due</span>',
+              '<button class="wf-btn small primary" onclick="showCheckin()">Check In</button> <a href="../nurse/recurring_series_detail.html"><button class="wf-btn small">View</button></a>',
+            ],
+            [
+              "RS-003",
+              "<strong>Dawit Tadesse</strong>",
+              "MRN-0023",
+              "Injection (Patient Drug)",
+              "Mon/Wed/Fri &times; 2 wks",
+              "<span style=\"font-family:'Architects Daughter',cursive;font-size:1rem;\">3/6</span>",
+              "Wed 23 Apr",
+              '<span class="wf-badge green">ETB 480</span>',
+              '<span class="wf-badge blue">On Track</span>',
+              '<a href="../nurse/recurring_series_detail.html"><button class="wf-btn small">View</button></a>',
+            ],
+          ],
+          { clickable: true },
+        )}
+      </div>
+
+      <!-- Check-in inline panel -->
+      <div class="wf-inline-panel" id="checkin-panel" style="display:none;margin-top:12px;">
+        <div class="section-title">Recurring Session Check-In</div>
+        <div class="wf-kv-grid">
+          <div class="wf-kv"><div class="kv-label">Patient</div><div class="kv-value"><strong>Almaz Kidane</strong> (MRN-0120)</div></div>
+          <div class="wf-kv"><div class="kv-label">Service</div><div class="kv-value">Injection (Patient Drug) — INJ-OWN</div></div>
+          <div class="wf-kv"><div class="kv-label">Series</div><div class="kv-value">RS-001 — Daily &times; 5 days (Session <strong>3 of 5</strong>)</div></div>
+          <div class="wf-kv"><div class="kv-label">Payment</div><div class="kv-value"><span class="wf-badge green">Paid upfront — ETB 400.00</span> No per-session payment required.</div></div>
+        </div>
+        <div class="wf-action-bar" style="margin-top:10px;">
+          <button class="wf-btn primary" onclick="confirmCheckin()">Confirm Check-In → Nurse Queue</button>
+          <button class="wf-btn" onclick="document.getElementById('checkin-panel').style.display='none'">Cancel</button>
+        </div>
+        <div style="margin-top:8px;padding:8px 12px;background:#e8f5e9;border-radius:3px;display:none;" id="checkin-success">
+          <span style="color:#2e7d32;font-size:.85rem;font-weight:600;">✓ Payment verified. Session checked in. Nursing order sent to Nurse queue (Session 3/5).</span>
+        </div>
+
+        <!-- Payment Pending variant (shown when upfront not yet paid) -->
+        <div style="margin-top:16px;padding:10px 14px;background:#fff3e0;border-radius:4px;border:1px solid #e65100;">
+          <div style="font-weight:700;color:#e65100;margin-bottom:6px;">⚠ Payment Pending — Example: Fatima Ali (RS-002)</div>
+          <div class="wf-kv-grid" style="margin-bottom:8px;">
+            <div class="wf-kv"><div class="kv-label">Patient</div><div class="kv-value"><strong>Fatima Ali</strong> (MRN-0078)</div></div>
+            <div class="wf-kv"><div class="kv-label">Service</div><div class="kv-value">Wound Dressing (Walk-In) — WND-WI</div></div>
+            <div class="wf-kv"><div class="kv-label">Series</div><div class="kv-value">RS-002 — Daily &times; 5 days (Session <strong>2 of 5</strong>)</div></div>
+            <div class="wf-kv"><div class="kv-label">Payment</div><div class="kv-value"><span class="wf-badge red">Not Paid</span> Upfront payment of ETB 750.00 has not been collected.</div></div>
+          </div>
+          <div class="wf-action-bar">
+            <button class="wf-btn" style="background:#e65100;color:#fff;border-color:#e65100;" onclick="sendToFinance()">Check In → Finance Queue (Payment Required)</button>
+            <button class="wf-btn">Cancel</button>
+          </div>
+          <div style="margin-top:8px;padding:8px 12px;background:#fff8e1;border-radius:3px;display:none;" id="finance-success">
+            <span style="color:#e65100;font-size:.85rem;font-weight:600;">→ Sent to Finance queue for payment. Once paid, session will automatically appear on the Nurse queue.</span>
+          </div>
+          <p class="text-small text-muted" style="margin-top:6px;">When upfront payment is not confirmed, the check-in routes to <strong>Finance</strong> first. After payment is collected, the session automatically appears on the <strong>Nurse queue</strong> for administration.</p>
+        </div>
+      </div>
+    `;
+          },
+        });
+
+        window.showCheckin = function () {
+          document.getElementById("checkin-panel").style.display = "block";
+          document.getElementById("checkin-success").style.display = "none";
+          document
+            .getElementById("checkin-panel")
+            .scrollIntoView({ behavior: "smooth" });
+        };
+        window.confirmCheckin = function () {
+          document.getElementById("checkin-success").style.display = "block";
+        };
+        window.sendToFinance = function () {
+          document.getElementById("finance-success").style.display = "block";
+        };
+      });
+    </script>
+  </body>
+</html>

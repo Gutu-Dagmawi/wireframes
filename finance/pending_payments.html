@@ -16,121 +16,234 @@
           screenId: "SCR_pending_payments_queue",
           workflow: "Payment Processing Flow",
           userName: "Kidist M. (Finance)",
-          content: `
-      <h2 class="page-title">Pending Payments Queue</h2>
-
-      <div class="wf-summary-bar">
-        <div class="summary-item"><strong>Total Pending:</strong> 7 payments</div>
-        <div class="summary-item"><strong>Total Amount:</strong> ETB 4,500.00</div>
+        content: `
+      <div class="wf-tabs">
+        <div class="tab active" data-tab="payments">Pending Payments</div>
+        <div class="tab" data-tab="credit">Credit Accounts</div>
       </div>
 
-      <div class="wf-filter-bar">
-        <div class="filter-group">
-          <label>Payment Type:</label>
-          <select class="wf-input" style="width:180px;">
-            <option>All Types</option>
-            <option>Card Activation</option>
-            <option>Lab Order</option>
-            <option>Procedure</option>
-            <option>Consultation</option>
-            <option>Special Service</option>
-          </select>
+      <div id="payments" class="wf-tab-content active">
+        <h2 class="page-title">Pending Payments Queue</h2>
+        <div class="wf-summary-bar">
+          <div class="summary-item"><strong>Total Pending:</strong> 7 payments</div>
+          <div class="summary-item"><strong>Total Amount:</strong> ETB 4,500.00</div>
         </div>
-        <div class="filter-group">
-          <label>Search:</label>
-          <input type="text" class="wf-input" placeholder="Patient name or MRN..." style="width:200px;">
+
+        <div class="wf-filter-bar">
+          <div class="filter-group">
+            <label>Payment Type:</label>
+            <select class="wf-input" style="width:180px;">
+              <option>All Types</option>
+              <option>Card Activation</option>
+              <option>Lab Order</option>
+              <option>Procedure</option>
+              <option>Consultation</option>
+              <option>Special Service</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label>Search:</label>
+            <input type="text" class="wf-input" placeholder="Patient name or MRN..." style="width:200px;">
+          </div>
         </div>
+
+        ${renderTable(
+          [
+            "MRN",
+            "Patient Name",
+            "Payment Type",
+            "Items",
+            "Amount Due",
+            "Requested By",
+            "Timestamp",
+            "Status",
+          ],
+          [
+            [
+              "MRN-0015",
+              "Abebe Kebede <span style='display:none;'>🔴 Red</span>",
+              '<span class="wf-badge">Card Activation</span>',
+              "Walk-in card activation",
+              "ETB 200.00",
+              "Auto (System)",
+              "10 Apr, 09:05",
+              '<span class="wf-badge orange">Pending</span>',
+            ],
+            [
+              "MRN-0078",
+              "Fatima Ali <span style='display:none;'>🟡 Yellow</span>",
+              '<span class="wf-badge">Card Activation</span>',
+              "Appointment card activation",
+              "ETB 150.00",
+              "Auto (System)",
+              "10 Apr, 09:12",
+              '<span class="wf-badge orange">Pending</span>',
+            ],
+            [
+              "MRN-0091",
+              "Meron Hailu <span style='display:none;'>🔴 Red</span>",
+              '<span class="wf-badge blue">Lab Order</span>',
+              "CBC, Lipid Profile (2 items)",
+              "ETB 850.00",
+              "Dr. Solomon T.",
+              "10 Apr, 09:30",
+              '<span class="wf-badge orange">Pending</span>',
+            ],
+            [
+              "MRN-0023",
+              "Dawit Tadesse <span style='display:none;'>🟢 Green</span>",
+              '<span class="wf-badge blue">Lab Order</span>',
+              "Blood Glucose, HbA1c (2 items)",
+              "ETB 600.00",
+              "Dr. Alem B.",
+              "10 Apr, 09:45",
+              '<span class="wf-badge orange">Pending</span>',
+            ],
+            [
+              "MRN-0103",
+              "Yonas Gebre",
+              '<span class="wf-badge green">Procedure</span>',
+              "Injection, Wound Dressing (2 items)",
+              "ETB 350.00",
+              "Dr. Solomon T.",
+              "10 Apr, 10:00",
+              '<span class="wf-badge orange">Pending</span>',
+            ],
+            [
+              "MRN-0042",
+              "Tigist Mekonnen <span style='display:none;'>🟡 Yellow</span>",
+              '<span class="wf-badge gray">Consultation</span>',
+              "Consultation Fee (Specialist)",
+              "ETB 500.00",
+              "Auto (System)",
+              "10 Apr, 10:15",
+              '<span class="wf-badge orange">Pending</span>',
+            ],
+            [
+              "MRN-0078",
+              "Fatima Ali <span style='display:none;'>🟡 Yellow</span>",
+              '<span class="wf-badge" style="background:#e8f5e9;color:#2e7d32;">Special Service</span>',
+              "BP Check, Blood Sugar Check (2 items)",
+              "ETB 150.00",
+              "Hana G. (Receptionist)",
+              "10 Apr, 10:25",
+              '<span class="wf-badge orange">Pending</span>',
+            ],
+          ],
+          { clickable: true },
+        )}
+        <p class="text-small text-muted">Click a row to open <a href="payment_detail.html">Payment Detail</a>. Queue auto-refreshes.</p>
       </div>
 
-      ${renderTable(
-        [
-          "MRN",
-          "Patient Name",
-          "Payment Type",
-          "Items",
-          "Amount Due",
-          "Requested By",
-          "Timestamp",
-          "Status",
-        ],
-        [
-          [
-            "MRN-0015",
-            "Abebe Kebede",
-            '<span class="wf-badge">Card Activation</span>',
-            "Walk-in card activation",
-            "ETB 200.00",
-            "Auto (System)",
-            "10 Apr, 09:05",
-            '<span class="wf-badge orange">Pending</span>',
-          ],
-          [
-            "MRN-0078",
-            "Fatima Ali",
-            '<span class="wf-badge">Card Activation</span>',
-            "Appointment card activation",
-            "ETB 150.00",
-            "Auto (System)",
-            "10 Apr, 09:12",
-            '<span class="wf-badge orange">Pending</span>',
-          ],
-          [
-            "MRN-0091",
-            "Meron Hailu",
-            '<span class="wf-badge blue">Lab Order</span>',
-            "CBC, Lipid Profile (2 items)",
-            "ETB 850.00",
-            "Dr. Solomon T.",
-            "10 Apr, 09:30",
-            '<span class="wf-badge orange">Pending</span>',
-          ],
-          [
-            "MRN-0023",
-            "Dawit Tadesse",
-            '<span class="wf-badge blue">Lab Order</span>',
-            "Blood Glucose, HbA1c (2 items)",
-            "ETB 600.00",
-            "Dr. Alem B.",
-            "10 Apr, 09:45",
-            '<span class="wf-badge orange">Pending</span>',
-          ],
-          [
-            "MRN-0103",
-            "Yonas Gebre",
-            '<span class="wf-badge green">Procedure</span>',
-            "IM Injection, Wound Dressing (2 items)",
-            "ETB 350.00",
-            "Dr. Solomon T.",
-            "10 Apr, 10:00",
-            '<span class="wf-badge orange">Pending</span>',
-          ],
-          [
-            "MRN-0042",
-            "Tigist Mekonnen",
-            '<span class="wf-badge gray">Consultation</span>',
-            "Consultation Fee (Specialist)",
-            "ETB 500.00",
-            "Auto (System)",
-            "10 Apr, 10:15",
-            '<span class="wf-badge orange">Pending</span>',
-          ],
-          [
-            "MRN-0078",
-            "Fatima Ali",
-            '<span class="wf-badge" style="background:#e8f5e9;color:#2e7d32;">Special Service</span>',
-            "BP Check, Blood Sugar Check (2 items)",
-            "ETB 150.00",
-            "Hana G. (Receptionist)",
-            "10 Apr, 10:25",
-            '<span class="wf-badge orange">Pending</span>',
-          ],
-        ],
-        { clickable: true },
-      )}
+      <div id="credit" class="wf-tab-content">
+        <h2 class="page-title">Credit Accounts Management</h2>
+        <div class="wf-summary-bar" style="background:#e3f2fd;border-color:#bbdefb;">
+          <div class="summary-item"><strong>Total Credit Patients:</strong> 124</div>
+          <div class="summary-item"><strong>Individual:</strong> 42</div>
+          <div class="summary-item"><strong>Corporate:</strong> 82</div>
+          <div class="summary-item"><strong>Exceeded Limits:</strong> <span style="color:#c62828;font-weight:700;">8</span></div>
+        </div>
 
-      <p class="text-small text-muted">Click a row to open <a href="payment_detail.html">Payment Detail</a> with itemised breakdown. All amounts are auto-populated from admin-configured prices. Queue auto-refreshes.</p>
+        <div class="wf-filter-bar">
+          <div class="filter-group">
+            <label>Account Type:</label>
+            <select class="wf-input" style="width:180px;">
+              <option>All Types</option>
+              <option>Individual</option>
+              <option>Corporate</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label>Organization:</label>
+            <select class="wf-input" style="width:180px;">
+              <option>All Organizations</option>
+              <option>Commercial Bank of Ethiopia (CBE)</option>
+              <option>Ethiopian Airlines</option>
+              <option>Safaricom ET</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label>Search:</label>
+            <input type="text" class="wf-input" placeholder="Patient name or MRN..." style="width:200px;">
+          </div>
+        </div>
+
+        ${renderTable(
+          ["MRN", "Patient Name", "Account Type", "Organization / Guarantor", "Credit Limit", "Used", "Remaining", "Status", ""],
+          [
+            [
+              "MRN-1045",
+              "Amanuel B.",
+              '<span class="wf-badge blue" style="font-size:.6rem;">Corporate</span>',
+              "CBE",
+              "ETB 10,000",
+              "ETB 12,450",
+              '<span style="color:#c62828;font-weight:700;">-ETB 2,450</span>',
+              '<span class="wf-badge red">Exceeded</span>',
+              '<a href="payment_detail.html"><button class="wf-btn small primary">Settle</button></a>',
+            ],
+            [
+              "MRN-0287",
+              "Hanna T.",
+              '<span class="wf-badge" style="font-size:.6rem;background:#f3e5f5;color:#7b1fa2;">Individual</span>',
+              "Self (personal guarantee)",
+              "ETB 5,000",
+              "ETB 5,800",
+              '<span style="color:#c62828;font-weight:700;">-ETB 800</span>',
+              '<span class="wf-badge red">Exceeded</span>',
+              '<a href="payment_detail.html"><button class="wf-btn small primary">Settle</button></a>',
+            ],
+            [
+              "MRN-0982",
+              "Zeleke T.",
+              '<span class="wf-badge blue" style="font-size:.6rem;">Corporate</span>',
+              "Ethiopian Airlines",
+              "ETB 25,000",
+              "ETB 18,200",
+              '<span style="color:#2e7d32;">ETB 6,800</span>',
+              '<span class="wf-badge green">Active</span>',
+              '<a href="payment_detail.html"><button class="wf-btn small primary">Settle</button></a>',
+            ],
+            [
+              "MRN-0415",
+              "Biruk M.",
+              '<span class="wf-badge" style="font-size:.6rem;background:#f3e5f5;color:#7b1fa2;">Individual</span>',
+              "Self (personal guarantee)",
+              "ETB 3,000",
+              "ETB 1,200",
+              '<span style="color:#2e7d32;">ETB 1,800</span>',
+              '<span class="wf-badge green">Active</span>',
+              '<a href="payment_detail.html"><button class="wf-btn small primary">Settle</button></a>',
+            ],
+            [
+              "MRN-1102",
+              "Salem K.",
+              '<span class="wf-badge blue" style="font-size:.6rem;">Corporate</span>',
+              "Safaricom ET",
+              "ETB 5,000",
+              "ETB 4,950",
+              '<span style="color:#e65100;font-weight:700;">ETB 50</span>',
+              '<span class="wf-badge orange">Near Limit</span>',
+              '<a href="payment_detail.html"><button class="wf-btn small primary">Settle</button></a>',
+            ],
+            [
+              "MRN-0633",
+              "Marta G.",
+              '<span class="wf-badge" style="font-size:.6rem;background:#f3e5f5;color:#7b1fa2;">Individual</span>',
+              "Self (personal guarantee)",
+              "ETB 8,000",
+              "ETB 2,100",
+              '<span style="color:#2e7d32;">ETB 5,900</span>',
+              '<span class="wf-badge green">Active</span>',
+              '<a href="payment_detail.html"><button class="wf-btn small primary">Settle</button></a>',
+            ],
+          ],
+        )}
+        <p class="text-small text-muted">Credit accounts can be <strong>individual</strong> (patient-requested with personal guarantee) or <strong>corporate</strong> (employer-sponsored with organizational agreement). When a credit limit is exceeded, additional charges must be paid upfront through the normal payment flow. Click <strong>Settle</strong> to record payments.</p>
+      </div>
     `,
         });
+        initTabs();
       });
     </script>
   </body>

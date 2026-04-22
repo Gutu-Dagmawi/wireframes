@@ -496,6 +496,16 @@ select.wf-input {
   border-left: 3px solid #333;
 }
 
+/* Priority Row Backgrounds */
+.wf-table tbody tr.priority-red { background: #ffebee !important; }
+.wf-table tbody tr.priority-red:hover { background: #ffcdd2 !important; }
+.wf-table tbody tr.priority-yellow { background: #fffde7 !important; }
+.wf-table tbody tr.priority-yellow:hover { background: #fff9c4 !important; }
+.wf-table tbody tr.priority-green { background: #e8f5e9 !important; }
+.wf-table tbody tr.priority-green:hover { background: #c8e6c9 !important; }
+.wf-table tbody tr.priority-blue { background: #e3f2fd !important; }
+.wf-table tbody tr.priority-blue:hover { background: #bbdefb !important; }
+
 /* ---------- Badge ---------- */
 .wf-badge {
   display: inline-block;

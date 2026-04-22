@@ -19,6 +19,30 @@
           content: `
       <h2 class="page-title">Nurse Dashboard</h2>
 
+      <!-- Recurring & External Order Alerts -->
+      <div class="wf-grid-2" style="margin-bottom:14px;">
+        <a href="recurring_orders.html" style="text-decoration:none;">
+          <div class="wf-card" style="padding:12px 16px;display:flex;align-items:center;gap:12px;border-left:4px solid #e65100;cursor:pointer;">
+            <div style="font-size:1.4rem;">🔄</div>
+            <div>
+              <div style="font-size:.85rem;font-weight:700;color:#333;">Recurring Orders Due Today</div>
+              <div style="font-size:.78rem;color:#888;">3 sessions pending administration</div>
+            </div>
+            <span class="wf-badge orange" style="margin-left:auto;font-size:.9rem;">3</span>
+          </div>
+        </a>
+        <a href="external_orders.html" style="text-decoration:none;">
+          <div class="wf-card" style="padding:12px 16px;display:flex;align-items:center;gap:12px;border-left:4px solid #1565c0;cursor:pointer;">
+            <div style="font-size:1.4rem;">📋</div>
+            <div>
+              <div style="font-size:.85rem;font-weight:700;color:#333;">Pending External Orders</div>
+              <div style="font-size:.78rem;color:#888;">2 orders awaiting validation</div>
+            </div>
+            <span class="wf-badge blue" style="margin-left:auto;font-size:.9rem;">2</span>
+          </div>
+        </a>
+      </div>
+
       <div class="wf-two-panel">
         <!-- Vitals Queue -->
         <div class="panel">
@@ -30,25 +54,25 @@
             ["Patient Name", "MRN", "Time Enlisted", "Assigned Practitioner"],
             [
               [
-                '<a href="vitals_triage.html"><strong>Abebe Kebede</strong></a>',
+                '<a href="vitals_triage.html"><strong>Abebe Kebede</strong></a> <span style="display:none;">🔴 Red</span>',
                 "MRN-0015",
                 "08:45",
                 "Dr. Solomon T.",
               ],
               [
-                '<a href="vitals_triage.html"><strong>Fatima Ali</strong></a>',
+                '<a href="vitals_triage.html"><strong>Fatima Ali</strong></a> <span style="display:none;">🟡 Yellow</span>',
                 "MRN-0078",
                 "09:12",
                 "Dr. Solomon T.",
               ],
               [
-                '<a href="vitals_triage.html"><strong>Dawit Tadesse</strong></a>',
+                '<a href="vitals_triage.html"><strong>Dawit Tadesse</strong></a> <span style="display:none;">🟢 Green</span>',
                 "MRN-0023",
                 "09:25",
                 "Dr. Alem B.",
               ],
               [
-                '<a href="vitals_triage.html"><strong>Yonas Gebre</strong></a>',
+                '<a href="vitals_triage.html"><strong>Yonas Gebre</strong></a> <span style="display:none;">🔵 Blue</span>',
                 "MRN-0103",
                 "09:40",
                 "Dr. Miriam K.",
@@ -75,28 +99,28 @@
             ],
             [
               [
-                '<a href="nursing_order_detail.html"><strong>Meron Hailu</strong></a>',
+                '<a href="nursing_order_detail.html"><strong>Meron Hailu</strong></a> <span style="display:none;">🔴 Red</span>',
                 "MRN-0091",
-                "IM Injection",
+                "Injection",
                 '<span class="wf-badge gray">Practitioner</span> Dr. Solomon T.',
                 "10:05",
               ],
               [
-                '<a href="nursing_order_detail.html"><strong>Tigist Mekonnen</strong></a>',
+                '<a href="nursing_order_detail.html"><strong>Tigist Mekonnen</strong></a> <span style="display:none;">🟡 Yellow</span>',
                 "MRN-0042",
                 "Wound Dressing, IV Infusion",
                 '<span class="wf-badge gray">Practitioner</span> Dr. Alem B.',
                 "10:20",
               ],
               [
-                '<a href="nursing_order_detail.html"><strong>Fatima Ali</strong></a>',
+                '<a href="nursing_order_detail.html"><strong>Fatima Ali</strong></a> <span style="display:none;">🟡 Yellow</span>',
                 "MRN-0078",
                 "Blood Pressure Check",
                 '<span class="wf-badge" style="background:#e8f5e9;color:#2e7d32;">Special Service</span> SSO-002',
                 "10:30",
               ],
               [
-                '<a href="nursing_order_detail.html"><strong>Henok Tadesse</strong></a>',
+                '<a href="nursing_order_detail.html"><strong>Henok Tadesse</strong></a> <span style="display:none;">🔵 Blue</span>',
                 "MRN-0056",
                 "Injection (Patient Drug)",
                 '<span class="wf-badge" style="background:#e8f5e9;color:#2e7d32;">Special Service</span> SSO-003',

@@ -16,7 +16,7 @@
           screenId: "SCR_encounter_outputs",
           workflow: "Document Delivery Flow",
           userName: "Hana G. (Receptionist)",
-          content: function(main) {
+          content: function (main) {
             main.innerHTML = `
       <h2 class="page-title">Encounter Outputs — Document Delivery</h2>
       <p class="text-small text-muted mb-2">Each document is listed as a separate printable item. A patient may have multiple documents from a single encounter. Read-only — the receptionist prints and hands to the patient.</p>
@@ -277,42 +277,53 @@
     `;
 
             // JS handlers
-            window.viewDoc = function(id) {
-              document.getElementById('output-preview').style.display = 'block';
-              document.getElementById('delivery-confirm').style.display = 'none';
-              document.getElementById('output-preview').scrollIntoView({ behavior: 'smooth' });
+            window.viewDoc = function (id) {
+              document.getElementById("output-preview").style.display = "block";
+              document.getElementById("delivery-confirm").style.display =
+                "none";
+              document
+                .getElementById("output-preview")
+                .scrollIntoView({ behavior: "smooth" });
             };
-            window.deliverDoc = function(btn) {
+            window.deliverDoc = function (btn) {
               if (btn) {
-                btn.textContent = 'Delivered';
+                btn.textContent = "Delivered";
                 btn.disabled = true;
-                btn.classList.remove('primary');
+                btn.classList.remove("primary");
                 // Update status badge in the same row
-                const row = btn.closest('tr');
+                const row = btn.closest("tr");
                 if (row) {
-                  const statusCell = row.querySelectorAll('td')[4];
-                  if (statusCell) statusCell.innerHTML = '<span class="wf-badge green">Delivered</span>';
+                  const statusCell = row.querySelectorAll("td")[4];
+                  if (statusCell)
+                    statusCell.innerHTML =
+                      '<span class="wf-badge green">Delivered</span>';
                 }
               }
-              document.getElementById('delivery-confirm').style.display = 'block';
-              document.getElementById('delivery-confirm').scrollIntoView({ behavior: 'smooth' });
+              document.getElementById("delivery-confirm").style.display =
+                "block";
+              document
+                .getElementById("delivery-confirm")
+                .scrollIntoView({ behavior: "smooth" });
             };
-            window.printAllForPatient = function(mrn) {
-              document.getElementById('delivery-confirm').style.display = 'block';
-              document.getElementById('delivery-confirm').scrollIntoView({ behavior: 'smooth' });
+            window.printAllForPatient = function (mrn) {
+              document.getElementById("delivery-confirm").style.display =
+                "block";
+              document
+                .getElementById("delivery-confirm")
+                .scrollIntoView({ behavior: "smooth" });
             };
-            window.toggleGroup = function(id, headerEl) {
+            window.toggleGroup = function (id, headerEl) {
               const body = document.getElementById(id);
-              const arrow = headerEl.querySelector('.grp-arrow');
-              if (body.style.display === 'none') {
-                body.style.display = 'block';
-                if (arrow) arrow.innerHTML = '&#9660;';
+              const arrow = headerEl.querySelector(".grp-arrow");
+              if (body.style.display === "none") {
+                body.style.display = "block";
+                if (arrow) arrow.innerHTML = "&#9660;";
               } else {
-                body.style.display = 'none';
-                if (arrow) arrow.innerHTML = '&#9654;';
+                body.style.display = "none";
+                if (arrow) arrow.innerHTML = "&#9654;";
               }
             };
-          }
+          },
         });
       });
     </script>

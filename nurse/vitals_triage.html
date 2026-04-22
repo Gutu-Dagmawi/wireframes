@@ -92,7 +92,16 @@
           </div>
         </div>
         <div class="wf-form-row">
-          ${renderFormField("Pain Score (0–10)", "slider", { value: "4" })}
+          ${renderFormField("Triage Priority <span class='required'>*</span>", "select", { 
+            required: true, 
+            options: [
+              "— Select Priority —", 
+              "🔴 Red - Emergency", 
+              "🟡 Yellow - Urgent", 
+              "🟢 Green - Stable", 
+              "🔵 Blue - Routine"
+            ] 
+          })}
           ${renderFormField("Pain Location", "text", { placeholder: "e.g., Lower back, right side" })}
         </div>
       </div>

@@ -34,10 +34,14 @@
         <!-- Service Fields (default) -->
         <div id="cat-service" class="wf-form-section cat-fields">
           <div class="section-title">Service / Procedure</div>
-          ${renderFormField("Service Name", "text", { required: true, placeholder: "e.g., IM Injection" })}
+          ${renderFormField("Service Name", "text", { required: true, placeholder: "e.g., Injection" })}
           ${renderFormField("Description", "textarea", { placeholder: "Brief description..." })}
           ${renderFormField("Price (ETB)", "number", { required: true, placeholder: "150" })}
           ${renderFormField("Branch Scope", "text", { required: true, placeholder: "Multi-select: All Branches or specific..." })}
+          <div class="wf-form-group">
+            <label><input type="checkbox"> Recurrence Eligible</label>
+            <div class="text-small text-muted" style="margin-top:4px;margin-left:22px;">When enabled, this service can be ordered as a recurring series by the receptionist (e.g., daily wound dressing for 5 days). Payment is collected upfront for all sessions.</div>
+          </div>
         </div>
 
         <!-- Lab Test Fields -->
@@ -47,6 +51,10 @@
           ${renderFormField("Specimen Type", "select", { required: true, options: ["— Select —", "Blood", "Urine", "Swab", "Stool", "CSF"] })}
           ${renderFormField("Price (ETB)", "number", { required: true, placeholder: "450" })}
           ${renderFormField("In-House Branches", "text", { required: true, placeholder: "Multi-select branches that can process in-house..." })}
+          <div class="wf-form-group">
+            <label><input type="checkbox"> Tracked (Trend Analysis)</label>
+            <div class="text-small text-muted" style="margin-top:4px;margin-left:22px;">Results for this test will be available for longitudinal trend analysis on the patient profile. Requires ≥2 results to display trend graph.</div>
+          </div>
         </div>
 
         <!-- Drug Fields -->

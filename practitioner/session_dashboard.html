@@ -40,19 +40,19 @@
             ["Patient Name", "Chief Complaint", "Time in Queue", "Status"],
             [
               [
-                '<a href="patient_encounter.html"><strong>Abebe Kebede</strong></a>',
+                '<a href="patient_encounter.html"><strong>Abebe Kebede</strong></a> <span style="display:none;">🔴 Red</span>',
                 "Persistent headache, 3 days",
                 "25 min",
                 '<span class="wf-badge">Waiting</span>',
               ],
               [
-                '<a href="patient_encounter.html"><strong>Fatima Ali</strong></a>',
+                '<a href="patient_encounter.html"><strong>Fatima Ali</strong></a> <span style="display:none;">🟡 Yellow</span>',
                 "Blood pressure check",
                 "18 min",
                 '<span class="wf-badge">Waiting</span>',
               ],
               [
-                '<a href="patient_encounter.html"><strong>Dawit Tadesse</strong></a>',
+                '<a href="patient_encounter.html"><strong>Dawit Tadesse</strong></a> <span style="display:none;">🟢 Green</span>',
                 "Joint pain, right knee",
                 "5 min",
                 '<span class="wf-badge">Waiting</span>',
@@ -73,7 +73,7 @@
             ["Patient Name", "Lab Tests", "Results Available Since", "Status"],
             [
               [
-                '<a href="patient_encounter.html"><strong>Meron Hailu</strong></a>',
+                '<a href="patient_encounter.html"><strong>Meron Hailu</strong></a> <span style="display:none;">🔴 Red</span>',
                 "CBC, Lipid Profile",
                 "10:25 AM",
                 '<span class="wf-badge blue">Waiting for Review</span>',
@@ -92,10 +92,16 @@
           <span class="wf-badge orange">1 waiting</span>
         </div>
         ${renderTable(
-          ["Patient Name", "Original Encounter", "Suspension Reason", "Returned Items", "Time Waiting"],
+          [
+            "Patient Name",
+            "Original Encounter",
+            "Suspension Reason",
+            "Returned Items",
+            "Time Waiting",
+          ],
           [
             [
-              '<a href="patient_encounter.html"><strong>Dawit Tadesse</strong></a>',
+              '<a href="patient_encounter.html"><strong>Dawit Tadesse</strong></a> <span style="display:none;">🟢 Green</span>',
               "28 Mar 2026",
               '<span class="wf-badge orange" style="font-size:.6rem;">External Lab Results</span>',
               "Thyroid Panel (T3, T4, TSH) results received",

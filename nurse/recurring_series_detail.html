@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>DocuMed — Recurring Series Detail</title>
+    <link rel="stylesheet" href="../wireframe.css" />
+    <script src="../wireframe.js"></script>
+  </head>
+  <body>
+    <script>
+      ready(() => {
+        renderPageShell({
+          title: "Recurring Series Detail",
+          role: "nurse",
+          activeId: "recurring_orders",
+          screenId: "SCR_recurring_series_detail",
+          workflow: "Recurring Order Administration Flow",
+          userName: "Selam D. (Nurse)",
+          content: function (main) {
+            main.innerHTML = `
+      <h2 class="page-title">Recurring Series Detail</h2>
+
+      <!-- Back nav -->
+      <div style="margin-bottom:12px;">
+        <a href="recurring_orders.html" style="font-size:.85rem;color:#1565c0;text-decoration:none;">← Back to Recurring Orders</a>
+      </div>
+
+      <!-- Series Header -->
+      <div class="wf-card" style="margin-bottom:16px;">
+        <div style="display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap;">
+          <!-- Patient Info -->
+          <div style="flex:1;min-width:200px;">
+            <div style="font-size:.72rem;color:#888;text-transform:uppercase;letter-spacing:.5px;">Patient</div>
+            <div style="display:flex;align-items:center;gap:8px;margin-top:4px;">
+              <div class="wf-placeholder" style="width:40px;height:40px;border-radius:50%;font-size:.45rem;display:flex;align-items:center;justify-content:center;">Foto</div>
+              <div>
+                <div style="font-weight:700;font-size:1.05rem;">Meron Hailu</div>
+                <div class="text-small text-muted">MRN-0091 &middot; F, 28 yrs</div>
+              </div>
+            </div>
+          </div>
+          <!-- Order Info -->
+          <div style="flex:1;min-width:200px;">
+            <div style="font-size:.72rem;color:#888;text-transform:uppercase;letter-spacing:.5px;">Procedure</div>
+            <div style="font-weight:700;margin-top:4px;">Injection — Diclofenac 75mg</div>
+            <div class="text-small text-muted">Route: Intramuscular (IM) &middot; Site: L. deltoid</div>
+          </div>
+          <!-- Schedule -->
+          <div style="flex:1;min-width:160px;">
+            <div style="font-size:.72rem;color:#888;text-transform:uppercase;letter-spacing:.5px;">Schedule</div>
+            <div style="font-weight:700;margin-top:4px;">Daily &times; 5 days</div>
+            <div class="text-small text-muted">21 Apr – 25 Apr 2026</div>
+          </div>
+          <!-- Ordering Practitioner -->
+          <div style="flex:1;min-width:160px;">
+            <div style="font-size:.72rem;color:#888;text-transform:uppercase;letter-spacing:.5px;">Ordered By</div>
+            <div style="font-weight:700;margin-top:4px;">Dr. Solomon T.</div>
+            <div class="text-small text-muted">Encounter E-2026-0421</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Progress Bar -->
+      <div class="wf-card" style="margin-bottom:16px;padding:16px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+          <div style="font-weight:700;font-size:.9rem;">Series Progress</div>
+          <div style="font-family:'Architects Daughter',cursive;font-size:1.4rem;color:#1565c0;">3 / 5 sessions</div>
+        </div>
+        <!-- Visual progress -->
+        <div style="display:flex;gap:6px;margin-bottom:10px;">
+          <div style="flex:1;height:32px;background:#e8f5e9;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;color:#2e7d32;border:1.5px solid #a5d6a7;">
+            ✓ Session 1
+          </div>
+          <div style="flex:1;height:32px;background:#e8f5e9;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;color:#2e7d32;border:1.5px solid #a5d6a7;">
+            ✓ Session 2
+          </div>
+          <div style="flex:1;height:32px;background:#e8f5e9;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;color:#2e7d32;border:1.5px solid #a5d6a7;">
+            ✓ Session 3
+          </div>
+          <div style="flex:1;height:32px;background:#fff3e0;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;color:#e65100;border:1.5px dashed #e65100;">
+            ⏳ Session 4
+          </div>
+          <div style="flex:1;height:32px;background:#f5f5f5;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:.72rem;color:#999;border:1.5px dashed #ccc;">
+            Session 5
+          </div>
+        </div>
+        <div class="text-small text-muted">
+          <span style="background:#e8f5e9;padding:2px 6px;border-radius:2px;font-size:.7rem;">Completed</span> &middot;
+          <span style="background:#fff3e0;padding:2px 6px;border-radius:2px;font-size:.7rem;">Due Today</span> &middot;
+          <span style="background:#ffebee;padding:2px 6px;border-radius:2px;font-size:.7rem;">Missed</span> &middot;
+          <span style="background:#f5f5f5;padding:2px 6px;border-radius:2px;font-size:.7rem;">Upcoming</span>
+        </div>
+      </div>
+
+      <!-- Session-by-Session Detail Table -->
+      <div class="wf-form-section">
+        <div class="section-title flex-between">
+          <span>Administration Log</span>
+          <span class="wf-badge">5 sessions</span>
+        </div>
+        ${renderTable(
+          [
+            "Session",
+            "Scheduled Date",
+            "Status",
+            "Administered By",
+            "Time",
+            "Site Used",
+            "Notes",
+            "Practitioner Notified",
+          ],
+          [
+            [
+              "<strong>1 / 5</strong>",
+              "Mon 21 Apr",
+              '<span class="wf-badge green">Completed</span>',
+              "Selam D. (Nurse)",
+              "09:30",
+              "L. deltoid",
+              "No adverse reaction. Patient tolerated well.",
+              '<span class="wf-badge green" style="font-size:.55rem;">✓ Notified</span>',
+            ],
+            [
+              "<strong>2 / 5</strong>",
+              "Tue 22 Apr",
+              '<span class="wf-badge green">Completed</span>',
+              "Selam D. (Nurse)",
+              "09:15",
+              "R. deltoid",
+              "Slight pain at injection site. No swelling.",
+              '<span class="wf-badge green" style="font-size:.55rem;">✓ Notified</span>',
+            ],
+            [
+              "<strong>3 / 5</strong>",
+              "Wed 23 Apr",
+              '<span class="wf-badge green">Completed</span>',
+              "Hiwot M. (Nurse)",
+              "10:00",
+              "L. deltoid",
+              "Patient reports improvement in pain. Alternated site.",
+              '<span class="wf-badge green" style="font-size:.55rem;">✓ Notified</span>',
+            ],
+            [
+              "<strong>4 / 5</strong>",
+              "Thu 24 Apr",
+              '<span class="wf-badge orange">Due Today</span>',
+              "—",
+              "—",
+              "—",
+              "—",
+              "—",
+            ],
+            [
+              "<strong>5 / 5</strong>",
+              "Fri 25 Apr",
+              '<span class="wf-badge gray">Upcoming</span>',
+              "—",
+              "—",
+              "—",
+              "—",
+              "—",
+            ],
+          ],
+        )}
+      </div>
+
+      <!-- Actions -->
+      <div class="wf-action-bar" style="margin-top:16px;">
+        <a href="nursing_order_detail.html"><button class="wf-btn primary">Administer Next Session (Session 4/5)</button></a>
+        <button class="wf-btn" onclick="alert('Series would be printed as a PDF report.')">Print Series Report</button>
+        <button class="wf-btn danger" onclick="alert('Cancel remaining sessions? This would void sessions 4 and 5.')">Cancel Remaining Sessions</button>
+      </div>
+
+      <!-- Practitioner Instructions -->
+      <div class="wf-card" style="margin-top:16px;border-left:3px solid #1565c0;">
+        <div class="card-title" style="color:#1565c0;">Practitioner Instructions</div>
+        <div class="wf-kv-grid">
+          <div class="wf-kv"><div class="kv-label">Drug</div><div class="kv-value">Diclofenac Sodium 75mg/3mL (Ampoule)</div></div>
+          <div class="wf-kv"><div class="kv-label">Route</div><div class="kv-value">Intramuscular (IM)</div></div>
+          <div class="wf-kv"><div class="kv-label">Site</div><div class="kv-value">Deltoid — alternate L/R each session</div></div>
+          <div class="wf-kv"><div class="kv-label">Frequency</div><div class="kv-value">Once daily</div></div>
+          <div class="wf-kv"><div class="kv-label">Duration</div><div class="kv-value">5 days (21–25 Apr 2026)</div></div>
+          <div class="wf-kv"><div class="kv-label">Special Instructions</div><div class="kv-value">Administer deep IM. Monitor for allergic reaction. Patient to remain 15 min post-injection.</div></div>
+        </div>
+      </div>
+    `;
+          },
+        });
+      });
+    </script>
+  </body>
+</html>

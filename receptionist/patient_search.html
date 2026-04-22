@@ -57,7 +57,7 @@
           [
             "MRN-0015",
             '<div class="wf-placeholder" style="width:28px;height:28px;border-radius:50%;font-size:.45rem;display:flex;align-items:center;justify-content:center;">Foto</div>',
-            "<strong>Abebe Kebede</strong>",
+            '<a href="patient_profile_admin.html"><strong>Abebe Kebede</strong></a>',
             "M",
             "12/03/1985",
             "0911-234-567",
@@ -69,7 +69,7 @@
           [
             "MRN-0078",
             '<div class="wf-placeholder" style="width:28px;height:28px;border-radius:50%;font-size:.45rem;display:flex;align-items:center;justify-content:center;">Foto</div>',
-            "<strong>Fatima Ali</strong>",
+            '<a href="patient_profile_admin.html"><strong>Fatima Ali</strong></a>',
             "F",
             "25/08/1990",
             "0922-345-678",
@@ -81,7 +81,7 @@
           [
             "MRN-0023",
             '<div class="wf-placeholder" style="width:28px;height:28px;border-radius:50%;font-size:.45rem;display:flex;align-items:center;justify-content:center;">Foto</div>',
-            "<strong>Dawit Tadesse</strong>",
+            '<a href="patient_profile_admin.html"><strong>Dawit Tadesse</strong></a>',
             "M",
             "07/11/1978",
             "0933-456-789",
@@ -93,7 +93,7 @@
           [
             "MRN-0091",
             '<div class="wf-placeholder" style="width:28px;height:28px;border-radius:50%;font-size:.45rem;display:flex;align-items:center;justify-content:center;">Foto</div>',
-            "<strong>Meron Hailu</strong>",
+            '<a href="patient_profile_admin.html"><strong>Meron Hailu</strong></a>',
             "F",
             "19/06/1995",
             "0944-567-890",
@@ -105,7 +105,7 @@
           [
             "MRN-0103",
             '<div class="wf-placeholder" style="width:28px;height:28px;border-radius:50%;font-size:.45rem;display:flex;align-items:center;justify-content:center;">Foto</div>',
-            "<strong>Yonas Gebre</strong>",
+            '<a href="patient_profile_admin.html"><strong>Yonas Gebre</strong></a>',
             "M",
             "03/02/2001",
             "0955-678-901",
@@ -146,7 +146,11 @@
           ${renderTable(
             ["Date", "Practitioner", "Chief Complaint"],
             [
-              ["28 Mar 2026", "Dr. Solomon T.", "Headache, elevated BP (140/95)"],
+              [
+                "28 Mar 2026",
+                "Dr. Solomon T.",
+                "Headache, elevated BP (140/95)",
+              ],
               ["15 Feb 2026", "Dr. Solomon T.", "Routine check-up"],
               ["20 Jan 2026", "Dr. Alem B.", "UTI symptoms"],
             ],
@@ -155,15 +159,19 @@
 
         <!-- Practitioner Selection -->
         <div class="wf-form-row" style="max-width:600px;margin-top:12px;">
-          ${renderFormField("Select Practitioner <span class='required'>*</span>", "select", {
-            required: true,
-            options: [
-              "— Select —",
-              "Dr. Solomon T. (General Practice) — 3 in queue",
-              "Dr. Miriam K. (Paediatrics) — 1 in queue",
-              "Dr. Alem B. (Internal Medicine) — 5 in queue",
-            ],
-          })}
+          ${renderFormField(
+            "Select Practitioner <span class='required'>*</span>",
+            "select",
+            {
+              required: true,
+              options: [
+                "— Select —",
+                "Dr. Solomon T. (General Practice) — 3 in queue",
+                "Dr. Miriam K. (Paediatrics) — 1 in queue",
+                "Dr. Alem B. (Internal Medicine) — 5 in queue",
+              ],
+            },
+          )}
           ${renderFormField("Visit Reason", "text", { placeholder: "Brief reason for visit (optional)" })}
         </div>
         <div class="wf-action-bar" style="margin-top:10px;">

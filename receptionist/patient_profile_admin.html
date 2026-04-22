@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>DocuMed — Patient Profile (Administrative)</title>
+    <link rel="stylesheet" href="../wireframe.css" />
+    <script src="../wireframe.js"></script>
+  </head>
+  <body>
+    <script>
+      ready(() => {
+        renderPageShell({
+          title: "Patient Profile (Administrative)",
+          role: "receptionist",
+          activeId: "patient_search",
+          screenId: "SCR_patient_profile_admin",
+          workflow: "Patient Administration",
+          userName: "Hana G. (Receptionist)",
+          content: function (main) {
+            main.innerHTML = `
+      <!-- Back nav -->
+      <div style="margin-bottom:12px;">
+        <a href="patient_search.html" style="font-size:.85rem;color:#1565c0;text-decoration:none;">← Back to Patient Search</a>
+      </div>
+
+      <!-- Patient Identity Banner -->
+      <div class="wf-patient-header">
+        <div class="ph-top-row">
+          <div style="display:flex;align-items:center;gap:14px;">
+            <div class="wf-placeholder" style="width:60px;height:60px;border-radius:50%;border-width:1.5px;flex-shrink:0;"><span style="font-size:.55rem;">Photo</span></div>
+            <div>
+              <div class="ph-name">Abebe Kebede <span class="wf-badge red" style="font-size:.7rem;vertical-align:middle;margin-left:8px;">🔴 Emergency</span> <span class="wf-badge green" style="font-size:.65rem;vertical-align:middle;margin-left:4px;">Card Active</span></div>
+              <div style="font-size:.82rem;color:#888;">MRN-0015 &middot; Registered: 15 Jan 2024 &middot; Last Visit: 08 Apr 2026</div>
+            </div>
+          </div>
+          <div class="flex gap-1">
+            <button class="wf-btn small" onclick="alert('Print patient ID card with MRN barcode.')">Print Patient Card</button>
+            <a href="appointment_management.html"><button class="wf-btn small">📅 Schedule Appointment</button></a>
+          </div>
+        </div>
+        <div class="ph-meta">
+          <div class="ph-meta-item"><span class="meta-label">Patient ID</span>ET-1234567</div>
+          <div class="ph-meta-item"><span class="meta-label">Sex / Age</span>Male, 41 yrs</div>
+          <div class="ph-meta-item"><span class="meta-label">Date of Birth</span>12 Mar 1985</div>
+          <div class="ph-meta-item"><span class="meta-label">Phone</span>0911-234-567</div>
+          <div class="ph-meta-item"><span class="meta-label">Email</span>abebe.k@email.com</div>
+          <div class="ph-meta-item"><span class="meta-label">Address</span>Bole Sub-city, Addis Ababa</div>
+          <div class="ph-meta-item"><span class="meta-label">Blood Type</span>O+</div>
+        </div>
+      </div>
+
+      <!-- Emergency Contact -->
+      <div class="wf-card">
+        <div class="card-title flex-between">
+          <span>Emergency Contact</span>
+          <button class="wf-btn small" onclick="alert('Opens emergency contact edit form.')">✏ Edit</button>
+        </div>
+        <div class="wf-kv-grid">
+          <div class="wf-kv"><div class="kv-label">Contact Name</div><div class="kv-value">Tigist Kebede</div></div>
+          <div class="wf-kv"><div class="kv-label">Relationship</div><div class="kv-value">Spouse</div></div>
+          <div class="wf-kv"><div class="kv-label">Phone</div><div class="kv-value">0922-111-222</div></div>
+        </div>
+      </div>
+
+      <!-- Card Activation History -->
+      <div class="wf-card">
+        <div class="card-title flex-between">
+          <span>Card Activation History</span>
+          <span class="wf-badge">4 records</span>
+        </div>
+        ${renderTable(
+          ["Activation Date", "Deactivation Date", "Duration", "Activated By", "Status"],
+          [
+            [
+              "08 Apr 2026",
+              "—",
+              "14 days (active)",
+              "Walk-in (E-2026-0412)",
+              '<span class="wf-badge green">Active</span>',
+            ],
+            [
+              "15 Mar 2026",
+              "28 Mar 2026",
+              "13 days",
+              "Appointment (E-2026-0315)",
+              '<span class="wf-badge gray">Expired</span>',
+            ],
+            [
+              "20 Feb 2026",
+              "06 Mar 2026",
+              "14 days",
+              "Walk-in (E-2026-0220)",
+              '<span class="wf-badge gray">Expired</span>',
+            ],
+            [
+              "05 Jan 2026",
+              "19 Jan 2026",
+              "14 days",
+              "Appointment (E-2026-0105)",
+              '<span class="wf-badge gray">Expired</span>',
+            ],
+          ],
+        )}
+        <p class="text-small text-muted">Card validity period is configured per branch (default: 14 days). Each encounter activation creates a new card period.</p>
+      </div>
+
+      <!-- Visit History (No Diagnosis) -->
+      <div class="wf-card">
+        <div class="card-title flex-between">
+          <span>Visit History</span>
+          <span class="wf-badge">4 visits</span>
+        </div>
+        ${renderTable(
+          ["Date", "Branch", "Practitioner", "Visit Type", "Duration", "Status"],
+          [
+            [
+              "08 Apr 2026",
+              "Main Branch",
+              "Dr. Solomon T.",
+              '<span class="wf-badge blue">Walk-in</span>',
+              "1h 47m",
+              '<span class="wf-badge green">Completed</span>',
+            ],
+            [
+              "15 Mar 2026",
+              "Main Branch",
+              "Dr. Alem B.",
+              '<span class="wf-badge blue">Appointment</span>',
+              "0h 52m",
+              '<span class="wf-badge green">Completed</span>',
+            ],
+            [
+              "20 Feb 2026",
+              "Main Branch",
+              "Dr. Solomon T.",
+              '<span class="wf-badge blue">Walk-in</span>',
+              "1h 12m",
+              '<span class="wf-badge green">Completed</span>',
+            ],
+            [
+              "05 Jan 2026",
+              "Main Branch",
+              "Dr. Solomon T.",
+              '<span class="wf-badge blue">Appointment</span>',
+              "0h 40m",
+              '<span class="wf-badge green">Completed</span>',
+            ],
+          ],
+        )}
+        <p class="text-small text-muted">Click a row to view encounter outputs (prescriptions, referrals, certificates) for that visit.</p>
+      </div>
+
+      <div class="wf-grid-2">
+        <!-- Upcoming Appointments -->
+        <div class="wf-card">
+          <div class="card-title flex-between">
+            <span>Upcoming Appointments</span>
+            <a href="appointment_management.html"><button class="wf-btn small">Manage</button></a>
+          </div>
+          ${renderTable(
+            ["Date / Time", "Practitioner", "Type", "Status"],
+            [
+              [
+                "<strong>22 Apr 2026, 09:30</strong>",
+                "Dr. Solomon T.",
+                "Follow-up",
+                '<span class="wf-badge green">Confirmed</span>',
+              ],
+              [
+                "06 May 2026, 10:00",
+                "Dr. Alem B.",
+                "Lab Review",
+                '<span class="wf-badge orange">Pending</span>',
+              ],
+            ],
+          )}
+          <div style="margin-top:8px;">
+            <a href="appointment_management.html"><button class="wf-btn small">+ Schedule New Appointment</button></a>
+          </div>
+        </div>
+
+        <!-- Recurring Services -->
+        <div class="wf-card">
+          <div class="card-title flex-between">
+            <span>Recurring Services</span>
+            <a href="recurring_services.html"><button class="wf-btn small">View Tracker</button></a>
+          </div>
+          ${renderTable(
+            ["Service", "Schedule", "Progress", "Next Due", "Status"],
+            [
+              [
+                "Injection — Diclofenac 75mg",
+                "Daily × 5 days",
+                '<span style="font-weight:700;color:#1565c0;">3 / 5</span>',
+                "<strong>24 Apr 2026</strong>",
+                '<span class="wf-badge orange">In Progress</span>',
+              ],
+            ],
+          )}
+          <p class="text-small text-muted">Recurring services originate from practitioner order-sheets or special service orders.</p>
+        </div>
+      </div>
+
+      <!-- Special Service Order History -->
+      <div class="wf-card">
+        <div class="card-title flex-between">
+          <span>Special Service Order History</span>
+          <span class="wf-badge">3 orders</span>
+        </div>
+        ${renderTable(
+          ["Date", "Service(s)", "Source", "Ordered By", "Payment", "Status"],
+          [
+            [
+              "21 Apr 2026",
+              "Injection (Diclofenac 75mg)",
+              '<span class="wf-badge" style="background:#e3f2fd;color:#1565c0;font-size:.65rem;">In-house</span>',
+              "Hana G.",
+              '<span class="wf-badge green">Paid</span>',
+              '<span class="wf-badge green">Completed</span>',
+            ],
+            [
+              "10 Apr 2026",
+              "Blood Pressure Check",
+              '<span class="wf-badge" style="background:#e3f2fd;color:#1565c0;font-size:.65rem;">In-house</span>',
+              "Hana G.",
+              '<span class="wf-badge green">Paid</span>',
+              '<span class="wf-badge green">Completed</span>',
+            ],
+            [
+              "05 Mar 2026",
+              "Injection (Ceftriaxone 1g)",
+              '<span class="wf-badge" style="background:#fff3e0;color:#e65100;font-size:.65rem;">External</span>',
+              "Hana G.",
+              '<span class="wf-badge green">Paid</span>',
+              '<span class="wf-badge green">Completed</span>',
+            ],
+          ],
+        )}
+      </div>
+
+      <!-- Registration Info -->
+      <div class="wf-card">
+        <div class="card-title flex-between">
+          <span>Registration Information</span>
+          <button class="wf-btn small" onclick="alert('Opens registration edit form with pre-filled data.')">✏ Edit Registration</button>
+        </div>
+        <div class="wf-kv-grid">
+          <div class="wf-kv"><div class="kv-label">Registration Date</div><div class="kv-value">15 Jan 2024</div></div>
+          <div class="wf-kv"><div class="kv-label">Registered By</div><div class="kv-value">Hana G. (Receptionist)</div></div>
+          <div class="wf-kv"><div class="kv-label">Registration Branch</div><div class="kv-value">Main Branch</div></div>
+          <div class="wf-kv"><div class="kv-label">Last Profile Update</div><div class="kv-value">08 Apr 2026 by Dr. Solomon T. (Encounter E-2026-0412)</div></div>
+          <div class="wf-kv"><div class="kv-label">Total Visits</div><div class="kv-value">4</div></div>
+          <div class="wf-kv"><div class="kv-label">Preferred Branch</div><div class="kv-value">Main Branch</div></div>
+        </div>
+      </div>
+
+      <!-- Clinical Data Notice -->
+      <div style="margin-top:16px;padding:12px 16px;background:#fff8e1;border:1.5px solid #ffe082;border-radius:4px;font-size:.82rem;color:#666;">
+        <strong style="color:#f57f17;">ℹ Note:</strong> Medical history, diagnoses, lab results, and prescriptions are only accessible to clinical staff (Practitioners and Nurses). Contact the assigned practitioner for clinical inquiries.
+      </div>
+    `;
+          },
+        });
+      });
+    </script>
+  </body>
+</html>

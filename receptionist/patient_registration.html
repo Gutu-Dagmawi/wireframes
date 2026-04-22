@@ -79,7 +79,15 @@
         </div>
       </div>
 
-      <hr class="wf-divider">
+      <!-- Financial Information -->
+      <div class="wf-form-section">
+        <div class="section-title">Financial Information</div>
+        <div class="wf-form-row">
+          ${renderFormField("Eligible for Credit", "checkbox", { placeholder: "Check if patient is allowed to bypass payment during visits" })}
+          ${renderFormField("Credit Limit (ETB)", "number", { placeholder: "e.g., 5000 (Leave empty for unlimited)" })}
+        </div>
+        <p class="text-small text-muted" style="margin-top:-6px;">Credit-eligible patients bypass the upfront payment step. A credit tab is created automatically on service activation.</p>
+      </div>
 
       <!-- Actions -->
       <div class="wf-action-bar">
@@ -109,9 +117,11 @@
     `,
         });
 
-        window.showMRN = function() {
-          document.getElementById('reg-success').style.display = 'block';
-          document.getElementById('reg-success').scrollIntoView({ behavior: 'smooth' });
+        window.showMRN = function () {
+          document.getElementById("reg-success").style.display = "block";
+          document
+            .getElementById("reg-success")
+            .scrollIntoView({ behavior: "smooth" });
         };
       });
     </script>

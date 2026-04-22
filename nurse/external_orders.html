@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>DocuMed — External Orders</title>
+    <link rel="stylesheet" href="../wireframe.css" />
+    <script src="../wireframe.js"></script>
+  </head>
+  <body>
+    <script>
+      ready(() => {
+        renderPageShell({
+          title: "External Orders",
+          role: "nurse",
+          activeId: "external_orders",
+          screenId: "SCR_external_orders",
+          workflow: "External Order Validation Flow",
+          userName: "Selam D. (Nurse)",
+          content: function (main) {
+            main.innerHTML = `
+      <h2 class="page-title">External Orders</h2>
+      <p class="text-small text-muted mb-2">Review and validate externally prescribed orders for services available in our clinic catalog. The nurse can approve (validate) or reject orders. Validated orders proceed to the standard nursing administration flow.</p>
+
+      <!-- Summary -->
+      <div class="wf-grid-4" style="margin-bottom:16px;">
+        <div class="wf-card" style="text-align:center;padding:16px;">
+          <div style="font-size:.75rem;color:#888;text-transform:uppercase;letter-spacing:.5px;">Pending Validation</div>
+          <div style="font-size:2rem;font-family:'Architects Daughter',cursive;color:#e65100;">2</div>
+        </div>
+        <div class="wf-card" style="text-align:center;padding:16px;">
+          <div style="font-size:.75rem;color:#888;text-transform:uppercase;letter-spacing:.5px;">Validated Today</div>
+          <div style="font-size:2rem;font-family:'Architects Daughter',cursive;color:#2e7d32;">1</div>
+        </div>
+        <div class="wf-card" style="text-align:center;padding:16px;">
+          <div style="font-size:.75rem;color:#888;text-transform:uppercase;letter-spacing:.5px;">Rejected</div>
+          <div style="font-size:2rem;font-family:'Architects Daughter',cursive;color:#c62828;">0</div>
+        </div>
+        <div class="wf-card" style="text-align:center;padding:16px;">
+          <div style="font-size:.75rem;color:#888;text-transform:uppercase;letter-spacing:.5px;">Administered</div>
+          <div style="font-size:2rem;font-family:'Architects Daughter',cursive;color:#1565c0;">1</div>
+        </div>
+      </div>
+
+      <!-- Pending Validation Queue -->
+      <div class="wf-form-section">
+        <div class="section-title flex-between">
+          <span>Pending Validation</span>
+          <span class="wf-badge orange">2 orders</span>
+        </div>
+        ${renderTable(
+          [
+            "Upload Date",
+            "Patient",
+            "MRN",
+            "Referring Clinic",
+            "Order Type",
+            "Uploaded By",
+            "File",
+            "Actions",
+          ],
+          [
+            [
+              "22 Apr 2026, 09:20",
+              "<strong>Kedir Mohammed</strong>",
+              "MRN-0110",
+              "St. Gabriel Hospital",
+              '<span class="wf-badge" style="background:#e3f2fd;color:#1565c0;">Injection (IM-INJ)</span>',
+              "Hana G. (Receptionist)",
+              '<span style="color:#1565c0;text-decoration:underline;cursor:pointer;">📎 order_scan.pdf</span>',
+              '<button class="wf-btn small primary" onclick="showReview(1)">Review</button>',
+            ],
+            [
+              "22 Apr 2026, 10:05",
+              "<strong>Sara Alemu</strong>",
+              "MRN-0067",
+              "Bethzatha Clinic",
+              '<span class="wf-badge" style="background:#e3f2fd;color:#1565c0;">Wound Dressing (WND-DRS)</span>',
+              "Hana G. (Receptionist)",
+              '<span style="color:#1565c0;text-decoration:underline;cursor:pointer;">📎 rx_photo.jpg</span>',
+              '<button class="wf-btn small primary" onclick="showReview(2)">Review</button>',
+            ],
+          ],
+          { clickable: true },
+        )}
+      </div>
+
+      <!-- Review Panel (shown on Review click) -->
+      <div class="wf-inline-panel" id="review-panel" style="display:none;margin-top:12px;">
+        <div class="section-title">External Order Review — Kedir Mohammed</div>
+        <div class="wf-grid-2">
+          <!-- Left: File Preview -->
+          <div>
+            <div style="font-size:.82rem;font-weight:600;color:#555;margin-bottom:6px;">Uploaded Document</div>
+            <div class="wf-placeholder" style="height:280px;display:flex;align-items:center;justify-content:center;font-size:.8rem;background:#f5f5f5;border:2px dashed #ccc;border-radius:4px;">
+              <div style="text-align:center;">
+                <div style="font-size:2rem;margin-bottom:8px;">📄</div>
+                <div>order_scan.pdf</div>
+                <div class="text-small text-muted">Preview renders here (PDF/image viewer)</div>
+                <button class="wf-btn small" style="margin-top:8px;">Open Full Size</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Order Details & Validation -->
+          <div>
+            <div style="font-size:.82rem;font-weight:600;color:#555;margin-bottom:6px;">Order Details</div>
+            <div class="wf-kv-grid" style="margin-bottom:12px;">
+              <div class="wf-kv"><div class="kv-label">Patient</div><div class="kv-value"><strong>Kedir Mohammed</strong> (MRN-0110)</div></div>
+              <div class="wf-kv"><div class="kv-label">Referring Clinic</div><div class="kv-value">St. Gabriel Hospital</div></div>
+              <div class="wf-kv"><div class="kv-label">Referring Doctor</div><div class="kv-value">Dr. Meseret A.</div></div>
+              <div class="wf-kv"><div class="kv-label">Clinic Service</div><div class="kv-value"><strong>Injection</strong> (IM-INJ) — from clinic catalog</div></div>
+              <div class="wf-kv"><div class="kv-label">External Prescription</div><div class="kv-value">Ceftriaxone 1g IM daily &times; 3 days (as per uploaded document)</div></div>
+              <div class="wf-kv"><div class="kv-label">Receptionist Notes</div><div class="kv-value">Patient brought printed prescription from St. Gabriel. Drug provided by patient.</div></div>
+            </div>
+
+            <div style="font-size:.82rem;font-weight:600;color:#555;margin-bottom:6px;">Validation Checklist</div>
+            <div style="background:#fafafa;padding:8px 12px;border-radius:3px;border:1px solid #eee;margin-bottom:12px;">
+              <label style="display:block;padding:3px 0;font-size:.82rem;cursor:pointer;"><input type="checkbox" checked> Order is legible</label>
+              <label style="display:block;padding:3px 0;font-size:.82rem;cursor:pointer;"><input type="checkbox" checked> Patient identity matches</label>
+              <label style="display:block;padding:3px 0;font-size:.82rem;cursor:pointer;"><input type="checkbox" checked> Prescribing doctor identified</label>
+              <label style="display:block;padding:3px 0;font-size:.82rem;cursor:pointer;"><input type="checkbox" checked> Medication/procedure details clear</label>
+              <label style="display:block;padding:3px 0;font-size:.82rem;cursor:pointer;"><input type="checkbox" checked> Dosage specified</label>
+              <label style="display:block;padding:3px 0;font-size:.82rem;cursor:pointer;"><input type="checkbox"> No contraindications noted</label>
+            </div>
+
+            ${renderFormField("Nurse Validation Notes", "textarea", { placeholder: "Any observations about the external order... (optional)" })}
+          </div>
+        </div>
+
+        <hr class="wf-divider">
+
+        <div class="wf-action-bar">
+          <button class="wf-btn primary" onclick="validateOrder()">✓ Validate & Proceed to Administration</button>
+          <button class="wf-btn danger" onclick="showReject()">✕ Reject Order</button>
+          <button class="wf-btn" onclick="document.getElementById('review-panel').style.display='none'">Cancel</button>
+        </div>
+        <div style="margin-top:8px;padding:8px 12px;background:#e8f5e9;border-radius:3px;display:none;" id="validate-success">
+          <span style="color:#2e7d32;font-size:.85rem;font-weight:600;">Order validated. Nursing order created and sent to your Nursing Orders Queue. Proceed to administer.</span>
+        </div>
+
+        <!-- Reject sub-panel -->
+        <div id="reject-panel" style="display:none;margin-top:12px;padding:12px;background:#fff3e0;border-radius:3px;border:1px solid #e65100;">
+          <div style="font-weight:600;color:#c62828;margin-bottom:8px;">Reject External Order</div>
+          ${renderFormField("Rejection Reason <span class='required'>*</span>", "select", { required: true, options: ["— Select reason —", "Illegible / unreadable", "Incomplete — missing information", "Suspicious — possible forgery", "Expired order", "Other — specify in notes"] })}
+          ${renderFormField("Rejection Notes <span class='required'>*</span>", "textarea", { required: true, placeholder: "Explain why this order cannot be processed..." })}
+          <div class="wf-action-bar" style="margin-top:8px;">
+            <button class="wf-btn danger" onclick="confirmReject()">Confirm Rejection</button>
+            <button class="wf-btn" onclick="document.getElementById('reject-panel').style.display='none'">Cancel</button>
+          </div>
+          <p class="text-small text-muted" style="margin-top:6px;">The receptionist will be notified immediately. No practitioner review is required for rejections.</p>
+        </div>
+      </div>
+
+      <!-- Validated / Processed Orders -->
+      <div class="wf-form-section" style="margin-top:16px;">
+        <div class="section-title flex-between">
+          <span>Validated Orders (Audit Trail)</span>
+          <span class="wf-badge green">1 order</span>
+        </div>
+        ${renderTable(
+          [
+            "Date",
+            "Patient",
+            "MRN",
+            "Referring Clinic",
+            "Type",
+            "Validated By",
+            "Status",
+          ],
+          [
+            [
+              "21 Apr 2026",
+              "<strong>Bereket Desta</strong>",
+              "MRN-0034",
+              "Kadisco Hospital",
+              "Injection (IM-INJ)",
+              "Selam D.",
+              '<span class="wf-badge green">Administered</span>',
+            ],
+          ],
+        )}
+      </div>
+    `;
+          },
+        });
+
+        window.showReview = function (id) {
+          document.getElementById("review-panel").style.display = "block";
+          document.getElementById("validate-success").style.display = "none";
+          document.getElementById("reject-panel").style.display = "none";
+          document
+            .getElementById("review-panel")
+            .scrollIntoView({ behavior: "smooth" });
+        };
+        window.validateOrder = function () {
+          document.getElementById("validate-success").style.display = "block";
+        };
+        window.showReject = function () {
+          document.getElementById("reject-panel").style.display = "block";
+          document
+            .getElementById("reject-panel")
+            .scrollIntoView({ behavior: "smooth" });
+        };
+        window.confirmReject = function () {
+          alert("Order rejected. Receptionist notified.");
+          document.getElementById("review-panel").style.display = "none";
+        };
+      });
+    </script>
+  </body>
+</html>

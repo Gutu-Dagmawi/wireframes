@@ -16,7 +16,7 @@
           screenId: "SCR_suspended_encounters",
           workflow: "Suspended Encounter Management Flow",
           userName: "Hana G. (Receptionist)",
-          content: function(main) {
+          content: function (main) {
             main.innerHTML = `
       <h2 class="page-title">Suspended Encounters</h2>
       <p class="text-small text-muted mb-2">Encounters suspended by practitioners awaiting external results or patient return. Manage resumption via walk-in activation or scheduled appointment.</p>
@@ -207,23 +207,35 @@
       </div>
     `;
 
-            window.showActivation = function(mrn) {
-              document.getElementById('activation-panel').style.display = 'block';
-              document.getElementById('activation-confirm').style.display = 'none';
-              document.getElementById('activation-panel').scrollIntoView({ behavior: 'smooth' });
+            window.showActivation = function (mrn) {
+              document.getElementById("activation-panel").style.display =
+                "block";
+              document.getElementById("activation-confirm").style.display =
+                "none";
+              document
+                .getElementById("activation-panel")
+                .scrollIntoView({ behavior: "smooth" });
             };
-            window.showSchedule = function(mrn) {
-              alert('Opens appointment scheduling form pre-populated with patient details, original practitioner, and reason: "Resumption — Awaiting External Lab Results"');
+            window.showSchedule = function (mrn) {
+              alert(
+                'Opens appointment scheduling form pre-populated with patient details, original practitioner, and reason: "Resumption — Awaiting External Lab Results"',
+              );
             };
-            window.showDetails = function(mrn) {
-              alert('Opens read-only view of the completed suspension/resumption details.');
+            window.showDetails = function (mrn) {
+              alert(
+                "Opens read-only view of the completed suspension/resumption details.",
+              );
             };
-            window.confirmActivation = function() {
-              document.getElementById('activation-panel').style.display = 'none';
-              document.getElementById('activation-confirm').style.display = 'block';
-              document.getElementById('activation-confirm').scrollIntoView({ behavior: 'smooth' });
+            window.confirmActivation = function () {
+              document.getElementById("activation-panel").style.display =
+                "none";
+              document.getElementById("activation-confirm").style.display =
+                "block";
+              document
+                .getElementById("activation-confirm")
+                .scrollIntoView({ behavior: "smooth" });
             };
-          }
+          },
         });
       });
     </script>

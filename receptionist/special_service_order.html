@@ -18,7 +18,7 @@
           userName: "Hana G. (Receptionist)",
           content: `
       <h2 class="page-title">Special Service Order</h2>
-      <p class="text-small text-muted mb-2">Order walk-in services that do not require a doctor's consultation. Flow: Receptionist → Finance → Nurse (and/or Lab Tech for linked tests).</p>
+      <p class="text-small text-muted mb-2">Order walk-in services that do not require a doctor's consultation. Can be in-house or externally prescribed (from another clinic). Flow: Receptionist → Finance → Nurse (and/or Lab Tech). External orders require nurse validation.</p>
 
       <!-- Patient Selection -->
       <div class="wf-form-section">
@@ -34,6 +34,39 @@
             <div class="text-small text-muted">Known allergies: None known</div>
           </div>
           <button class="wf-btn small" style="margin-left:auto;">Change Patient</button>
+        </div>
+      </div>
+
+      <!-- Order Source -->
+      <div class="wf-form-section">
+        <div class="section-title">1b. Order Source</div>
+        <div style="display:flex;gap:12px;margin-bottom:8px;">
+          <label style="display:flex;align-items:center;gap:6px;padding:8px 16px;border:2px solid #eee;border-radius:4px;cursor:pointer;font-size:.88rem;">
+            <input type="radio" name="source" value="inhouse" checked onchange="document.getElementById('external-fields').style.display='none'"> <strong>In-house</strong>
+          </label>
+          <label style="display:flex;align-items:center;gap:6px;padding:8px 16px;border:2px solid #1565c0;border-radius:4px;cursor:pointer;font-size:.88rem;background:#e3f2fd;">
+            <input type="radio" name="source" value="external" onchange="document.getElementById('external-fields').style.display='block'"> <strong>External</strong> (prescribed by another clinic)
+          </label>
+        </div>
+
+        <!-- External fields (shown when External selected) -->
+        <div id="external-fields" style="display:block;margin-top:8px;padding:12px;background:#f8fbff;border-radius:4px;border:1px solid #bbdefb;">
+          <div class="wf-grid-2">
+            <div>
+              ${renderFormField("Referring Clinic <span class='required'>*</span>", "text", { required: true, placeholder: "e.g., St. Gabriel Hospital" })}
+              ${renderFormField("Referring Doctor", "text", { placeholder: "e.g., Dr. Meseret A." })}
+            </div>
+            <div>
+              <div class="wf-form-group">
+                <label>Upload Prescription (PDF / Image) <span class="required">*</span></label>
+                <div class="wf-placeholder" style="height:70px;display:flex;align-items:center;justify-content:center;font-size:.8rem;background:#fff;border:2px dashed #90caf9;border-radius:4px;cursor:pointer;">
+                  📎 Click to upload or drag & drop (PDF, JPG, PNG — max 10MB)
+                </div>
+              </div>
+              ${renderFormField("Receptionist Notes", "textarea", { placeholder: "e.g., Patient brought printed prescription. Drug provided by patient." })}
+            </div>
+          </div>
+          <p class="text-small text-muted" style="margin-top:4px;">External orders require <strong>nurse validation</strong> before administration. The uploaded prescription will be reviewed in the Nurse's External Orders queue.</p>
         </div>
       </div>
 
@@ -102,6 +135,30 @@
         </div>
       </div>
 
+      <!-- Recurrence Configuration (shown when recurrence-eligible service selected) -->
+      <div class="wf-form-section" id="recurrence-config" style="border-left:3px solid #1565c0;background:#f8fbff;">
+        <div class="section-title" style="color:#1565c0;">🔄 Recurring Service Configuration</div>
+        <p class="text-small text-muted" style="margin-top:-6px;margin-bottom:8px;">The selected service <strong>Wound Dressing (Walk-In)</strong> is <strong>recurrence eligible</strong>. Configure a recurring series or leave unchecked for a single session.</p>
+        <div class="wf-form-group">
+          <label><input type="checkbox" checked> Enable Recurring Series</label>
+        </div>
+        <div class="wf-grid-2" style="margin-top:6px;">
+          <div>
+            ${renderFormField("Schedule Type", "select", { options: ["Daily", "Custom days (Mon/Wed/Fri)", "Every other day"] })}
+            ${renderFormField("Total Sessions <span class='required'>*</span>", "number", { required: true, placeholder: "5" })}
+          </div>
+          <div>
+            ${renderFormField("Start Date", "date", { required: true })}
+            <div class="wf-form-group">
+              <label>End Date (auto-calculated)</label>
+              <input class="wf-input" type="text" value="26 Apr 2026" disabled style="background:#f5f5f5;">
+            </div>
+            ${renderFormField("Time Preference", "select", { options: ["Morning", "Afternoon", "No Preference"] })}
+          </div>
+        </div>
+        <p class="text-small text-muted">Payment is collected <strong>upfront</strong> for all sessions. The recurring series will appear on the <strong>Recurring Services Tracker</strong> calendar. Per-session check-in routes to the Nurse queue without additional payment.</p>
+      </div>
+
       <!-- Notes -->
       <div class="wf-form-section">
         <div class="section-title">3. Notes for Nurse</div>
@@ -110,18 +167,47 @@
 
       <!-- Order Summary -->
       <div class="wf-form-section">
-        <div class="section-title">Order Summary</div>
+        <div class="section-title flex-between">
+          <span>Order Summary</span>
+          <span class="wf-badge" style="background:#e3f2fd;color:#1565c0;">Source: External — St. Gabriel Hospital</span>
+        </div>
         ${renderTable(
-          ["#", "Service", "Code", "Unit Price (ETB)", "Linked Lab", "Subtotal (ETB)"],
           [
-            ["1", "Blood Pressure Check", "BP-CHK", "50.00", "—", "50.00"],
-            ["2", "Blood Sugar Check", "BS-CHK", "100.00", '<span class="wf-badge blue" style="font-size:.55rem;">FBS → Lab Tech Queue</span>', "100.00"],
+            "#",
+            "Service",
+            "Code",
+            "Sessions",
+            "Unit Price (ETB)",
+            "Linked Lab",
+            "Subtotal (ETB)",
+          ],
+          [
+            ["1", "Blood Pressure Check", "BP-CHK", "1", "50.00", "—", "50.00"],
+            [
+              "2",
+              "Blood Sugar Check",
+              "BS-CHK",
+              "1",
+              "100.00",
+              '<span class="wf-badge blue" style="font-size:.55rem;">FBS → Lab Tech Queue</span>',
+              "100.00",
+            ],
+            [
+              "3",
+              '<strong>Wound Dressing (Walk-In)</strong> <span class="wf-badge" style="font-size:.5rem;background:#e3f2fd;color:#1565c0;">Recurring</span>',
+              "WND-WI",
+              "<strong>5</strong>",
+              "150.00",
+              "—",
+              "<strong>750.00</strong>",
+            ],
           ],
         )}
         <div style="display:flex;justify-content:flex-end;padding:8px 12px;">
           <div style="text-align:right;">
             <div class="text-small text-muted">Price from: Branch Config (Main Branch)</div>
-            <div style="font-family:'Architects Daughter',cursive;font-size:1.8rem;color:#222;margin-top:4px;">Total: ETB 150.00</div>
+            <div style="font-family:'Architects Daughter',cursive;font-size:1.8rem;color:#222;margin-top:4px;">Total: ETB 900.00</div>
+            <div class="text-small text-muted">Includes 5-session recurring series (ETB 750.00 upfront)</div>
           </div>
         </div>
       </div>
@@ -155,9 +241,11 @@
     `,
         });
 
-        window.showSuccess = function() {
-          document.getElementById('order-success').style.display = 'block';
-          document.getElementById('order-success').scrollIntoView({ behavior: 'smooth' });
+        window.showSuccess = function () {
+          document.getElementById("order-success").style.display = "block";
+          document
+            .getElementById("order-success")
+            .scrollIntoView({ behavior: "smooth" });
         };
       });
     </script>
